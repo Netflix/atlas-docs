@@ -1,6 +1,6 @@
 lazy val root = (project in file("."))
   //.enablePlugins(ParadoxSitePlugin, ParadoxMaterialThemePlugin)
-  .enablePlugins(ParadoxSitePlugin)
+  .enablePlugins(ParadoxSitePlugin, GhpagesPlugin)
   .settings(
     name := "Atlas Docs",
     paradoxDirectives ++= Seq(
@@ -17,6 +17,8 @@ lazy val root = (project in file("."))
     sourceDirectory in Paradox := sourceDirectory.value / "main" / "paradox",
     previewFixedPort := Some(8000), // Match mkdocs default
     previewLaunchBrowser := false,
+
+    git.remoteRepo := "git@github.com:Netflix/atlas-docs.git",
 
     libraryDependencies ++= Seq(
       "com.netflix.spectator" % "spectator-api" % "0.63.0",
