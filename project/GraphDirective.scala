@@ -26,7 +26,7 @@ object GraphDirective extends ContainerBlockDirective("atlas-graph") with (Write
 
   def render(node: DirectiveNode, visitor: Visitor, printer: Printer): Unit = {
     val uri = Uri(node.contents.trim)
-    val image = grapher.render(uri, db)
+    val image = grapher.evalAndRender(uri, db)
     val meta = PngImage(image.data)
     val width = meta.data.getWidth
     val height = meta.data.getHeight
