@@ -1,0 +1,3 @@
+# Double Exponential Smoothing
+
+TODO
