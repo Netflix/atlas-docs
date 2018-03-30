@@ -1,18 +1,17 @@
 lazy val root = (project in file("."))
-  //.enablePlugins(ParadoxSitePlugin, ParadoxMaterialThemePlugin)
-  .enablePlugins(ParadoxSitePlugin, GhpagesPlugin)
+  .enablePlugins(ParadoxSitePlugin, ParadoxMaterialThemePlugin, GhpagesPlugin)
   .settings(
     name := "Atlas Docs",
     paradoxDirectives ++= Seq(
       GraphDirective,
       StacklangDirective
     ),
-    /*ParadoxMaterialThemePlugin.paradoxMaterialThemeSettings(Paradox),
+    ParadoxMaterialThemePlugin.paradoxMaterialThemeSettings(Paradox),
     paradoxMaterialTheme in Paradox ~= {
       _.withFavicon("images/atlas_logo_small.png")
         .withLogo("images/atlas_logo_small.png")
-        .withRepository(uri("https://github.com/brharrington/atlas-docs"))
-    },*/
+        .withRepository(uri("https://github.com/Netflix/atlas-docs"))
+    },
     paradoxGroups := Map("Language" -> Seq("Java", "Python")),
     sourceDirectory in Paradox := sourceDirectory.value / "main" / "paradox",
     previewFixedPort := Some(8000), // Match mkdocs default
