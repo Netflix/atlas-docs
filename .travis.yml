@@ -1,0 +1,14 @@
+language: scala
+matrix:
+  include:
+  - jdk: oraclejdk8
+    env: BINTRAY_PUBLISH=true
+scala:
+- 2.12.4
+sudo: false
+script:
+- ./buildViaTravis.sh
+cache:
+  directories:
+  - $HOME/.sbt
+  - $HOME/.ivy2
