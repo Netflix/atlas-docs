@@ -8,6 +8,8 @@
 * [Stack Language](asl/index.md)
 * [Reference](asl-reference/index.md)
 * [Spectator](spectator/index.md)
+* [Spectator Extenstions](spectator-ext/index.md)
+* [Spectator Registries](spectator-reg/index.md)
 
 @@@
 
