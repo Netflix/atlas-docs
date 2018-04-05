@@ -1,0 +1,309 @@
+
+#nav-top {
+  background-color: #b9090b;
+  position: sticky;
+  top: 0;
+  z-index: 1024;
+}
+
+#content {
+  z-index: 1000;
+  max-width: 768px;
+}
+
+#nav-left {
+  position: sticky;
+  top: 4rem;
+  padding-top: 1rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+}
+
+#nav-left ul {
+  margin: 0;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+#nav-left ul ul {
+  padding-left: 15px;
+}
+
+#nav-right {
+  position: sticky;
+  top: 4rem;
+  padding-top: 1rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+}
+
+#nav-right ul {
+  margin: 0;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+#nav-right ul ul {
+  padding-left: 15px;
+}
+
+a.anchor {
+  display: block;
+  position: relative;
+  top: -5rem;
+  visibility: hidden;
+}
+
+/*
+ * -- Styles below were borrowed from default paradox template --
+ */
+
+/* body */
+
+body {
+  background: #fff;
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.4em;
+  position: relative;
+  cursor: default;
+  font: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: #333333;
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-size-adjust: none;
+  text-rendering: optimizeLegibility;
+}
+
+/* callout */
+
+.callout {
+  border: none;
+  border-left: 10px solid #4078c0;
+  background-color: rgba(64, 120, 192, 0.1);
+}
+
+.callout.warning {
+  border-color: #DB504A;
+  background-color: #fff3d9;
+}
+
+.callout .callout-title {
+  font-weight: bold;
+  margin-bottom: 0.33em;
+}
+
+.callout div ~ p {
+  margin-top: 0;
+}
+
+.callout p ~ p {
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+
+.callout p code {
+  background: #fff;
+  padding-right: 0.5em !important;
+}
+
+/* table */
+
+table th {
+  background: #ffffff;
+  border: solid 1px #dddddd;
+}
+
+table td {
+  background: #ffffff;
+  border: solid 1px #dddddd;
+}
+
+/* code */
+
+pre {
+  padding: 1rem !important;
+  border: 1px solid #dddddd !important;
+  margin: 0 0 1rem 0 !important;
+  white-space: pre;
+  overflow: auto;
+  line-height: 0.9em !important;
+}
+
+code {
+  line-height: 1.45em !important;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+  font-size: 0.85em !important;
+  font-weight: normal !important;
+  padding: 0 !important;
+}
+
+pre > code {
+  background: none;
+  border: none;
+}
+
+p code {
+  border: none;
+  color: #0c323b;
+  padding: 0 0.2em !important;
+}
+
+li code {
+  border: none;
+  color: #0c323b;
+  padding: 0 0.2em !important;
+}
+
+/* Github-like */
+
+pre.prettyprint span.str {
+  color: #183691;
+}
+pre.prettyprint span.kwd {
+  color: #000000;
+  font-weight: bold;
+}
+pre.prettyprint span.com {
+  color: #999988;
+  font-style: italic;
+}
+pre.prettyprint span.typ {
+  color: #445588;
+  font-weight: bold;
+}
+pre.prettyprint span.lit {
+  color: #009999
+}
+pre.prettyprint span.pun {
+  color: #000000;
+  font-weight: bold;
+}
+pre.prettyprint span.pln {
+  color: #000000
+}
+pre.prettyprint span.tag {
+  color: navy
+}
+pre.prettyprint span.atn {
+  color: teal
+}
+pre.prettyprint span.atv {
+  color: #dd1144
+}
+pre.prettyprint span.dec {
+  color: #990000
+}
+pre.prettyprint span.var {
+  color: #000000
+}
+pre.prettyprint span.fun {
+  color: #990000
+}
+
+/* tabbed code snippets */
+
+dl.tabbed {
+  position: relative;
+}
+
+dl.tabbed dt {
+  float: left;
+  display: inline-block;
+  position: relative;
+  left: 1px;
+  margin-left: -1px;
+}
+
+dl.tabbed dt.current {
+  z-index: 2;
+}
+
+dl.tabbed dt a {
+  display: block;
+  border: 1px solid #f7f7f7;
+  padding: 0 20px;
+  height: 30px;
+  line-height: 2;
+  color: #4078c0;
+  text-decoration: none;
+}
+
+dl.tabbed dt a:hover {
+  background: #f7f7f7;
+}
+
+dl.tabbed dt.first a {
+  border-top-left-radius: 5px;
+}
+
+dl.tabbed dt.last a {
+  border-top-right-radius: 5px;
+}
+
+dl.tabbed dt.current a {
+  background-color: #f7f7f7;
+  border-color: #dddddd;
+  border-bottom: 0;
+  padding-bottom: 1px;
+}
+
+dl.tabbed dt.current a {
+  color: #0c323b;
+  outline: none;
+}
+
+dl.tabbed dd {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 29px;
+}
+
+dl.tabbed dd.current {
+  z-index: 1;
+}
+
+dl.tabbed dd pre {
+  border-top-left-radius: 0 !important;
+}
+
+dl.tabbed dd.has-note pre {
+  border-bottom: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+dl.tabbed dd.has-note blockquote {
+  color: #0c323b;
+  border: solid #dddddd;
+  border-width: 1px 1px 1px 10px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-top: 0;
+  font-style: italic;
+}
+
+/* navigation next */
+
+.nav-next {
+  background: #F7F7F7;
+  border-left: 10px solid #4078c0;
+  margin-top: 40px;
+  padding: 1em 20px;
+}
+
+.nav-next p {
+  display: inline;
+  color: #0c323b;
+  font-style: italic;
+}
+
+.nav-next a {
+  color: #4078c0;
+  font-weight: normal;
+}
