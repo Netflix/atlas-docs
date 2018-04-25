@@ -9,11 +9,11 @@ There are two overloaded variants of the `:and` operator:
 
 ## Query Variant
 
-## Signature
+### Signature
 
 `Query Query -- Query`
 
-## Summary
+### Summary
 
 Query expression that matches if both sub queries match. Suppose you have three time
 series:
@@ -28,11 +28,11 @@ The query `name,sys.cpu,:eq,nf.app,foo,:eq,:and` would match:
 
 ## Math Variant
 
-## Signature
+### Signature
 
 `TimeSeriesExpr TimeSeriesExpr -- TimeSeriesExpr`
 
-## Summary
+### Summary
 
 Compute a new time series where each interval has the value `(a AND b)` where `a`
  and `b` are the corresponding intervals in the input time series.

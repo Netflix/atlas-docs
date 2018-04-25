@@ -6,5 +6,6 @@ externalResolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "com.netflix.atlas_v1" %% "atlas-eval" % "1.6.0-SNAPSHOT"
+  "com.netflix.atlas_v1" %% "atlas-eval" % "1.6.0-SNAPSHOT",
+  "org.jsoup" % "jsoup" % "1.11.3"
 )
