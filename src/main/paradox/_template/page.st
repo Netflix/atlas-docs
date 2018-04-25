@@ -21,7 +21,7 @@
   <body>
     <header class="navbar navbar-expand-lg navbar-dark" id="nav-top">
       <a class="navbar-brand" href="$page.base$index.html">
-        <img src="$page.base$/images/atlas_logo_small.png" width="40px" height="40px"/>
+        <img src="$page.base$images/atlas_logo_small.png" width="40px" height="40px"/>
       </a>
       <button class="navbar-toggler"
         type="button"
@@ -65,7 +65,7 @@
     <div class="container-fluid">
       <div class="row flex-xl-nowrap justify-content-md-center">
         <div class="col-12 col-md-3 col-xl-2" id="nav-left">
-          $groups()$
+          $page.groups$
           $page.navigation$
         </div>
         <div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5" id="content">
@@ -95,7 +95,7 @@
     <script src="https://cdn.jsdelivr.net/npm/lunr@2.1.6/lunr.js"
       integrity="sha256-U3smMZ6uKxtHEAX38FWHzhjlVgfcm5Xvs0Gp8t3unQk="
       crossorigin="anonymous"></script>
-    <script src="$page.base$/js/page.js"></script>
+    <script src="$page.base$js/page.js"></script>
 
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=scala"></script>
     <script type="text/javascript">jQuery(function(){window.prettyPrint && prettyPrint()});</script>
