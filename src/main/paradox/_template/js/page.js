@@ -1,4 +1,4 @@
-$(function() {
+const initialize = function(pageBase) {
 
   /*
    * Search Support
@@ -57,7 +57,7 @@ $(function() {
     $('#search').trigger('focus')
     if (idx === null) {
       $('#search-results').html('<p>Loading search index...</p>');
-      fetch('/search.json')
+      fetch(pageBase + 'search.json')
         .then(function(response) {
           if (response.status !== 200) {
             var status = 'Failed to load index: ' + response.status + ' ' + response.statusText;
@@ -172,4 +172,4 @@ $(function() {
   setInitialGroup();
   updateGroupDisplay();
   $('select[name=Language]').change(updateGroupDisplay);
-});
+};

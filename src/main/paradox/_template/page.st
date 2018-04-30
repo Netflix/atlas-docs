@@ -96,6 +96,7 @@
       integrity="sha256-U3smMZ6uKxtHEAX38FWHzhjlVgfcm5Xvs0Gp8t3unQk="
       crossorigin="anonymous"></script>
     <script src="$page.base$js/page.js"></script>
+    <script>initialize("$page.base$")</script>
 
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=scala"></script>
     <script type="text/javascript">jQuery(function(){window.prettyPrint && prettyPrint()});</script>
