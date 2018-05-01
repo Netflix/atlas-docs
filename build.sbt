@@ -1,4 +1,6 @@
 
+val generateSearchIndex = taskKey[(File, String)]("Generate search index of the site.")
+
 lazy val root = (project in file("."))
   .enablePlugins(ParadoxSitePlugin, GhpagesPlugin)
   .settings(
@@ -15,11 +17,18 @@ lazy val root = (project in file("."))
     previewFixedPort := Some(8000), // Match mkdocs default
     previewLaunchBrowser := false,
 
-    makeSite := {
-      val siteDir = makeSite.value
-      SearchIndex.generate(siteDir)
-      siteDir
-    },
+    generateSearchIndex := Def.taskDyn {
+      // Ensure html has been generated
+      val mappings = (paradoxMarkdownToHtml in Paradox).value
+      val dir = (target in Paradox).value / "paradox" / "site" / "paradox"
+
+      // Generate the index
+      val indexFile = dir / "search.json"
+      SearchIndex.generate(indexFile, mappings)
+      Def.task((indexFile, "search.json"))
+    }.value,
+
+    mappings in Paradox += generateSearchIndex.value,
 
     git.remoteRepo := "git@github.com:Netflix/atlas-docs.git",
 
