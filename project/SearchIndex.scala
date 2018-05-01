@@ -1,4 +1,5 @@
 import java.io.File
+import java.io.IOException
 import java.nio.charset.StandardCharsets
 
 import com.netflix.atlas.core.util.Streams._
@@ -8,30 +9,15 @@ import org.jsoup.nodes.Element
 
 object SearchIndex {
 
-  def generate(dir: File): Unit = {
-    val pages = listPages(dir)
-    val docs = Docs(pages.flatMap(p => extractSections(dir, p)))
-    val index = new File(dir, "search.json")
-
-    scope(fileOut(index)) { out =>
+  def generate(indexFile: File, mappings: Seq[(File, String)]): Unit = {
+    val docs = Docs(mappings.flatMap(m => extractSections(m._1, m._2)).toList)
+    scope(fileOut(indexFile)) { out =>
       out.write(Json.encode(docs).getBytes(StandardCharsets.UTF_8))
     }
   }
 
-  private def listPages(dir: File): List[File] = {
-    dir.listFiles()
-      .flatMap {
-        case f if f.isFile && f.getName.endsWith(".html") => List(f)
-        case f if f.isDirectory                           => listPages(f)
-        case _                                            => Nil
-      }
-      .toList
-  }
-
-  private def extractSections(baseDir: File, file: File): List[Doc] = {
+  private def extractSections(file: File, href: String): List[Doc] = {
     import scala.collection.JavaConverters._
-
-    val urlPath = path(baseDir, file)
 
     val html = Jsoup.parse(file, "UTF-8")
     val elements = html.select("#content")
@@ -47,7 +33,7 @@ object SearchIndex {
           docs += doc.copy(text = builder.toString().trim)
           builder.delete(0, builder.length)
         }
-        val location = urlPath + element.select("a").attr("href")
+        val location = href + element.select("a").attr("href")
         val title = element.text().trim
         doc = Doc(location, title)
       } else {
@@ -55,10 +41,6 @@ object SearchIndex {
       }
     }
     docs.result()
-  }
-
-  private def path(baseDir: File, file: File): String = {
-    "/" + baseDir.toURI.relativize(file.toURI).getPath
   }
 
   private def isHeader(element: Element): Boolean = {
