@@ -101,7 +101,10 @@ const initialize = function(pageBase) {
 
   $('h1, h2, h3, h4, h5, h6').each(function() {
     var href = $(this).find('a').attr('href');
-    $(this).append('  <a href="' + href + '" style="font-size: 0.7em;">&para;</a>');
+    var text = $(this).text();
+    $(this).html(
+      '<a name="' + href.substring(1) + '" href="' + href + '" class="anchor"></a>' +
+      '<a href="' + href + '">' + text + '</a>');
   });
 
   /*
