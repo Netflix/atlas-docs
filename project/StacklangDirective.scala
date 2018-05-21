@@ -17,9 +17,7 @@ case class StacklangDirective(context: Writer.Context)
 
   def render(node: DirectiveNode, visitor: Visitor, printer: Printer): Unit = {
     val formatted = StacklangDirective.addReferenceLinks(basePath, node.contents.trim)
-    printer.print(s"""<pre>""")
     printer.print(formatted)
-    printer.print("""</pre>""")
   }
 }
 
@@ -72,6 +70,6 @@ object StacklangDirective extends (Writer.Context => Directive) {
       matcher.appendReplacement(builder, link)
     }
     matcher.appendTail(builder)
-    builder.toString
+    "<pre>\n" + builder.toString + "\n</pre>\n"
   }
 }
