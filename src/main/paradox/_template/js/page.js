@@ -105,6 +105,15 @@ const initialize = function(pageBase) {
   });
 
   /*
+   * Image Widths
+   *
+   * Set the max-width on images to ensure they do not exceed the content div.
+   */
+  $('img').each(function() {
+    $(this).css('max-width', '100%');
+  });
+
+  /*
    * Code Snippets
    *
    * Rewrite code definition lists to divs with appropriate class.
