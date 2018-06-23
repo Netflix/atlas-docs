@@ -27,44 +27,11 @@ is done by using the [:rolling-count](stateful-rolling-count) operator to get a 
 how many times the input signal has been true withing a specified window and then applying a
 second threshold to the rolling count.
 
-<table>
-<tr>
-<td>Input</td>
-<td>Rolling count</td>
-<td>Dampened signal</td>
-</tr>
-<tr>
-<td><img src="/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&w=210&layout=image&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt" /></td>
-<td><img src="/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&w=210&layout=image&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt,5,:rolling-count" /></td>
-<td><img src="/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&w=210&layout=image&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt,5,:rolling-count,4,:gt" /></td>
-</tr>
-<tr>
-<td><pre>
-nf.app,alerttest,<a href="https://github.com/Netflix/atlas/wiki/query-eq">:eq</a>,
-name,ssCpuUser,<a href="https://github.com/Netflix/atlas/wiki/query-eq">:eq</a>,
-<a href="https://github.com/Netflix/atlas/wiki/query-and">:and</a>,
-<a href="https://github.com/Netflix/atlas/wiki/data-sum">:sum</a>,
-80,<a href="https://github.com/Netflix/atlas/wiki/math-gt">:gt</a>
-</pre></td>
-<td><pre>
-nf.app,alerttest,<a href="https://github.com/Netflix/atlas/wiki/query-eq">:eq</a>,
-name,ssCpuUser,<a href="https://github.com/Netflix/atlas/wiki/query-eq">:eq</a>,
-<a href="https://github.com/Netflix/atlas/wiki/query-and">:and</a>,
-<a href="https://github.com/Netflix/atlas/wiki/data-sum">:sum</a>,
-80,<a href="https://github.com/Netflix/atlas/wiki/math-gt">:gt</a>,
-<b>5,<a href="https://github.com/Netflix/atlas/wiki/stateful-rolling‐count">:rolling-count</a></b>
-</pre></td>
-<td><pre>
-nf.app,alerttest,<a href="https://github.com/Netflix/atlas/wiki/query-eq">:eq</a>,
-name,ssCpuUser,<a href="https://github.com/Netflix/atlas/wiki/query-eq">:eq</a>,
-<a href="https://github.com/Netflix/atlas/wiki/query-and">:and</a>,
-<a href="https://github.com/Netflix/atlas/wiki/data-sum">:sum</a>,
-80,<a href="https://github.com/Netflix/atlas/wiki/math-gt">:gt</a>,
-5,<a href="https://github.com/Netflix/atlas/wiki/stateful-rolling‐count">:rolling-count</a>,
-<b>4,<a href="https://github.com/Netflix/atlas/wiki/math-gt">:gt</a></b>
-</pre></td>
-</tr>
-</table>
+@@@ atlas-example
+Input: /api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt
+Rolling-count: /api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt,5,:rolling-count
+Dampened signal: /api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt,5,:rolling-count,4,:gt
+@@@
 
 ## Visualization
 

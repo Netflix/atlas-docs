@@ -16,6 +16,7 @@ instead.
 
 ## Example
 
-@@@ atlas-graph { show-expr=true }
-/api/v1/graph?q=name,requestsPerSecond,:eq,:sum,:des-slow
+@@@ atlas-example
+Before: /api/v1/graph?q=name,requestsPerSecond,:eq,:sum
+ After: /api/v1/graph?q=name,requestsPerSecond,:eq,:sum,:des-slow
 @@@
