@@ -64,11 +64,11 @@
 
     <div class="container-fluid">
       <div class="row flex-xl-nowrap justify-content-md-center">
-        <div class="col-12 col-md-3 col-xl-2" id="nav-left">
+        <div class="d-none d-lg-block col-lg-2 col-xl-2" id="nav-left">
           $page.groups$
           $page.navigation$
         </div>
-        <div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5" id="content">
+        <div class="col-12 col-md-9 col-xl-8" id="content">
           $page.content$
 
           $if(page.next.html)$
