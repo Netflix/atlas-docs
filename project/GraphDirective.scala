@@ -22,7 +22,7 @@ case class GraphDirective(context: Writer.Context)
   private val db = new StaticDatabase(config.getConfig("atlas.core.db"))
   private val grapher = Grapher(config)
 
-  private val basePath = "../" * context.location.depth
+  private val basePath = "../" * (context.location.depth - 1)
 
 
   def render(node: DirectiveNode, visitor: Visitor, printer: Printer): Unit = {

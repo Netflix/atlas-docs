@@ -13,7 +13,7 @@ import org.pegdown.ast.Visitor
 case class StacklangDirective(context: Writer.Context)
   extends ContainerBlockDirective("atlas-expr") {
 
-  private val basePath = "../" * context.location.depth
+  private val basePath = "../" * (context.location.depth - 1)
 
   def render(node: DirectiveNode, visitor: Visitor, printer: Printer): Unit = {
     val formatted = StacklangDirective.addReferenceLinks(basePath, node.contents.trim)

@@ -154,7 +154,7 @@ http://atlas/api/v1/graph
 
 Adding some comments to the stack expression to explain a bit what is going on:
 
-```
+@@@ atlas-expr
 # Query to generate the input line
 nf.cluster,alerttest,:eq,
 name,requestsPerSecond,:eq,:and,
@@ -193,7 +193,7 @@ name,requestsPerSecond,:eq,:and,
 :rot,$name,:legend,
 :rot,prediction,:legend,
 :rot,:vspan,60,:alpha,alert+triggered,:legend
-```
+@@@
 
 See the [stack language](Stack Language) page for more information.
 
