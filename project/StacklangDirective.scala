@@ -1,5 +1,6 @@
 
 import java.net.URI
+import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 import com.lightbend.paradox.markdown.ContainerBlockDirective
@@ -23,6 +24,8 @@ case class StacklangDirective(context: Writer.Context)
 
 object StacklangDirective extends (Writer.Context => Directive) {
 
+  private val preClasses = "class=\"prettyprint prettyprinted\""
+
   def apply(context: Writer.Context): Directive = new StacklangDirective(context)
 
   /** Format an existing Atlas graph URI. */
@@ -35,7 +38,7 @@ object StacklangDirective extends (Writer.Context => Directive) {
           if (k == "q") formatQueryExpr(basePath, v) else s"$k=$v"
         }
     }
-    s"<pre>\n${uri.getPath}?\n  ${pstr.mkString("\n  &")}\n</pre>\n"
+    addReferenceLinks(basePath, s"${uri.getPath}?\n  ${pstr.mkString(s"\n  &")}")
   }
 
   /** Format an existing Atlas expression. */
@@ -45,18 +48,28 @@ object StacklangDirective extends (Writer.Context => Directive) {
     parts.zipWithIndex.foreach {
       case (p, i) =>
         if (p.startsWith(":"))
-          buf.append(mkLink(basePath, p.substring(1))).append(',').append("\n")
+          buf.append(p).append(",\n")
         else
           buf.append(p).append(',')
     }
     val s = buf.toString
     val formatted = s.substring(0, s.lastIndexOf(","))
-    s"<pre>\n$formatted\n</pre>"
+    addReferenceLinks(basePath, formatted)
   }
 
   private def mkLink(basePath: String, name: String): String = {
     s"""<a href="${basePath}asl-reference/$name.html">:$name</a>"""
   }
+
+  private def span(cls: String, value: String): String = {
+    s"""<span class="$cls">$value</span>"""
+  }
+
+  private def keyword(v: String): String = span("kwd", v)
+
+  private def punctuation(v: String): String = span("pun", v)
+
+  private def comment(v: String): String = span("com", v)
 
   private def formatQueryExpr(basePath: String, q: String): String = {
     val parts = q.split(",").toList
@@ -64,13 +77,22 @@ object StacklangDirective extends (Writer.Context => Directive) {
     buf.append("q=\n    ")
     parts.zipWithIndex.foreach {
       case (p, i) =>
-        if (p.startsWith(":"))
-          buf.append(mkLink(basePath, p.substring(1))).append(',').append("\n    ")
+        if (p.startsWith(":") || p.startsWith("--"))
+          buf.append(p).append(",\n    ")
         else
-          buf.append(p).append(',')
+          buf.append(p).append(",")
     }
     val s = buf.toString
     s.substring(0, s.lastIndexOf(","))
+  }
+
+  private def rewrite(matcher: Matcher, f: String => String): String = {
+    val builder = new StringBuffer()
+    while (matcher.find()) {
+      val r = f(matcher.group(1))
+      matcher.appendReplacement(builder, r)
+    }
+    matcher.appendTail(builder).toString
   }
 
   /**
@@ -78,14 +100,19 @@ object StacklangDirective extends (Writer.Context => Directive) {
     * hand format the expression however they like.
     */
   def addReferenceLinks(basePath: String, input: String): String = {
-    val matcher = Pattern.compile(":([^,\\s]+)").matcher(input)
-    val builder = new StringBuffer()
-    while (matcher.find()) {
-      val name = matcher.group(1)
-      val link = mkLink(basePath, name)
-      matcher.appendReplacement(builder, link)
+    import Pattern.compile
+    val rewrites = List(
+      // Need to exclude times like 9:00, but cover operations like :2over and :-rot
+      compile(":([-2a-z][a-z][^,\\s]*)") -> ((n: String) => keyword(mkLink(basePath, n))),
+      compile("(--[^,\\n]+)")            -> comment _,
+      compile("(,)")                     -> punctuation _
+    )
+
+    val str = rewrites.foldLeft(input) { (acc, rw) =>
+      val matcher = rw._1.matcher(acc)
+      rewrite(matcher, rw._2)
     }
-    matcher.appendTail(builder)
-    "<pre>\n" + builder.toString + "\n</pre>\n"
+
+    s"<pre $preClasses><code>$str</code></pre>\n"
   }
 }

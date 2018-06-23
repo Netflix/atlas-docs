@@ -155,41 +155,41 @@ http://atlas/api/v1/graph
 Adding some comments to the stack expression to explain a bit what is going on:
 
 @@@ atlas-expr
-# Query to generate the input line
+-- Query to generate the input line
 nf.cluster,alerttest,:eq,
 name,requestsPerSecond,:eq,:and,
 :sum,
 
-# Create a copy on the stack
+-- Create a copy on the stack
 :dup,
 
-# Apply a DES function to generate a prediction
-# using the copy on the top of the stack. For
-# a description of the parameters see the DES
-# reference page.
+-- Apply a DES function to generate a prediction
+-- using the copy on the top of the stack. For
+-- a description of the parameters see the DES
+-- reference page.
 10,0.1,0.02,:des,
 
-# Used to set a threshold. The prediction should
-# be roughly equal to the line, in this case the
-# threshold would be 85% of the prediction.
+-- Used to set a threshold. The prediction should
+-- be roughly equal to the line. In this case the
+-- threshold would be 85% of the prediction.
 0.85,:mul,
 
-# Before              After
-# 4.                  4. actual
-# 3.                  3. prediction
-# 2. actual           2. actual
-# 1. prediction       1. prediction
+-- Before              After
+-- 4.                  4. actual
+-- 3.                  3. prediction
+-- 2. actual           2. actual
+-- 1. prediction       1. prediction
 :2over,
 
-# Create a boolean signal line that is 1
-# for datapoints where the actual value is
-# less than the prediction and 0 where it
-# is greater than or equal the prediction.
-# The 1 values are where the alert should
-# trigger.
+-- Create a boolean signal line that is 1
+-- for datapoints where the actual value is
+-- less than the prediction and 0 where it
+-- is greater than or equal the prediction.
+-- The 1 values are where the alert should
+-- trigger.
 :lt,
 
-# Apply presentation details.
+-- Apply presentation details.
 :rot,$name,:legend,
 :rot,prediction,:legend,
 :rot,:vspan,60,:alpha,alert+triggered,:legend
