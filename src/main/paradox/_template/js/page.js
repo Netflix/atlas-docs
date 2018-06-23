@@ -15,19 +15,63 @@ const initialize = function(pageBase) {
       console.log("query changed from '" + currentQuery + "' to '" + query + "'");
       currentQuery = query;
       var results = idx.search(currentQuery);
-      var content = "<dl>" + results
-        .map(function(match) {
-          var doc = documents[match.ref];
-          var text = summarize('text', doc.text, match);
-          return '<dt><a href="' + doc.location + '">' + doc.title + '</a></dt><dd>' + text + '</dd>';
+      var grouped = groupByLocation(results);
+      var content = '<div class="list-group">' + grouped
+        .map(function(matches) {
+          return matches[1]
+            .map(function(match) {
+              var doc = documents[match.ref];
+              var text = summarize('text', doc.text, match);
+              var classes = 'list-group-item list-group-item-action flex-column align-items-start';
+              return '<a href="' + pageBase + doc.location + '" class="' + classes + '">'
+                + '<div class="d-flex w-100 justify-content-between">'
+                + '<h6 class="mb-1">' + doc.pageTitle + ' > ' + doc.title + '</h6>'
+                + '</div>'
+                + '<small class="mb-1">' + text + '</small>'
+                + '</a>';
+            })
+            .join('');
         })
         .join('') + "</dl>";
-      var header = "<div>" + results.length + " found for '<b>" + currentQuery + "</b>'</div><hr/>";
-      $("#search-results").html(header + content);
+      var header = (currentQuery === '')
+        ? '<div>Type to start searching.</div>'
+        : "<div>" + results.length + " matches for '<b>" + currentQuery + "</b>'</div>";
+      $("#search-results").html(header + '<hr/>' + content);
     }
   }
 
+  function groupByLocation(results) {
+    var map = new Map();
+    results.forEach(function(match) {
+      var doc = documents[match.ref];
+      var loc = doc.location;
+      var fragmentPos = loc.indexOf("#");
+      if (fragmentPos > 0) {
+        loc = loc.substring(0, fragmentPos);
+      }
+      if (map.has(loc)) {
+        map.get(loc).push(match);
+      } else {
+        map.set(loc, [match]);
+      }
+    });
+
+    var grouped = Array
+      .from(map.entries())
+      .sort(function (a, b) {
+        return aggregateScore(b[1]) - aggregateScore(a[1]);
+      });
+    return grouped;
+  }
+
+  function aggregateScore(matches) {
+    var sum = 0.0;
+    matches.forEach(function(m) { sum += m.score; });
+    return sum;
+  }
+
   function summarize(field, text, match) {
+    // Highlight the terms that lead to it matching
     var content = '';
     var meta = match.matchData.metadata;
     for (var k in meta) {
@@ -46,7 +90,27 @@ const initialize = function(pageBase) {
         content = text;
       }
     }
-    return content;
+
+    // Extract first sample sentence with a match
+    var match = '';
+    content.split(/[.?!;]\s/).forEach(function(sentence) {
+      if (sentence.indexOf("<b>") >= 0) {
+        match += sentence + "... ";
+      }
+    });
+    if (match.length > 200) {
+      var s = match.lastIndexOf('<b>', 200);
+      var e = match.lastIndexOf('</b>', 200);
+      if (s > e) {
+        // Boundary is inside of tag, push to end
+        match = match.substring(0, e + 4);
+      } else {
+        // Boundary to next whitespace
+        var p = match.indexOf(' ', 200);
+        match = match.substring(0, p);
+      }
+    }
+    return match;
   }
 
   $("#search").keyup(function() {

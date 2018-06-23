@@ -27,6 +27,7 @@ object SearchIndex {
     val docs = List.newBuilder[Doc]
     val builder = new StringBuilder
     var doc: Doc = null
+    var pageTitle: String = null
     elements.foreach { element =>
       if (isHeader(element)) {
         if (doc != null) {
@@ -35,7 +36,11 @@ object SearchIndex {
         }
         val location = href + element.select("a").attr("href")
         val title = element.text().trim
-        doc = Doc(location, title)
+        if (doc == null) {
+          // First header on the page
+          pageTitle = title
+        }
+        doc = Doc(location, title, pageTitle)
       } else {
         builder.append(element.text()).append(' ')
       }
@@ -50,5 +55,5 @@ object SearchIndex {
 
   // Use the same structure as mkdocs index
   case class Docs(docs: List[Doc])
-  case class Doc(location: String, title: String, text: String = "")
+  case class Doc(location: String, title: String, pageTitle: String, text: String = "")
 }
