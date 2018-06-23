@@ -12,6 +12,7 @@
 
 ## Example
 
-@@@ atlas-graph { show-expr=true }
-/api/v1/graph?q=name,requestsPerSecond,:eq,:sum,:dup,input,:legend,:swap,5,0.1,0.5,:des,des,:legend
+@@@ atlas-example
+Before: /api/v1/graph?q=name,requestsPerSecond,:eq,:sum
+ After: /api/v1/graph?q=name,requestsPerSecond,:eq,:sum,5,0.1,0.5,:des
 @@@

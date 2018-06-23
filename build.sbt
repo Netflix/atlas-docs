@@ -7,7 +7,8 @@ lazy val root = (project in file("."))
     name := "Atlas Docs",
     paradoxDirectives ++= Seq(
       GraphDirective,
-      StacklangDirective
+      StacklangDirective,
+      ExampleDirective
     ),
     paradoxTheme := None,
     paradoxNavigationDepth := 3,

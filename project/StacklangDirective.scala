@@ -38,6 +38,22 @@ object StacklangDirective extends (Writer.Context => Directive) {
     s"<pre>\n${uri.getPath}?\n  ${pstr.mkString("\n  &")}\n</pre>\n"
   }
 
+  /** Format an existing Atlas expression. */
+  def formatExpr(basePath: String, exprStr: String): String = {
+    val parts = exprStr.split(",").toList
+    val buf = new StringBuilder
+    parts.zipWithIndex.foreach {
+      case (p, i) =>
+        if (p.startsWith(":"))
+          buf.append(mkLink(basePath, p.substring(1))).append(',').append("\n")
+        else
+          buf.append(p).append(',')
+    }
+    val s = buf.toString
+    val formatted = s.substring(0, s.lastIndexOf(","))
+    s"<pre>\n$formatted\n</pre>"
+  }
+
   private def mkLink(basePath: String, name: String): String = {
     s"""<a href="${basePath}asl-reference/$name.html">:$name</a>"""
   }
