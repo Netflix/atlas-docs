@@ -23,28 +23,17 @@
       <a class="navbar-brand" href="$page.base$index.html">
         <img src="$page.base$images/atlas_logo_small.png" width="40px" height="40px"/>
       </a>
-      <button class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="$page.base$index.html">
+            <span style="font-size: 1.8em;">Atlas</span>
+          </a>
+        </li>
+      </ul>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="$page.base$index.html">
-              <span style="font-size: 1.8em;">Atlas</span>
-            </a>
-          </li>
-        </ul>
-        <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#search-modal">
-          <span class="fa fa-search"></span>
-        </button>
-      </div>
+      <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#search-modal">
+        <span class="fa fa-search"></span>
+      </button>
     </header>
 
     <div id="search-modal" class="modal" tabindex="-1" role="dialog">
