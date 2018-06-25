@@ -57,7 +57,7 @@
           $page.groups$
           $page.navigation$
         </div>
-        <div class="col-12 col-md-9 col-xl-8" id="content">
+        <div class="col-12 col-md-9 col-xl-8 py-md-3" id="content">
           $page.content$
 
           $if(page.next.html)$
