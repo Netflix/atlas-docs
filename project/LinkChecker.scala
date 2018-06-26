@@ -15,9 +15,6 @@ class LinkChecker(logger: Logger) {
 
   private val baseUri = URI.create("http://localhost:8000/site")
 
-  private val red = "\u001B[31m"
-  private val reset = "\u001B[0m"
-
   def check(mappings: Seq[(File, String)]): Unit = {
 
     // Extract links from all the local pages
@@ -76,7 +73,7 @@ class LinkChecker(logger: Logger) {
           acc + 1
       }
     }
-    val badImages = 0
+    val badImages = 0 // TODO: check that image links work
     badHrefs + badImages
   }
 
