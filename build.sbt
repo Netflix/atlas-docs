@@ -1,5 +1,6 @@
 
 val generateSearchIndex = taskKey[(File, String)]("Generate search index of the site.")
+val checkLinks = taskKey[Unit]("Check links in the generated pages.")
 
 lazy val root = (project in file("."))
   .enablePlugins(ParadoxSitePlugin, GhpagesPlugin)
@@ -30,6 +31,17 @@ lazy val root = (project in file("."))
     }.value,
 
     mappings in Paradox += generateSearchIndex.value,
+
+    checkLinks := Def.taskDyn {
+      // Ensure html has been generated
+      val mappings = (paradoxMarkdownToHtml in Paradox).value
+      val dir = (target in Paradox).value / "paradox" / "site" / "paradox"
+
+      // Check the links
+      val checker = new LinkChecker(streams.value.log)
+      checker.check(mappings)
+      Def.task(())
+    }.value,
 
     git.remoteRepo := "git@github.com:Netflix/atlas-docs.git",
 

@@ -1,5 +1,4 @@
 import java.io.File
-import java.io.IOException
 import java.nio.charset.StandardCharsets
 
 import com.netflix.atlas.core.util.Streams._
