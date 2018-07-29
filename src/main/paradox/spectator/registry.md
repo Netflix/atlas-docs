@@ -193,5 +193,5 @@ public void init() {
 ```
 
 Any measurements taken while no registries are added to the global instance will
-be lost. If multiple registries are added, all will recieve updates made to the global
+be lost. If multiple registries are added, all will receive updates made to the global
 registry.
