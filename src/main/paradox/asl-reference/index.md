@@ -33,6 +33,7 @@
 * [pick](pick.md)
 * [random](random.md)
 * [roll](roll.md)
+* [rolling-count](rolling-count.md)
 * [rot](rot.md)
 * [sdes](sdes.md)
 * [sdes-fast](sdes-fast.md)
@@ -42,6 +43,7 @@
 * [srandom](srandom.md)
 * [sset](sset.md)
 * [swap](swap.md)
+* [trend](trend.md)
 * [tuck](tuck.md)
 
 @@@
