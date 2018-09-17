@@ -23,6 +23,7 @@
 * [freeze](freeze.md)
 * [get](get.md)
 * [integral](integral.md)
+* [legend](legend.md)
 * [list](list.md)
 * [map](map.md)
 * [ndrop](ndrop.md)
