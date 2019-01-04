@@ -6,7 +6,7 @@ import com.lightbend.paradox.markdown.ContainerBlockDirective
 import com.lightbend.paradox.markdown.Writer
 import com.netflix.atlas.config.ConfigManager
 import com.netflix.atlas.core.db.StaticDatabase
-import com.netflix.atlas.core.util.PngImage
+import com.netflix.atlas.chart.util.PngImage
 import com.netflix.atlas.eval.graph.Grapher
 import com.typesafe.config.ConfigFactory
 import org.pegdown.Printer
