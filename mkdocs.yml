@@ -1,0 +1,42 @@
+site_name: Atlas Docs
+site_url: 'https://netflix.github.io/atlas-docs/'
+repo_url: 'https://github.com/Netflix/atlas-docs'
+google_analytics: ['UA-82153845-1', 'auto']
+strict: True
+
+nav:
+- Home: index.md
+- API:
+  - Fetch: api/fetch.md
+  - Graph: api/graph.md
+  - Tags: api/tags.md
+- Stack Language:
+  - Tutorial: asl/tutorial.md
+  - Reference:
+    - Choosing:
+      - eq: asl/eq.md
+- Spectator:
+  - Overview: spectator/index.md
+  - Core Types:
+    - Counters: spectator/counter.md
+  - Java:
+    - Counters: spectator/java/counter.md
+  - NodeJS:
+    - Counters: spectator/js/counter.md
+theme:
+  name: material
+  feature:
+    tabs: True
+  logo: 'images/atlas_logo.svg'
+  palette:
+    primary: 'red'
+    accent: 'red'
+extra:
+  font:
+    code: 'Menlo'
+markdown_extensions:
+- admonition
+- codehilite
+- pymdownx.tilde
+- toc:
+    permalink: True

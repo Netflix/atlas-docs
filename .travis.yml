@@ -1,31 +1,7 @@
-language: scala
-matrix:
-  include:
-  - jdk: openjdk11
-    env: BINTRAY_PUBLISH=true
-scala:
-- 2.12.4
-dist: xenial
+language: python
+python:
+- "3.6"
+install:
+- pip install -r requirements.txt
 script:
-- project/sbt clean compile packageSite
-before_deploy:
-# Record minimal build information via the Git user ident
-- git config --global user.name "$USER"
-- git config --global user.email "$TRAVIS_BUILD_NUMBER@$TRAVIS_COMMIT"
-# Decrypt the secret deploy key using instructions from `travis encrypt-file`
-- openssl aes-256-cbc -K $encrypted_f09b6751bdee_key -iv $encrypted_f09b6751bdee_iv -in project/travis-deploy-key.enc -out project/travis-deploy-key -d
-- chmod 600 project/travis-deploy-key
-# Start ssh-agent in the background and load the deploy key
-- eval "$(ssh-agent -s)"
-- ssh-add project/travis-deploy-key
-deploy:
-  provider: script
-  script: project/sbt ghpagesPushSite
-  skip_cleanup: true
-  on:
-    branch: master
-    condition: $TRAVIS_PULL_REQUEST = false
-cache:
-  directories:
-  - $HOME/.sbt
-  - $HOME/.ivy2
+- mkdocs build
