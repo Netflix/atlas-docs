@@ -19,24 +19,16 @@ Experiment for moving [Atlas] documentation off of GitHub wiki and unifying with
 
 ## Development
 
+Setup a virtual environment with the appropriate python libraries:
+
+```
+$ ./setup-venv.sh
+$ source venv/bin/activate
+```
+
 The following command will run a local webserver on port 8000:
 
 ```
-sbt previewAuto
+$ mkdocs serve
 ```
 
-It does not auto-refresh the browser page on changes, but you can do this manually.
-
-You can validate the Java examples as follows:
-
-```
-sbt compile
-```
-
-## Deployment
-
-The following command will deploy the site to the `gh-pages` branch, where it will be available on
-
-```
-sbt ghpagesPushSite
-```
