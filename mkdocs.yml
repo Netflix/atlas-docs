@@ -23,12 +23,100 @@ nav:
       - and: asl/ref/and.md
 - Spectator:
   - Overview: spectator/index.md
-  - Core Types:
-    - Counters: spectator/counter.md
-  - Java:
-    - Counters: spectator/java/counter.md
-  - NodeJS:
-    - Counters: spectator/js/counter.md
+  - Core Concepts:
+    - Time Series: spectator/core/time-series.md
+    - Normalization: spectator/core/normalization.md
+    - Naming: spectator/core/naming.md
+    - Clock: spectator/core/clock.md
+    - Meters:
+      - Counters: spectator/core/meters/counter.md
+      - Distribution Summaries: spectator/core/meters/dist-summary.md
+      - Gauges: spectator/core/meters/gauge.md
+      - Timers: spectator/core/meters/timer.md
+  - Languages:
+    - Overview: spectator/lang/overview.md
+    - C++:
+      - Usage: spectator/lang/cpp/usage.md
+      - Meters:
+        - Counters: spectator/lang/cpp/meters/counter.md
+        - Distribution Summaries: spectator/lang/cpp/meters/dist-summary.md
+        - Gauges: spectator/lang/cpp/meters/gauge.md
+        - Percentile Timers: spectator/lang/cpp/meters/percentile-timer.md
+        - Timers: spectator/lang/cpp/meters/timer.md
+    - Go:
+      - Usage: spectator/lang/go/usage.md
+      - Meters:
+        - Counters: spectator/lang/go/meters/counter.md
+        - Distribution Summaries: spectator/lang/go/meters/dist-summary.md
+        - Gauges: spectator/lang/go/meters/gauge.md
+        - Percentile Timers: spectator/lang/go/meters/percentile-timer.md
+        - Timers: spectator/lang/go/meters/timer.md
+    - Java:
+      - Usage: spectator/lang/java/usage.md
+      - Registry:
+        - Overview: spectator/lang/java/registry/overview.md
+        - Metrics3: spectator/lang/java/registry/metrics3.md
+      - Meters:
+        - Counters: spectator/lang/java/meters/counter.md
+        - Distribution Summaries: spectator/lang/java/meters/dist-summary.md
+        - Gauges: spectator/lang/java/meters/gauge.md
+        - Percentile Timers: spectator/lang/java/meters/percentile-timer.md
+        - Timers: spectator/lang/java/meters/timer.md
+      - Extensions:
+        - JVM Stats:
+          - Buffer Pools: spectator/lang/java/ext/jvm-buffer-pools.md
+          - Garbage Collection: spectator/lang/java/ext/jvm-gc.md
+          - GC Causes: spectator/lang/java/ext/jvm-gc-causes.md
+          - Memory Pools: spectator/lang/java/ext/jvm-memory-pools.md
+          - Thread Pools: spectator/lang/java/ext/thread-pools.md
+        - Log4j2 Appender: spectator/lang/java/ext/log4j2.md
+        - Log4j1 Appender: spectator/lang/java/ext/log4j1.md
+        - Placeholders: spectator/lang/java/ext/placeholders.md
+      - Testing: spectator/lang/java/testing.md
+      - Servo Migration: spectator/lang/java/servo-migration.md
+    - Node.js:
+      - Usage: spectator/lang/nodejs/usage.md
+      - Extensions:
+          - Node.js Stats:
+            - CPU: spectator/lang/nodejs/ext/nodejs-cpu.md
+            - Event Loop: spectator/lang/nodejs/ext/nodejs-eventloop.md
+            - File Descriptor: spectator/lang/nodejs/ext/nodejs-filedescriptor.md
+            - Garbarge Collection: spectator/lang/nodejs/ext/nodejs-gc.md
+            - Heap: spectator/lang/nodejs/ext/nodejs-heap.md
+            - Heap Space: spectator/lang/nodejs/ext/nodejs-heapspace.md
+            - Memory: spectator/lang/nodejs/ext/nodejs-memory.md
+      - Meters:
+        - Counters: spectator/lang/nodejs/meters/counter.md
+        - Distribution Summaries: spectator/lang/nodejs/meters/dist-summary.md
+        - Gauges: spectator/lang/nodejs/meters/gauge.md
+        - Percentile Timers: spectator/lang/nodejs/meters/percentile-timer.md
+        - Timers: spectator/lang/nodejs/meters/timer.md
+    - Python:
+      - Usage: spectator/lang/py/usage.md
+      - Meters:
+        - Counters: spectator/lang/py/meters/counter.md
+        - Distribution Summaries: spectator/lang/py/meters/dist-summary.md
+        - Gauges: spectator/lang/py/meters/gauge.md
+        - Percentile Timers: spectator/lang/py/meters/percentile-timer.md
+        - Timers: spectator/lang/py/meters/timer.md
+    - Ruby:
+      - Usage: spectator/lang/rb/usage.md
+      - Meters:
+        - Counters: spectator/lang/rb/meters/counter.md
+        - Distribution Summaries: spectator/lang/rb/meters/dist-summary.md
+        - Gauges: spectator/lang/rb/meters/gauge.md
+        - Percentile Timers: spectator/lang/rb/meters/percentile-timer.md
+        - Timers: spectator/lang/rb/meters/timer.md
+  - Patterns:
+      - Cardinality Limiter: spectator/patterns/cardinality-limiter.md
+      - Gauge Poller: spectator/patterns/gauge-poller.md
+      - Interval Counter: spectator/patterns/interval-counter.md
+      - Long Task Timer: spectator/patterns/long-task-timer.md
+      - Percentile Timer: spectator/patterns/percentile-timer.md
+      - Polled Meter: spectator/patterns/polled-meter.md
+  - Specifications:
+    - IPC: spectator/specs/ipc.md
+
 theme:
   name: material
   feature:
@@ -37,12 +125,21 @@ theme:
   palette:
     primary: 'red'
     accent: 'red'
+
 extra:
   font:
     code: 'Menlo'
+  spectator_api:
+      java_latest: 0.92.0
+
 markdown_extensions:
-- admonition
-- codehilite
-- pymdownx.tilde
-- toc:
-    permalink: True
+  - admonition
+  - codehilite
+  - pymdownx.superfences
+  - pymdownx.tilde
+  - toc:
+      permalink: True
+
+plugins:
+  - markdownextradata: {}
+  - search
