@@ -19,16 +19,22 @@ Experiment for moving [Atlas] documentation off of GitHub wiki and unifying with
 
 ## Development
 
-Setup a virtual environment with the appropriate python libraries:
+Setup a virtual environment with the appropriate Python libraries:
 
 ```
-$ ./setup-venv.sh
-$ source venv/bin/activate
+./setup-venv.sh
+source venv/bin/activate
 ```
 
-The following command will run a local webserver on port 8000:
+The following command will build and serve the docs locally on port 8000:
 
 ```
-$ mkdocs serve
+mkdocs serve
 ```
 
+## Travis Build and Deploy
+
+The following blog post details the process used here, based on GitHub Deploy Keys, so that write
+access is restricted to this repository:
+
+* [Deploying Docs on Github with Travis-CI](https://derekweitzel.com/2017/02/08/deploying-docs-on-github-with-travisci/)
