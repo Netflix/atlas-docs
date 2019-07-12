@@ -21,7 +21,7 @@ cloud. In 2011, we were monitoring 2 million metrics related to our streaming sy
 were at 1.2 billion metrics and the numbers continue to rise. Atlas is designed to handle this
 large quantity of data and can scale with the hardware we use to analyze and store it.
 
-For details and background on the project please read through the [[overview]] page.
+For details and background on the project please read through the [overview](./overview.md) page.
 
 Check out the [[getting started]] page for an introduction to using Atlas in the cloud
 environment. Once you've explored the example, check out the stack language references to see
