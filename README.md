@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Netflix/atlas-docs.svg)](https://travis-ci.org/Netflix/atlas-docs/builds)
+
 # Atlas Docs
 
 Experiment for moving [Atlas] documentation off of GitHub wiki and unifying with the
@@ -31,6 +33,10 @@ The following command will build and serve the docs locally on port 8000:
 ```
 mkdocs serve
 ```
+
+See the [Atlas Formatting Plugin README] for details on using directives in Markdown source.
+
+[Atlas Formatting Plugin README]: ./plugins/mkdocs-atlas-formatting-plugin/README.md
 
 ## Travis Build and Deploy
 
