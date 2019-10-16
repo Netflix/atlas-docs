@@ -55,6 +55,8 @@ A single line containing an Atlas graph URI, which will be rendered as a formatt
 to improve readability, with links to the Atlas StackLang Reference pages for each of the
 operators.
 
+Only the Atlas expression within the URI will be rendered.
+
 **Input:**
 
 ```
@@ -67,6 +69,51 @@ operators.
 
 ![Atlas StackLang Output](./images/atlas-stacklang-output.png)
 
+**Input:**
+
+```
+@@@ atlas-stacklang { hilite=ssCpuUser }
+/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum
+@@@
+```
+
+**Output:**
+
+![Atlas StackLang Hilite Output](./images/atlas-stacklang-hilite-output.png)
+
+### Atlas URI
+
+A single line containing an Atlas graph URI, which will be rendered as a formatted block
+to improve readability, with links to the Atlas StackLang Reference pages for each of the
+operators.
+
+The full URI will be rendered, so that URL parameters can be shown.
+
+Any `=` characters in the `hilite` value must be percent-encoded (`%3d`).
+
+**Input:**
+
+```
+@@@ atlas-uri
+/api/v1/graph?s=e-3h&e=2012-01-01T07:00&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum&tz=UTC&l=0&h=100
+@@@
+```
+
+**Output:**
+
+![Atlas URI Output](./images/atlas-uri-output.png)
+
+**Input:**
+
+```
+@@@ atlas-uri { hilite=&tz%3dUTC }
+/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum
+@@@
+```
+
+**Output:**
+
+![Atlas URI Hilite Output](./images/atlas-uri-hilite-output.png)
 
 ## Build
 

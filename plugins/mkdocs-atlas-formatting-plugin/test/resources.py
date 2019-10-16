@@ -1,5 +1,11 @@
 from typing import List
 
+options_single: str = 'show-expr=true'
+options_multiple: str = 'show-expr=true something-else=false'
+options_no_equals = 'show-expr true'
+options_unencoded_equals = 'hilite=&l=0'
+options_encoded_equals = 'hilite=&l%3d0 something-else=&l%3D0'
+
 atlas_example_start_line: str = '<p>@@@ atlas-example'
 
 atlas_example_line: str = 'Dampened Signal: /api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt,5,:rolling-count,4,:gt'
@@ -11,6 +17,10 @@ atlas_graph_line: str = '/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=10
 atlas_stacklang_start_line: str = '<p>@@@ atlas-stacklang'
 
 atlas_stacklang_line: str = '/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum'
+
+atlas_uri_start_line: str = '<p>@@@ atlas-uri'
+
+atlas_uri_line: str = '/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum'
 
 invalid_start_line: str = '<p>@@@ foo-block'
 
