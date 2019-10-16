@@ -1,3 +1,4 @@
+from typing import List
 
 atlas_example_start_line: str = '<p>@@@ atlas-example'
 
@@ -12,6 +13,12 @@ atlas_stacklang_start_line: str = '<p>@@@ atlas-stacklang'
 atlas_stacklang_line: str = '/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum'
 
 invalid_start_line: str = '<p>@@@ foo-block'
+
+block_query_patterns: List[str] = [
+    '/api/v1/graph?q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100',
+    '/api/v1/graph?s=e-3h&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum&e=2012-01-01T07:00&tz=UTC&l=0&h=100',
+    '/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum'
+]
 
 graph_image_html_template: str = """\
 <html>

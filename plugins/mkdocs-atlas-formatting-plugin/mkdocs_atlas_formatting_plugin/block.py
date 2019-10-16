@@ -22,7 +22,7 @@ class Block:
 
     example_pattern = re.compile('([^:]+): (.+)')
     options_pattern = re.compile('.+@@@ ([a-z\\-]+)(?:$| { (.+) })')
-    query_pattern = re.compile('.*q=(.+)')
+    query_pattern = re.compile('.*q=([^&]+)')
 
     def __init__(self, webserver: Optional[NoopWebserver] = None) -> None:
         self.webserver: AtlasWebServer = AtlasWebServer() if not webserver else webserver
