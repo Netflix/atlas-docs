@@ -17,6 +17,11 @@ class BlockTest(unittest.TestCase):
         self.assertEqual(False, block.is_started)
         self.assertEqual(None, block.input_lines)
 
+    def test_query_pattern(self):
+        for uri in block_query_patterns:
+            m = Block.query_pattern.match(uri)
+            self.assertEqual('nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum', m.group(1))
+
     def test_mk_image_tag(self):
         block = Block(NoopWebserver())
         image_tag = block.mk_image_tag(atlas_graph_line)
