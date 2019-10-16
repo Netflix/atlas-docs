@@ -68,8 +68,19 @@ class AtlasWebServer:
 
         logger.info(f'saved {jar}')
 
+    @staticmethod
+    def port_is_open(host: str, port: int) -> bool:
+        with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
+            if s.connect_ex((host, port)) == 0:
+                return True
+            else:
+                return False
+
     def start_jar(self, jar: str, host: str, port: int) -> None:
         """Start the Atlas Standalone jar and wait for the webserver port to become available."""
+
+        if self.port_is_open(host, port):
+            raise ChildProcessError(f'ERROR: another process is listening on port {port}')
 
         logger.info(f'starting atlas webserver on port {port}')
 
@@ -78,16 +89,14 @@ class AtlasWebServer:
         count = 0
 
         while True:
-            with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
+            if self.port_is_open(host, port):
+                break
+            else:
                 if count > 10:
                     self.proc.terminate()
                     raise ChildProcessError(f'ERROR: failed to access atlas webserver on port {port} after 10s')
-
-                if s.connect_ex((host, port)) != 0:
-                    count += 1
-                    time.sleep(1)
-                else:
-                    break
+                count += 1
+                time.sleep(1)
 
         logger.info(f'webserver startup complete in {count}s, pid={self.proc.pid}')
 
