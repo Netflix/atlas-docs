@@ -13,11 +13,13 @@ class Block:
     ATLAS_EXAMPLE = 'atlas-example'
     ATLAS_GRAPH = 'atlas-graph'
     ATLAS_STACKLANG = 'atlas-stacklang'
+    ATLAS_URI = 'atlas-uri'
 
     valid_types = [
         ATLAS_EXAMPLE,
         ATLAS_GRAPH,
-        ATLAS_STACKLANG
+        ATLAS_STACKLANG,
+        ATLAS_URI
     ]
 
     example_pattern = re.compile('([^:]+): (.+)')
@@ -44,23 +46,25 @@ class Block:
 
         if block_type in self.valid_types:
             self.type = block_type
-            self.options = self.parse_options(block_options)
+            self.parse_options(block_options)
             self.is_started = True
         else:
             logger.warning(f'invalid block type `{block_type}` on page `{page_title}`')
 
-    @staticmethod
-    def parse_options(options: Optional[str]) -> Optional[Dict[str, str]]:
+    def parse_options(self, options: Optional[str]) -> None:
         if options:
             res = {}
 
             for option in options.split(' '):
-                if '=' not in option:
+                if '=' not in option or len(option.split('=')) > 2:
                     continue
                 k, v = option.split('=')
+                # allow for & and = characters in option values
+                v = v.replace('&amp;', '&').replace('%3D', '=').replace('%3d', '=')
                 res[k] = v
 
-            return res
+            if len(res) > 0:
+                self.options = res
 
     def complete(self) -> None:
         self.type = None
@@ -105,12 +109,13 @@ class Block:
         stripped_op = op.replace(":", "")
         return f'<a href="{self.ASL_BASE_URI}/{stripped_op}/">{op}</a>'
 
-    def fmt_atlas_expr(self, uri: str) -> str:
+    def fmt_atlas_expr(self, uri: str, offset: int = 0) -> str:
         """
         Given an Atlas URI, extract the query and convert it into a pre-formatted block.
 
         There should be line breaks after each operator and each operator should link to the
-        Atlas Stack Language Reference.
+        Atlas Stack Language Reference. The output is intended to be wrapped in pre tags by
+        the caller.
 
         Input:
 
@@ -118,38 +123,42 @@ class Block:
 
         Output:
 
-        <pre>nf.app,alerttest,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+        nf.app,alerttest,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
         name,ssCpuUser,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
         <a href="https://netflix.github.io/atlas-docs/asl/ref/and/">:and</a>,
         <a href="https://netflix.github.io/atlas-docs/asl/ref/sum/">:sum</a>,
         80,<a href="https://netflix.github.io/atlas-docs/asl/ref/gt/">:gt</a>,
-        5,<a href="https://netflix.github.io/atlas-docs/asl/ref/rolling-count/">:rolling-count</a></pre>
+        5,<a href="https://netflix.github.io/atlas-docs/asl/ref/rolling-count/">:rolling-count</a>
         """
 
         m = self.query_pattern.match(uri)
 
         if not m:
-            return '<pre>ERROR: query not found</pre>'
+            return 'ERROR: query not found'
 
         line = ''
+        pad = ' ' * offset if offset > 0 else ''
         output_lines = []
 
         for item in m.group(1).split(','):
             if item.startswith(':'):
-                output_lines.append(f'{line}{self.mk_asl_link(item)},')
+                output_lines.append(f'{pad}{line}{self.mk_asl_link(item)},')
                 line = ''
             else:
                 line += f'{item},'
 
         output_lines[-1] = output_lines[-1][:-1]  # strip trailing comma
-        atlas_expr = '\n'.join(output_lines)
 
-        return f'<pre>{atlas_expr}</pre>'
+        return '\n'.join(output_lines) + '\n'
 
     @staticmethod
     def mk_table_row(data: List[str]) -> str:
-        out_line = ''.join([f'<td>{item}</td>' for item in data])
-        return f'<tr>{out_line}</tr>'
+        output = ''.join([f'<td>{item}</td>' for item in data])
+        return f'<tr>{output}</tr>'
+
+    @staticmethod
+    def hilite(input_line: str, expr: str) -> str:
+        return input_line.replace(expr, f'<span class="atlas-hilite">{expr}</span>')
 
     def build_output(self) -> None:
         method_name = 'build_' + self.type.replace('-', '_')
@@ -165,7 +174,7 @@ class Block:
         for title, uri in self.input_lines:
             titles.append(title)
             graphs.append(self.mk_image_tag(uri))
-            exprs.append(self.fmt_atlas_expr(uri))
+            exprs.append(f'<pre>{self.fmt_atlas_expr(uri)}</pre>')
 
         self.output_lines = ['<table><tbody>']
         self.output_lines.append(self.mk_table_row(titles))
@@ -175,10 +184,35 @@ class Block:
 
     def build_atlas_graph(self) -> None:
         uri = self.input_lines[0]
+
         self.output_lines = [f'<p>{self.mk_image_tag(uri)}</p>']
 
         if self.options['show-expr'] == 'true':
-            self.output_lines.append(self.fmt_atlas_expr(uri))
+            self.output_lines.append(f'<pre>{self.fmt_atlas_expr(uri)}</pre>')
 
     def build_atlas_stacklang(self):
-        self.output_lines = [self.fmt_atlas_expr(self.input_lines[0])]
+        output = self.fmt_atlas_expr(self.input_lines[0])
+
+        if self.options and 'hilite' in self.options:
+            output = self.hilite(output, self.options['hilite'])
+
+        self.output_lines = [f'<pre>{output}</pre>']
+
+    def build_atlas_uri(self):
+        base_uri, params = self.input_lines[0].split('?')
+
+        output = f'{base_uri}?\n'
+
+        for idx, p in enumerate(params.split('&')):
+            pad = '  ' if idx == 0 else '  &'
+
+            if p.startswith('q='):
+                output += f'{pad}q=\n'
+                output += self.fmt_atlas_expr(p, 4)
+            else:
+                output += f'{pad}{p}\n'
+
+        if self.options and 'hilite' in self.options:
+            output = self.hilite(output, self.options['hilite'])
+
+        self.output_lines = [f'<pre>{output}</pre>']
