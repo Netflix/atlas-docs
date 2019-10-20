@@ -11,9 +11,9 @@ atlas-link-checker
 
 The following categories are highlighted in the report output:
 
-* OLD SITE LINKS. Links which point to the previous documentation site.
-* BARE LINKS. Links that lack an http:// or https:// prefix.
-* BAD LINKS. Links which do not return 200 OK.
+* `OLD SITE LINKS`. Links which point to the previous documentation site.
+* `BARE LINKS`. Links that lack an http:// or https:// prefix.
+* `BAD LINKS`. Links which do not return 200 OK.
 
 Example output:
 
