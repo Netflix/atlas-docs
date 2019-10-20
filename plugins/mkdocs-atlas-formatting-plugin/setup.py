@@ -10,13 +10,16 @@ setup(
     keywords='atlas docs',
     url='https://github.com/Netflix/atlas-docs',
     python_requires='>=3.6',
-    install_requires=[],
+    install_requires=[
+        'pillow',
+        'requests'
+    ],
     extras_require={},
     packages=find_packages(),
     include_package_data=True,
     entry_points={
         'mkdocs.plugins': [
-            'foo = mkdocs_atlas_formatting_plugin.plugin:AtlasFormattingPlugin'
+            'atlas_formatting = mkdocs_atlas_formatting_plugin.plugin:AtlasFormattingPlugin'
         ]
     }
 )
