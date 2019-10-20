@@ -36,7 +36,10 @@ mkdocs serve
 
 See the [Atlas Formatting Plugin README] for details on using directives in Markdown source.
 
+See the [Atlas Link Checker README] for details on validating links in MkDocs site output.
+
 [Atlas Formatting Plugin README]: ./plugins/mkdocs-atlas-formatting-plugin/README.md
+[Atlas Link Checker README]: ./plugins/atlas-link-checker/README.md
 
 ## Travis Build and Deploy
 
