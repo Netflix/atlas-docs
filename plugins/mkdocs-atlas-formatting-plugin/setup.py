@@ -5,10 +5,10 @@ setup(
     version='1.0.0',
     author='Matthew Johnson',
     author_email='matthewj@netflix.com',
-    description='Does things.',
+    description='Format Atlas directives in Markdown source to produce images and expression blocks.',
     license='Apache License, Version 2.0',
     keywords='atlas docs',
-    url='https://github.com/Netflix/atlas-docs',
+    url='https://github.com/Netflix/atlas-docs/tree/master/plugins/mkdocs-atlas-formatting-plugin',
     python_requires='>=3.6',
     install_requires=[
         'pillow',
