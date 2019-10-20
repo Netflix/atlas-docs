@@ -22,3 +22,8 @@ class AtlasFormattingPlugin(BasePlugin):
     def on_page_content(self, html: str, page: Page, config: Config, files: Files) -> str:
         parser = Parser(page.title, html)
         return parser.html
+
+    def on_post_build(self, config: Config) -> None:
+        if config['site_url'] == 'https://netflix.github.io/atlas-docs/':
+            logger.info('shutdown webserver')
+            self.webserver.shutdown()
