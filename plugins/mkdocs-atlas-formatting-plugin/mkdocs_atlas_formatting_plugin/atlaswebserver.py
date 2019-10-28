@@ -35,6 +35,7 @@ class AtlasWebServer:
 
     webserver_host: str = '127.0.0.1'
     webserver_port: int = 7101
+    webserver_timeout: int = 30
 
     base_url: str = f'http://{webserver_host}:{webserver_port}'
 
@@ -92,9 +93,12 @@ class AtlasWebServer:
             if self.port_is_open(host, port):
                 break
             else:
-                if count > 10:
+                if count > self.webserver_timeout:
                     self.proc.terminate()
-                    raise ChildProcessError(f'ERROR: failed to access atlas webserver on port {port} after 10s')
+                    raise ChildProcessError(
+                        f'ERROR: failed to access atlas webserver on ' +
+                        f'port {port} after {self.webserver_timeout}s'
+                    )
                 count += 1
                 time.sleep(1)
 
