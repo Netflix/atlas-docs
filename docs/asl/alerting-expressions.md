@@ -2,6 +2,13 @@ The stack language provides some basic techniques to convert an input line into 
 that can be used to trigger and visualize alert conditions. This section assumes a familiarity
 with the stack language and the [alerting philosophy](Alerting-Philosophy).
 
+## Signal Line
+
+A signal line is a time series that indicates whether or not a condition is true for a particular
+interval. They are modelled by having zero indicate false and non-zero, typically 1, indicating
+true. Alerting expressions map some input time series to a set of signal lines that indicate true
+when in a triggering state.
+
 ## Threshold Alerts
 
 To start we need an input metric. For this example the input will be a sample metric showing
