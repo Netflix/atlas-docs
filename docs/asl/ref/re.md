@@ -1,28 +1,9 @@
-<table>
-  <tbody>
-  <tr>
-    <td>
-      <strong>Input Stack:</strong>
-      <table>
-        <tbody>
-        <tr><td>v: String</td></tr>
-        <tr><td>k: String</td></tr>
-        </tbody>
-      </table>
-    </td><td style="vertical-align: middle;">
-      &#8680;
-    </td><td>
-      <strong>Output Stack:</strong>
-      <table>
-        <tbody>
-        <tr><td>(k=~/^v/): Query</td></tr>
-        <tr><td>&nbsp;</td></tr>
-        </tbody>
-      </table>
-    </td>
-  </tr>
-  </tbody>
-</table>
+@@@ atlas-signature
+v: String
+k: String
+-->
+(k=~/^v/): Query
+@@@
 
 !!! warning
     Regular expressions can be expensive to check and should be avoided if possible. When

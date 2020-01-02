@@ -1,28 +1,9 @@
-<table>
-  <tbody>
-  <tr>
-    <td>
-      <strong>Input Stack:</strong>
-      <table>
-        <tbody>
-        <tr><td>vs: List[String]</td></tr>
-        <tr><td>k: String</td></tr>
-        </tbody>
-      </table>
-    </td><td style="vertical-align: middle;">
-      &#8680;
-    </td><td>
-      <strong>Output Stack:</strong>
-      <table>
-        <tbody>
-        <tr><td>(k in vs): Query</td></tr>
-        <tr><td>&nbsp;</td></tr>
-        </tbody>
-      </table>
-    </td>
-  </tr>
-  </tbody>
-</table>
+@@@ atlas-signature
+vs: List[String]
+k: String
+-->
+(k in vs): Query
+@@@
 
 Select time series where the value for a key is in the specified set. For example, consider
 the following query:

@@ -3,31 +3,12 @@ There are two variants of the `:and` operator.
 
 ## Choosing
 
-<table>
-  <tbody>
-  <tr>
-    <td>
-      <strong>Input Stack:</strong>
-      <table>
-        <tbody>
-        <tr><td>q2: Query</td></tr>
-        <tr><td>q1: Query</td></tr>
-        </tbody>
-      </table>
-    </td><td style="vertical-align: middle;">
-      &#8680;
-    </td><td>
-      <strong>Output Stack:</strong>
-      <table>
-        <tbody>
-        <tr><td>(q1 AND q2): Query</td></tr>
-        <tr><td>&nbsp;</td></tr>
-        </tbody>
-      </table>
-    </td>
-  </tr>
-  </tbody>
-</table>
+@@@ atlas-signature
+q2: Query
+q1: Query
+-->
+(q1 AND q2): Query
+@@@
 
 This first variant is used for [choosing](../tutorial.md#choosing) the set of time series to
 operate on. It is a binary operator that matches if both of the sub-queries match. For example,
@@ -75,31 +56,12 @@ included in the result set:
 
 ## Math
 
-<table>
-  <tbody>
-  <tr>
-    <td>
-      <strong>Input Stack:</strong>
-      <table>
-        <tbody>
-        <tr><td>ts2: TimeSeriesExpr</td></tr>
-        <tr><td>ts1: TimeSeriesExpr</td></tr>
-        </tbody>
-      </table>
-    </td><td style="vertical-align: middle;">
-      &#8680;
-    </td><td>
-      <strong>Output Stack:</strong>
-      <table>
-        <tbody>
-        <tr><td>(ts1 AND ts2): TimeSeriesExpr</td></tr>
-        <tr><td>&nbsp;</td></tr>
-        </tbody>
-      </table>
-    </td>
-  </tr>
-  </tbody>
-</table>
+@@@ atlas-signature
+ts2: TimeSeriesExpr
+ts1: TimeSeriesExpr
+-->
+(ts1 AND ts2): TimeSeriesExpr
+@@@
 
 Compute a new time series where each interval has the value `(a AND b)` where `a`
 and `b` are the corresponding intervals in the input time series. For example:

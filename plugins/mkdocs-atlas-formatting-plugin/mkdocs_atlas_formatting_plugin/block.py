@@ -12,12 +12,14 @@ class Block:
 
     ATLAS_EXAMPLE = 'atlas-example'
     ATLAS_GRAPH = 'atlas-graph'
+    ATLAS_SIGNATURE = 'atlas-signature'
     ATLAS_STACKLANG = 'atlas-stacklang'
     ATLAS_URI = 'atlas-uri'
 
     valid_types = [
         ATLAS_EXAMPLE,
         ATLAS_GRAPH,
+        ATLAS_SIGNATURE,
         ATLAS_STACKLANG,
         ATLAS_URI
     ]
@@ -152,6 +154,11 @@ class Block:
         return '\n'.join(output_lines) + '\n'
 
     @staticmethod
+    def mk_stack_table(label: str, data: List[str]) -> str:
+        rows = ''.join([f'<tr><td>{item}</td></tr>' for item in data])
+        return f'<strong>{label} Stack:</strong><table><tbody>{rows}</tbody></table>'
+
+    @staticmethod
     def mk_table_row(data: List[str]) -> str:
         output = ''.join([f'<td>{item}</td>' for item in data])
         return f'<tr>{output}</tr>'
@@ -189,6 +196,32 @@ class Block:
 
         if self.options['show-expr'] == 'true':
             self.output_lines.append(f'<pre>{self.fmt_atlas_expr(uri)}</pre>')
+
+    def build_atlas_signature(self) -> None:
+        input_stack = []
+        output_stack = []
+        is_input = True
+        for line in self.input_lines:
+            if line.startswith('--&gt;'):
+                is_input = False
+            elif is_input:
+                input_stack.append(line)
+            else:
+                output_stack.append(line)
+
+        # Make stack sizes the same by filling with spaces if needed
+        n = max(len(input_stack), len(output_stack))
+        if len(input_stack) < n:
+            input_stack.extend(['&nbsp;'] * (n - len(input_stack)))
+        if len(output_stack) < n:
+            output_stack.extend(['&nbsp;'] * (n - len(output_stack)))
+
+        self.output_lines = []
+        self.output_lines.append('<table><tbody><tr>')
+        self.output_lines.append(f'<td>{self.mk_stack_table("Input", input_stack)}</td>')
+        self.output_lines.append(f'<td style="vertical-align: middle;">&#8680;</td>')
+        self.output_lines.append(f'<td>{self.mk_stack_table("Output", output_stack)}</td>')
+        self.output_lines.append('</tr></tbody></table>')
 
     def build_atlas_stacklang(self):
         output = self.fmt_atlas_expr(self.input_lines[0])
