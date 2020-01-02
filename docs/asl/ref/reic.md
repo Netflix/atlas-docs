@@ -1,28 +1,9 @@
-<table>
-  <tbody>
-  <tr>
-    <td>
-      <strong>Input Stack:</strong>
-      <table>
-        <tbody>
-        <tr><td>v: String</td></tr>
-        <tr><td>k: String</td></tr>
-        </tbody>
-      </table>
-    </td><td style="vertical-align: middle;">
-      &#8680;
-    </td><td>
-      <strong>Output Stack:</strong>
-      <table>
-        <tbody>
-        <tr><td>(k=~/^v/i): Query</td></tr>
-        <tr><td>&nbsp;</td></tr>
-        </tbody>
-      </table>
-    </td>
-  </tr>
-  </tbody>
-</table>
+@@@ atlas-signature
+v: String
+k: String
+-->
+(k=~/^v/i): Query
+@@@
 
 !!! warning
     Ignoring the case will always result if a full scan for the key. This should be used
