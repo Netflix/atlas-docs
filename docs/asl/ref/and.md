@@ -76,3 +76,9 @@ and `b` are the corresponding intervals in the input time series. For example:
 
 The result will be a [signal time series](../alerting-expressions.md#signal-line) that will
 be `1.0` for all intervals where the corresponding values of `a` and `b` are both non-zero.
+Example:
+
+@@@ atlas-example { hilite=:and }
+Input: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,310,:lt
+Output: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,310,:lt,:and
+@@@
