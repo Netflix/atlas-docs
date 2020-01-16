@@ -233,18 +233,3 @@ paved path.
 
 If using `base-server`, then you will get the Spectator and Atlas bindings automatically.
 
-### Auto Plugin
-
-!!! warning
-    **Deprecated**: Use of `AutoBindSingleton` is generally discouraged. It is recommended to
-    use one of the other methods.
-
-If you are only interested in getting the GC logging, then there is a library with an auto-bind
-singleton that can be used:
-
-```
-com.netflix.spectator:spectator-nflx:{{ spectator_api.java_latest }}
-```
-
-Assuming you are using karyon/base-server or Governator with `com.netflix` in the list of base
-packages, then the plugin should be automatically loaded.
