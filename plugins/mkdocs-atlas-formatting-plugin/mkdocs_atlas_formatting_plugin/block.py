@@ -181,7 +181,11 @@ class Block:
         for title, uri in self.input_lines:
             titles.append(title)
             graphs.append(self.mk_image_tag(uri))
-            exprs.append(f'<pre>{self.fmt_atlas_expr(uri)}</pre>')
+
+            expr = self.fmt_atlas_expr(uri)
+            if self.options and 'hilite' in self.options:
+                expr = self.hilite(expr, self.options['hilite'])
+            exprs.append(f'<pre>{expr}</pre>')
 
         self.output_lines = ['<table><tbody>']
         self.output_lines.append(self.mk_table_row(titles))
