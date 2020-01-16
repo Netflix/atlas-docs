@@ -4,7 +4,7 @@ import time
 from base64 import b64encode
 from contextlib import closing
 from io import BytesIO
-from subprocess import Popen, PIPE
+from subprocess import Popen, DEVNULL
 from typing import Optional, Tuple
 
 import requests
@@ -85,7 +85,7 @@ class AtlasWebServer:
 
         logger.info(f'starting atlas webserver on port {port}')
 
-        self.proc = Popen(['java', '-jar', jar], stdout=PIPE, stderr=PIPE)
+        self.proc = Popen(['java', '-jar', jar], stdout=DEVNULL, stderr=DEVNULL)
 
         count = 0
 
