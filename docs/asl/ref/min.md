@@ -88,6 +88,6 @@ input expression. This is typically used when there is a need to use some other 
 for the grouping. Example:
 
 @@@ atlas-example { hilite=:min }
-Input: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,),:by
-Output: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,),:by,:min
+Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,),:by
+After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,),:by,:min
 @@@

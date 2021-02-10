@@ -94,6 +94,6 @@ Compute the sum of all the time series from the input expression. This is typica
 there is a need to use some other aggregation for the grouping. Example:
 
 @@@ atlas-example { hilite=:sum }
-Input: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:max,(,nf.cluster,),:by
-Output: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:max,(,nf.cluster,),:by,:sum
+Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:max,(,nf.cluster,),:by
+After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:max,(,nf.cluster,),:by,:sum
 @@@

@@ -79,6 +79,6 @@ be `1.0` for all intervals where the corresponding values of `a` or `b` are non-
 Example:
 
 @@@ atlas-example { hilite=:or }
-Input: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,290,:lt
-Output: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,290,:lt,:or
+Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,290,:lt
+After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,290,:lt,:or
 @@@
