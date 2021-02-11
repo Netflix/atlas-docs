@@ -1,3 +1,6 @@
+!!! warning
+    This operation is still incubating and may change.
+
 @@@ atlas-signature
 TimeSeriesExpr
 stat: String
@@ -5,6 +8,8 @@ k: Int
 -->
 TimeSeriesExpr
 @@@
+
+Since: 1.7
 
 Restrict the output for a grouped expression to the `k` time series with the smallest value
 for the specified [summary statistic](stat.md) and computes an average aggregate for the other
