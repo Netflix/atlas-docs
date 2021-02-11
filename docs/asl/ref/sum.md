@@ -5,7 +5,7 @@ Sum aggregation operator. There are two variants of the `:sum` operator.
 @@@ atlas-signature
 Query
 -->
-DataExpr
+AggregationFunction
 @@@
 
 Compute the sum of all the time series that match the query. Sum is the default aggregate

@@ -70,7 +70,7 @@ Spectator is primarily intended for collecting data for dimensional time series 
 [Atlas](https://github.com/Netflix/atlas). The ids used for looking up a [Meter] in the [Registry]
 consist of a name and set of tags. Ids will be consumed many times by users after the data has
 been reported, so they should be chosen with some care and thought about how they will get used.
-See the [conventions page](../../../core/naming.md) for some general guidelines.
+See the [conventions page](../../../../concepts/naming.md) for some general guidelines.
 
 Ids are created via the Registry, for example:
 

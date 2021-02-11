@@ -7,7 +7,7 @@ that all time series in the system are consistent.
 
 How a normalized value is computed depends on the data source type. Atlas supports three types
 indicated by the value of the `atlas.dstype` tag. In general, you should not need to worry about
-that, client libraries like [Spectator](../index.md) will automatically handle tagging based on
+that, client libraries like [Spectator](../spectator/index.md) will automatically handle tagging based on
 the data source type.
 
 It is recommended to at least skim through the normalization for [gauges](#gauge) and

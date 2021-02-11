@@ -664,7 +664,7 @@ public class Foo {
 
 ### MonitorConfig
 
-See the documentation on [naming](../../core/naming.md).
+See the documentation on [naming](../../../concepts/naming.md).
 
 Servo:
 
