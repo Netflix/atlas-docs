@@ -5,7 +5,7 @@ Min aggregation operator. There are two variants of the `:min` operator.
 @@@ atlas-signature
 Query
 -->
-DataExpr
+AggregationFunction
 @@@
 
 Select the minimum value for corresponding times across all matching time series.

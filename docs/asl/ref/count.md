@@ -5,7 +5,7 @@ Count aggregation operator. There are two variants of the `:count` operator.
 @@@ atlas-signature
 Query
 -->
-DataExpr
+AggregationFunction
 @@@
 
 Compute the number of time series that match the query and have a value for a given interval.

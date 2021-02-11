@@ -4,9 +4,9 @@ At a minimum, you need to:
 
 1. Understand core concepts.
 
-    * [Time Series](core/time-series.md)
-    * [Normalization](core/normalization.md)
-    * [Naming](core/naming.md)
+    * [Time Series](../concepts/time-series.md)
+    * [Normalization](../concepts/normalization.md)
+    * [Naming](../concepts/naming.md)
     * [Clock](core/clock.md)
 
 1. Install the language-specific library and configuration bindings, where available.

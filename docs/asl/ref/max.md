@@ -5,7 +5,7 @@ Max aggregation operator. There are two variants of the `:max` operator.
 @@@ atlas-signature
 Query
 -->
-DataExpr
+AggregationFunction
 @@@
 
 Select the maximum value for corresponding times across all matching time series.

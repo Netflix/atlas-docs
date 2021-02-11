@@ -4,7 +4,7 @@ Group by operator. There are two variants of the `:by` operator.
 
 @@@ atlas-signature
 keys: List[String]
-Query
+AggregationFunction
 -->
 DataExpr
 @@@
