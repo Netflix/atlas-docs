@@ -2,9 +2,9 @@
     This operation is still incubating and may change.
 
 @@@ atlas-signature
-TimeSeriesExpr
-stat: String
 k: Int
+stat: String
+TimeSeriesExpr
 -->
 TimeSeriesExpr
 @@@
