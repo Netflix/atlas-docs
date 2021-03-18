@@ -104,7 +104,7 @@ class Block:
         <img src="data:image/png;base64,...encoded image..." width="286" height="153">
         """
 
-        data_uri, width, height = self.webserver.get_image(uri)
+        data_uri, width, height = self.webserver.get_image(f'{uri}&features=unstable')
         return f'<img src="{data_uri}" width="{width}" height="{height}"/>'
 
     def mk_asl_link(self, op: str) -> str:
