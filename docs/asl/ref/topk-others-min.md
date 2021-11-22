@@ -1,5 +1,3 @@
-!!! warning
-    This operation is still incubating and may change.
 
 @@@ atlas-signature
 k: Int
