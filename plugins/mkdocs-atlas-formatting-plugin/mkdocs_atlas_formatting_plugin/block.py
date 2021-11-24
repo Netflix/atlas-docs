@@ -27,6 +27,8 @@ class Block:
     example_pattern = re.compile('([^:]+): (.+)')
     options_pattern = re.compile('.+@@@ ([a-z\\-]+)(?:$| { (.+) })')
     query_pattern = re.compile('.*q=([^&]+)')
+    number_pattern = re.compile('^[-+]?\d+(.\d)?$')
+    color_pattern = re.compile('^1(,1)+$')
 
     def __init__(self, webserver: Optional[NoopWebserver] = None) -> None:
         self.webserver: AtlasWebServer = AtlasWebServer() if not webserver else webserver
@@ -142,12 +144,19 @@ class Block:
         pad = ' ' * offset if offset > 0 else ''
         output_lines = []
 
+        # Short circuit for examples with a constant for the query or the color queries
+        if self.number_pattern.match(m.group(1)) or self.color_pattern.match(m.group(1)):
+            return f'{pad}{line}{m.group(1)}\n'
+
         for item in m.group(1).split(','):
             if item.startswith(':'):
                 output_lines.append(f'{pad}{line}{self.mk_asl_link(item)},')
                 line = ''
             else:
                 line += f'{item},'
+
+        if line:
+            output_lines.append(f'{pad}{line}')
 
         output_lines[-1] = output_lines[-1][:-1]  # strip trailing comma
 

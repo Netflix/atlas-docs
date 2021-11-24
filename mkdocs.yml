@@ -7,20 +7,40 @@ nav:
 - Home:
   - Introduction: index.md
   - Overview: overview.md
+  - Getting Started: getting-started.md
 - Core Concepts:
   - Time Series: concepts/time-series.md
   - Normalization: concepts/normalization.md
   - Consolidation: concepts/consolidation.md
   - Naming: concepts/naming.md
 - API:
-  - Fetch: api/fetch.md
-  - Graph: api/graph.md
+  - Graph:
+    - Introduction: api/graph/graph.md
+    - Basics: api/graph/basics.md
+    - Examples: api/graph/examples.md
+    - Anonymization: api/graph/anonymization.md
+    - Axis Bounds: api/graph/axis-bounds.md
+    - Axis Scale: api/graph/axis-scale.md
+    - Color Blindness: api/graph/vision.md
+    - Color Palettes: api/graph/color-palettes.md
+    - Layout: api/graph/layout.md
+    - Legends: api/graph/legends.md
+    - Line Attributes: api/graph/line-attributes.md
+    - Line Styles: api/graph/line-styles.md
+    - Multi Y Axis: api/graph/multi-y.md
+    - Output Formats: api/graph/outputs.md
+    - Tick Labels: api/graph/tick.md
+    - Time Shift: api/graph/time-shift.md
+    - Time Zones: api/graph/time-zone.md
   - Tags: api/tags.md
+  - Time Parameters: api/time-parameters.md
 - Stack Language:
   - Tutorial: asl/tutorial.md
   - Alerting Expressions: asl/alerting-expressions.md
+  - Alerting Philosophy: asl/alerting-philosophy.md
+  - Double Exponential Smoothing: asl/des.md
   - Reference:
-    - Choosing:
+    - Query:
       - and: asl/ref/and.md
       - eq: asl/ref/eq.md
       - 'false': asl/ref/false.md
@@ -31,11 +51,13 @@ nav:
       - le: asl/ref/le.md
       - lt: asl/ref/lt.md
       - not: asl/ref/not.md
+      - offset: asl/ref/offset.md
       - or: asl/ref/or.md
       - re: asl/ref/re.md
       - reic: asl/ref/reic.md
       - 'true': asl/ref/true.md
     - Aggregation:
+      - avg: asl/ref/avg.md
       - by: asl/ref/by.md
       - cf-avg: asl/ref/cf-avg.md
       - cf-max: asl/ref/cf-max.md
@@ -46,22 +68,65 @@ nav:
       - min: asl/ref/min.md
       - sum: asl/ref/sum.md
     - Math:
+      - abs: asl/ref/abs.md
+      - add: asl/ref/add.md
       - and: asl/ref/and.md
+      - avg: asl/ref/avg.md
       - bottomk: asl/ref/bottomk.md
       - bottomk-others-avg: asl/ref/bottomk-others-avg.md
       - bottomk-others-max: asl/ref/bottomk-others-max.md
       - bottomk-others-min: asl/ref/bottomk-others-min.md
       - bottomk-others-sum: asl/ref/bottomk-others-sum.md
       - by: asl/ref/by.md
+      - clamp-max: asl/ref/clamp-max.md
+      - clamp-min: asl/ref/clamp-min.md
       - count: asl/ref/count.md
+      - cq: asl/ref/cq.md
+      - delay: asl/ref/delay.md
+      - derivitive: asl/ref/derivative.md
+      - des: asl/ref/des.md
+      - des-epic-signal: asl/ref/des-epic-signal.md
+      - des-fast: asl/ref/des-fast.md
+      - des-simple: asl/ref/des-simple.md
+      - des-slow: asl/ref/des-slow.md
+      - des-slower: asl/ref/des-slower.md
+      - dist-avg: asl/ref/dist-avg.md
+      - dist-max: asl/ref/dist-max.md
+      - dist-stddev: asl/ref/dist-stddev.md
+      - div: asl/ref/div.md
+      - fadd: asl/ref/fadd.md
+      - fdiv: asl/ref/fdiv.md
       - filter: asl/ref/filter.md
+      - fmul: asl/ref/fmul.md
+      - fsub: asl/ref/fsub.md
       - ge: asl/ref/ge.md
       - gt: asl/ref/gt.md
+      - integral: asl/ref/integral.md
       - le: asl/ref/le.md
       - lt: asl/ref/lt.md
       - max: asl/ref/max.md
+      - median: asl/ref/median.md
+      - mul: asl/ref/mul.md
       - min: asl/ref/min.md
+      - neg: asl/ref/neg.md
       - or: asl/ref/or.md
+      - pct: asl/ref/pct.md
+      - per-step: asl/ref/per-step.md
+      - percentiles: asl/ref/percentiles.md
+      - pow: asl/ref/pow.md
+      - random: asl/ref/random.md
+      - rolling-count: asl/ref/rolling-count.md
+      - rolling-max: asl/ref/rolling-max.md
+      - rolling-mean: asl/ref/rolling-mean.md
+      - rolling-min: asl/ref/rolling-min.md
+      - rolling-sum: asl/ref/rolling-sum.md
+      - sdes: asl/ref/sdes.md
+      - sdes-fast: asl/ref/sdes-fast.md
+      - sdes-simple: asl/ref/sdes-simple.md
+      - sdes-slow: asl/ref/sdes-slow.md
+      - sdes-slower: asl/ref/sdes-slower.md
+      - sqrt: asl/ref/sqrt.md
+      - srandom: asl/ref/srandom.md
       - stat: asl/ref/stat.md
       - stat-avg: asl/ref/stat-avg.md
       - stat-count: asl/ref/stat-count.md
@@ -69,17 +134,70 @@ nav:
       - stat-max: asl/ref/stat-max.md
       - stat-min: asl/ref/stat-min.md
       - stat-total: asl/ref/stat-total.md
+      - stddev: asl/ref/stddev.md
+      - sub: asl/ref/sub.md
+      - sum: asl/ref/sum.md
+      - time: asl/ref/time.md
+      - time-span: asl/ref/time-span.md
       - topk: asl/ref/topk.md
       - topk-others-avg: asl/ref/topk-others-avg.md
       - topk-others-max: asl/ref/topk-others-max.md
       - topk-others-min: asl/ref/topk-others-min.md
       - topk-others-sum: asl/ref/topk-others-sum.md
-      - sum: asl/ref/sum.md
+    - Presentation:
+      - alpha: asl/ref/alpha.md
+      - area: asl/ref/area.md
+      - axis: asl/ref/axis.md
+      - color: asl/ref/color.md
+      - decode: asl/ref/decode.md
+      - des-epic-viz: asl/ref/des-epic-viz.md
+      - filter: asl/ref/filter.md
+      - head: asl/ref/head.md
+      - legend: asl/ref/legend.md
+      - limit: asl/ref/limit.md
+      - line: asl/ref/line.md
+      - ls: asl/ref/ls.md
+      - lw: asl/ref/lw.md
+      - palette: asl/ref/palette.md
+      - order: asl/ref/order.md
+      - s: asl/ref/s.md
+      - sort: asl/ref/sort.md
+      - stack: asl/ref/stack.md
+      - vspan: asl/ref/vspan.md
+    - Stack Manipulation:
+      - -rot: asl/ref/-rot.md
+      - 2over: asl/ref/2over.md
+      - call: asl/ref/call.md
+      - clear: asl/ref/clear.md
+      - depth: asl/ref/depth.md
+      - drop: asl/ref/drop.md
+      - dup: asl/ref/dup.md
+      - each: asl/ref/each.md
+      - fcall: asl/ref/fcall.md
+      - freeze: asl/ref/freeze.md
+      - get: asl/ref/get.md
+      - list: asl/ref/list.md
+      - map: asl/ref/map.md
+      - ndrop: asl/ref/ndrop.md
+      - nip: asl/ref/nip.md
+      - nlist: asl/ref/nlist.md
+      - over: asl/ref/over.md
+      - pick: asl/ref/pick.md
+      - roll: asl/ref/roll.md
+      - rot: asl/ref/rot.md
+      - set: asl/ref/set.md
+      - sset: asl/ref/sset.md
+      - swap: asl/ref/swap.md
+      - tuck: asl/ref/tuck.md
+    - Utilities:
+      - format: asl/ref/format.md
+      - named-rewrite: asl/ref/named-rewrite.md
     - Deprecated:
       - all: asl/ref/all.md
       - stat-avg-mf: asl/ref/stat-avg-mf.md
       - stat-max-mf: asl/ref/stat-max-mf.md
       - stat-min-mf: asl/ref/stat-min-mf.md
+      - trend: asl/ref/trend.md
 - Spectator:
   - Overview: spectator/index.md
   - Core Concepts:
@@ -195,6 +313,7 @@ markdown_extensions:
   - codehilite
   - pymdownx.superfences
   - pymdownx.tilde
+  - attr_list
   - toc:
       permalink: True
 
