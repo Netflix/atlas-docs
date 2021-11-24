@@ -1,0 +1,33 @@
+@@@ atlas-signature
+a
+b
+-->
+b
+a
+@@@
+
+Rotate the stack so that the item at the top is now at the bottom.
+
+Example:
+
+@@@ atlas-stacklang
+/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=a,b,c,d,:-rot
+@@@
+
+<table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
+<td>0</td>
+<td>d</td>
+<td>c</td>
+</tr><tr>
+<td>1</td>
+<td>c</td>
+<td>b</td>
+</tr><tr>
+<td>2</td>
+<td>b</td>
+<td>a</td>
+</tr><tr>
+<td>3</td>
+<td>a</td>
+<td>d</td>
+</tr></tbody></table>
