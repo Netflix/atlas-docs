@@ -1,6 +1,7 @@
 ## Introduction
 
-Check HTML links for correctness in the MkDocs build output for Atlas Docs.
+Check HTML links for correctness in the MkDocs build output for Atlas Docs. This tool is too slow
+to run as a part of the standard build, so it should be run locally as needed.
 
 ```bash
 ./setup-venv.sh
