@@ -15,4 +15,5 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install -r requirements.txt
-      - run: mkdocs gh-deploy --force
+      - run: git fetch origin gh-pages:gh-pages
+      - run: mkdocs gh-deploy
