@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
 
-PIP3=$(which pip3)
-VIRTUALENV=$(which virtualenv)
+PYTHON3=$(which python3)
 
-if [ -z $PIP3 ]; then
-    echo "pip3 is not available - please install python3"
+if [[ -z $PYTHON3 ]]; then
+    echo "python3 is not available - please install"
     exit 1
-fi
-
-if [ -z $VIRTUALENV ]; then
-    pip3 install virtualenv
 fi
 
 python3 -m venv venv
 
 source venv/bin/activate
 
-pip install -r requirements.txt
+if [[ -f requirements.txt ]]; then
+    pip3 install --upgrade pip
+    pip3 install --requirement requirements.txt
+fi
