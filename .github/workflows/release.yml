@@ -10,6 +10,11 @@ jobs:
     if: ${{ github.repository == 'Netflix/atlas-docs' }}
     runs-on: ubuntu-latest
     steps:
+      - run: |
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
@@ -18,3 +23,5 @@ jobs:
       - run: mkdocs build
       - run: atlas-link-checker
       - run: mkdocs gh-deploy
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
