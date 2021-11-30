@@ -81,7 +81,7 @@ def bare_link(link: Tag) -> bool:
 
 def bad_link(link: Tag) -> bool:
     try:
-        r = requests.get(link['href'], allow_redirects=False)
+        r = requests.get(link['href'], allow_redirects=False, timeout=0.5)
     except requests.exceptions.ConnectionError:
         return True
 
