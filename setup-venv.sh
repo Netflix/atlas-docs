@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-PYTHON3=$(which python3)
-
-if [[ -z $PYTHON3 ]]; then
+if ! which python3 > /dev/null; then
     echo "python3 is not available - please install"
     exit 1
 fi
