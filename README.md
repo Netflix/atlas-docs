@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Netflix/atlas-docs.svg)](https://travis-ci.org/Netflix/atlas-docs/builds)
+[![Release](https://github.com/Netflix/atlas-docs/actions/workflows/release.yml/badge.svg)](https://github.com/Netflix/atlas-docs/actions/workflows/release.yml)
 
 # Atlas Docs
 
