@@ -40,10 +40,3 @@ See the [Atlas Link Checker README] for details on validating links in MkDocs si
 
 [Atlas Formatting Plugin README]: ./plugins/mkdocs-atlas-formatting-plugin/README.md
 [Atlas Link Checker README]: ./plugins/atlas-link-checker/README.md
-
-## Travis Build and Deploy
-
-The following blog post details the process used here, based on GitHub Deploy Keys, so that write
-access is restricted to this repository:
-
-* [Deploying Docs on Github with Travis-CI](https://derekweitzel.com/2017/02/08/deploying-docs-on-github-with-travisci/)
