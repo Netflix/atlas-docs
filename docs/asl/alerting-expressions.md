@@ -1,6 +1,6 @@
 The stack language provides some basic techniques to convert an input line into a set of signals
 that can be used to trigger and visualize alert conditions. This section assumes a familiarity
-with the stack language and the [alerting philosophy](Alerting-Philosophy).
+with the stack language and the [alerting philosophy](alerting-philosophy.md).
 
 ## Signal Line
 
@@ -19,7 +19,7 @@ high CPU usage for a period:
 @@@
 
 Lets say we want to trigger an alert when the CPU usage goes above 80%. To do that simply use the
-[:gt](math-gt) operator and append `80,:gt` to the query:
+[:gt](ref/gt.md) operator and append `80,:gt` to the query:
 
 @@@ atlas-graph { show-expr=false }
 /api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt
@@ -57,8 +57,8 @@ input, threshold, and triggering state on the same graph.
 You should now know the basics of crafting an alert expression using the stack language. Other
 topics that may be of interest:
 
-* [Alerting Philosophy](Alerting-Philosophy): overview of best practices associated with alerts.
-* [Stack Language Reference](Stack-Language-Reference): comprehensive list of avialable operators.
-* [DES](DES): double exponential smoothing. A technique for detecting anomalies in normally clean
+* [Alerting Philosophy](alerting-philosophy.md): overview of best practices associated with alerts.
+* [Stack Language Tutorial](tutorial.md): comprehensive list of available operators.
+* [DES](des.md): double exponential smoothing. A technique for detecting anomalies in normally clean
   input signals where a precise threshold is unknown. For example, the requests per second hitting
   a service.
