@@ -19,7 +19,7 @@ After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=h
 
 In some cases it can be useful to see an aggregate summary of the other time series that were not
 part of the top set. This can be accomplished using the `:topk-others-$(aggr)` operators.
-Permitted aggregations are `avg`, `max`, `min`, and `sum`. For more details see:
+For more details see:
 
 - [:topk-others-avg](topk-others-avg.md)
 - [:topk-others-max](topk-others-max.md)
