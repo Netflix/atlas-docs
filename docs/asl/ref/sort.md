@@ -1,6 +1,6 @@
 @@@ atlas-signature
-TimeSeriesExpr
 String
+TimeSeriesExpr
 -->
 StyleExpr
 @@@

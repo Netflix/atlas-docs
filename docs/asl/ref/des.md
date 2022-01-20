@@ -1,8 +1,8 @@
 @@@ atlas-signature
-TimeSeriesExpr
-training: Integer
-alpha: Double
 beta: Double
+alpha: Double
+training: Int
+TimeSeriesExpr
 -->
 TimeSeriesExpr
 @@@

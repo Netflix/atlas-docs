@@ -1,6 +1,6 @@
 @@@ atlas-signature
-TimeSeriesExpr
 window: Duration
+TimeSeriesExpr
 -->
 TimeSeriesExpr
 @@@
@@ -13,17 +13,17 @@ for the whole window it will emit `NaN`. If the input line has `NaN` values, the
 will be treated as zeros. Example:
 
 Input | 2m,:trend | 5m,:trend |
--------|-----------|-----------|
-0   |  NaN      | NaN       |
-1   |  0.5      | NaN       |
--1   |  0.0      | NaN       |
-NaN   | -0.5      | NaN       |
-0   |  0.0      | 0.0       |
-1   |  0.5      | 0.2       |
-2   |  1.5      | 0.4       |
-1   |  1.5      | 0.8       |
-1   |  1.0      | 1.0       |
-0   |  0.5      | 1.0       |
+------|-----------|-----------|
+0     |  NaN      | NaN       |
+1     |  0.5      | NaN       |
+-1    |  0.0      | NaN       |
+NaN   |   -0.5    | NaN       |
+0     |  0.0      | 0.0       |
+1     |  0.5      | 0.2       |
+2     |  1.5      | 0.4       |
+1     |  1.5      | 0.8       |
+1     |  1.0      | 1.0       |
+0     |  0.5      | 1.0       |
 
 The window size is specified as a range of time. If the window size is not evenly
 divisible by the [step size](../../concepts/time-series.md#step-size), then the window size will be rounded

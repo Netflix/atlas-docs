@@ -1,6 +1,6 @@
 @@@ atlas-signature
+String
 TimeSeriesExpr
-stat: String
 -->
 TimeSeriesExpr
 @@@
@@ -28,4 +28,3 @@ Example of usage:
 Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
 After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,avg,:stat
 @@@
-

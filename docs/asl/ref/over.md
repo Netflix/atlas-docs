@@ -1,6 +1,6 @@
 @@@ atlas-signature
-a
 b
+a
 -->
 a
 b

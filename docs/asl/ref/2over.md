@@ -1,11 +1,11 @@
 @@@ atlas-signature
-a
 b
+a
 -->
-a
 b
 a
 b
+a
 @@@
 
 Shorthand equivalent to writing: `:over,:over`

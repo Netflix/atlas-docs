@@ -1,17 +1,17 @@
 @@@ atlas-signature
-TimeSeriesExpr
 percentiles: List
+Query
 -->
 TimeSeriesExpr
 @@@
 
 Estimate percentiles for a timer or distribution summary. The data must have been
 published appropriately to allow the approximation. If using
-[spectator](http://netflix.github.io/spectator/en/latest/), then see
-[PercentileTimer](http://netflix.github.io/spectator/en/latest/javadoc/spectator-api/com/netflix/spectator/api/histogram/PercentileTimer.html)
-and
-[PercentileDistributionSummary](http://netflix.github.io/spectator/en/latest/javadoc/spectator-api/com/netflix/spectator/api/histogram/PercentileDistributionSummary.html)
-helper classes.
+[spectator], then see [PercentileTimer] and [PercentileDistributionSummary] helper classes.
+
+[spectator]: http://netflix.github.io/spectator/en/latest/
+[PercentileTimer]: http://netflix.github.io/spectator/en/latest/javadoc/spectator-api/com/netflix/spectator/api/histogram/PercentileTimer.html
+[PercentileDistributionSummary]: http://netflix.github.io/spectator/en/latest/javadoc/spectator-api/com/netflix/spectator/api/histogram/PercentileDistributionSummary.html
 
 The percentile values can be shown in the legend using `$percentile`.
 

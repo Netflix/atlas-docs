@@ -1,8 +1,8 @@
 @@@ atlas-signature
+function: List
 items: List
-functions: List
 -->
-List(functions[N](items[N]), ... functions[0](items[0]))
+List(function(items[0], ..., items[N-1])
 @@@
 
 Create a new list by applying a function to all elements of a list. 

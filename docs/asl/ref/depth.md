@@ -1,8 +1,8 @@
 @@@ atlas-signature
-?
+...
 -->
-?
-N
+Int
+...
 @@@
 
 Push the depth of the stack.

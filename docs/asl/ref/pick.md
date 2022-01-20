@@ -1,12 +1,12 @@
 @@@ atlas-signature
-aN
-...
-a0
 N
--->
-aN
-...
 a0
+...
+aN
+-->
+aN-1
+a0
+...
 aN
 @@@
 
