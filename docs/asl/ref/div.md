@@ -1,8 +1,8 @@
 @@@ atlas-signature
-q2: Query
-q1: Query
+ts2: TimeSeriesExpr
+ts1: TimeSeriesExpr
 -->
-(q1 / q2): Query
+(ts1 / ts2): TimeSeriesExpr
 @@@
 
 Compute a new time series where each interval has the value `(a / b)` where `a`

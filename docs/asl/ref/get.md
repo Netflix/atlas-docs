@@ -1,7 +1,5 @@
 @@@ atlas-signature
-...
 k
-...
 -->
 vars[k]
 @@@

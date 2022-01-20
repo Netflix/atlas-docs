@@ -1,6 +1,6 @@
 @@@ atlas-signature
-pattern: String
 args: List
+pattern: String
 -->
 str: String
 @@@

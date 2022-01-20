@@ -1,6 +1,6 @@
 @@@ atlas-signature
-Query
 Double
+TimeSeriesExpr
 -->
 TimeSeriesExpr
 @@@

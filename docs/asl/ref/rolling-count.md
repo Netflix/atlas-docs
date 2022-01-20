@@ -1,6 +1,6 @@
 @@@ atlas-signature
+n: Int
 TimeSeriesExpr
-n: Integer
 -->
 TimeSeriesExpr
 @@@
@@ -21,7 +21,7 @@ A value is counted if it is non-zero. Missing values, `NaN`, will be treated as 
 For example:
 
 Input | 3,:rolling-count |
--------|------------------|
+------|------------------|
 0     | 0                |
 1     | 1                |
 -1    | 2                |

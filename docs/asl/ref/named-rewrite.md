@@ -1,7 +1,7 @@
 @@@ atlas-signature
-original: TimeSeriesExpr
-rewritten: TimeSeriesExpr
 name: String
+rewritten: TimeSeriesExpr
+original: TimeSeriesExpr
 -->
 TimeSeriesExpr
 @@@

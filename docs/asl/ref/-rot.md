@@ -1,9 +1,11 @@
 @@@ atlas-signature
-a
 b
+a
+...
 -->
-b
 a
+...
+b
 @@@
 
 Rotate the stack so that the item at the top is now at the bottom.

@@ -1,7 +1,7 @@
 @@@ atlas-signature
+replacement: String
+searchPattern: String
 TimeSeriesExpr
-s: String
-r: String
 -->
 StyleExpr
 @@@

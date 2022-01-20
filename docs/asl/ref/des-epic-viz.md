@@ -1,11 +1,11 @@
 @@@ atlas-signature
-TimeSeriesExpr
-training: Integer
-alpha: Double
-beta: Double
-maxPercent: Double
-minPercent: Double
 noise: Double
+minPercent: Double
+maxPercent: Double
+beta: Double
+alpha: Double
+training: Int
+TimeSeriesExpr
 -->
 TimeSeriesExpr
 @@@

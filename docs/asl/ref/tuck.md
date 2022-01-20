@@ -1,7 +1,10 @@
 @@@ atlas-signature
-?
+b
+a
 -->
-?
+b
+a
+b
 @@@
 
 Shorthand equivalent to writing: `:swap,:over` 

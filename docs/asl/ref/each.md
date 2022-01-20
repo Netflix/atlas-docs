@@ -1,10 +1,10 @@
 @@@ atlas-signature
+function: List
 items: List
-functions: List
 -->
-function[0](items[0])
+function(items[N-1])
 ...
-function[N](items[N])
+function(items[0])
 @@@
 
 Pops a list off the stack and executes it as a program. 

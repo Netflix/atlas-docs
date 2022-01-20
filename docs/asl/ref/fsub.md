@@ -1,8 +1,8 @@
 @@@ atlas-signature
-TimeSeriesExpr
-TimeSeriesExpr
+ts2: TimeSeriesExpr
+ts1: TimeSeriesExpr
 -->
-TimeSeriesExpr
+(ts1 - ts2): TimeSeriesExpr
 @@@
 
 Floating point subtraction operator. Compute a new time series where each interval has the

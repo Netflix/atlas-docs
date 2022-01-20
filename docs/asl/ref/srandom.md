@@ -1,5 +1,5 @@
 @@@ atlas-signature
-seed: Integer
+seed: Int
 -->
 TimeSeriesExpr
 @@@

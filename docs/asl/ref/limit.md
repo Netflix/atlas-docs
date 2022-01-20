@@ -1,6 +1,6 @@
 @@@ atlas-signature
+n: Int
 TimeSeriesExpr
-n: Integer
 -->
 StyleExpr
 @@@

@@ -1,7 +1,7 @@
 @@@ atlas-signature
-?
+...
 -->
-List(?)
+List[?]
 @@@
 
 Pop all items off the stack and push them as a list.

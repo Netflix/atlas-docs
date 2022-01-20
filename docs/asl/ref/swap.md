@@ -1,9 +1,9 @@
 @@@ atlas-signature
-a
 b
+a
 -->
-b
 a
+b
 @@@
 
 Swap the top two items on the stack. 

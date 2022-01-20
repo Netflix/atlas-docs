@@ -1,6 +1,6 @@
 @@@ atlas-signature
-s: String
 e: String
+s: String
 -->
 TimeSeriesExpr
 @@@

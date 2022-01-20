@@ -1,5 +1,6 @@
 @@@ atlas-signature
-List
+String
+...
 -->
 ?
 @@@

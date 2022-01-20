@@ -1,10 +1,11 @@
 @@@ atlas-signature
-aN
-...
-a0
 N
+a0
+...
+aN
 -->
-List(aN-1 ... a0)
+List(aN-1, ..., a0)
+aN
 @@@
 
 Create a list with the top N items on the stack.
