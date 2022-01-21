@@ -5,7 +5,7 @@ machine. For other common tasks see:
 * Querying Data:
     * [Examples](api/graph/examples.md)
     * [Tutorial](asl/tutorial.md)
-* [Instrumenting Code](http://netflix.github.io/spectator/en/latest/)
+* [Instrumenting Code](spectator/index.md)
 
 ## Run a Demo Instance
 

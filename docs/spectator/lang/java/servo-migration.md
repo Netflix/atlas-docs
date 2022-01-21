@@ -34,7 +34,7 @@ like overwriting a registered object.
 ### More Focused
 
 The goal of Spectator is instrumenting code to send to a dimensional time-series system like
-[Atlas](https://github.com/Netflix/atlas/wiki). Servo has goals of staying compatible with a
+[Atlas](../../../index.md). Servo has goals of staying compatible with a
 number of legacy libraries and naming formats, exposing data to JMX, etc. Examples of how this
 influences decisions:
 

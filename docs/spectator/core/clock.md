@@ -3,7 +3,7 @@
 When taking measurements or working with timers it is recommended to use the [Clock] interface. It
 provides two methods for measuring time:
 
-[Clock]:https://github.com/Netflix/spectator/blob/master/spectator-api/src/main/java/com/netflix/spectator/api/Clock.java
+[Clock]: https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/Clock.html
 
 ## Wall Time
 
@@ -80,4 +80,4 @@ Assert.assertEquals(timer.totalTime(), 42L);
 ```
 
 [System.nanoTime()]: https://docs.oracle.com/javase/8/docs/api/java/lang/System.html#nanoTime--
-[ManualClock]: https://github.com/Netflix/spectator/blob/master/spectator-api/src/main/java/com/netflix/spectator/api/ManualClock.java
+[ManualClock]: https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/ManualClock.html

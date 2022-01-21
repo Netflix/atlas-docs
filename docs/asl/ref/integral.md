@@ -23,7 +23,7 @@ NaN   | 0         |
 1     | 5         |
 0     | 5         |
 
-For a [counter](http://netflix.github.io/spectator/en/latest/intro/counter/), each data
+For a [counter](../../spectator/core/meters/counter.md), each data
 point represents the average rate per second over the step interval. To compute the total
 amount incremented, the value first needs to be converted to a rate per step interval.
 This conversion can be performed using the [:per-step](per-step.md) operation.

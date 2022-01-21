@@ -153,7 +153,7 @@ the typical values seen are `end_of_major_GC` and `end_of_minor_GC`.
 
 ## Alerting
 
-This section assumes the data is available in [Atlas](https://github.com/Netflix/atlas/wiki/),
+This section assumes the data is available in [Atlas](../../../../index.md),
 but users of other systems should be able to take the idea and make it work. For all of these
 alerts it is recommended to check them on instance. At Netflix that can be done by selecting
 the option in alert ui:

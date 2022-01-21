@@ -5,7 +5,7 @@
     These docs are still a work in progress. For now you should still refer to
     the [Atlas Wiki](https://github.com/Netflix/atlas/wiki).
 
-<img src="https://github.com/Netflix/atlas/wiki/images/atlas_logo.png" width="230" height="230" align="left"></img>
+<img src="images/atlas_logo.png" width="230" height="230" align="left"></img>
 
 Atlas was developed by Netflix to manage dimensional time series data for near real-time
 operational insight. Atlas features in-memory data storage, allowing it to gather and report
