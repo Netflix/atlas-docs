@@ -5,7 +5,7 @@ Average or mean aggregation operator. There are two variants of the `:avg` opera
 @@@ atlas-signature
 Query
 -->
-AggregationFunction
+TimeSeriesExpr
 @@@
 
 A helper method that computes the average or mean from one or more time series using the 
