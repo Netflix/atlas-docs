@@ -1,65 +1,128 @@
-Examples for specifying the time zone:
+There are four [line styles](style-ls) available:
 
-* [Single Zone](#single-zone)
-* [Multi Zone](#multi-zone)
-* [Daylight Savings Time](#daylight-savings-time)
+* [Line](#line)
+* [Area](#area)
+* [Stack](#stack)
+* [Vertical Span](#vertical-span)
 
-## Single Zone
+Multiple styles can be used in the same chart or combined with other operations.
 
-Most graphs will only show a single time zone. By default the zone is `US/Pacific`. To set to
-another zone such as `UTC` use the `tz` query parameter:
+* [Stacked Percentage](#stacked-percentage)
+* [Combinations](#combinations)
+* [Layering](#layering)
 
-@@@ atlas-uri { hilite=tz%3DUTC }
-/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&tz=UTC
+
+## Line
+
+The default style is line.
+
+@@@ atlas-uri { hilite=:line }
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:line&s=e-1w
 @@@
 
 @@@ atlas-graph { show-expr=false }
-/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&tz=UTC
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:line&s=e-1w
 @@@
 
-## Multi Zone
 
-The `tz` parameter can be specified multiple times in which case one X-axis will be shown per
-zone. Start and end times will be based on the first time zone listed.
+## Area
 
-@@@ atlas-uri { hilite=tz }
-/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d&tz=US/Eastern&tz=US/Pacific&tz=UTC
-@@@
+Area will fill the space between the line and 0 on the Y-axis. The [alpha](style-alpha) setting
+is just used to help visualize the overlap.
 
-@@@ atlas-graph { show-expr=false }
-/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d&tz=US/Eastern&tz=US/Pacific&tz=UTC
-@@@
-
-## Daylight Savings Time
-
-If using a time zone that changes for daylight savings time, then you will see duplicate or missing
-hours on the time axis labels during the transition period. For example, a duplicate hour:
-
-@@@ atlas-uri { hilite=tz }
-/api/v1/graph?e=2015-11-01T08:00&q=name,sps,:eq&s=e-12h&tz=US/Pacific&tz=UTC
+@@@ atlas-uri { hilite=:area }
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:area,40,:alpha&s=e-1w
 @@@
 
 @@@ atlas-graph { show-expr=false }
-/api/v1/graph?e=2015-11-01T08:00&q=name,sps,:eq&s=e-12h&tz=US/Pacific&tz=UTC
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:area,40,:alpha&s=e-1w
 @@@
 
-A missing hour:
+Similarly for negative values:
 
-@@@ atlas-uri { hilite=tz }
-/api/v1/graph?e=2015-03-08T08:00&q=name,sps,:eq&s=e-12h&tz=US/Pacific&tz=UTC
-@@@
-
-@@@ atlas-graph { show-expr=false }
-/api/v1/graph?e=2015-03-08T08:00&q=name,sps,:eq&s=e-12h&tz=US/Pacific&tz=UTC
-@@@
-
-If looking at a longer time frame, then it can also throw off the alignment so ticks will not
-be on significant time boundaries, e.g.:
-
-@@@ atlas-uri { hilite=tz }
-/api/v1/graph?e=2015-11-05T08:00&q=name,sps,:eq&s=e-1w&tz=US/Pacific&tz=UTC
+@@@ atlas-uri { hilite=:area }
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:neg,:area,40,:alpha&s=e-1w
 @@@
 
 @@@ atlas-graph { show-expr=false }
-/api/v1/graph?e=2015-11-05T08:00&q=name,sps,:eq&s=e-1w&tz=US/Pacific&tz=UTC
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:neg,:area,40,:alpha&s=e-1w
 @@@
+
+
+## Stack
+
+Stack is similar to [area](#area), but will stack the filled areas on top of each other.
+
+@@@ atlas-uri { hilite=:stack }
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:stack&s=e-1w
+@@@
+
+@@@ atlas-graph { show-expr=false }
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:stack&s=e-1w
+@@@
+
+Similarly for negative values:
+
+@@@ atlas-uri { hilite=:stack }
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:neg,:stack&s=e-1w
+@@@
+
+@@@ atlas-graph { show-expr=false }
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:neg,:stack&s=e-1w
+@@@
+
+
+## Stacked Percentage
+
+The [stack](#stack) style can be combined with the [:pct](math-pct) operator to get a stacked
+percentage chart for a group by:
+
+@@@ atlas-uri { hilite=:pct }
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:pct,:stack&s=e-1w
+@@@
+
+@@@ atlas-graph { show-expr=false }
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:pct,:stack&s=e-1w
+@@@
+
+
+## Vertical Span
+
+The vertical span style converts non-zero to spans. This is often used to highlight some portion of
+another line.
+
+@@@ atlas-uri { hilite=:vspan }
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,50e3,:gt,:vspan&s=e-1w
+@@@
+
+@@@ atlas-graph { show-expr=false }
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,50e3,:gt,:vspan&s=e-1w
+@@@
+
+
+## Combinations
+
+Line styles can be combined, e.g., to highlight the portion of a line that is above a
+threshold:
+
+@@@ atlas-uri
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,5003,:gt,:vspan,40,:alpha,50e3&s=e-1w
+@@@
+
+@@@ atlas-graph { show-expr=false }
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,50e3,:gt,:vspan,40,:alpha,50e3&s=e-1w
+@@@
+
+
+## Layering
+
+The z-order is based on the order of the expression on the stack.
+
+@@@ atlas-uri
+/api/v1/graph?e=2015-03-10T13:13&no_legend=1&q=t,name,sps,:eq,:sum,:set,t,:get,:stack,t,:get,1.1,:mul,6h,:offset,t,:get,4,:div,:stack&s=e-2d
+@@@
+
+@@@ atlas-graph { show-expr=false }
+/api/v1/graph?e=2015-03-10T13:13&no_legend=1&q=t,name,sps,:eq,:sum,:set,t,:get,:stack,t,:get,1.1,:mul,6h,:offset,t,:get,4,:div,:stack&s=e-2d
+@@@
+
