@@ -43,8 +43,8 @@ nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-avg
 nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-avg,(,nf.asg,),:by
 ```
 
-[:cq]: https://github.com/Netflix/atlas/wiki/math-cq
-[:dist-avg]: https://github.com/Netflix/atlas/wiki/math-dist%E2%80%90avg
+[:cq]: ../../../asl/ref/cq.md
+[:dist-avg]: ../../../asl/ref/dist-avg.md
 
 ## Maximum Measurement (:dist-max)
 

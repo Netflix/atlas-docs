@@ -9,9 +9,9 @@ Estimate percentiles for a timer or distribution summary. The data must have bee
 published appropriately to allow the approximation. If using
 [spectator], then see [PercentileTimer] and [PercentileDistributionSummary] helper classes.
 
-[spectator]: http://netflix.github.io/spectator/en/latest/
-[PercentileTimer]: http://netflix.github.io/spectator/en/latest/javadoc/spectator-api/com/netflix/spectator/api/histogram/PercentileTimer.html
-[PercentileDistributionSummary]: http://netflix.github.io/spectator/en/latest/javadoc/spectator-api/com/netflix/spectator/api/histogram/PercentileDistributionSummary.html
+[spectator]: ../../spectator/index.md
+[PercentileTimer]: https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/histogram/PercentileTimer.html
+[PercentileDistributionSummary]: https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/histogram/PercentileDistributionSummary.html
 
 The percentile values can be shown in the legend using `$percentile`.
 

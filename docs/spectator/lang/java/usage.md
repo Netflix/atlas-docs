@@ -110,7 +110,7 @@ public class Server {
 ## Netflix Integration
 
 When running at Netflix, use the `atlas-client` library to enable transferring the
-instrumented data to [Atlas](http://github.com/Netflix/atlas/wiki/). See the appropriate
+instrumented data to [Atlas](../../../index.md). See the appropriate
 section for the type of project you are working on:
 
 * [Libraries](#libraries)
