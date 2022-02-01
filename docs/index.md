@@ -1,4 +1,3 @@
-
 # Atlas
 
 <img src="images/atlas_logo.png" width="230" height="230" align="left"></img>
@@ -19,7 +18,6 @@ large quantity of data and can scale with the hardware we use to analyze and sto
 
 For details and background on the project please read through the [overview](./overview.md) page.
 
-Check out the [[getting started]] page for an introduction to using Atlas in the cloud
-environment. Once you've explored the example, check out the stack language references to see
-the various types of information you can access.
-
+Check out the [getting started](./getting-started.md) page for an introduction to using Atlas in
+the cloud environment. Once you've explored the example, check out the stack language references to
+see the various types of information you can access.
