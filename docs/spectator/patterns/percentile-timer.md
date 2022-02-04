@@ -5,8 +5,14 @@ This Timer type will track the data distribution for the timer by maintaining a 
 The distribution can then be used on the server side to estimate percentiles, while still allowing
 for arbitrary slicing and dicing based on dimensions.
 
-<span style="color:red">**Percentile Timers are expensive compared to basic Timers from the
-Registry.**</span> In order to maintain the data distribution, they have a higher storage cost,
+!!! Warning
+Please be selective about what you measure as there is significant overhead on both
+the client and storage side. Usually only one or two key performance indicators (KPIs)
+per application. Limit the tag cardinality as much as possible. For example, only
+include an endpoint tag, not a user agent or response code. Use one of the other meter
+types whenever possible.
+
+In order to maintain the data distribution, they have a higher storage cost,
 with a worst-case of up to 300X that of a standard Timer. Be diligent about any additional
 dimensions added to Percentile Timers and ensure that they have a small bounded cardinality. In
 addition, it is highly recommended to set a range, whenever possible, to restrict the worst case
