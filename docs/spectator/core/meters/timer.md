@@ -1,33 +1,71 @@
-# Timers
+# Timer
 
-A Timer is used to measure how long (in seconds) some event is taking. Two types of Timers
-are supported:
+A Timer is used to measure how long (in seconds) some event is taking. Timer measurements
+are typically short, less than 1 minute. 
 
-* `Timer`: for frequent short-duration events.
-* `LongTaskTimer`: for long-running tasks.
+A selection of specialized timers include: 
 
-The long-duration Timer is setup so that you can track the time while an event being measured is
-still running. A regular Timer just records the duration and has no information until the task is
-complete.
+* `LongTaskTimer` - Periodically reports the time taken for a long running task (> 1 minute). See
+  the [Long Task Timer] pattern for details.
+* `PercentileTimer` - Useful if percentile approximations are needed in addition to basic stats.
+  See the [Percentile Timer] pattern for details.
 
-As an example, consider a chart showing request latency to a typical web server. The expectation
-is many short requests, so the timer will be getting updated many times per second.
+[Long Task Timer]: ../../patterns/long-task-timer.md
+[Percentile Timer]: ../../patterns/percentile-timer.md
 
-![Request Latency](../../../images/request_latency.png)
+## Querying
 
-Now consider a background process to refresh metadata from a data store. For example, Edda caches
-AWS resources such as instances, volumes, auto-scaling groups etc. Normally, all data can be
-refreshed in a few minutes. If the AWS services are having problems, it can take much longer. A
-long duration timer can be used to track the overall time for refreshing the metadata.
+!!! Note
+    Timers report summarized statistics about the measurements for a time window
+    including the `totalTime`, `count`, `max` and `totalOfSquares`. If you were to simply query for
+    the name of your timer via
 
-The charts below show max latency for the refresh using a regular timer and a long task timer.
-Regular timer, note that the y-axis is using a logarithmic scale:
+    @@@ atlas-stacklang
+    /api/v1/graph?q=nnf.cluster,foo,:eq,name,http.req.latency,:eq,:and
+    @@@
 
-![Regular Timer](../../../images/regular_timer.png)
+    you would get a nonsense value that is the sum of the reported statistics.
 
-Long Task Timer:
+When querying the results of a timer, use one of the operators below to generate a useful 
+response.
 
-![Long Task Timer](../../../images/duration_timer.png)
+### Average Measurement (:dist-avg)
+
+To compute the average latency across an arbitrary group, use the [:dist-avg] function:
+
+@@@ atlas-stacklang
+/api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,
+:dist-avg,(,nf.asg,),:by
+@@@
+
+[:dist-avg]: ../../../asl/ref/dist-avg.md
+
+### Maximum Measurement (:dist-max)
+
+To compute the maximum latency across a group, use [:dist-max]:
+
+@@@ atlas-stacklang
+/api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,
+:dist-max,(,nf.asg,),:by
+@@@
+
+[:dist-max]: ../../../asl/ref/dist-max.md
+
+### Standard Deviation of Measurement (:dist-stddev)
+
+To compute the standard deviation of measurements across all instances for a time interval:
+
+@@@ atlas-stacklang
+/api/v1/graph?q=nnf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-stddev
+@@@
+
+[:dist-stddev]: ../../../asl/ref/dist-stddev.md
+
+### Raw Statistics
+
+Note that it is possible to plot the individual statics by filtering on the `statistic` tag.
+If you choose to do so, note that the `count`, `totalAmount` and `totalOfSquares` are counters
+thus reported as rates per second, while the `max` is reported as a gauge.
 
 ## Languages
 
