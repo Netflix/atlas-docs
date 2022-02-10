@@ -3049,23 +3049,43 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#querying" class="md-nav__link">
+    Querying
+  </a>
+  
+    <nav class="md-nav" aria-label="Querying">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#average-measurement-dist-avg" class="md-nav__link">
     Average Measurement (:dist-avg)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#maximum-measurement-dist-max" class="md-nav__link">
     Maximum Measurement (:dist-max)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#standard-deviation-of-measurement-dist-stddev" class="md-nav__link">
     Standard Deviation of Measurement (:dist-stddev)
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raw-statistics" class="md-nav__link">
+    Raw Statistics
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4487,23 +4507,43 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#querying" class="md-nav__link">
+    Querying
+  </a>
+  
+    <nav class="md-nav" aria-label="Querying">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#average-measurement-dist-avg" class="md-nav__link">
     Average Measurement (:dist-avg)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#maximum-measurement-dist-max" class="md-nav__link">
     Maximum Measurement (:dist-max)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#standard-deviation-of-measurement-dist-stddev" class="md-nav__link">
     Standard Deviation of Measurement (:dist-stddev)
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raw-statistics" class="md-nav__link">
+    Raw Statistics
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4552,39 +4592,53 @@
                 
                 
                 <h1 id="distribution-summary">Distribution Summary<a class="headerlink" href="#distribution-summary" title="Permanent link">&para;</a></h1>
-<p>A Distribution Summary is used to track the distribution of events. It is similar to a <a href="../timer/">Timer</a>, but
+<p>A Distribution Summary is used to track the distribution of events. It is similar to a [Timer], but
 more general, in that the size does not have to be a period of time. For example, a distribution
-summary could be used to measure the payload sizes of requests hitting a server.</p>
+summary could be used to measure the payload sizes of requests hitting a server or the number of
+records returned from a query.</p>
 <p>It is recommended to always use base units when recording the data. So, if measuring the payload
 size use bytes, not kilobytes or some other unit. This allows the presentation layer for graphing
 to use either SI or IEC prefixes in a natural manner, and you do not need to consider the meaning
 of something like "milli-milliseconds".</p>
-<h2 id="average-measurement-dist-avg">Average Measurement (:dist-avg)<a class="headerlink" href="#average-measurement-dist-avg" title="Permanent link">&para;</a></h2>
-<p>For <a href="../timer/">Timer</a> and Distribution Summary metrics, the <code>totalTime</code>/<code>totalAmount</code> and <code>count</code> are
-collected each time a measurement is taken. If this technique was applied to a request latency
-metric, then you would have the average latency per request for an arbitrary grouping. These
-types of metrics have an explicit count based on activity. To get an average per measurement 
-manually:</p>
-<div class="highlight"><pre><span></span><code>statistic,totalTime,:eq,:sum,
-statistic,count,:eq,:sum,
-:div
-</code></pre></div>
-<p>This expression can be bound to a query using the <a href="../../../../asl/ref/cq/">:cq</a> (common query) operator:</p>
-<div class="highlight"><pre><span></span><code>statistic,totalTime,:eq,:sum,
-statistic,count,:eq,:sum,
-:div
-nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:cq
-</code></pre></div>
-<p>To make this process easier, Atlas provides a <a href="../../../../asl/ref/dist-avg/">:dist-avg</a> function that is used in the same
-manner as a built-in aggregate function:</p>
-<div class="highlight"><pre><span></span><code>nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-avg
+<h2 id="querying">Querying<a class="headerlink" href="#querying" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Timers report summarized statistics about the measurements for a time window
+including the <code>totalAmount</code>, <code>count</code>, <code>max</code> and <code>totalOfSquares</code>. If you were to simply query for
+the name of your timer via</p>
+<pre>nf.cluster,foo,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+name,http.req.payload.size,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+<a href="https://netflix.github.io/atlas-docs/asl/ref/and/">:and</a>
+</pre>
+<p>you would get a nonsense value that is the sum of the reported statistics.</p>
+</div>
+<p>When querying the results of a timer, use one of the operators below to generate a useful
+response.</p>
+<h3 id="average-measurement-dist-avg">Average Measurement (:dist-avg)<a class="headerlink" href="#average-measurement-dist-avg" title="Permanent link">&para;</a></h3>
+<p>To compute the average latency across an arbitrary group, use the <a href="../../../../asl/ref/dist-avg/">:dist-avg</a> function:</p>
+<pre>nf.cluster,foo,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+name,http.req.payload.size,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+<a href="https://netflix.github.io/atlas-docs/asl/ref/and/">:and</a>,
 
-nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-avg,(,nf.asg,),:by
-</code></pre></div>
-<h2 id="maximum-measurement-dist-max">Maximum Measurement (:dist-max)<a class="headerlink" href="#maximum-measurement-dist-max" title="Permanent link">&para;</a></h2>
-<p>TBD</p>
-<h2 id="standard-deviation-of-measurement-dist-stddev">Standard Deviation of Measurement (:dist-stddev)<a class="headerlink" href="#standard-deviation-of-measurement-dist-stddev" title="Permanent link">&para;</a></h2>
-<p>TBD</p>
+</pre>
+<h3 id="maximum-measurement-dist-max">Maximum Measurement (:dist-max)<a class="headerlink" href="#maximum-measurement-dist-max" title="Permanent link">&para;</a></h3>
+<p>To compute the maximum latency across a group, use <a href="../../../../asl/ref/dist-max/">:dist-max</a>:</p>
+<pre>nf.cluster,foo,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+name,http.req.payload.size,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+<a href="https://netflix.github.io/atlas-docs/asl/ref/and/">:and</a>,
+
+</pre>
+<h3 id="standard-deviation-of-measurement-dist-stddev">Standard Deviation of Measurement (:dist-stddev)<a class="headerlink" href="#standard-deviation-of-measurement-dist-stddev" title="Permanent link">&para;</a></h3>
+<p>To compute the standard deviation of measurements across all instances for a time interval:</p>
+<pre>nnf.cluster,foo,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+name,http.req.payload.size,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+<a href="https://netflix.github.io/atlas-docs/asl/ref/and/">:and</a>,
+<a href="https://netflix.github.io/atlas-docs/asl/ref/dist-stddev/">:dist-stddev</a>
+</pre>
+<h3 id="raw-statistics">Raw Statistics<a class="headerlink" href="#raw-statistics" title="Permanent link">&para;</a></h3>
+<p>Note that it is possible to plot the individual statics by filtering on the <code>statistic</code> tag.
+If you choose to do so, note that the <code>count</code>, <code>totalAmount</code> and <code>totalOfSquares</code> are counters
+thus reported as rates per second, while the <code>max</code> is reported as a gauge.</p>
 <h2 id="languages">Languages<a class="headerlink" href="#languages" title="Permanent link">&para;</a></h2>
 <h3 id="first-class-support">First-Class Support<a class="headerlink" href="#first-class-support" title="Permanent link">&para;</a></h3>
 <ul>

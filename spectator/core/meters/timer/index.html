@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#timers" class="md-skip">
+        <a href="#timer" class="md-skip">
           Skip to content
         </a>
       
@@ -3073,6 +3073,47 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#querying" class="md-nav__link">
+    Querying
+  </a>
+  
+    <nav class="md-nav" aria-label="Querying">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#average-measurement-dist-avg" class="md-nav__link">
+    Average Measurement (:dist-avg)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maximum-measurement-dist-max" class="md-nav__link">
+    Maximum Measurement (:dist-max)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#standard-deviation-of-measurement-dist-stddev" class="md-nav__link">
+    Standard Deviation of Measurement (:dist-stddev)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raw-statistics" class="md-nav__link">
+    Raw Statistics
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#languages" class="md-nav__link">
     Languages
   </a>
@@ -4466,6 +4507,47 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#querying" class="md-nav__link">
+    Querying
+  </a>
+  
+    <nav class="md-nav" aria-label="Querying">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#average-measurement-dist-avg" class="md-nav__link">
+    Average Measurement (:dist-avg)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maximum-measurement-dist-max" class="md-nav__link">
+    Maximum Measurement (:dist-max)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#standard-deviation-of-measurement-dist-stddev" class="md-nav__link">
+    Standard Deviation of Measurement (:dist-stddev)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raw-statistics" class="md-nav__link">
+    Raw Statistics
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#languages" class="md-nav__link">
     Languages
   </a>
@@ -4509,28 +4591,55 @@
                   </a>
                 
                 
-                <h1 id="timers">Timers<a class="headerlink" href="#timers" title="Permanent link">&para;</a></h1>
-<p>A Timer is used to measure how long (in seconds) some event is taking. Two types of Timers
-are supported:</p>
+                <h1 id="timer">Timer<a class="headerlink" href="#timer" title="Permanent link">&para;</a></h1>
+<p>A Timer is used to measure how long (in seconds) some event is taking. Timer measurements
+are typically short, less than 1 minute. </p>
+<p>A selection of specialized timers include: </p>
 <ul>
-<li><code>Timer</code>: for frequent short-duration events.</li>
-<li><code>LongTaskTimer</code>: for long-running tasks.</li>
+<li><code>LongTaskTimer</code> - Periodically reports the time taken for a long running task (&gt; 1 minute). See
+  the <a href="../../../patterns/long-task-timer/">Long Task Timer</a> pattern for details.</li>
+<li><code>PercentileTimer</code> - Useful if percentile approximations are needed in addition to basic stats.
+  See the <a href="../../../patterns/percentile-timer/">Percentile Timer</a> pattern for details.</li>
 </ul>
-<p>The long-duration Timer is setup so that you can track the time while an event being measured is
-still running. A regular Timer just records the duration and has no information until the task is
-complete.</p>
-<p>As an example, consider a chart showing request latency to a typical web server. The expectation
-is many short requests, so the timer will be getting updated many times per second.</p>
-<p><img alt="Request Latency" src="../../../../images/request_latency.png" /></p>
-<p>Now consider a background process to refresh metadata from a data store. For example, Edda caches
-AWS resources such as instances, volumes, auto-scaling groups etc. Normally, all data can be
-refreshed in a few minutes. If the AWS services are having problems, it can take much longer. A
-long duration timer can be used to track the overall time for refreshing the metadata.</p>
-<p>The charts below show max latency for the refresh using a regular timer and a long task timer.
-Regular timer, note that the y-axis is using a logarithmic scale:</p>
-<p><img alt="Regular Timer" src="../../../../images/regular_timer.png" /></p>
-<p>Long Task Timer:</p>
-<p><img alt="Long Task Timer" src="../../../../images/duration_timer.png" /></p>
+<h2 id="querying">Querying<a class="headerlink" href="#querying" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Timers report summarized statistics about the measurements for a time window
+including the <code>totalTime</code>, <code>count</code>, <code>max</code> and <code>totalOfSquares</code>. If you were to simply query for
+the name of your timer via</p>
+<pre>nnf.cluster,foo,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+name,http.req.latency,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+<a href="https://netflix.github.io/atlas-docs/asl/ref/and/">:and</a>
+</pre>
+<p>you would get a nonsense value that is the sum of the reported statistics.</p>
+</div>
+<p>When querying the results of a timer, use one of the operators below to generate a useful 
+response.</p>
+<h3 id="average-measurement-dist-avg">Average Measurement (:dist-avg)<a class="headerlink" href="#average-measurement-dist-avg" title="Permanent link">&para;</a></h3>
+<p>To compute the average latency across an arbitrary group, use the <a href="../../../../asl/ref/dist-avg/">:dist-avg</a> function:</p>
+<pre>nf.cluster,foo,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+name,http.req.latency,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+<a href="https://netflix.github.io/atlas-docs/asl/ref/and/">:and</a>,
+
+</pre>
+<h3 id="maximum-measurement-dist-max">Maximum Measurement (:dist-max)<a class="headerlink" href="#maximum-measurement-dist-max" title="Permanent link">&para;</a></h3>
+<p>To compute the maximum latency across a group, use <a href="../../../../asl/ref/dist-max/">:dist-max</a>:</p>
+<pre>nf.cluster,foo,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+name,http.req.latency,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+<a href="https://netflix.github.io/atlas-docs/asl/ref/and/">:and</a>,
+
+</pre>
+<h3 id="standard-deviation-of-measurement-dist-stddev">Standard Deviation of Measurement (:dist-stddev)<a class="headerlink" href="#standard-deviation-of-measurement-dist-stddev" title="Permanent link">&para;</a></h3>
+<p>To compute the standard deviation of measurements across all instances for a time interval:</p>
+<pre>nnf.cluster,foo,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+name,http.req.latency,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
+<a href="https://netflix.github.io/atlas-docs/asl/ref/and/">:and</a>,
+<a href="https://netflix.github.io/atlas-docs/asl/ref/dist-stddev/">:dist-stddev</a>
+</pre>
+<h3 id="raw-statistics">Raw Statistics<a class="headerlink" href="#raw-statistics" title="Permanent link">&para;</a></h3>
+<p>Note that it is possible to plot the individual statics by filtering on the <code>statistic</code> tag.
+If you choose to do so, note that the <code>count</code>, <code>totalAmount</code> and <code>totalOfSquares</code> are counters
+thus reported as rates per second, while the <code>max</code> is reported as a gauge.</p>
 <h2 id="languages">Languages<a class="headerlink" href="#languages" title="Permanent link">&para;</a></h2>
 <h3 id="first-class-support">First-Class Support<a class="headerlink" href="#first-class-support" title="Permanent link">&para;</a></h3>
 <ul>

@@ -4510,12 +4510,19 @@
                 
                 
                 <h1 id="counter">Counter<a class="headerlink" href="#counter" title="Permanent link">&para;</a></h1>
-<p>A Counter is used to measure the rate at which some event is occurring. Considering a simple 
+<p>A Counter is used to measure the rate at which some event is occurring. Considering a simple
 queue, Counters could be used to measure things like the rate at which items are being inserted
 and removed.</p>
-<p>Counters are reported to the backend as a rate-per-second.</p>
-<p>In Atlas, the <code>:per-step</code> operator can be used to convert them back into a value-per-step on a
-graph.</p>
+<p>Counters are reported to the backend as a rate-per-second. This makes it much easier
+to reason about the measurement and allows for aggregating the counter across instances.</p>
+<p>In Atlas, the <code>:per-step</code> operator can be used to convert them back into a count-per-step on a
+graph. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For high performance code, such as incrementing in a tight loop that lasts less than a 
+reporting interval, increment a local variable and add the final value to the counter after 
+the loop has completed.</p>
+</div>
 <h2 id="languages">Languages<a class="headerlink" href="#languages" title="Permanent link">&para;</a></h2>
 <h3 id="first-class-support">First-Class Support<a class="headerlink" href="#first-class-support" title="Permanent link">&para;</a></h3>
 <ul>
