@@ -4703,14 +4703,14 @@ Timers) using a dimensional data model.</p>
 </code></pre></div>
 <h2 id="netflix-integration">Netflix Integration<a class="headerlink" href="#netflix-integration" title="Permanent link">&para;</a></h2>
 <p>Create a Netflix Spectator Config to be used by <a href="#spectator-js">spectator-js</a>.</p>
-<p>Only applications should depend on the <code>nflx-spectator-jsconf</code> package. Libraries should get the
+<p>Only applications should depend on the <code>@netflix-internal/spectator-conf</code> package. Libraries should get the
 Registry passed by the application, and therefore should only need to depend on <a href="#spectator-js">spectator-js</a>.</p>
 <p>Add the following dependencies to <code>package.json</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;nflx-spectator&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
     <span class="nt">&quot;nflx-spectator-nodejsmetrics&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;nflx-spectator-jsconf&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
+    <span class="nt">&quot;@netflix-internal/spectator-conf&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -4720,7 +4720,7 @@ specified logger should provide <code>debug</code>, <code>info</code>, and <code
 logs to stdout.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">spectator</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;nflx-spectator&#39;</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">NodeMetrics</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;nflx-spectator-nodejsmetrics&#39;</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">getSpectatorConfig</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;nflx-spectator-jsconf&#39;</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">getSpectatorConfig</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@netflix-internal/spectator-conf&#39;</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;pino&#39;</span><span class="p">)();</span>
 
 <span class="c1">//...</span>
