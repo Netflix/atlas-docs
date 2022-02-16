@@ -163,7 +163,7 @@ registry.stop();
 
 Create a Netflix Spectator Config to be used by [spectator-js].
 
-Only applications should depend on the `nflx-spectator-jsconf` package. Libraries should get the
+Only applications should depend on the `@netflix-internal/spectator-conf` package. Libraries should get the
 Registry passed by the application, and therefore should only need to depend on [spectator-js].
 
 Add the following dependencies to `package.json`:
@@ -173,7 +173,7 @@ Add the following dependencies to `package.json`:
   "dependencies": {
     "nflx-spectator": "*",
     "nflx-spectator-nodejsmetrics": "*",
-    "nflx-spectator-jsconf": "*"
+    "@netflix-internal/spectator-conf": "*"
   }
 }
 ```
@@ -187,7 +187,7 @@ logs to stdout.
 ```js
 const spectator = require('nflx-spectator');
 const NodeMetrics = require('nflx-spectator-nodejsmetrics');
-const getSpectatorConfig = require('nflx-spectator-jsconf');
+const getSpectatorConfig = require('@netflix-internal/spectator-conf');
 const logger = require('pino')();
 
 //...
