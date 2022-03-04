@@ -4603,7 +4603,7 @@ of something like "milli-milliseconds".</p>
 <h2 id="querying">Querying<a class="headerlink" href="#querying" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Timers report summarized statistics about the measurements for a time window
+<p>Distribution summaries report summarized statistics about the measurements for a time window
 including the <code>totalAmount</code>, <code>count</code>, <code>max</code> and <code>totalOfSquares</code>. If you were to simply query for
 the name of your timer via</p>
 <pre>nf.cluster,foo,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
@@ -4612,8 +4612,8 @@ name,http.req.payload.size,<a href="https://netflix.github.io/atlas-docs/asl/ref
 </pre>
 <p>you would get a nonsense value that is the sum of the reported statistics.</p>
 </div>
-<p>When querying the results of a timer, use one of the operators below to generate a useful
-response.</p>
+<p>When querying the results of a distribution summary, either select <em>one</em> of the statistics above
+via a filter, or use one of the operators below to generate a useful response.</p>
 <h3 id="average-measurement-dist-avg">Average Measurement (:dist-avg)<a class="headerlink" href="#average-measurement-dist-avg" title="Permanent link">&para;</a></h3>
 <p>To compute the average latency across an arbitrary group, use the <a href="../../../../asl/ref/dist-avg/">:dist-avg</a> function:</p>
 <pre>nf.cluster,foo,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
