@@ -13,7 +13,7 @@ of something like "milli-milliseconds".
 ## Querying
 
 !!! Note
-    Timers report summarized statistics about the measurements for a time window
+    Distribution summaries report summarized statistics about the measurements for a time window
     including the `totalAmount`, `count`, `max` and `totalOfSquares`. If you were to simply query for
     the name of your timer via
 
@@ -23,8 +23,8 @@ of something like "milli-milliseconds".
 
     you would get a nonsense value that is the sum of the reported statistics.
 
-When querying the results of a timer, use one of the operators below to generate a useful
-response.
+When querying the results of a distribution summary, either select *one* of the statistics above
+via a filter, or use one of the operators below to generate a useful response.
 
 ### Average Measurement (:dist-avg)
 
