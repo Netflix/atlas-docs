@@ -57,4 +57,4 @@ Notice that the casing for the query does not match the data. The regular expres
 be automatically anchored at the start. For more information on supported patterns, see the
 [Java regular expressions] documentation.
 
-[Java regular expressions]: https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/regex/Pattern.html
+[Java regular expressions]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html

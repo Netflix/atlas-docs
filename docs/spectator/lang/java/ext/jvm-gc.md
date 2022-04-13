@@ -8,7 +8,7 @@ some basic GC logging and metrics.
 * [Metrics](#metrics)
 * [Alerting](#alerting)
 
-[GarbageCollectorMXBean]: http://docs.oracle.com/javase/7/docs/api/java/lang/management/GarbageCollectorMXBean.html
+[GarbageCollectorMXBean]: https://docs.oracle.com/en/java/javase/17/docs/api/java.management/java/lang/management/GarbageCollectorMXBean.html
 
 ## Getting Started
 
@@ -83,7 +83,9 @@ the amount allocated since the previous GC event.
 
 **Unit:** bytes/second
 
-**Dimensions:** n/a
+**Dimensions:**
+
+* None.
 
 ### jvm.gc.promotionRate
 
@@ -98,7 +100,9 @@ abs(oldGen.sizeAfterGC - oldGen.sizeBeforeGC)
 
 **Unit:** bytes/second
 
-**Dimensions:** n/a
+**Dimensions:**
+
+* None.
 
 ### jvm.gc.liveDataSize
 
@@ -111,7 +115,9 @@ of the memory pool:
 
 **Unit:** bytes
 
-**Dimensions:** n/a
+**Dimensions:**
+
+* None.
 
 ### jvm.gc.maxDataSize
 
@@ -120,7 +126,9 @@ live data size.
 
 **Unit:** bytes
 
-**Dimensions:** n/a
+**Dimensions:**
+
+* None.
 
 ### jvm.gc.pause
 
@@ -135,8 +143,8 @@ the typical values seen are `end_of_major_GC` and `end_of_minor_GC`.
 * `cause`: cause that instigated GC ([getGcCause]). For an explanation of common causes see the
 [GC causes](jvm-gc-causes.md) page.
 
-[getGcAction]: http://docs.oracle.com/javase/7/docs/jre/api/management/extension/com/sun/management/GarbageCollectionNotificationInfo.html#getGcAction()
-[getGcCause]: http://docs.oracle.com/javase/7/docs/jre/api/management/extension/com/sun/management/GarbageCollectionNotificationInfo.html#getGcCause()
+[getGcAction]: https://docs.oracle.com/en/java/javase/17/docs/api/jdk.management/com/sun/management/GarbageCollectionNotificationInfo.html#getGcAction()
+[getGcCause]: https://docs.oracle.com/en/java/javase/17/docs/api/jdk.management/com/sun/management/GarbageCollectionNotificationInfo.html#getGcCause()
 
 ### jvm.gc.concurrentPhaseTime
 

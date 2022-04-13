@@ -25,7 +25,7 @@ Java usage example:
 long currentTime = registry.clock().wallTime();
 ```
 
-[System.currentTimeMillis()]: https://docs.oracle.com/javase/8/docs/api/java/lang/System.html#currentTimeMillis--
+[System.currentTimeMillis()]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#currentTimeMillis()
 [ntpd]: https://en.wikipedia.org/wiki/Ntpd
 
 ## Monotonic Time
@@ -79,5 +79,5 @@ timer.record(() -> {
 Assert.assertEquals(timer.totalTime(), 42L);
 ```
 
-[System.nanoTime()]: https://docs.oracle.com/javase/8/docs/api/java/lang/System.html#nanoTime--
+[System.nanoTime()]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#nanoTime()
 [ManualClock]: https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/ManualClock.html

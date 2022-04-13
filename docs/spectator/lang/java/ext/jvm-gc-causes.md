@@ -6,7 +6,7 @@ file in the jdk and we include some information on what these mean for the appli
 
 ### System.gc__
 
-Something called [System.gc()](http://docs.oracle.com/javase/7/docs/api/java/lang/System.html#gc()).
+Something called [System.gc()](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#gc()).
 If you are seeing this once an hour it is likely related to the RMI GC interval. For more
 details see:
 
@@ -31,13 +31,13 @@ just before the jvm exits. The `-Xaprof` option was removed in java 8.
 ### JvmtiEnv_ForceGarbageCollection
 
 Something called the JVM tool interface function
-[ForceGarbageCollection](https://docs.oracle.com/javase/8/docs/platform/jvmti/jvmti.html#ForceGarbageCollection).
+[ForceGarbageCollection](https://docs.oracle.com/en/java/javase/17/docs/specs/jvmti.html#ForceGarbageCollection).
 Look at the `-agentlib` param to java to see what agents are configured.
 
 ### GCLocker_Initiated_GC
 
 The GC locker prevents GC from occurring when JNI code is in a
-[critical region](http://docs.oracle.com/javase/8/docs/technotes/guides/jni/spec/functions.html#GetPrimitiveArrayCritical_ReleasePrimitiveArrayCritical).
+[critical region](https://docs.oracle.com/en/java/javase/17/docs/specs/jni/functions.html#getprimitivearraycritical-releaseprimitivearraycritical).
 If GC is needed while a thread is in a critical region, then it will allow them to complete,
 i.e. call the corresponding release function. Other threads will not be permitted to enter a
 critical region. Once all threads are out of critical regions a GC event will be triggered. 
@@ -45,19 +45,19 @@ critical region. Once all threads are out of critical regions a GC event will be
 ### Heap_Inspection_Initiated_GC
 
 GC was initiated by an inspection operation on the heap. For example you can trigger this
-with [jmap](http://docs.oracle.com/javase/7/docs/technotes/tools/share/jmap.html):
+with [jmap](https://docs.oracle.com/en/java/javase/17/docs/specs/man/jmap.html):
 
 `$ jmap -histo:live <pid>`
 
 ### Heap_Dump_Initiated_GC
 
 GC was initiated before dumping the heap. For example you can trigger this with
-[jmap](http://docs.oracle.com/javase/7/docs/technotes/tools/share/jmap.html):
+[jmap](https://docs.oracle.com/en/java/javase/17/docs/specs/man/jmap.html):
 
 `$ jmap -dump:live,format=b,file=heap.out <pid>`
 
 Another common example would be clicking the Heap Dump button on the Monitor tab in
-[jvisualvm](http://docs.oracle.com/javase/7/docs/technotes/tools/share/jvisualvm.html).
+[VisualVM](https://visualvm.github.io/).
 
 ### WhiteBox_Initiated_Young_GC
 

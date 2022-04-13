@@ -124,7 +124,7 @@ represents the number of events since the system was initialized. An example of 
 is [ThreadPoolExecutor.getCompletedTaskCount], which returns the number of completed tasks on
 the thread pool.
 
-[ThreadPoolExecutor.getCompletedTaskCount]: https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadPoolExecutor.html#getCompletedTaskCount--
+[ThreadPoolExecutor.getCompletedTaskCount]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ThreadPoolExecutor.html#getCompletedTaskCount()
 
 For sources like this, the `monitorMonotonicCounter` method can be used:
 
