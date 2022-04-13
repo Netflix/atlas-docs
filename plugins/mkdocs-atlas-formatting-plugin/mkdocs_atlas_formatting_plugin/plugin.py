@@ -16,7 +16,6 @@ class AtlasFormattingPlugin(BasePlugin):
     webserver: Optional[AtlasWebServer] = None
 
     def on_pre_build(self, config: Config) -> None:
-        logger.info('pre-build')
         self.webserver = AtlasWebServer()
 
     def on_page_content(self, html: str, page: Page, config: Config, files: Files) -> str:
@@ -27,3 +26,7 @@ class AtlasFormattingPlugin(BasePlugin):
         if config['site_url'] == 'https://netflix.github.io/atlas-docs/':
             logger.info('shutdown webserver')
             self.webserver.shutdown()
+
+    def on_build_error(self, error) -> None:
+        logger.info('shutdown webserver, due to error')
+        self.webserver.shutdown()
