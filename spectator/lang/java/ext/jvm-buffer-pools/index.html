@@ -3655,6 +3655,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../jvm-classloading/" class="md-nav__link">
+        Class Loading
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jvm-compilation/" class="md-nav__link">
+        Compilation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../jvm-gc/" class="md-nav__link">
         Garbage Collection
       </a>
@@ -3681,6 +3705,18 @@
     <li class="md-nav__item">
       <a href="../jvm-memory-pools/" class="md-nav__link">
         Memory Pools
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jvm-threads/" class="md-nav__link">
+        Threads
       </a>
     </li>
   
@@ -4529,16 +4565,15 @@
                 
                 <h1 id="buffer-pools">Buffer Pools<a class="headerlink" href="#buffer-pools" title="Permanent link">&para;</a></h1>
 <p>Buffer pools, such as direct byte buffers, can be monitored at a high level using the
-<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/management/BufferPoolMXBean.html">BufferPoolMXBean</a>
+<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.management/java/lang/management/BufferPoolMXBean.html">BufferPoolMXBean</a>
 provided by the JDK. </p>
 <h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
-<p>To get information about buffer pools in spectator just setup registration of standard MXBeans.
-Note, if you are building an app at Netflix this should happen automatically via the normal
+<p>To get information about buffer pools in Spectator, just setup registration of standard MXBeans.
+Note, if you are building an app at Netflix, then this should happen automatically via the normal
 platform initialization.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.netflix.spectator.api.Spectator</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">com.netflix.spectator.jvm.Jmx</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.netflix.spectator.jvm.Jmx</span><span class="p">;</span>
 
-<span class="n">Jmx</span><span class="p">.</span><span class="na">registerStandardMXBeans</span><span class="p">(</span><span class="n">Spectator</span><span class="p">.</span><span class="na">registry</span><span class="p">());</span>
+<span class="n">Jmx</span><span class="p">.</span><span class="na">registerStandardMXBeans</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
 </code></pre></div>
 <h2 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h2>
 <h3 id="jvmbuffercount">jvm.buffer.count<a class="headerlink" href="#jvmbuffercount" title="Permanent link">&para;</a></h3>
@@ -4590,13 +4625,13 @@ platform initialization.</p>
           </a>
         
         
-          <a href="../jvm-gc/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../jvm-classloading/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Garbage Collection
+                Class Loading
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

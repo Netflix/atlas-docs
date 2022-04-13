@@ -3590,6 +3590,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../jvm-classloading/" class="md-nav__link">
+        Class Loading
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jvm-compilation/" class="md-nav__link">
+        Compilation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../jvm-gc/" class="md-nav__link">
         Garbage Collection
       </a>
@@ -3696,6 +3720,18 @@
   
 </nav>
       
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jvm-threads/" class="md-nav__link">
+        Threads
+      </a>
     </li>
   
 
@@ -4556,17 +4592,15 @@
                 
                 
                 <h1 id="memory-pools">Memory Pools<a class="headerlink" href="#memory-pools" title="Permanent link">&para;</a></h1>
-<p>Uses the <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/management/MemoryPoolMXBean.html">MemoryPoolMXBean</a>
-provided by the JDK to monitor the sizes of java memory spaces such as perm gen, eden, old
-gen, etc. </p>
+<p>Uses the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.management/java/lang/management/MemoryPoolMXBean.html">MemoryPoolMXBean</a>
+provided by the JDK to monitor the sizes of java memory spaces such as perm gen, eden, old gen, etc. </p>
 <h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
-<p>To get information about memory pools in spectator just setup registration of standard MXBeans.
-Note, if you are building an app at Netflix this should happen automatically via the normal
+<p>To get information about memory pools in Spectator, just setup registration of standard MXBeans.
+Note, if you are building an app at Netflix, then this should happen automatically via the normal
 platform initialization.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.netflix.spectator.api.Spectator</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">com.netflix.spectator.jvm.Jmx</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.netflix.spectator.jvm.Jmx</span><span class="p">;</span>
 
-<span class="n">Jmx</span><span class="p">.</span><span class="na">registerStandardMXBeans</span><span class="p">(</span><span class="n">Spectator</span><span class="p">.</span><span class="na">registry</span><span class="p">());</span>
+<span class="n">Jmx</span><span class="p">.</span><span class="na">registerStandardMXBeans</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
 </code></pre></div>
 <h2 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h2>
 <h3 id="jvmmemoryused">jvm.memory.used<a class="headerlink" href="#jvmmemoryused" title="Permanent link">&para;</a></h3>
@@ -4575,11 +4609,13 @@ metric will typically have a sawtooth pattern. For alerting or detecting memory 
 the <a href="../jvm-gc/#jvmgclivedatasize">live data size</a>
 is probably a better option.</p>
 <p><strong>Unit:</strong> bytes</p>
-<p><strong>Dimensions:</strong>
-see <a href="#metric-dimensions">metric dimensions</a></p>
+<p><strong>Dimensions:</strong></p>
+<ul>
+<li>See <a href="#metric-dimensions">metric dimensions</a>.</li>
+</ul>
 <h3 id="jvmmemorycommitted">jvm.memory.committed<a class="headerlink" href="#jvmmemorycommitted" title="Permanent link">&para;</a></h3>
 <p>Gauge reporting the current amount of memory committed. From the
-<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/management/MemoryUsage.html">javadocs</a>,
+<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.management/java/lang/management/MemoryUsage.html">javadocs</a>,
 committed is:</p>
 <blockquote>
 <p>The amount of memory (in bytes) that is guaranteed to be available for use by the Java
@@ -4588,11 +4624,13 @@ The Java virtual machine may release memory to the system and committed could be
 init. committed will always be greater than or equal to used.</p>
 </blockquote>
 <p><strong>Unit:</strong> bytes </p>
-<p><strong>Dimensions:</strong>
-see <a href="#metric-dimensions">metric dimensions</a></p>
+<p><strong>Dimensions:</strong></p>
+<ul>
+<li>See <a href="#metric-dimensions">metric dimensions</a>.</li>
+</ul>
 <h3 id="jvmmemorymax">jvm.memory.max<a class="headerlink" href="#jvmmemorymax" title="Permanent link">&para;</a></h3>
 <p>Gauge reporting the max amount of memory that can be used. From the
-<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/management/MemoryUsage.html">javadocs</a>,
+<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.management/java/lang/management/MemoryUsage.html">javadocs</a>,
 max is:</p>
 <blockquote>
 <p>The maximum amount of memory (in bytes) that can be used for memory management. Its value
@@ -4603,15 +4641,17 @@ memory allocation may fail if it attempts to increase the used memory such that
 system is low on virtual memory).</p>
 </blockquote>
 <p><strong>Unit:</strong> bytes </p>
-<p><strong>Dimensions:</strong>
-see <a href="#metric-dimensions">metric dimensions</a></p>
+<p><strong>Dimensions:</strong></p>
+<ul>
+<li>See <a href="#metric-dimensions">metric dimensions</a>.</li>
+</ul>
 <h2 id="metric-dimensions">Metric Dimensions<a class="headerlink" href="#metric-dimensions" title="Permanent link">&para;</a></h2>
 <p>All memory metrics have the following dimensions:</p>
 <ul>
 <li><code>id</code>: name of the memory pool being reported. The names of the pools vary depending on the
   garbage collector algorithm being used.</li>
 <li><code>memtype</code>: type of memory. It has two possible values: <code>HEAP</code> and <code>NON_HEAP</code>. For more
-  information see the javadocs for <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/management/MemoryType.html">MemoryType</a>.</li>
+  information see the javadocs for <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.management/java/lang/management/MemoryType.html">MemoryType</a>.</li>
 </ul>
                 
               
@@ -4646,13 +4686,13 @@ see <a href="#metric-dimensions">metric dimensions</a></p>
           </a>
         
         
-          <a href="../thread-pools/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../jvm-threads/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Thread Pools
+                Threads
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

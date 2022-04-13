@@ -3588,6 +3588,30 @@
             
   
   
+  
+    <li class="md-nav__item">
+      <a href="../jvm-classloading/" class="md-nav__link">
+        Class Loading
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jvm-compilation/" class="md-nav__link">
+        Compilation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
     
   
   
@@ -3770,6 +3794,18 @@
     <li class="md-nav__item">
       <a href="../jvm-memory-pools/" class="md-nav__link">
         Memory Pools
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jvm-threads/" class="md-nav__link">
+        Threads
       </a>
     </li>
   
@@ -4706,7 +4742,7 @@
                 
                 
                 <h1 id="garbage-collection">Garbage Collection<a class="headerlink" href="#garbage-collection" title="Permanent link">&para;</a></h1>
-<p>The GC module registers with the notification emitter of the <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/management/GarbageCollectorMXBean.html">GarbageCollectorMXBean</a> to provide
+<p>The GC module registers with the notification emitter of the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.management/java/lang/management/GarbageCollectorMXBean.html">GarbageCollectorMXBean</a> to provide
 some basic GC logging and metrics.</p>
 <ul>
 <li><a href="#getting-started">Getting started</a></li>
@@ -4757,7 +4793,10 @@ that is incremented after a GC event by the amount <code>youngGen.sizeBeforeGC</
 <p>However, <code>youngGen.sizeAfterGC</code> should be 0 and thus the size of young gen before the GC is
 the amount allocated since the previous GC event.</p>
 <p><strong>Unit:</strong> bytes/second</p>
-<p><strong>Dimensions:</strong> n/a</p>
+<p><strong>Dimensions:</strong></p>
+<ul>
+<li>None.</li>
+</ul>
 <h3 id="jvmgcpromotionrate">jvm.gc.promotionRate<a class="headerlink" href="#jvmgcpromotionrate" title="Permanent link">&para;</a></h3>
 <p>The promotion rate measures how fast data is being moved from young generation into the old
 generation.</p>
@@ -4765,27 +4804,36 @@ generation.</p>
 <div class="highlight"><pre><span></span><code>abs(oldGen.sizeAfterGC - oldGen.sizeBeforeGC)
 </code></pre></div>
 <p><strong>Unit:</strong> bytes/second</p>
-<p><strong>Dimensions:</strong> n/a</p>
+<p><strong>Dimensions:</strong></p>
+<ul>
+<li>None.</li>
+</ul>
 <h3 id="jvmgclivedatasize">jvm.gc.liveDataSize<a class="headerlink" href="#jvmgclivedatasize" title="Permanent link">&para;</a></h3>
 <p>The live data size is the size of the old generation after a major GC.</p>
 <p>The image below shows how the live data size view compares to a metric showing the current size
 of the memory pool:</p>
 <p><img alt="Live Data Size" src="../../../../../images/live_data_size.png" /></p>
 <p><strong>Unit:</strong> bytes</p>
-<p><strong>Dimensions:</strong> n/a</p>
+<p><strong>Dimensions:</strong></p>
+<ul>
+<li>None.</li>
+</ul>
 <h3 id="jvmgcmaxdatasize">jvm.gc.maxDataSize<a class="headerlink" href="#jvmgcmaxdatasize" title="Permanent link">&para;</a></h3>
 <p>Maximum size for the old generation. Primary use-case is for gaining perspective on the the
 live data size.</p>
 <p><strong>Unit:</strong> bytes</p>
-<p><strong>Dimensions:</strong> n/a</p>
+<p><strong>Dimensions:</strong></p>
+<ul>
+<li>None.</li>
+</ul>
 <h3 id="jvmgcpause">jvm.gc.pause<a class="headerlink" href="#jvmgcpause" title="Permanent link">&para;</a></h3>
 <p>Pause time for a GC event. All of the values reported are stop the world pauses.</p>
 <p><strong>Unit:</strong> seconds</p>
 <p><strong>Dimensions:</strong></p>
 <ul>
-<li><code>action</code>: action performed by the garbage collector (<a href="http://docs.oracle.com/javase/7/docs/jre/api/management/extension/com/sun/management/GarbageCollectionNotificationInfo.html#getGcAction()">getGcAction</a>). There is no guarantee, but
+<li><code>action</code>: action performed by the garbage collector (<a href="https://docs.oracle.com/en/java/javase/17/docs/api/jdk.management/com/sun/management/GarbageCollectionNotificationInfo.html#getGcAction()">getGcAction</a>). There is no guarantee, but
 the typical values seen are <code>end_of_major_GC</code> and <code>end_of_minor_GC</code>.</li>
-<li><code>cause</code>: cause that instigated GC (<a href="http://docs.oracle.com/javase/7/docs/jre/api/management/extension/com/sun/management/GarbageCollectionNotificationInfo.html#getGcCause()">getGcCause</a>). For an explanation of common causes see the
+<li><code>cause</code>: cause that instigated GC (<a href="https://docs.oracle.com/en/java/javase/17/docs/api/jdk.management/com/sun/management/GarbageCollectionNotificationInfo.html#getGcCause()">getGcCause</a>). For an explanation of common causes see the
 <a href="../jvm-gc-causes/">GC causes</a> page.</li>
 </ul>
 <h3 id="jvmgcconcurrentphasetime">jvm.gc.concurrentPhaseTime<a class="headerlink" href="#jvmgcconcurrentphasetime" title="Permanent link">&para;</a></h3>
@@ -4793,9 +4841,9 @@ the typical values seen are <code>end_of_major_GC</code> and <code>end_of_minor_
 <p><strong>Unit:</strong> seconds</p>
 <p><strong>Dimensions:</strong></p>
 <ul>
-<li><code>action</code>: action performed by the garbage collector (<a href="http://docs.oracle.com/javase/7/docs/jre/api/management/extension/com/sun/management/GarbageCollectionNotificationInfo.html#getGcAction()">getGcAction</a>). There is no guarantee, but
+<li><code>action</code>: action performed by the garbage collector (<a href="https://docs.oracle.com/en/java/javase/17/docs/api/jdk.management/com/sun/management/GarbageCollectionNotificationInfo.html#getGcAction()">getGcAction</a>). There is no guarantee, but
 the typical values seen are <code>end_of_major_GC</code> and <code>end_of_minor_GC</code>.</li>
-<li><code>cause</code>: cause that instigated GC (<a href="http://docs.oracle.com/javase/7/docs/jre/api/management/extension/com/sun/management/GarbageCollectionNotificationInfo.html#getGcCause()">getGcCause</a>). For an explanation of common causes see the
+<li><code>cause</code>: cause that instigated GC (<a href="https://docs.oracle.com/en/java/javase/17/docs/api/jdk.management/com/sun/management/GarbageCollectionNotificationInfo.html#getGcCause()">getGcCause</a>). For an explanation of common causes see the
 <a href="../jvm-gc-causes/">GC causes</a> page.</li>
 </ul>
 <h2 id="alerting">Alerting<a class="headerlink" href="#alerting" title="Permanent link">&para;</a></h2>
@@ -4841,7 +4889,7 @@ percentUsed,:legend
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../jvm-buffer-pools/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../jvm-compilation/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -4850,7 +4898,7 @@ percentUsed,:legend
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Buffer Pools
+                Compilation
               </div>
             </div>
           </a>

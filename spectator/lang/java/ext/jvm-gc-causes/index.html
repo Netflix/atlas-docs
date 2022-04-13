@@ -3590,6 +3590,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../jvm-classloading/" class="md-nav__link">
+        Class Loading
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jvm-compilation/" class="md-nav__link">
+        Compilation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../jvm-gc/" class="md-nav__link">
         Garbage Collection
       </a>
@@ -3829,6 +3853,18 @@
     <li class="md-nav__item">
       <a href="../jvm-memory-pools/" class="md-nav__link">
         Memory Pools
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jvm-threads/" class="md-nav__link">
+        Threads
       </a>
     </li>
   
@@ -4828,7 +4864,7 @@
 <a href="http://hg.openjdk.java.net/jdk8u/hs-dev/hotspot/file/tip/src/share/vm/gc_interface/gcCause.cpp">gcCause.cpp</a>
 file in the jdk and we include some information on what these mean for the application.</p>
 <h3 id="systemgc__">System.gc__<a class="headerlink" href="#systemgc__" title="Permanent link">&para;</a></h3>
-<p>Something called <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/System.html#gc()">System.gc()</a>.
+<p>Something called <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#gc()">System.gc()</a>.
 If you are seeing this once an hour it is likely related to the RMI GC interval. For more
 details see:</p>
 <ul>
@@ -4846,24 +4882,24 @@ details see:</p>
 just before the jvm exits. The <code>-Xaprof</code> option was removed in java 8.</p>
 <h3 id="jvmtienv_forcegarbagecollection">JvmtiEnv_ForceGarbageCollection<a class="headerlink" href="#jvmtienv_forcegarbagecollection" title="Permanent link">&para;</a></h3>
 <p>Something called the JVM tool interface function
-<a href="https://docs.oracle.com/javase/8/docs/platform/jvmti/jvmti.html#ForceGarbageCollection">ForceGarbageCollection</a>.
+<a href="https://docs.oracle.com/en/java/javase/17/docs/specs/jvmti.html#ForceGarbageCollection">ForceGarbageCollection</a>.
 Look at the <code>-agentlib</code> param to java to see what agents are configured.</p>
 <h3 id="gclocker_initiated_gc">GCLocker_Initiated_GC<a class="headerlink" href="#gclocker_initiated_gc" title="Permanent link">&para;</a></h3>
 <p>The GC locker prevents GC from occurring when JNI code is in a
-<a href="http://docs.oracle.com/javase/8/docs/technotes/guides/jni/spec/functions.html#GetPrimitiveArrayCritical_ReleasePrimitiveArrayCritical">critical region</a>.
+<a href="https://docs.oracle.com/en/java/javase/17/docs/specs/jni/functions.html#getprimitivearraycritical-releaseprimitivearraycritical">critical region</a>.
 If GC is needed while a thread is in a critical region, then it will allow them to complete,
 i.e. call the corresponding release function. Other threads will not be permitted to enter a
 critical region. Once all threads are out of critical regions a GC event will be triggered. </p>
 <h3 id="heap_inspection_initiated_gc">Heap_Inspection_Initiated_GC<a class="headerlink" href="#heap_inspection_initiated_gc" title="Permanent link">&para;</a></h3>
 <p>GC was initiated by an inspection operation on the heap. For example you can trigger this
-with <a href="http://docs.oracle.com/javase/7/docs/technotes/tools/share/jmap.html">jmap</a>:</p>
+with <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/man/jmap.html">jmap</a>:</p>
 <p><code>$ jmap -histo:live &lt;pid&gt;</code></p>
 <h3 id="heap_dump_initiated_gc">Heap_Dump_Initiated_GC<a class="headerlink" href="#heap_dump_initiated_gc" title="Permanent link">&para;</a></h3>
 <p>GC was initiated before dumping the heap. For example you can trigger this with
-<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/share/jmap.html">jmap</a>:</p>
+<a href="https://docs.oracle.com/en/java/javase/17/docs/specs/man/jmap.html">jmap</a>:</p>
 <p><code>$ jmap -dump:live,format=b,file=heap.out &lt;pid&gt;</code></p>
 <p>Another common example would be clicking the Heap Dump button on the Monitor tab in
-<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/share/jvisualvm.html">jvisualvm</a>.</p>
+<a href="https://visualvm.github.io/">VisualVM</a>.</p>
 <h3 id="whitebox_initiated_young_gc">WhiteBox_Initiated_Young_GC<a class="headerlink" href="#whitebox_initiated_young_gc" title="Permanent link">&para;</a></h3>
 <p>Most likely you'll never see this value. Used for testing hotspot, it indicates something
 called <code>sun.hotspot.WhiteBox.youngGC()</code>. </p>

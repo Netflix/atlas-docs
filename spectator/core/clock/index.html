@@ -3636,6 +3636,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../../lang/java/ext/jvm-classloading/" class="md-nav__link">
+        Class Loading
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/jvm-compilation/" class="md-nav__link">
+        Compilation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../lang/java/ext/jvm-gc/" class="md-nav__link">
         Garbage Collection
       </a>
@@ -3662,6 +3686,18 @@
     <li class="md-nav__item">
       <a href="../../lang/java/ext/jvm-memory-pools/" class="md-nav__link">
         Memory Pools
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/jvm-threads/" class="md-nav__link">
+        Threads
       </a>
     </li>
   
@@ -4501,7 +4537,7 @@ provides two methods for measuring time:</p>
 <h2 id="wall-time">Wall Time<a class="headerlink" href="#wall-time" title="Permanent link">&para;</a></h2>
 <p>This is what most users think of for time. It can be used to get the current time like
 what you would see on a wall clock. In most cases when not running in tests this will
-call <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html#currentTimeMillis--">System.currentTimeMillis()</a>.</p>
+call <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#currentTimeMillis()">System.currentTimeMillis()</a>.</p>
 <p>Note that the values returned by this method may not be monotonically increasing. Just like a
 clock on your wall, this value can go back in time or jump forward at unpredictable intervals,
 if someone sets the time. On many systems, <a href="https://en.wikipedia.org/wiki/Ntpd">ntpd</a> or similar daemons will be constantly keeping
@@ -4531,7 +4567,7 @@ measuring elapsed time, for example:</p>
 <span class="kt">long</span> <span class="n">end</span> <span class="o">=</span> <span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">monotonicTime</span><span class="p">();</span>
 <span class="n">reqLatencyTimer</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">,</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="na">NANOSECONDS</span><span class="p">);</span>
 </code></pre></div>
-<p>In most cases this will map to <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html#nanoTime--">System.nanoTime()</a>. Note the actual value returned is not
+<p>In most cases this will map to <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#nanoTime()">System.nanoTime()</a>. Note the actual value returned is not
 meaningful unless compared with another sample to get a delta.</p>
 <h2 id="manual-clock">Manual Clock<a class="headerlink" href="#manual-clock" title="Permanent link">&para;</a></h2>
 <p>If timing code is written to the Clock interface, then alternative implementations can be
