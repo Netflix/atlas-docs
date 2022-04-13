@@ -21,7 +21,7 @@ Generates a line based on the current time. Supported modes are:
 * days (since epoch)
 
 The mode can also be a value of the enum
-[ChronoField](https://docs.oracle.com/javase/8/docs/api/java/time/temporal/ChronoField.html).
+[ChronoField](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/temporal/ChronoField.html).
 
 Examples:
 

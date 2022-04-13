@@ -58,4 +58,4 @@ case sensitive. Always try to have a simple prefix on the expression to allow fo
 matching of the expression. For more information on supported patterns, see the
 [Java regular expressions] documentation.
 
-[Java regular expressions]: https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/regex/Pattern.html
+[Java regular expressions]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html

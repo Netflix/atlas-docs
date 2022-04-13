@@ -7,7 +7,7 @@ str: String
 
 Format a string using a printf [style pattern][formatter].
 
-[formatter]: https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html
+[formatter]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Formatter.html
 
 Example:
 

@@ -144,4 +144,4 @@ month (`M`), and year (`Y`) are not supported. Examples:
 | P1DT37M    | One day and 37 minutes. |
 | PT5H6M    | Five hours and six minutes. |
 
-For more details see docs on [parsing durations](https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html#parse-java.lang.CharSequence-).
+For more details see docs on [parsing durations](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html#parse(java.lang.CharSequence)).

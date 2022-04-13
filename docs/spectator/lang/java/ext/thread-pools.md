@@ -75,5 +75,5 @@ Gauge showing the current number of threads queued for execution.
 
 **Data Source:** `ThreadPoolExecutor#getQueue().size()`
 
-[ThreadPoolExecutor]: http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadPoolExecutor.html
+[ThreadPoolExecutor]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ThreadPoolExecutor.html
 [ThreadPoolMonitor]: https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/patterns/ThreadPoolMonitor.html
