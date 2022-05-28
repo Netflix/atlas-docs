@@ -2,7 +2,7 @@
 (DES) is a simple technique for generating a smooth trend line from another time series. This
 technique is often used to generate a dynamic threshold for alerting.
 
-!!! warning 
+!!! warning
     Alerts on dynamic thresholds should be expected to be noisy. They are looking
     for strange behavior rather than an actual problem causing impact. Make sure you will
     actually spend the time to tune and investigate the alarms before using this approach.
@@ -17,6 +17,9 @@ The [:des](ref/des.md) operator takes 4 parameters:
 * `training` - the number of intervals to use for warming up before generating an output
 * `alpha` - is a data smoothing factor
 * `beta` - is a trend smoothing factor
+
+!!! note
+    For most use cases, the sliding variant of DES, [:sdes](ref/sdes.md), should be used instead.
 
 ### Training
 
