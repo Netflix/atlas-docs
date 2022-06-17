@@ -6,6 +6,8 @@ There are currently four scales that can be used for an axis:
 * [Power of 2](#power-of-2)
 * [Square Root](#square-root)
 
+See [Tick Labels](tick.md) for information on Y axis label formatting and suffix information.
+
 ## Linear
 
 A linear scale uniformly maps the input values (domain) to the Y-axis location (range).

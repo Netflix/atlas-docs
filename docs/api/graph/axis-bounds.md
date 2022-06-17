@@ -20,6 +20,8 @@ The automatic bounds allows us to see much more detail, but could lead a casual 
 there were frequent large spikes in CPU usage rather than just noise on a machine with very little
 load.
 
+See [Tick Labels](tick.md) for information on Y axis label formatting and suffix information.
+
 ## Default Lower
 
 @@@ atlas-uri

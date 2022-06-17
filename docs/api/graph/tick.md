@@ -1,4 +1,4 @@
-The following tick label modes are supported:
+The following tick (Y axis numeric labels) modes are supported:
 
 * [decimal](#decimal)
 * [binary](#binary)
@@ -54,3 +54,25 @@ way of doing that is to disable the Y-axis labels by setting the tick label mode
 @@@ atlas-graph { show-expr=false }
 /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=off
 @@@
+
+## Offset Labels
+
+In situations where a graph has very small changes in value that generate a significant number
+of digits per tick, ticks may be labeled with offsets in order to fit the labels in
+the layout. A base value is displayed at the bottom of the axis and positive
+or negative offsets from the base displayed next to the ticks. 
+
+For example, if the amount of disk space used varies by 1 byte occasionally, the ticks
+will be labeled by in increments of `+1.0`.
+
+@@@ atlas-graph { show-expr=false }
+/api/v1/graph?e=2012-01-01T00:00&ylabel=bytes&q=hourOfDay,:time,6e10,:const,5,:sub,:add,disk bytes used,:legend
+@@@
+
+!!! note
+    It is possible for queries spanning different data sources to display offset labels due
+    to differing schemes used to encode floating point values.
+
+If offsets are not desirable, try adjusting the y [axis bounds]. 
+
+[axis bounds]: axis-bounds.md
