@@ -25,6 +25,17 @@ Putting it all together:
 /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d
 @@@
 
+The resulting [PNG] plot displays time along the X axis, automatically scaled to the proper
+time range. The Y [axis labels] are scaled using metric prefixes to show the measured value.
+A [legend] is displayed under the plot with the name(s) of the expression results and a set
+of statistics computed on the plotted data for the time window. The small text at the very 
+bottom reflect query parameters and step size along with some processing statistics.
+
+[PNG]: outputs.md
+[axis labels]: tick.md
+[legend]: legends.md
+
+
 ## Adding a Title
 
 The graph title can be set using the `title` parameter. Similarly, a Y-axis label can be set
