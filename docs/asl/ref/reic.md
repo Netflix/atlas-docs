@@ -11,7 +11,7 @@ k: String
     [:re](re.md) intead.
 
 Select time series where the value for a key matches the specified regular expression with
-case insenitive matching. For example, consider the following query:
+case insensitive matching. For example, consider the following query:
 
 @@@ atlas-stacklang { hilite=:reic }
 /api/v1/graph?q=name,ssCPU,:reic
