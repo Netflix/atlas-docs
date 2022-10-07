@@ -32,7 +32,7 @@ when everything is fine.
 
 Our threshold alert above will trigger if the CPU usage is ever recorded to be above the threshold.
 Alert conditions are often combined with a check for the number of occurrences. This is done by
-using the [:rolling-count](stateful-rolling-count) operator to get a line showing how many times
+using the [:rolling-count](ref/rolling-count.md) operator to get a line showing how many times
 the input signal has been true withing a specified window and then applying a second threshold to
 the rolling count.
 

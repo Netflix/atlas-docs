@@ -17,7 +17,7 @@ Input 2 | 1.0 | 0.0 | 0.0 | NaN | NaN |
 Note in many cases `NaN` will appear in data, e.g., if a node was brought up and started
 reporting in the middle of the time window for the graph. This can lead to confusing
 behavior if added to a line that does have data as the result will be `NaN`. Use the
-[sub](math-sub) operator to treat `NaN` values as zero for combining with other time
+[sub](sub.md) operator to treat `NaN` values as zero for combining with other time
 series.
 
 Example subtracting a constant:
