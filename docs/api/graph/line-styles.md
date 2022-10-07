@@ -1,4 +1,4 @@
-There are four [line styles](style-ls) available:
+There are four [line styles](../../asl/ref/ls.md) available:
 
 * [Line](#line)
 * [Area](#area)
@@ -27,8 +27,8 @@ The default style is line.
 
 ## Area
 
-Area will fill the space between the line and 0 on the Y-axis. The [alpha](style-alpha) setting
-is just used to help visualize the overlap.
+Area will fill the space between the line and 0 on the Y-axis. The [alpha](../../asl/ref/alpha.md)
+setting is just used to help visualize the overlap.
 
 @@@ atlas-uri { hilite=:area }
 /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:area,40,:alpha&s=e-1w
@@ -74,7 +74,7 @@ Similarly for negative values:
 
 ## Stacked Percentage
 
-The [stack](#stack) style can be combined with the [:pct](math-pct) operator to get a stacked
+The [stack](#stack) style can be combined with the [:pct](../../asl/ref/pct.md) operator to get a stacked
 percentage chart for a group by:
 
 @@@ atlas-uri { hilite=:pct }

@@ -17,7 +17,7 @@ Input 2 | 1.0 | 0.0 | 0.0 | NaN | NaN |
 Note in many cases `NaN` will appear in data, e.g., if a node was brought up and started
 reporting in the middle of the time window for the graph. Zero divided by zero can also
 occur due to lack of activity in some windows. Unless you really need strict floating
-point behavior, use the [div](math-div) operator to get behavior more appropriate for
+point behavior, use the [div](div.md) operator to get behavior more appropriate for
 graphs.
 
 Example dividing a constant:
