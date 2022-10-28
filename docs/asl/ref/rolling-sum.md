@@ -1,5 +1,4 @@
 @@@ atlas-signature
-minNumValues: Int
 n: Int
 TimeSeriesExpr
 -->
