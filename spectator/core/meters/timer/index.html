@@ -4668,14 +4668,16 @@ response.</p>
 <pre>nf.cluster,foo,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
 name,http.req.latency,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
 <a href="https://netflix.github.io/atlas-docs/asl/ref/and/">:and</a>,
-
+<a href="https://netflix.github.io/atlas-docs/asl/ref/dist-avg/">:dist-avg</a>,
+(,nf.asg,),<a href="https://netflix.github.io/atlas-docs/asl/ref/by/">:by</a>
 </pre>
 <h3 id="maximum-measurement-dist-max">Maximum Measurement (:dist-max)<a class="headerlink" href="#maximum-measurement-dist-max" title="Permanent link">&para;</a></h3>
 <p>To compute the maximum latency across a group, use <a href="../../../../asl/ref/dist-max/">:dist-max</a>:</p>
 <pre>nf.cluster,foo,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
 name,http.req.latency,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
 <a href="https://netflix.github.io/atlas-docs/asl/ref/and/">:and</a>,
-
+<a href="https://netflix.github.io/atlas-docs/asl/ref/dist-max/">:dist-max</a>,
+(,nf.asg,),<a href="https://netflix.github.io/atlas-docs/asl/ref/by/">:by</a>
 </pre>
 <h3 id="standard-deviation-of-measurement-dist-stddev">Standard Deviation of Measurement (:dist-stddev)<a class="headerlink" href="#standard-deviation-of-measurement-dist-stddev" title="Permanent link">&para;</a></h3>
 <p>To compute the standard deviation of measurements across all instances for a time interval:</p>
