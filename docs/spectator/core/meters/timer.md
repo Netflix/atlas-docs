@@ -34,8 +34,7 @@ response.
 To compute the average latency across an arbitrary group, use the [:dist-avg] function:
 
 @@@ atlas-stacklang
-/api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,
-:dist-avg,(,nf.asg,),:by
+/api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-avg,(,nf.asg,),:by
 @@@
 
 [:dist-avg]: ../../../asl/ref/dist-avg.md
@@ -45,8 +44,7 @@ To compute the average latency across an arbitrary group, use the [:dist-avg] fu
 To compute the maximum latency across a group, use [:dist-max]:
 
 @@@ atlas-stacklang
-/api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,
-:dist-max,(,nf.asg,),:by
+/api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-max,(,nf.asg,),:by
 @@@
 
 [:dist-max]: ../../../asl/ref/dist-max.md
