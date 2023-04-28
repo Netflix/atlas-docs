@@ -60,7 +60,7 @@ class AtlasWebServer:
 
         logger.info(f'download {url}')
 
-        r = requests.get(url, stream=True)
+        r = requests.get(url, stream=True, allow_redirects=True)
 
         with open(jar, 'wb') as f:
             for chunk in r.iter_content(chunk_size=1024):
