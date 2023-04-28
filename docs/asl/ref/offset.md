@@ -10,7 +10,9 @@ TimeSeriesExpr
     at the end. It cannot be used along with math operations.
 
 Shift the time frame to use when fetching the data. This is used to look at a previous
-interval as a point of reference, e.g., day-over-day or week-over-week.
+interval as a point of reference, e.g., day-over-day or week-over-week. Offset cannot be
+used with streaming execution of the query, consider using the [delay](delay.md) operator
+for short intervals to detect a change.
 
 Examples:
 
