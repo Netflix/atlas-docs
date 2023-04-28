@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://netflix.github.io/atlas-docs/asl/ref/offset/">
       
       
-        <link rel="prev" href="../not/">
+        <link rel="prev" href="../node-avg/">
       
       
         <link rel="next" href="../or/">
@@ -924,16 +924,14 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5_1" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5_1" >
       
       
       
@@ -942,7 +940,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_5_1_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_5_1_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4_5_1">
           <span class="md-nav__icon md-icon"></span>
           Choosing
@@ -1112,28 +1110,6 @@
       <a href="../not/" class="md-nav__link">
         not
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        offset
-      </a>
-      
     </li>
   
 
@@ -1394,14 +1370,16 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5_3" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5_3" checked>
       
       
       
@@ -1410,7 +1388,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_5_3_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_5_3_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_4_5_3">
           <span class="md-nav__icon md-icon"></span>
           Math
@@ -2056,6 +2034,28 @@
       <a href="../node-avg/" class="md-nav__link">
         node-avg
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        offset
+      </a>
+      
     </li>
   
 
@@ -5259,7 +5259,9 @@
 at the end. It cannot be used along with math operations.</p>
 </div>
 <p>Shift the time frame to use when fetching the data. This is used to look at a previous
-interval as a point of reference, e.g., day-over-day or week-over-week.</p>
+interval as a point of reference, e.g., day-over-day or week-over-week. Offset cannot be
+used with streaming execution of the query, consider using the <a href="../delay/">delay</a> operator
+for short intervals to detect a change.</p>
 <p>Examples:</p>
 <table><tbody>
 <tr><td>Before</td><td>After</td><td>Combined</td></tr>
