@@ -378,11 +378,7 @@ Spectator:
 
 ### BucketTimer
 
-TODO: find sandbox documentation or remove reference
-
-See the general overview of [registration differences](#registration) and the summary of
-[sandbox documentation](Sandbox). In Spectator, BucketTimer is provided in the sandbox extension
-library and may change in future as we gain more experience using it.
+See the general overview of [registration differences](#registration).
 
 Servo:
 
