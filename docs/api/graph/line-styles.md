@@ -4,6 +4,7 @@ There are four [line styles](../../asl/ref/ls.md) available:
 * [Area](#area)
 * [Stack](#stack)
 * [Vertical Span](#vertical-span)
+* [Heat Map](#heat-map)
 
 Multiple styles can be used in the same chart or combined with other operations.
 
@@ -86,6 +87,24 @@ percentage chart for a group by:
 @@@
 
 
+## Heat Map
+
+Since 1.8.
+
+Plotting many time series with a heat map can be useful for identifying concentrations of
+measurements where individual lines may produce too much noise. 
+
+See [Heatmap](heatmap.md) for more details.
+
+@@@ atlas-uri { hilite=:heatmap }
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+@@@
+
+@@@ atlas-graph { show-expr=false }
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+@@@
+
+
 ## Vertical Span
 
 The vertical span style converts non-zero to spans. This is often used to highlight some portion of
@@ -125,4 +144,3 @@ The z-order is based on the order of the expression on the stack.
 @@@ atlas-graph { show-expr=false }
 /api/v1/graph?e=2015-03-10T13:13&no_legend=1&q=t,name,sps,:eq,:sum,:set,t,:get,:stack,t,:get,1.1,:mul,6h,:offset,t,:get,4,:div,:stack&s=e-2d
 @@@
-
