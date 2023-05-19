@@ -11,7 +11,7 @@ that the metric to be recorded as a [percentile](../../spectator/patterns/percen
 
 See [heatmap](../../api/graph/heatmap.md#percentiles) for more information.
 
-Shorthand equivalent of writing `name,requestLatency,:eq,(,percentile,),:by,:heatmap`
+Shorthand equivalent of writing `(,percentile,),:by,:heatmap`
 
 Example:
 

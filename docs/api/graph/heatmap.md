@@ -5,7 +5,7 @@ a measurement falls within the cells boundaries. Colors or shades of colors then
 based on the final count.
 
 ## Percentiles
-Heat maps are particularly useful on top of
+Heatmaps are particularly useful on top of
 [percentile](../../spectator/patterns/percentile-timer.md) metrics to analyze the entire
 measurement range. 
 
