@@ -103,17 +103,17 @@ Shades of red.
 
 ## Custom
 
-A custom color palette can be provided for a graph by using a prefix of `colors:` followed by
-a comma separated list of [hex color](../../asl/ref/color.md) values. This is mainly used to customize the
-colors for the result of a group by where you cannot set the color for each line using
-[:color](../../asl/ref/color.md).
+A custom color palette can be provided for a graph by using a list of  comma separated 
+[hex color](../../asl/ref/color.md) values following the ASL list format `(,HEX,HEX,HEX,)`. 
+This is mainly used to customize the colors for the result of a group by where you 
+cannot set the color for each line using the list.
 
 @@@ atlas-uri
-/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=colors:1a9850,91cf60,d9ef8b,fee08b,fc8d59,d73027&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=(,1a9850,91cf60,d9ef8b,fee08b,fc8d59,d73027,)&stack=1&tz=UTC&q=1,1,1,1,1,1,1
 @@@
 
 @@@ atlas-graph { show-expr=false }
-/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=colors:1a9850,91cf60,d9ef8b,fee08b,fc8d59,d73027&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=(,1a9850,91cf60,d9ef8b,fee08b,fc8d59,d73027,)&stack=1&tz=UTC&q=1,1,1,1,1,1,1
 @@@
 
 ## Hashed Selection

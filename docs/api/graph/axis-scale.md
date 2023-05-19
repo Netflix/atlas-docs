@@ -3,6 +3,7 @@ There are currently four scales that can be used for an axis:
 
 * [Linear](#linear)
 * [Logarithmic](#logarithmic)
+* [Log Linear](#log-linear)
 * [Power of 2](#power-of-2)
 * [Square Root](#square-root)
 
@@ -41,6 +42,21 @@ To use this mode, add `scale=log` (prior to 1.6 use `o=1`).
 
 @@@ atlas-graph { show-expr=false }
 /api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=log
+@@@
+
+## Log Linear
+
+Since 1.8.
+
+A logarithmic scale for powers of 10 with linear behavior between ticks. This is useful for
+heatmap views of percentile distributions. Note that unit suffixes change with this scale.
+
+@@@ atlas-uri { hilite=scale%3dlog }
+/api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=log-linear
+@@@
+
+@@@ atlas-graph { show-expr=false }
+/api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=log-linear
 @@@
 
 ## Power of 2

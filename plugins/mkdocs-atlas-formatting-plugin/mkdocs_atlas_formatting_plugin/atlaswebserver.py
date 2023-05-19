@@ -66,8 +66,12 @@ class AtlasWebServer:
             for chunk in r.iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
-
-        logger.info(f'saved {jar}')
+        if r.ok:
+            logger.info(f'saved {jar}')
+        else:
+            with open(jar) as f:
+                lines = f.readlines()
+            raise ConnectionError(f'ERROR {r.status_code}: failed to download Atlas: {lines}')
 
     @staticmethod
     def port_is_open(host: str, port: int) -> bool:
