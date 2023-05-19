@@ -4,7 +4,7 @@ There are four [line styles](../../asl/ref/ls.md) available:
 * [Area](#area)
 * [Stack](#stack)
 * [Vertical Span](#vertical-span)
-* [Heat Map](#heat-map)
+* [Heatmap](#heatmap)
 
 Multiple styles can be used in the same chart or combined with other operations.
 
@@ -87,7 +87,7 @@ percentage chart for a group by:
 @@@
 
 
-## Heat Map
+## Heatmap
 
 Since 1.8.
 

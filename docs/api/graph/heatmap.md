@@ -9,14 +9,12 @@ Heat maps are particularly useful on top of
 [percentile](../../spectator/patterns/percentile-timer.md) metrics to analyze the entire
 measurement range. 
 
-**Note** the query must be setup properly for percentile metrics. Instead of using the 
-`:percentile` operator, the query must group on the `percentile` tag via `(,percentile,),:by`.
-Using the [log linear](axis-scale.md#log-linear) scale will help to highlight clustered
+**Note** Using the [log linear](axis-scale.md#log-linear) scale will help to highlight clustered
 regions of measurements via `&scale=log-linear`.
 The example also uses data not available in the demo Atlas instance.
 
-@@@ atlas-uri { hilite=:heatmap }
-/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,requestLatency,:eq,(,percentile,),:by,:heatmap&scale=log-linear
+@@@ atlas-uri { hilite=:percentile-heatmap }
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,requestLatency,:eq,:percentile-heatmap,&scale=log-linear
 @@@
 
 ![ptile-heatmap](../../images/heatmap_timer2_log_linear.png)
@@ -25,12 +23,11 @@ The example also uses data not available in the demo Atlas instance.
 
 The `&heatmap_l=` and `&heatmap_u` parameters can be used to narrow the range of cells 
 displayed in a heatmap. Heatmap bounds act on the _count_ of measurements in a cell and the
-palette colors or shades chosen. Bounds may have the effect of omitting some cells that are
-above or below the configured boundaries.
+palette colors or shades chosen. Depending on the bound limits, some cells may appear empty.
 
 @@@ atlas-example
 No Heatmap Bounds: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
-With Bounds (`&heatmap_l.2=0&heatmap_u=1.3`): /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_l.2=0&heatmap_u=1.3
+With Bounds (`&heatmap_l=1.2&heatmap_u=1.3`): /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_l=1.2&heatmap_u=1.3
 @@@
 
 ## Palette
@@ -51,12 +48,14 @@ A custom palette may be provided by listing the hex colors to use in _descending
 meaning the color to use for the highest cell counts must appear first.
 
 @@@ atlas-uri { hilight=heatmap_palette }
-/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_palette=colors:8cd1b9,46adbc,2a91b8,1978b3,335ca9,413e95,361566
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_palette=(,8cd1b9,46adbc,2a91b8,1978b3,335ca9,413e95,361566,)
 @@@
 
 @@@ atlas-graph { show-expr=false }
-/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_palette=colors:8cd1b9,46adbc,2a91b8,1978b3,335ca9,413e95,361566
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_palette=(,8cd1b9,46adbc,2a91b8,1978b3,335ca9,413e95,361566,)
 @@@
+
+For further information, see [Custom Color Palettes](color-palettes.md#custom).
 
 ### Order of Expressions
 
