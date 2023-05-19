@@ -2,6 +2,7 @@ The following tick (Y axis numeric labels) modes are supported:
 
 * [decimal](#decimal)
 * [binary](#binary)
+* [duration](#duration)
 * [off](#off)
 
 ## Decimal
@@ -40,6 +41,20 @@ IEC [binary prefix](https://en.wikipedia.org/wiki/Binary_prefix) will be used.
 
 @@@ atlas-graph { show-expr=false }
 /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=binary
+@@@
+
+## Duration
+
+Since 1.7.1.
+
+Useful for timers or percentiles that measure latency, provides ticks with time unit suffix.
+
+@@@ atlas-uri { hilite=tick_labels }
+/api/v1/graph?e=2012-01-01T00:00&q=name,requestLatency,:eq,nf.node,wii-node,:eq,:and&tick_labels=duration
+@@@
+
+@@@ atlas-graph { show-expr=false }
+/api/v1/graph?e=2012-01-01T00:00&q=name,requestLatency,:eq,nf.node,wii-node,:eq,:and&tick_labels=duration
 @@@
 
 ## Off
