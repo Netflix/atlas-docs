@@ -6,6 +6,9 @@ rm -rf venv
 echo "-- remove current requirements.txt"
 rm requirements.txt
 
+echo "-- remove cached atlas-standalone.jar"
+rm -f atlas-standalone.jar
+
 echo "-- create new venv with no deps"
 ./setup-venv.sh
 
