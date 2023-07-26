@@ -10,6 +10,6 @@ python3 -m venv venv
 source venv/bin/activate
 
 if [[ -f requirements.txt ]]; then
-    pip3 install --upgrade pip
+    pip3 install --upgrade pip wheel
     pip3 install --requirement requirements.txt
 fi
