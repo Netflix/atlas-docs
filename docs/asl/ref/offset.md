@@ -1,6 +1,6 @@
 @@@ atlas-signature
-TimeSeriesExpr
 Duration
+TimeSeriesExpr
 -->
 TimeSeriesExpr
 @@@
