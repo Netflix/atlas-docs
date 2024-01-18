@@ -45,9 +45,9 @@ public class FooTest {
 }
 ```
 
-## Guice Test
+## Spring Test
 
-If using guice, then the `TestModule` can be used:
+If using Spring, then you can create a binding for the `DefaultRegistry`, for example:
 
 ```java
 public class FooTest {
@@ -55,17 +55,35 @@ public class FooTest {
   private Registry registry;
   private Foo foo;
 
-  @Before
-  public void init() {
-    Injector injector = Guice.createInjector(new TestModule());
-    registry = injector.getInstance(Registry.class);
-    foo = injector.getInstance(Foo.class);
+  @Configuration
+  public static class TestConfiguration {
+    @Bean
+    public Registry registry() {
+      return new DefaultRegistry();
+    }
+
+    @Bean
+    public Foo foo(Registry registry) {
+      return new Foo(registry);
+    }
+  }
+
+  private AnnotationConfigApplicationContext createContext() {
+    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+    context.register(TestConfiguration.class);
+    context.refresh();
+    return context;
   }
 
   @Test
   public void doSomething() {
-    foo.doSomething();
-    Assert.assertEquals(1, registry.counter("foo").count());
+    try (AnnotationConfigApplicationContext context = createContext()) {
+      Foo foo = context.getBean(Foo.class);
+      foo.doSomething();
+
+      Registry registry = context.getBean(Registry.class);
+      Assert.assertEquals(1, registry.counter("foo").count());
+    }
   }
 }
 ```
