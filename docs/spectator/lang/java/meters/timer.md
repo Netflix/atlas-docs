@@ -21,7 +21,7 @@ Then wrap the call you need to measure, preferably using a lambda:
 
 ```java
   public Response handle(Request request) {
-    return requestLatency.record(() -> handleImpl(request));
+    return requestLatency.recordRunnable(() -> handleImpl(request));
   }
 ```
 
@@ -75,9 +75,9 @@ public class MetadataService {
 ```
 
 The id value returned by the `start` method is used to keep track of a particular task being
-measured by the Timer. It must be stopped using the provided id. Note that unlike a regular Timer
-that does not do anything until the final duration is recorded, a long duration Timer will report
-as two Gauges:
+measured by the LongTaskTimer. It must be stopped using the provided id. Note that unlike a
+regular Timer that does not do anything until the final duration is recorded, a LongTaskTimer
+will report as two Gauges:
 
 * `duration`: total duration spent within all currently running tasks.
 * `activeTasks`: number of currently running tasks.
@@ -90,11 +90,3 @@ e.g., update a different Timer, if an exception is thrown.
 * Being a Gauge, it is inappropriate for short tasks. In particular, Gauges are sampled and if it
 is not sampled during the execution, or the sampling period is a significant subset of the expected
 duration, then the duration value will not be meaningful.
-
-Like a regular Timer, the duration Timer also supports using a lambda to simplify the common case:
-
-```java
-  private void refresh() {
-    metadataRefresh.record(this::refreshImpl);
-  }
-```
