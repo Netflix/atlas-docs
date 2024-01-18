@@ -5375,7 +5375,7 @@
 </code></pre></div>
 <p>Then wrap the call you need to measure, preferably using a lambda:</p>
 <div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Response</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">requestLatency</span><span class="p">.</span><span class="na">record</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">handleImpl</span><span class="p">(</span><span class="n">request</span><span class="p">));</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">requestLatency</span><span class="p">.</span><span class="na">recordRunnable</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">handleImpl</span><span class="p">(</span><span class="n">request</span><span class="p">));</span>
 <span class="w">  </span><span class="p">}</span>
 </code></pre></div>
 <p>The lambda variants will handle exceptions for you and ensure the record happens as part of a
@@ -5420,9 +5420,9 @@ occasionally having bogus measurements due to time adjustments. For more informa
 <span class="w">  </span><span class="p">}</span>
 </code></pre></div>
 <p>The id value returned by the <code>start</code> method is used to keep track of a particular task being
-measured by the Timer. It must be stopped using the provided id. Note that unlike a regular Timer
-that does not do anything until the final duration is recorded, a long duration Timer will report
-as two Gauges:</p>
+measured by the LongTaskTimer. It must be stopped using the provided id. Note that unlike a
+regular Timer that does not do anything until the final duration is recorded, a LongTaskTimer
+will report as two Gauges:</p>
 <ul>
 <li><code>duration</code>: total duration spent within all currently running tasks.</li>
 <li><code>activeTasks</code>: number of currently running tasks.</li>
@@ -5436,11 +5436,6 @@ e.g., update a different Timer, if an exception is thrown.</li>
 is not sampled during the execution, or the sampling period is a significant subset of the expected
 duration, then the duration value will not be meaningful.</li>
 </ul>
-<p>Like a regular Timer, the duration Timer also supports using a lambda to simplify the common case:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">refresh</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">metadataRefresh</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="k">this</span><span class="p">::</span><span class="n">refreshImpl</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-</code></pre></div>
 
 
 
