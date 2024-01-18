@@ -4462,8 +4462,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#guice-test" class="md-nav__link">
-    Guice Test
+  <a href="#spring-test" class="md-nav__link">
+    Spring Test
   </a>
   
 </li>
@@ -5340,8 +5340,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#guice-test" class="md-nav__link">
-    Guice Test
+  <a href="#spring-test" class="md-nav__link">
+    Spring Test
   </a>
   
 </li>
@@ -5409,24 +5409,42 @@
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="guice-test">Guice Test<a class="headerlink" href="#guice-test" title="Permanent link">&para;</a></h2>
-<p>If using guice, then the <code>TestModule</code> can be used:</p>
+<h2 id="spring-test">Spring Test<a class="headerlink" href="#spring-test" title="Permanent link">&para;</a></h2>
+<p>If using Spring, then you can create a binding for the <code>DefaultRegistry</code>, for example:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FooTest</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
 <span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">Foo</span><span class="w"> </span><span class="n">foo</span><span class="p">;</span>
 
-<span class="w">  </span><span class="nd">@Before</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">init</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Injector</span><span class="w"> </span><span class="n">injector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Guice</span><span class="p">.</span><span class="na">createInjector</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">TestModule</span><span class="p">());</span>
-<span class="w">    </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">injector</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="n">Registry</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="w">    </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">injector</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="n">Foo</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="w">  </span><span class="nd">@Configuration</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TestConfiguration</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Registry</span><span class="w"> </span><span class="nf">registry</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DefaultRegistry</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Foo</span><span class="w"> </span><span class="nf">foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Foo</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">AnnotationConfigApplicationContext</span><span class="w"> </span><span class="nf">createContext</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">AnnotationConfigApplicationContext</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AnnotationConfigApplicationContext</span><span class="p">();</span>
+<span class="w">    </span><span class="n">context</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="n">TestConfiguration</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="w">    </span><span class="n">context</span><span class="p">.</span><span class="na">refresh</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">context</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
 <span class="w">  </span><span class="nd">@Test</span>
 <span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">foo</span><span class="p">.</span><span class="na">doSomething</span><span class="p">();</span>
-<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">).</span><span class="na">count</span><span class="p">());</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">AnnotationConfigApplicationContext</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createContext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">Foo</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">Foo</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="w">      </span><span class="n">foo</span><span class="p">.</span><span class="na">doSomething</span><span class="p">();</span>
+
+<span class="w">      </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">Registry</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="w">      </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">).</span><span class="na">count</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>

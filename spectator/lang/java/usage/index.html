@@ -4071,15 +4071,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#applications" class="md-nav__link">
-    Applications
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#base-server" class="md-nav__link">
-    Base Server
+  <a href="#sbn-applications" class="md-nav__link">
+    SBN Applications
   </a>
   
 </li>
@@ -5397,15 +5390,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#applications" class="md-nav__link">
-    Applications
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#base-server" class="md-nav__link">
-    Base Server
+  <a href="#sbn-applications" class="md-nav__link">
+    SBN Applications
   </a>
   
 </li>
@@ -5436,7 +5422,6 @@
   <h1>Usage</h1>
 
 <h2 id="project">Project<a class="headerlink" href="#project" title="Permanent link">&para;</a></h2>
-<p><a href="https://travis-ci.org/Netflix/spectator"><img alt="Build Status" src="https://travis-ci.org/Netflix/spectator.svg?branch=master" /></a></p>
 <ul>
 <li><a href="https://github.com/Netflix/spectator">Source</a></li>
 <li><a href="https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/">Javadoc</a> </li>
@@ -5543,8 +5528,7 @@ instrumented data to <a href="../../../../">Atlas</a>. See the appropriate
 section for the type of project you are working on:</p>
 <ul>
 <li><a href="#libraries">Libraries</a></li>
-<li><a href="#applications">Applications</a>, specifically standalone apps using Guice or Governator directly.</li>
-<li><a href="#base-server">Base Server</a></li>
+<li><a href="#applications">SBN Applications</a>, specifically standalone apps using SBN.</li>
 </ul>
 <h3 id="libraries">Libraries<a class="headerlink" href="#libraries" title="Permanent link">&para;</a></h3>
 <p>For libraries, the only dependency that should be needed is:</p>
@@ -5560,79 +5544,25 @@ just inject a <a href="../registry/overview/">Registry</a>, e.g.:</p>
 <span class="w">  </span><span class="p">...</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>See the <a href="../testing/">testing docs</a> for more information about creating a binding to use with tests.</p>
-<p>Libraries should not install <code>SpectatorModule</code>. The bindings to use for the <a href="../registry/overview/">Registry</a> should be
+<p>See the <a href="../testing/">testing docs</a> for more information about creating a binding to use with tests.
+Libraries should not install a particular registry. The bindings to use for the <a href="../registry/overview/">Registry</a> should be
 determined by the <a href="#application">application</a> that is using the library. Think of it as being like
 slf4j where <a href="https://www.slf4j.org/faq.html#configure_logging">logging configuration</a> is up to the end-user, not the library owner.</p>
-<p>When creating a Guice module for your library, you may want to avoid binding errors if the end-user
-has not provided a binding for the Spectator registry. This can be done by using optional injections
-inside of the module, for example:</p>
+<p>You may want to avoid binding errors if the end-user has not provided a binding for the Spectator
+registry. For Spring, this can be done by using optional injections, for example:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Sample library class</span>
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyLib</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
 
 <span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyLib</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-
-<span class="c1">// Guice module to configure the library and setup the bindings</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyLibModule</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">AbstractModule</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Logger</span><span class="w"> </span><span class="n">LOGGER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">MyLibModule</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-
-<span class="w">  </span><span class="nd">@Override</span>
-<span class="w">  </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">configure</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="nd">@Provides</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">MyLib</span><span class="w"> </span><span class="nf">provideMyLib</span><span class="p">(</span><span class="n">OptionalInjections</span><span class="w"> </span><span class="n">opts</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyLib</span><span class="p">(</span><span class="n">opts</span><span class="p">.</span><span class="na">registry</span><span class="p">());</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">OptionalInjections</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Inject</span><span class="p">(</span><span class="n">optional</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
-
-<span class="w">    </span><span class="n">Registry</span><span class="w"> </span><span class="nf">registry</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">registry</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">LOGGER</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;no spectator registry has been bound, so using noop implementation&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NoopRegistry</span><span class="p">();</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyLib</span><span class="p">(</span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">Registry</span><span class="o">&gt;</span><span class="w"> </span><span class="n">registryOpt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registryOpt</span><span class="p">.</span><span class="na">orElseGet</span><span class="p">(</span><span class="n">NoopRegistry</span><span class="p">::</span><span class="k">new</span><span class="p">);</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<h3 id="applications">Applications<a class="headerlink" href="#applications" title="Permanent link">&para;</a></h3>
-<p>Applications should include a dependency on the <code>atlas-client</code> plugin:</p>
-<div class="highlight"><pre><span></span><code>netflix:atlas-client:latest.release
-</code></pre></div>
-<p>Note this is an internal-only library with configs specific to the Netflix environments. It
-is assumed you are using <a href="https://nebula-plugins.github.io/">Nebula</a> so that internal Maven repositories are available for your
-build. When configuring with Governator, specify the <code>AtlasModule</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">Injector</span><span class="w"> </span><span class="n">injector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LifecycleInjector</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withModules</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AtlasModule</span><span class="p">())</span>
-<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="na">createInjector</span><span class="p">();</span>
-</code></pre></div>
-<p>The <a href="../registry/overview/">Registry</a> binding will then be available for injection as shown in the <a href="#libraries">libraries section</a>.
-The Insight libraries do not use any Governator or Guice specific features. It is possible to
-use Guice or other dependency injection frameworks directly with the following caveats:</p>
-<ol>
-<li>Some of the libraries use the <a href="http://docs.oracle.com/javaee/7/api/javax/annotation/PostConstruct.html">@PostConstruct</a> and <a href="http://docs.oracle.com/javaee/7/api/javax/annotation/PreDestroy.html">@PreDestroy</a> annotations for managing
-lifecycle. Governator adds lifecycle management and many other features on top of Guice and is
-the recommended way. For more minimalist support of just the lifecycle annotations on top of
-Guice, see <a href="https://github.com/Netflix/iep/tree/master/iep-guice#description">iep-guice</a>.</li>
-<li>The bindings and configuration necessary to run correctly with the internal setup are only
-supported as Guice modules. If you are trying to use some other dependency injection framework,
-then you will be responsible for either finding a way to leverage the Guice module in that
-framework or recreating those bindings and maintaining them as things change. It is not a
-paved path.</li>
-</ol>
-<h3 id="base-server">Base Server<a class="headerlink" href="#base-server" title="Permanent link">&para;</a></h3>
-<p>If using <code>base-server</code>, then you will get the Spectator and Atlas bindings automatically.</p>
+<h3 id="sbn-applications">SBN Applications<a class="headerlink" href="#sbn-applications" title="Permanent link">&para;</a></h3>
+<p>Applications should include <code>spring-boot-netflix-starter-metrics</code> which will configure the
+registry bindings for internal use.</p>
 
 
 
