@@ -1,7 +1,5 @@
 ## Project
 
-[![Build Status](https://travis-ci.org/Netflix/spectator.svg?branch=master)](https://travis-ci.org/Netflix/spectator)
-
 * [Source](https://github.com/Netflix/spectator)
 * [Javadoc](https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/) 
 * **Product Lifecycle:** GA
@@ -114,8 +112,7 @@ instrumented data to [Atlas](../../../index.md). See the appropriate
 section for the type of project you are working on:
 
 * [Libraries](#libraries)
-* [Applications](#applications), specifically standalone apps using Guice or Governator directly.
-* [Base Server](#base-server)
+* [SBN Applications](#applications), specifically standalone apps using SBN.
 
 ### Libraries
 
@@ -139,16 +136,14 @@ public class Foo {
 ```
 
 See the [testing docs](testing.md) for more information about creating a binding to use with tests.
-
-Libraries should not install `SpectatorModule`. The bindings to use for the [Registry] should be
+Libraries should not install a particular registry. The bindings to use for the [Registry] should be
 determined by the [application](#application) that is using the library. Think of it as being like
 slf4j where [logging configuration] is up to the end-user, not the library owner.
 
 [logging configuration]: https://www.slf4j.org/faq.html#configure_logging
 
-When creating a Guice module for your library, you may want to avoid binding errors if the end-user
-has not provided a binding for the Spectator registry. This can be done by using optional injections
-inside of the module, for example:
+You may want to avoid binding errors if the end-user has not provided a binding for the Spectator
+registry. For Spring, this can be done by using optional injections, for example:
 
 ```java
 // Sample library class
@@ -156,80 +151,14 @@ public class MyLib {
   Registry registry;
 
   @Inject
-  public MyLib(Registry registry) {
-    this.registry = registry;
-  }
-}
-
-// Guice module to configure the library and setup the bindings
-public class MyLibModule extends AbstractModule {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(MyLibModule.class);
-
-  @Override
-  protected void configure() {
-  }
-
-  @Provides
-  private MyLib provideMyLib(OptionalInjections opts) {
-    return new MyLib(opts.registry());
-  }
-
-  private static class OptionalInjections {
-    @Inject(optional = true)
-    private Registry registry;
-
-    Registry registry() {
-      if (registry == null) {
-        LOGGER.warn("no spectator registry has been bound, so using noop implementation");
-        registry = new NoopRegistry();
-      }
-      return registry;
-    }
+  public MyLib(Optional<Registry> registryOpt) {
+    this.registry = registryOpt.orElseGet(NoopRegistry::new);
   }
 }
 ```
 
-### Applications
+### SBN Applications
 
-Applications should include a dependency on the `atlas-client` plugin:
-
-```
-netflix:atlas-client:latest.release
-```
-
-Note this is an internal-only library with configs specific to the Netflix environments. It
-is assumed you are using [Nebula] so that internal Maven repositories are available for your
-build. When configuring with Governator, specify the `AtlasModule`:
-
-```java
-Injector injector = LifecycleInjector.builder()
-    .withModules(new AtlasModule())
-    .build()
-    .createInjector();
-```
-
-The [Registry] binding will then be available for injection as shown in the [libraries section].
-The Insight libraries do not use any Governator or Guice specific features. It is possible to
-use Guice or other dependency injection frameworks directly with the following caveats:
-
-1. Some of the libraries use the [@PostConstruct] and [@PreDestroy] annotations for managing
-lifecycle. Governator adds lifecycle management and many other features on top of Guice and is
-the recommended way. For more minimalist support of just the lifecycle annotations on top of
-Guice, see [iep-guice].
-1. The bindings and configuration necessary to run correctly with the internal setup are only
-supported as Guice modules. If you are trying to use some other dependency injection framework,
-then you will be responsible for either finding a way to leverage the Guice module in that
-framework or recreating those bindings and maintaining them as things change. It is not a
-paved path.
-
-[Nebula]: https://nebula-plugins.github.io/
-[libraries section]: #libraries
-[@PostConstruct]: http://docs.oracle.com/javaee/7/api/javax/annotation/PostConstruct.html
-[@PreDestroy]: http://docs.oracle.com/javaee/7/api/javax/annotation/PreDestroy.html
-[iep-guice]: https://github.com/Netflix/iep/tree/master/iep-guice#description
-
-### Base Server
-
-If using `base-server`, then you will get the Spectator and Atlas bindings automatically.
+Applications should include `spring-boot-netflix-starter-metrics` which will configure the
+registry bindings for internal use.
 
