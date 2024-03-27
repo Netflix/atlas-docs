@@ -5732,7 +5732,7 @@ name,requestsPerSecond,:eq,:and,
 :rot,prediction,:legend,
 :rot,:vspan,60,:alpha,alert+triggered,:legend
 </code></pre></div>
-<p>See the <a href="Stack Language">stack language</a> page for more information.</p>
+<p>See the [stack language] page for more information.</p>
 <h2 id="memory-storage">Memory Storage<a class="headerlink" href="#memory-storage" title="Permanent link">&para;</a></h2>
 <p>Storage for Atlas has been a bit of a sore point. We have tried many backends and ended up moving
 more and more to a model where pretty much all data is stored in memory either in or off the java
@@ -5771,7 +5771,7 @@ failure will only impact a single mirror.</p>
 <p>The publish cluster needs to know all of the instance in the mirror cluster and takes care of
 splitting the traffic up so it goes to the correct shard. The set of mirror instances and shards
 are assigned based on slots from the <a href="https://github.com/Netflix/edda">Edda</a>
-<a href="https://github.com/Netflix/edda/wiki/REST#groupautoScalingGroups">autoScalingGroups API</a>. Since
+<a href="https://netflix.github.io/edda/rest-api/#apiv2group">autoScalingGroups API</a>. Since
 the set of instances for the mirrors change rarely, the publish instances can cache the Edda
 response and still retain successfully publish most data if Edda fails. If an instance is replaced
 and we can't update data we would have partial loss for a single shard if the same shard was
