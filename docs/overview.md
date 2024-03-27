@@ -196,7 +196,7 @@ name,requestsPerSecond,:eq,:and,
 
 See the [stack language] page for more information.
 
-[stack langauge]: asl/tutorial.md
+[stack language]: asl/tutorial.md
 
 ## Memory Storage
 
