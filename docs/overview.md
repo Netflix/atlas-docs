@@ -194,7 +194,9 @@ name,requestsPerSecond,:eq,:and,
 :rot,:vspan,60,:alpha,alert+triggered,:legend
 ```
 
-See the [stack language](Stack Language) page for more information.
+See the [stack language] page for more information.
+
+[stack langauge]: asl/tutorial.md
 
 ## Memory Storage
 
@@ -244,7 +246,7 @@ failure will only impact a single mirror.
 The publish cluster needs to know all of the instance in the mirror cluster and takes care of
 splitting the traffic up so it goes to the correct shard. The set of mirror instances and shards
 are assigned based on slots from the [Edda](https://github.com/Netflix/edda)
-[autoScalingGroups API](https://github.com/Netflix/edda/wiki/REST#groupautoScalingGroups). Since
+[autoScalingGroups API](https://netflix.github.io/edda/rest-api/#apiv2group). Since
 the set of instances for the mirrors change rarely, the publish instances can cache the Edda
 response and still retain successfully publish most data if Edda fails. If an instance is replaced
 and we can't update data we would have partial loss for a single shard if the same shard was
