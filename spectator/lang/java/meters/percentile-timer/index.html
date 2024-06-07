@@ -5300,7 +5300,44 @@
 
 
 <h1 id="java-percentile-timers">Java Percentile Timers<a class="headerlink" href="#java-percentile-timers" title="Permanent link">&para;</a></h1>
-<p>TBD</p>
+<p><strong>Note</strong>: Percentile timers generate a metric per bucket in the histogram. Create instances
+once per ID and reuse them as needed. Avoid adding tags with high cardinality as that increases
+the cardinality of the metric. If at all possible, use a <a href="../timer/">Timer</a> instead.</p>
+<p>To get started, create an instance using the <a href="../../registry/overview/">Registry</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Server</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">PercentileTimer</span><span class="w"> </span><span class="n">requestLatency</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nd">@Inject</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Server</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
+<span class="w">    </span><span class="n">requestLatency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PercentileTimer</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">withId</span><span class="p">(</span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;server.request.latency&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;200&quot;</span><span class="p">))</span>
+<span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<p>Then wrap the call you need to measure, preferably using a lambda:</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Response</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">requestLatency</span><span class="p">.</span><span class="na">recordRunnable</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">handleImpl</span><span class="p">(</span><span class="n">request</span><span class="p">));</span>
+<span class="w">  </span><span class="p">}</span>
+</code></pre></div>
+<p>The lambda variants will handle exceptions for you and ensure the record happens as part of a
+finally block using the monotonic time. It could also have been done more explicitly like:</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Response</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">monotonicTime</span><span class="p">();</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">handleImpl</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">monotonicTime</span><span class="p">();</span>
+<span class="w">      </span><span class="n">requestLatency</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">NANOSECONDS</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+</code></pre></div>
+<p>This example uses the Clock from the Registry, which can be useful for testing, if you need
+to control the timing. In actual usage, it will typically get mapped to the system clock. It
+is recommended to use a monotonically increasing source for measuring the times, to avoid
+occasionally having bogus measurements due to time adjustments. For more information, see the
+<a href="../../../../core/clock/">Clock documentation</a>.</p>
 
 
 
