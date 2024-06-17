@@ -44,7 +44,7 @@ gc.start(null);
 
 ## Logging
 
-After GC events, an INFO level log message will get reported using slf4j. This makes it easy
+After GC events, an DEBUG level log message will get reported using slf4j. This makes it easy
 to see GC events in the context of other log messages for the application. The logger name is
 `com.netflix.spectator.gc.GcLogger` and the message will look like:
 
@@ -60,7 +60,7 @@ detailed GC logs. See [GC causes](jvm-gc-causes.md) for more details on the poss
 Sample:
 
 ```
-2014-08-31 02:02:24,724  INFO [com.netflix.spectator.gc.GcLogger] YOUNG: ParNew,
+2014-08-31 02:02:24,724  DEBUG [com.netflix.spectator.gc.GcLogger] YOUNG: ParNew,
 id=5281, at=Sun Aug 31 02:02:24 UTC 2014, duration=2ms, cause=[Allocation Failure],
 0.4G => 0.3G / 1.8G (24.3% => 16.6%)
 ```
