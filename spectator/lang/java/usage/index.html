@@ -7797,7 +7797,7 @@ instrumented data to <a href="../../../../">Atlas</a>. See the appropriate
 section for the type of project you are working on:</p>
 <ul>
 <li><a href="#libraries">Libraries</a></li>
-<li><a href="#applications">SBN Applications</a>, specifically standalone apps using SBN.</li>
+<li><a href="#sbn-applications">SBN Applications</a>, specifically standalone apps using SBN.</li>
 </ul>
 <h3 id="libraries">Libraries<a class="headerlink" href="#libraries" title="Permanent link">&para;</a></h3>
 <p>For libraries, the only dependency that should be needed is:</p>
@@ -7815,7 +7815,7 @@ just inject a <a href="../registry/overview/">Registry</a>, e.g.:</p>
 </code></pre></div>
 <p>See the <a href="../testing/">testing docs</a> for more information about creating a binding to use with tests.
 Libraries should not install a particular registry. The bindings to use for the <a href="../registry/overview/">Registry</a> should be
-determined by the <a href="#application">application</a> that is using the library. Think of it as being like
+determined by the <a href="#sbn-applications">application</a> that is using the library. Think of it as being like
 slf4j where <a href="https://www.slf4j.org/faq.html#configure_logging">logging configuration</a> is up to the end-user, not the library owner.</p>
 <p>You may want to avoid binding errors if the end-user has not provided a binding for the Spectator
 registry. For Spring, this can be done by using optional injections, for example:</p>

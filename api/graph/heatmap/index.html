@@ -7709,17 +7709,15 @@
   <h1>Heatmap</h1>
 
 <p>Atlas primarily supports visualizing data in line charts. As of 1.8, Atlas can also visualize
-via heatmaps using the <a href="../line-styles/#heat-map"><code>:heatmap</code></a> line style.
+via heatmaps using the <a href="../line-styles/#heatmap"><code>:heatmap</code></a> line style.
 The graph area is broken up into a series of cells and a count for each cell is incremented when 
 a measurement falls within the cells boundaries. Colors or shades of colors then fill in cells 
 based on the final count.</p>
 <h2 id="percentiles">Percentiles<a class="headerlink" href="#percentiles" title="Permanent link">&para;</a></h2>
-<p>Heatmaps are particularly useful on top of
-<a href="../../../spectator/patterns/percentile-timer/">percentile</a> metrics to analyze the entire
-measurement range. </p>
-<p><strong>Note</strong> Using the <a href="../axis-scale/#log-linear">log linear</a> scale will help to highlight clustered
-regions of measurements via <code>&amp;scale=log-linear</code>.
-The example also uses data not available in the demo Atlas instance.</p>
+<p>Heatmaps are particularly useful on top of <a href="../../../spectator/patterns/percentile-timer/">percentile</a>
+metrics to analyze the entire measurement range. </p>
+<p><strong>Note</strong> Using the <a href="../axis-scale/#log-linear">log linear</a> scale will help to highlight clustered regions of measurements
+via <code>&amp;scale=log-linear</code>. The example also uses data not available in the demo Atlas instance.</p>
 <pre>/api/v1/graph?
   e=2012-01-01T00:00
   &no_legend=1
