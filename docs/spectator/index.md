@@ -9,17 +9,22 @@ At a minimum, you need to:
     * [Naming](../concepts/naming.md)
     * [Clock](core/clock.md)
 
+1. Install the metrics agent.
+
+    * [SpectatorD](agent/usage.md)
+
 1. Install the language-specific library and configuration bindings, where available.
+
     * Support Class Descriptions
         * [Language Overview](lang/overview.md)
     * First-Class Support
-        * [Java](lang/java/usage.md)
-        * [Node.js](lang/nodejs/usage.md)
-    * Best-Effort Support
         * [C++](lang/cpp/usage.md)
         * [Go](lang/go/usage.md)
+        * [Java](lang/java/usage.md)
+        * [Node.js](lang/nodejs/usage.md)
         * [Python](lang/py/usage.md)
-        * [Ruby](lang/rb/usage.md)
+    * Best-Effort Support
+        * Rust (internal library)   
 
 1. Instrument some code, referring to the core usage guides on the following meter types:
 

@@ -19,12 +19,12 @@ graph.
 
 ### First-Class Support
 
-* [Java](../../lang/java/meters/counter.md)
-* [Node.js](../../lang/nodejs/meters/counter.md)
-
-### Experimental Support
-
 * [C++](../../lang/cpp/meters/counter.md)
 * [Go](../../lang/go/meters/counter.md)
+* [Java](../../lang/java/meters/counter.md)
+* [Node.js](../../lang/nodejs/meters/counter.md)
 * [Python](../../lang/py/meters/counter.md)
-* [Ruby](../../lang/rb/meters/counter.md)
+
+### Best-Effort Support
+
+* Rust (internal library)
