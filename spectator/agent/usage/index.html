@@ -1,0 +1,8305 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://netflix.github.io/atlas-docs/spectator/agent/usage/">
+      
+      
+        <link rel="prev" href="../../">
+      
+      
+        <link rel="next" href="../metrics/">
+      
+      
+      <link rel="icon" href="../../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.28">
+    
+    
+      
+        <title>Usage - Atlas Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#spectatord-introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Atlas Docs" class="md-header__button md-logo" aria-label="Atlas Docs" data-md-component="logo">
+      
+  <img src="../../../images/atlas_logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Atlas Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Usage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Netflix/atlas-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../concepts/time-series/" class="md-tabs__link">
+          
+  
+  Core Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../api/graph/graph/" class="md-tabs__link">
+          
+  
+  API
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../asl/tutorial/" class="md-tabs__link">
+          
+  
+  Stack Language
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  Spectator
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Atlas Docs" class="md-nav__button md-logo" aria-label="Atlas Docs" data-md-component="logo">
+      
+  <img src="../../../images/atlas_logo.svg" alt="logo">
+
+    </a>
+    Atlas Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Netflix/atlas-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Core Concepts
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Core Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/time-series/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Time Series
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/normalization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Normalization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/consolidation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Consolidation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/naming/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Naming
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            API
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Graph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/graph/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/examples/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Examples
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/anonymization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anonymization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/axis-bounds/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Axis Bounds
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/axis-scale/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Axis Scale
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/vision/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Color Blindness
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/color-palettes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Color Palettes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/heatmap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Heatmap
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/layout/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Layout
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/legends/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Legends
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/line-attributes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Line Attributes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/line-styles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Line Styles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/multi-y/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi Y Axis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/outputs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Output Formats
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/tick/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tick Labels
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/time-shift/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Time Shift
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/graph/time-zone/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Time Zones
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/tags/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tags
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/time-parameters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Time Parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Stack Language
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Stack Language
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/tutorial/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/alerting-expressions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Alerting Expressions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/alerting-philosophy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Alerting Philosophy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/des/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Double Exponential Smoothing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5_1" id="__nav_4_5_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Choosing
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Choosing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/and/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    and
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/contains/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    contains
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/ends/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ends
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/eq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    eq
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/false/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    false
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/ge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ge
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/gt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    gt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/has/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    has
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/in/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    in
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/le/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    le
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/lt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    lt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/not/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    not
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/or/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    or
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/re/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    re
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/reic/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    reic
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/starts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    starts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/true/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    true
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5_2" id="__nav_4_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Aggregation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Aggregation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/avg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    avg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/by/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    by
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/cf-avg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cf-avg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/cf-max/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cf-max
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/cf-min/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cf-min
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/cf-sum/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cf-sum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/count/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    count
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/max/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    max
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/min/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    min
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/sum/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5_3" id="__nav_4_5_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Math
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Math
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/abs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    abs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/add/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    add
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/and/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    and
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/as/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    as
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/avg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    avg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/bottomk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    bottomk
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/bottomk-others-avg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    bottomk-others-avg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/bottomk-others-max/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    bottomk-others-max
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/bottomk-others-min/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    bottomk-others-min
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/bottomk-others-sum/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    bottomk-others-sum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/by/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    by
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/cg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/clamp-max/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    clamp-max
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/clamp-min/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    clamp-min
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/const/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    const
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/count/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    count
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/cq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cq
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/delay/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    delay
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/derivative/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    derivative
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/des/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    des
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/des-epic-signal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    des-epic-signal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/des-fast/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    des-fast
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/des-simple/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    des-simple
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/des-slow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    des-slow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/des-slower/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    des-slower
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/dist-avg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dist-avg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/dist-max/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dist-max
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/dist-stddev/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dist-stddev
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/div/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    div
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/eureka-avg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    eureka-avg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/fadd/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    fadd
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/fdiv/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    fdiv
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/filter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    filter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/fmul/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    fmul
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/fsub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    fsub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/ge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ge
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/gt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    gt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/integral/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    integral
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/le/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    le
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/lt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    lt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/max/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    max
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/median/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    median
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/mul/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    mul
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/min/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    min
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/neg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    neg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/node-avg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    node-avg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/offset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    offset
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/or/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    or
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/pct/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pct
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/per-step/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    per-step
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/percentiles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    percentiles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/pow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/random/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    random
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/rolling-count/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    rolling-count
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/rolling-max/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    rolling-max
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/rolling-mean/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    rolling-mean
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/rolling-min/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    rolling-min
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/rolling-sum/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    rolling-sum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/sdes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sdes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/sdes-fast/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sdes-fast
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/sdes-simple/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sdes-simple
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/sdes-slow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sdes-slow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/sdes-slower/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sdes-slower
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/sqrt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sqrt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/srandom/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    srandom
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/stat/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stat
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/stat-avg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stat-avg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/stat-count/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stat-count
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/stat-last/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stat-last
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/stat-max/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stat-max
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/stat-min/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stat-min
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/stat-total/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stat-total
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/stddev/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stddev
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/sub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/sum/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/time/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    time
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/time-span/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    time-span
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/topk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    topk
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/topk-others-avg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    topk-others-avg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/topk-others-max/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    topk-others-max
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/topk-others-min/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    topk-others-min
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/topk-others-sum/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    topk-others-sum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5_4" id="__nav_4_5_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Presentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Presentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/alpha/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    alpha
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/area/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    area
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/axis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    axis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/color/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    color
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/decode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    decode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/des-epic-viz/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    des-epic-viz
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/filter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    filter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/head/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    head
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/heatmap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    heatmap
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/legend/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    legend
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    limit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/line/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    line
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/ls/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/lw/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    lw
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/palette/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    palette
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/percentiles-heatmap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    percentiles-heatmap
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/order/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    order
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/s/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    s
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/sort/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sort
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/stack/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stack
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/vspan/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vspan
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5_5" id="__nav_4_5_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Stack Manipulation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            Stack Manipulation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/-rot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    -rot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/2over/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2over
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/call/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    call
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/clear/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    clear
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/depth/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    depth
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/drop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/dup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/each/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    each
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/fcall/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    fcall
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/freeze/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    freeze
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/get/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    get
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/list/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    list
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/map/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    map
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/ndrop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ndrop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/nip/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    nip
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/nlist/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    nlist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/over/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    over
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/pick/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pick
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/roll/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    roll
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/rot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    rot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/set/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    set
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/sset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sset
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/swap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    swap
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/tuck/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    tuck
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5_6" id="__nav_4_5_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Utilities
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            Utilities
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/format/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    format
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/named-rewrite/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    named-rewrite
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5_7" id="__nav_4_5_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Deprecated
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            Deprecated
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/all/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    all
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/stat-avg-mf/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stat-avg-mf
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/stat-max-mf/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stat-max-mf
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/stat-min-mf/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stat-min-mf
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../asl/ref/trend/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    trend
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Spectator
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Spectator
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Agent
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Agent
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-configuration-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command Line Configuration Flags
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Endpoints
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#message-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Message Format
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Message Format">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metric-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metric Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metric-name-and-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metric Name and Tags
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Metric Name and Tags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#length-restrictions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Length Restrictions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allowed-characters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Allowed Characters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metric-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metric Value
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admin-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admin Server
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Numbers
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Core Concepts
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Core Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core/clock/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Clock
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3_2" id="__nav_5_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Meters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Meters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core/meters/counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Counters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core/meters/dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Distribution Summaries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core/meters/gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gauges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core/meters/timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Timers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Languages
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Languages
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_2" id="__nav_5_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    C++
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            C++
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/cpp/usage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_2_2" id="__nav_5_4_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Meters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_4_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Meters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/cpp/meters/counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Counters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/cpp/meters/dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Distribution Summaries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/cpp/meters/gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gauges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/cpp/meters/percentile-timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Timers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/cpp/meters/timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Timers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_3" id="__nav_5_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Go
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/go/usage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_3_2" id="__nav_5_4_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Meters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_4_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Meters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/go/meters/counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Counters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/go/meters/dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Distribution Summaries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/go/meters/gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gauges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/go/meters/percentile-timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Timers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/go/meters/timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Timers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_4" id="__nav_5_4_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Java
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/usage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_4_2" id="__nav_5_4_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Registry
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_4_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Registry
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/registry/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/registry/metrics3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_4_3" id="__nav_5_4_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Meters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_4_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Meters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/meters/counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Counters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/meters/dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Distribution Summaries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/meters/gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gauges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/meters/percentile-timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Timers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/meters/timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Timers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_4_4" id="__nav_5_4_4_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Extensions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_4_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Extensions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_4_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_4_4_1" id="__nav_5_4_4_4_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    JVM Stats
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_5_4_4_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_4_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            JVM Stats
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/jvm-buffer-pools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Buffer Pools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/jvm-classloading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Class Loading
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/jvm-compilation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Compilation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/jvm-gc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Garbage Collection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/jvm-gc-causes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GC Causes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/jvm-memory-pools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Memory Pools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/jvm-safepoint/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Safepoints
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/jvm-threads/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Threads
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/thread-pools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Thread Pools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/log4j2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Log4j2 Appender
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/log4j1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Log4j1 Appender
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/ext/placeholders/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Placeholders
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/java/servo-migration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Servo Migration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_5" id="__nav_5_4_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Node.js
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Node.js
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/nodejs/usage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_5_2" id="__nav_5_4_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Extensions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_4_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Extensions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_5_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_5_2_1" id="__nav_5_4_5_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Node.js Stats
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_5_4_5_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_5_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            Node.js Stats
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/nodejs/ext/nodejs-cpu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CPU
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/nodejs/ext/nodejs-eventloop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Event Loop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/nodejs/ext/nodejs-filedescriptor/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    File Descriptor
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/nodejs/ext/nodejs-gc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Garbarge Collection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/nodejs/ext/nodejs-heap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Heap
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/nodejs/ext/nodejs-heapspace/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Heap Space
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/nodejs/ext/nodejs-memory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Memory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_5_3" id="__nav_5_4_5_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Meters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_4_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Meters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/nodejs/meters/counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Counters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/nodejs/meters/dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Distribution Summaries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/nodejs/meters/gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gauges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/nodejs/meters/percentile-timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Timers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/nodejs/meters/timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Timers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_6" id="__nav_5_4_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Python
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/py/usage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_6_2" id="__nav_5_4_6_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Meters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_4_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            Meters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/py/meters/counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Counters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/py/meters/dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Distribution Summaries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/py/meters/gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gauges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/py/meters/percentile-timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Timers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/py/meters/timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Timers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_7" id="__nav_5_4_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Ruby
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_7">
+            <span class="md-nav__icon md-icon"></span>
+            Ruby
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/rb/usage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_7_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_7_2" id="__nav_5_4_7_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Meters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_4_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            Meters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/rb/meters/counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Counters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/rb/meters/dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Distribution Summaries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/rb/meters/gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gauges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/rb/meters/percentile-timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Timers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lang/rb/meters/timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Timers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_5" id="__nav_5_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Patterns
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            Patterns
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../patterns/cardinality-limiter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cardinality Limiter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../patterns/gauge-poller/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gauge Poller
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../patterns/interval-counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Interval Counter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../patterns/long-task-timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Long Task Timer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../patterns/percentile-timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Timer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../patterns/polled-meter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Polled Meter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Specifications
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            Specifications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../specs/ipc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IPC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-configuration-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command Line Configuration Flags
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Endpoints
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#message-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Message Format
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Message Format">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metric-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metric Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metric-name-and-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metric Name and Tags
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Metric Name and Tags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#length-restrictions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Length Restrictions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allowed-characters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Allowed Characters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metric-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metric Value
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admin-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admin Server
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Numbers
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<p><a href="https://github.com/Netflix-Skunkworks/spectatord/actions/workflows/build.yml"><img alt="Build" src="https://github.com/Netflix-Skunkworks/spectatord/actions/workflows/build.yml/badge.svg" /></a></p>
+<h1 id="spectatord-introduction">SpectatorD Introduction<a class="headerlink" href="#spectatord-introduction" title="Permanent link">&para;</a></h1>
+<p><a href="https://github.com/Netflix-Skunkworks/spectatord">SpectatorD</a> is a high-performance telemetry agent that listens for metrics specified by a
+text-based protocol and publishes updates periodically to an <a href="https://github.com/Netflix/atlas">Atlas</a> aggregator service. It
+consolidates the logic required to apply common tagging to all metrics received, maintain
+metric lifetimes, and route metrics to the correct backend.</p>
+<p>The preferred method of using <code>spectatord</code> is to use one of the thin-client implementations,
+however, the text-based protocol was designed to make it easy for community-supported clients
+to be developed. It is also easy to use in shell scripts with common command line tools.  </p>
+<h2 id="command-line-configuration-flags">Command Line Configuration Flags<a class="headerlink" href="#command-line-configuration-flags" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>spectatord<span class="w"> </span>--help
+spectatord:<span class="w"> </span>A<span class="w"> </span>daemon<span class="w"> </span>that<span class="w"> </span>listens<span class="w"> </span><span class="k">for</span><span class="w"> </span>metrics<span class="w"> </span>and<span class="w"> </span>reports<span class="w"> </span>them<span class="w"> </span>to<span class="w"> </span>Atlas.
+
+<span class="w">    </span>--admin_port<span class="w"> </span><span class="o">(</span>Port<span class="w"> </span>number<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>admin<span class="w"> </span>server.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span><span class="m">1234</span><span class="p">;</span>
+<span class="w">    </span>--age_gauge_limit<span class="w"> </span><span class="o">(</span>The<span class="w"> </span>maximum<span class="w"> </span>number<span class="w"> </span>of<span class="w"> </span>age<span class="w"> </span>gauges<span class="w"> </span>that<span class="w"> </span>may<span class="w"> </span>be<span class="w"> </span>reported<span class="w"> </span>by
+<span class="w">      </span>this<span class="w"> </span>process.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span><span class="m">1000</span><span class="p">;</span>
+<span class="w">    </span>--common_tags<span class="w"> </span><span class="o">(</span>Common<span class="w"> </span>tags:<span class="w"> </span>nf.app<span class="o">=</span>app,nf.cluster<span class="o">=</span>cluster.<span class="w"> </span>Override<span class="w"> </span>the
+<span class="w">      </span>default<span class="w"> </span>common<span class="w"> </span>tags.<span class="w"> </span>If<span class="w"> </span>empty,<span class="w"> </span><span class="k">then</span><span class="w"> </span>spectatord<span class="w"> </span>will<span class="w"> </span>use<span class="w"> </span>the<span class="w"> </span>default<span class="w"> </span>set.
+<span class="w">      </span>This<span class="w"> </span>flag<span class="w"> </span>should<span class="w"> </span>only<span class="w"> </span>be<span class="w"> </span>used<span class="w"> </span>by<span class="w"> </span>experts<span class="w"> </span>who<span class="w"> </span>understand<span class="w"> </span>the<span class="w"> </span>risks.<span class="o">)</span><span class="p">;</span>
+<span class="w">      </span>default:<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+<span class="w">    </span>--debug<span class="w"> </span><span class="o">(</span>Debug<span class="w"> </span>spectatord.<span class="w"> </span>All<span class="w"> </span>values<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>sent<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>dev<span class="w"> </span>aggregator<span class="w"> </span>and
+<span class="w">      </span>dropped.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+<span class="w">    </span>--enable_external<span class="w"> </span><span class="o">(</span>Enable<span class="w"> </span>external<span class="w"> </span>publishing.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+<span class="w">    </span>--enable_socket<span class="w"> </span><span class="o">(</span>Enable<span class="w"> </span>UNIX<span class="w"> </span>domain<span class="w"> </span>socket<span class="w"> </span>support.<span class="w"> </span>Default<span class="w"> </span>is<span class="w"> </span><span class="nb">true</span><span class="w"> </span>on<span class="w"> </span>Linux
+<span class="w">      </span>and<span class="w"> </span><span class="nb">false</span><span class="w"> </span>on<span class="w"> </span>MacOS.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>true<span class="p">;</span>
+<span class="w">    </span>--enable_statsd<span class="w"> </span><span class="o">(</span>Enable<span class="w"> </span>statsd<span class="w"> </span>support.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+<span class="w">    </span>--metatron_dir<span class="w"> </span><span class="o">(</span>Path<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>Metatron<span class="w"> </span>certificates,<span class="w"> </span>which<span class="w"> </span>are<span class="w"> </span>used<span class="w"> </span><span class="k">for</span>
+<span class="w">      </span>external<span class="w"> </span>publishing.<span class="w"> </span>A<span class="w"> </span>number<span class="w"> </span>of<span class="w"> </span>well-known<span class="w"> </span>directories<span class="w"> </span>are<span class="w"> </span>searched<span class="w"> </span>by
+<span class="w">      </span>default.<span class="w"> </span>This<span class="w"> </span>option<span class="w"> </span>is<span class="w"> </span>only<span class="w"> </span>necessary<span class="w"> </span><span class="k">if</span><span class="w"> </span>your<span class="w"> </span>certificates<span class="w"> </span>are<span class="w"> </span><span class="k">in</span><span class="w"> </span>an
+<span class="w">      </span>unusual<span class="w"> </span>location.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+<span class="w">    </span>--meter_ttl<span class="w"> </span><span class="o">(</span>Meter<span class="w"> </span>TTL:<span class="w"> </span>expire<span class="w"> </span>meters<span class="w"> </span>after<span class="w"> </span>this<span class="w"> </span>period<span class="w"> </span>of<span class="w"> </span>inactivity.<span class="o">)</span><span class="p">;</span>
+<span class="w">      </span>default:<span class="w"> </span>15m<span class="p">;</span>
+<span class="w">    </span>--no_common_tags<span class="w"> </span><span class="o">(</span>No<span class="w"> </span>common<span class="w"> </span>tags<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>provided<span class="w"> </span><span class="k">for</span><span class="w"> </span>metrics.<span class="w"> </span>Since<span class="w"> </span>no
+<span class="w">      </span>common<span class="w"> </span>tags<span class="w"> </span>are<span class="w"> </span>available,<span class="w"> </span>no<span class="w"> </span>internal<span class="w"> </span>status<span class="w"> </span>metrics<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>recorded.
+<span class="w">      </span>Only<span class="w"> </span>use<span class="w"> </span>this<span class="w"> </span>feature<span class="w"> </span><span class="k">for</span><span class="w"> </span>special<span class="w"> </span>cases<span class="w"> </span>where<span class="w"> </span>it<span class="w"> </span>is<span class="w"> </span>absolutely<span class="w"> </span>necessary
+<span class="w">      </span>to<span class="w"> </span>override<span class="w"> </span>common<span class="w"> </span>tags<span class="w"> </span>such<span class="w"> </span>as<span class="w"> </span>nf.app,<span class="w"> </span>and<span class="w"> </span>only<span class="w"> </span>use<span class="w"> </span>it<span class="w"> </span>with<span class="w"> </span>a<span class="w"> </span>secondary
+<span class="w">      </span>spectatord<span class="w"> </span>process.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+<span class="w">    </span>--port<span class="w"> </span><span class="o">(</span>Port<span class="w"> </span>number<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>UDP<span class="w"> </span>socket.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span><span class="m">1234</span><span class="p">;</span>
+<span class="w">    </span>--socket_path<span class="w"> </span><span class="o">(</span>Path<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>UNIX<span class="w"> </span>domain<span class="w"> </span>socket.<span class="o">)</span><span class="p">;</span>
+<span class="w">      </span>default:<span class="w"> </span><span class="s2">&quot;/run/spectatord/spectatord.unix&quot;</span><span class="p">;</span>
+<span class="w">    </span>--statsd_port<span class="w"> </span><span class="o">(</span>Port<span class="w"> </span>number<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>statsd<span class="w"> </span>socket.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span><span class="m">8125</span><span class="p">;</span>
+<span class="w">    </span>--uri<span class="w"> </span><span class="o">(</span>Optional<span class="w"> </span>override<span class="w"> </span>URI<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>aggregator.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+<span class="w">    </span>--verbose<span class="w"> </span><span class="o">(</span>Use<span class="w"> </span>verbose<span class="w"> </span>logging.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+<span class="w">    </span>--verbose_http<span class="w"> </span><span class="o">(</span>Output<span class="w"> </span>debug<span class="w"> </span>info<span class="w"> </span><span class="k">for</span><span class="w"> </span>HTTP<span class="w"> </span>requests.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+
+Try<span class="w"> </span>--helpfull<span class="w"> </span>to<span class="w"> </span>get<span class="w"> </span>a<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>all<span class="w"> </span>flags<span class="w"> </span>or<span class="w"> </span>--help<span class="o">=</span>substring<span class="w"> </span>shows<span class="w"> </span><span class="nb">help</span><span class="w"> </span><span class="k">for</span>
+flags<span class="w"> </span>which<span class="w"> </span>include<span class="w"> </span>specified<span class="w"> </span>substring<span class="w"> </span><span class="k">in</span><span class="w"> </span>either<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>name,<span class="w"> </span>or<span class="w"> </span>description<span class="w"> </span>or
+path.
+</code></pre></div>
+<h2 id="endpoints">Endpoints<a class="headerlink" href="#endpoints" title="Permanent link">&para;</a></h2>
+<p>By default, the daemon will listen on the following endpoints:</p>
+<ul>
+<li>Metrics Message Protocol</li>
+<li><code>1234/udp</code> <em>(~430K reqs/sec with 16MB buffers)</em></li>
+<li><code>/run/spectatord/spectatord.unix</code> Domain Socket <em>(~1M reqs/sec with batching)</em></li>
+<li>Admin Server: <code>1234/tcp</code></li>
+</ul>
+<p>The choice of which endpoint to use is determined by your performance and access requirements;
+the Unix domain socket offers higher performance, but requires filesystem access, which may not
+be tenable under some container configurations. See <a href="#performance-numbers">Performance Numbers</a>
+for more details.</p>
+<h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>:warning: In container environments, the <code>-w0</code> option may not work and <code>-w1</code> should be
+used instead.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>echo &quot;c:server.numRequests,id=failed:1&quot; | nc -u -w0 localhost 1234
+echo &quot;t:server.requestLatency:0.042&quot; | nc -u -w0 localhost 1234
+echo &quot;d:server.responseSizes:1024&quot; | nc -w0 -uU /run/spectatord/spectatord.unix
+echo &quot;g:someGauge:60&quot; | nc -w0 -uU /run/spectatord/spectatord.unix
+echo &quot;g,300:anotherGauge:60&quot; | nc -w0 -uU /run/spectatord/spectatord.unix
+echo &quot;X,1543160297100:monotonic.Source:42&quot; | nc -w0 -uU /run/spectatord/spectatord.unix
+echo &quot;X,1543160298100:monotonic.Source:43&quot; | nc -w0 -uU /run/spectatord/spectatord.unix
+echo &quot;A:age.gauge:0&quot; | nc -u -w0 localhost 1234
+</code></pre></div>
+<h2 id="message-format">Message Format<a class="headerlink" href="#message-format" title="Permanent link">&para;</a></h2>
+<p>The message sent to the server has the following format, where the <code>,options</code> and <code>,tags</code> portions
+are optional:</p>
+<div class="highlight"><pre><span></span><code>metric-type,options:name,tags:value
+</code></pre></div>
+<p>Multiple lines may be sent in the same packet, separated by newlines (<code>\n</code>):</p>
+<div class="highlight"><pre><span></span><code>echo -e &quot;t:server.requestLatency:0.042\nd:server.responseSizes:1024&quot; | nc -u -w0 localhost 1234
+</code></pre></div>
+<h3 id="metric-types">Metric Types<a class="headerlink" href="#metric-types" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Metric Type</th>
+<th>Symbol</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Age Gauge</td>
+<td><code>A</code></td>
+<td>The value is the time in seconds since the epoch at which an event has successfully occurred, or <code>0</code> to use the current time in epoch seconds. After an Age Gauge has been set, it will continue reporting the number of seconds since the last time recorded, for as long as the spectatord process runs. The purpose of this metric type is to enable users to more easily implement the Time Since Last Success alerting pattern. <br><br> To set a specific time as the last success: <code>A:time.sinceLastSuccess:1611081000</code>. <br><br> To set <code>now()</code> as the last success: <code>A:time.sinceLastSuccess:0</code>. <br><br> By default, a maximum of <code>1000</code> Age Gauges are allowed per <code>spectatord</code> process, because there is no mechanism for cleaning them up. This value may be tuned with the <code>--age_gauge_limit</code> flag on the spectatord binary.</td>
+</tr>
+<tr>
+<td>Counter</td>
+<td><code>c</code></td>
+<td>The value is the number of increments that have occurred since the last time it was recorded. The value will be reported to the backend as a rate-per-second.</td>
+</tr>
+<tr>
+<td>Distribution Summary</td>
+<td><code>d</code></td>
+<td>The value tracks the distribution of events. It is similar to a Timer, but more general, because the size does not have to be a period of time. <br><br> For example, it can be used to measure the payload sizes of requests hitting a server or the number of records returned from a query.</td>
+</tr>
+<tr>
+<td>Gauge</td>
+<td><code>g</code></td>
+<td>The value is a number that was sampled at a point in time. The default time-to-live (TTL) for gauges is 900 seconds (15 minutes) - they will continue reporting the last value set for this duration of time. <br><br> Optionally, the TTL may be specified in seconds, with a minimum TTL of 5 seconds. For example, <code>g,120:gauge:42.0</code> spcifies a gauge with a 120 second (2 minute) TTL.</td>
+</tr>
+<tr>
+<td>Max Gauge</td>
+<td><code>m</code></td>
+<td>The value is a number that was sampled at a point in time, but it is reported as a maximum gauge value to the backend.</td>
+</tr>
+<tr>
+<td>Monotonic Counter (double)</td>
+<td><code>C</code></td>
+<td>The value is a monotonically increasing number. A minimum of two samples must be received in order for <code>spectatord</code> to calculate a delta value and report it to the backend as a rate-per-second. The value is a <code>double</code> data type, and negative deltas are ignored. This data type provides flexibility for transforming values into base units with division. <br><br> Commonly used with networking metrics.</td>
+</tr>
+<tr>
+<td>Monotonic Counter (uint64)</td>
+<td><code>U</code></td>
+<td>The value is a monotonically increasing number. A minimum of two samples must be received in order for <code>spectatord</code> to calculate a delta value and report it to the backend as a rate-per-second. The value is a <code>uint64</code> data type, and it will handle rollovers. <br><br> Commonly used with networking metrics.</td>
+</tr>
+<tr>
+<td>Monotonic Counter (double) with Millisecond Timestamps</td>
+<td><code>X</code></td>
+<td>The value is a monotonically increasing number, sampled at a specified number of milliseconds since the epoch. A minimum of two samples must be received in order for <code>spectatord</code> to calculate a delta value and report it to the backend. The value should be a <code>uint64</code> data type, and it will handle rollovers. <br><br> This is an <strong>experimental</strong> metric type that can be used to track monotonic sources that were sampled in the recent past, with the value normalized over the reported time period. <br><br> The timestamp in milliseconds since the epoch when the value was sampled must be included as a metric option: <code>X,1543160297100:monotonic.Source:42</code></td>
+</tr>
+<tr>
+<td>Percentile Distribution Summary</td>
+<td><code>D</code></td>
+<td>The value tracks the distribution of events, with percentile estimates. It is similar to a Percentile Timer, but more general, because the size does not have to be a period of time. <br><br> For example, it can be used to measure the payload sizes of requests hitting a server or the number of records returned from a query. <br><br> In order to maintain the data distribution, they have a higher storage cost, with a worst-case of up to 300X that of a standard Distribution Summary. Be diligent about any additional dimensions added to Percentile Distribution Summaries and ensure that they have a small bounded cardinality.</td>
+</tr>
+<tr>
+<td>Percentile Timer</td>
+<td><code>T</code></td>
+<td>The value is the number of seconds that have elapsed for an event, with percentile estimates. <br><br> This metric type will track the data distribution by maintaining a set of Counters. The distribution can then be used on the server side to estimate percentiles, while still allowing for arbitrary slicing and dicing based on dimensions. <br><br> In order to maintain the data distribution, they have a higher storage cost, with a worst-case of up to 300X that of a standard Timer. Be diligent about any additional dimensions added to Percentile Timers and ensure that they have a small bounded cardinality.</td>
+</tr>
+<tr>
+<td>Timer</td>
+<td><code>t</code></td>
+<td>The value is the number of seconds that have elapsed for an event.</td>
+</tr>
+</tbody>
+</table>
+<p>The data type for all numbers except <code>U</code> is <code>double</code>. The <code>U</code> values are recorded as <code>uint64_t</code>, and the calculated
+deltas are passed to the backend as <code>double</code>. Passing negative values for <code>uint64_t</code> data types will cause the parsed
+string value to rollover.</p>
+<h3 id="metric-name-and-tags">Metric Name and Tags<a class="headerlink" href="#metric-name-and-tags" title="Permanent link">&para;</a></h3>
+<p>The metric name and tags must follow Atlas restrictions, which are described in the sections below.</p>
+<p>Tags are optional. They may be specified as comma-separated <code>key=value</code> pairs after the metric name.
+For example:</p>
+<div class="highlight"><pre><span></span><code>fooIsTheName,some.tag=val1,some.otherTag=val2
+</code></pre></div>
+<p>See <a href="https://netflix.github.io/atlas-docs/concepts/naming/">Atlas Naming Conventions</a> for
+recommendations on naming metrics.</p>
+<h4 id="length-restrictions">Length Restrictions<a class="headerlink" href="#length-restrictions" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Limit</th>
+<th>Min</th>
+<th>Max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Length of <code>name</code></td>
+<td>1</td>
+<td>255</td>
+</tr>
+<tr>
+<td>Tag key length</td>
+<td>2</td>
+<td>60</td>
+</tr>
+<tr>
+<td>Tag value length</td>
+<td>1</td>
+<td>120</td>
+</tr>
+</tbody>
+</table>
+<h4 id="allowed-characters">Allowed Characters<a class="headerlink" href="#allowed-characters" title="Permanent link">&para;</a></h4>
+<p>The metric name, tag keys and values may only use characters in the following set: <code>-._A-Za-z0-9</code>.</p>
+<p>All others characters will be converted to an underscore (<code>_</code>) by the client.</p>
+<p>To avoid issues with parsing metrics, avoid using the SpectatorD protocol delimiter characters
+(<code>,=:</code>) rather than relying on the client to rewrite them to <code>_</code>.</p>
+<h3 id="metric-value">Metric Value<a class="headerlink" href="#metric-value" title="Permanent link">&para;</a></h3>
+<p>A double value, or a uint64 value for one kind of Monotonic Counters. The meaning of the value
+depends on the metric type.</p>
+<h2 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h2>
+<p>See <a href="../metrics/">Metrics</a> for a list of metrics published by this service.</p>
+<h2 id="admin-server">Admin Server<a class="headerlink" href="#admin-server" title="Permanent link">&para;</a></h2>
+<p>An administrative server is provided with SpectatorD, so that debugging information and few
+data management tasks may be completed. By default, this server listens on port <code>1234/TCP</code>,
+but this can be modified with the <code>--admin_port</code> flag. The endpoints which change data may
+only be accessed from localhost.</p>
+<ul>
+<li><code>GET /</code><ul>
+<li>Returns a service description and list of available endpoints. </li>
+</ul>
+</li>
+<li><code>GET /config</code><ul>
+<li>Returns the current SpectatorD configuration, including the current set of common tags.</li>
+</ul>
+</li>
+<li><code>GET /config/common_tags</code><ul>
+<li>Returns a description of how to use this endpoint to modify common tags.</li>
+</ul>
+</li>
+<li><code>POST /config/common_tags</code><ul>
+<li>Create, modify or delete common tags from the allowed set of Mantis common tags. No other
+common tags may be modified. Create or update a tag by setting it to a string. Delete a tag
+by setting the value to an empty string.</li>
+<li>Allowed tags:<ul>
+<li><code>mantisJobId</code></li>
+<li><code>mantisJobName</code></li>
+<li><code>mantisUser</code></li>
+<li><code>mantisWorkerIndex</code></li>
+<li><code>mantisWorkerNumber</code></li>
+<li><code>mantisWorkerStageNumber</code></li>
+</ul>
+</li>
+<li>Example:
+    <div class="highlight"><pre><span></span><code>curl -X POST \
+-d &#39;{&quot;mantisJobId&quot;: &quot;foo&quot;, &quot;mantisJobName&quot;: &quot;bar&quot;, &quot;mantisUser&quot;: &quot;&quot;}&#39; \
+-w &quot; %{http_code}\n&quot; \
+http://localhost:1234/config/common_tags
+</code></pre></div></li>
+</ul>
+</li>
+<li><code>GET /metrics</code><ul>
+<li>Return an object containing lists of all metrics currently known to the Registry, grouped
+by type.</li>
+</ul>
+</li>
+<li><code>DELETE /metrics/A</code><ul>
+<li>Delete all AgeGauge metrics from the Registry. </li>
+</ul>
+</li>
+<li><code>DELETE /metrics/A/{id}</code><ul>
+<li>Delete one AgeGauge metric from the Registry, identified by the <code>id</code>.</li>
+<li>Example:
+    <div class="highlight"><pre><span></span><code>curl -X DELETE \
+-w &quot; %{http_code}\n&quot; \
+http://localhost:1234/metrics/A/fooIsTheName,some.tag=val1,some.otherTag=val2
+</code></pre></div></li>
+</ul>
+</li>
+<li><code>DELETE /metrics/g</code><ul>
+<li>Delete all Gauge metrics from the Registry. </li>
+</ul>
+</li>
+<li><code>DELETE /metrics/g/{id}</code><ul>
+<li>Delete one Gauge metric from the Registry, identified by the <code>id</code>.</li>
+<li>Example:
+    <div class="highlight"><pre><span></span><code>curl -X DELETE \
+-w &quot; %{http_code}\n&quot; \
+http://localhost:1234/metrics/g/fooIsTheName,some.tag=val1,some.otherTag=val2
+</code></pre></div></li>
+</ul>
+</li>
+</ul>
+<h2 id="performance-numbers">Performance Numbers<a class="headerlink" href="#performance-numbers" title="Permanent link">&para;</a></h2>
+<p>A key goal of this project is to deliver high performance. This means that we need to use few
+resources for the common use case, where the number of metric updates is relatively small
+(&lt; 10k reqs/sec), and it also needs to be able to handle hundreds of thousands of updates per
+second when required.</p>
+<p>Using Unix domain sockets, we can handle close to 1M metric updates per second, assuming the client
+batches the updates and sends a few at a time. Sending every single metric update requires a lot of
+context switching, but is something that works well for the majority of our use cases. This
+simplicity means the user does not have to maintain any local state.</p>
+<div class="highlight"><pre><span></span><code>Transport          Batch Size    First 10M          Second 10M
+Unix Dgram         1             22.98s (435k rps)  20.58s (486k rps)
+Unix Dgram         8             11.46s (873k rps)   9.89s (1011k rps)
+Unix Dgram         32            10.38s (963k rps)   8.49s (1178k rps)
+</code></pre></div>
+<p>The UDP transport is particularly sensitive the max receive buffer size (16MB on our systems). </p>
+<p>Our tests indicate that sending 430K rps to the UDP port did not drop packets, but if there is a
+need for higher throughput, then tweaking <code>/proc/sys/net/unix/max_dgram_qlen</code> is recommended.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>
