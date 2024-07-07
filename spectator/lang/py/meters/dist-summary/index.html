@@ -7052,6 +7052,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../age-gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Age Gauges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../counter/" class="md-nav__link">
         
   
@@ -7123,7 +7144,70 @@
   
   
     <li class="md-nav__item">
-      <a href="../percentile-timer/" class="md-nav__link">
+      <a href="../max-gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Max Gauges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mono-counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monotonic Counters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pct-dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Distribution Summaries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pct-timer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -7161,6 +7245,27 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../migrations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migrations
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -7531,7 +7636,17 @@
 
   <h1>Distribution Summaries</h1>
 
+<p>A Distribution Summary is used to track the distribution of events. It is similar to a Timer, but
+more general, in that the size does not have to be a period of time. For example, a Distribution
+Summary could be used to measure the payload sizes of requests hitting a server.</p>
+<p>Always use base units when recording data, to ensure that the tick labels presented on Atlas graphs
+are readable. If you are measuring payload size, then use bytes, not kilobytes (or some other unit).
+This means that a <code>4K</code> tick label will represent 4 kilobytes, rather than 4 kilo-kilobytes.</p>
+<p>Call <code>record()</code> with a value:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span>
 
+<span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">distribution_summary</span><span class="p">(</span><span class="s2">&quot;server.requestSize&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
 
 
 

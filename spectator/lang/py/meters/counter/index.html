@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://netflix.github.io/atlas-docs/spectator/lang/py/meters/counter/">
       
       
-        <link rel="prev" href="../../usage/">
+        <link rel="prev" href="../age-gauge/">
       
       
         <link rel="next" href="../dist-summary/">
@@ -7049,6 +7049,27 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../age-gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Age Gauges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -7123,7 +7144,70 @@
   
   
     <li class="md-nav__item">
-      <a href="../percentile-timer/" class="md-nav__link">
+      <a href="../max-gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Max Gauges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mono-counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monotonic Counters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pct-dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Distribution Summaries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pct-timer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -7161,6 +7245,27 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../migrations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migrations
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -7531,9 +7636,20 @@
 
   <h1>Counters</h1>
 
+<p>A Counter is used to measure the rate at which an event is occurring. Considering an API
+endpoint, a Counter could be used to measure the rate at which it is being accessed.</p>
+<p>Counters are reported to the backend as a rate-per-second. In Atlas, the <code>:per-step</code> operator
+can be used to convert them back into a value-per-step on a graph.</p>
+<p>Call <code>increment()</code> when an event occurs:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span>
 
-<span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="s1">&#39;server.numRequests&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">increment</span><span class="p">()</span>
+<span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">increment</span><span class="p">()</span>
+</code></pre></div>
+<p>You can also pass a value to <code>increment()</code>. This is useful when a collection of events happens
+together:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span>
+
+<span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="s2">&quot;queue.itemsAdded&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </code></pre></div>
 
 
