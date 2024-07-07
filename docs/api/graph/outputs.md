@@ -1,4 +1,4 @@
-The following output formats are supported by default for [graphing](Graph):
+The following output formats are supported by default for [graphing](./graph.md):
 
 * [png](#png)
 * [csv](#csv)

@@ -19,10 +19,10 @@ There are only four reserved symbols used for structuring the expression: `,:()`
    and `"b"`.
 2. Colon is used to prefix operations. If the first character is a colon the item will be treated
    as a command to run. For example, `a,:dup`, will push `"a"` on the stack and then execute the
-   [duplicate](std-dup) operation.
+   [duplicate](./ref/dup.md) operation.
 3. Parenthesis are used to indicate the start and end of a list. The expression `(,)` puts an
    empty list on the stack. Commands inside of a list will not be executed unless the list is
-   passed to the [call](std-call) command. For example, `(,:dup,)` will push a list with a single
+   passed to the [call](./ref/call.md) command. For example, `(,:dup,)` will push a list with a single
    string value of `":dup"` on to the stack.
 
 ## Data Model
@@ -192,8 +192,8 @@ value:
 /api/v1/graph?q=app,web,:eq,name,cpu,:eq,:and,:sum,:neg,:abs
 @@@
 
-Common binary operations are [add](ref/add.md#math), [subtract](ref/sub.md#math), [multiply](ref/mul.md#math), and
-[divide](ref/div.md#math). The [aggregation section](#aggregation) has an example of using divide to
+Common binary operations are [add](ref/add.md), [subtract](ref/sub.md), [multiply](ref/mul.md), and
+[divide](ref/div.md). The [aggregation section](#aggregation) has an example of using divide to
 compute the average.
 
 ### Presentation
