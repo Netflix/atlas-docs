@@ -25,7 +25,7 @@ Specifies the output format to use. The default is `json`.
 
 Maximum number of results to return before paging the response. If the response is paged 
 a `x-nflx-atlas-next-offset` will be set to indicate the next offset. Pass the value with an 
-[offset](#offset) param to get the next part of the list. If the header is not present 
+[offset](#offset-offset) param to get the next part of the list. If the header is not present 
 there is no more data.
 
 ### Offset (offset)

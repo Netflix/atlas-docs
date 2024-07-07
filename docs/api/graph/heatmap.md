@@ -1,17 +1,16 @@
 Atlas primarily supports visualizing data in line charts. As of 1.8, Atlas can also visualize
-via heatmaps using the [`:heatmap`](../../api/graph/line-styles.md#heat-map) line style.
+via heatmaps using the [`:heatmap`](../../api/graph/line-styles.md#heatmap) line style.
 The graph area is broken up into a series of cells and a count for each cell is incremented when 
 a measurement falls within the cells boundaries. Colors or shades of colors then fill in cells 
 based on the final count.
 
 ## Percentiles
-Heatmaps are particularly useful on top of
-[percentile](../../spectator/patterns/percentile-timer.md) metrics to analyze the entire
-measurement range. 
 
-**Note** Using the [log linear](axis-scale.md#log-linear) scale will help to highlight clustered
-regions of measurements via `&scale=log-linear`.
-The example also uses data not available in the demo Atlas instance.
+Heatmaps are particularly useful on top of [percentile](../../spectator/patterns/percentile-timer.md)
+metrics to analyze the entire measurement range. 
+
+**Note** Using the [log linear](axis-scale.md#log-linear) scale will help to highlight clustered regions of measurements
+via `&scale=log-linear`. The example also uses data not available in the demo Atlas instance.
 
 @@@ atlas-uri { hilite=:percentile-heatmap }
 /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,requestLatency,:eq,:percentile-heatmap,&scale=log-linear

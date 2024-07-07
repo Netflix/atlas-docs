@@ -81,7 +81,7 @@ There are four parameters to control the image size and layout used for a graph:
 | `h`      | Height of the canvas or image                  | `300`[*](#defaults) | int                               |
 | `zoom`   | Transform the size by a zoom factor            | `1.0`               | float                             |
 
-For more information on the behavior see the [graph layout](layout) page.
+For more information on the behavior see the [graph layout](layout.md) page.
 
 ### Y-Axis
 

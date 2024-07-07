@@ -9,7 +9,7 @@ TimeSeriesExpr
 @@@
 
 A helper method that computes the average or mean from one or more time series using the 
-[count](count) aggregate to determine how many time series have data at an interval and 
+[count](./count.md) aggregate to determine how many time series have data at an interval and 
 dividing the sum of the values by the count. This avoids issues where one or time series
 are missing data at a specific time resulting in an artificially low average. E.g. the 
 expression:

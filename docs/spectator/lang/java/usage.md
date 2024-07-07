@@ -112,7 +112,7 @@ instrumented data to [Atlas](../../../index.md). See the appropriate
 section for the type of project you are working on:
 
 * [Libraries](#libraries)
-* [SBN Applications](#applications), specifically standalone apps using SBN.
+* [SBN Applications](#sbn-applications), specifically standalone apps using SBN.
 
 ### Libraries
 
@@ -137,7 +137,7 @@ public class Foo {
 
 See the [testing docs](testing.md) for more information about creating a binding to use with tests.
 Libraries should not install a particular registry. The bindings to use for the [Registry] should be
-determined by the [application](#application) that is using the library. Think of it as being like
+determined by the [application](#sbn-applications) that is using the library. Think of it as being like
 slf4j where [logging configuration] is up to the end-user, not the library owner.
 
 [logging configuration]: https://www.slf4j.org/faq.html#configure_logging

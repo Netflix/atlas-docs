@@ -11,7 +11,7 @@ that, client libraries like [Spectator](../spectator/index.md) will automaticall
 the data source type.
 
 It is recommended to at least skim through the normalization for [gauges](#gauge) and
-[rates](#rates) to better understand how the values you see actually relate to measured
+[rates](#rate) to better understand how the values you see actually relate to measured
 data.
 
 ## Gauge

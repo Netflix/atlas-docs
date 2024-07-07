@@ -128,9 +128,11 @@ To illustrate, this is a sample graph image:
 ![Alert example](./images/stack_alert_example.png)
 
 This graph shows the number of requests per second and compares that with a prediction line
-generated using [double exponential smoothing](DES). If the number of requests per second falls
+generated using [double exponential smoothing]. If the number of requests per second falls
 below the prediction, it indicates an alert would trigger using the vertical spans. The url to
 generate this image follows (newlines added for readability):
+
+[double exponential smoothing]: asl/ref/des.md
 
 ```
 http://atlas/api/v1/graph
@@ -238,13 +240,13 @@ window of data they contain.
 
 With this setup we can show the last 6h of data as long as clients can successfully publish. The
 data is all in memory sharded across machines in the 6h clusters. Because the data and index are
-all in memory on the local node each instance is self contained and doesn't need any external
+all in memory on the local node each instance is self-contained and doesn't need any external
 service to function. We typically run multiple mirrors of the 6h cluster so data is replicated and
 we can handle loss of an instance. In AWS we run each mirror in a different zone so that a zone
 failure will only impact a single mirror.
 
-The publish cluster needs to know all of the instance in the mirror cluster and takes care of
-splitting the traffic up so it goes to the correct shard. The set of mirror instances and shards
+The publish cluster needs to know all the instance in the mirror cluster and takes care of
+splitting the traffic up, so it goes to the correct shard. The set of mirror instances and shards
 are assigned based on slots from the [Edda](https://github.com/Netflix/edda)
 [autoScalingGroups API](https://netflix.github.io/edda/rest-api/#apiv2group). Since
 the set of instances for the mirrors change rarely, the publish instances can cache the Edda
