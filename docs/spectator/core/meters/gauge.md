@@ -12,12 +12,12 @@ may have been much higher or lower at some point during interval, but that is no
 
 ### First-Class Support
 
-* [Java](../../lang/java/meters/gauge.md)
-* [Node.js](../../lang/nodejs/meters/gauge.md)
-
-### Experimental Support
-
 * [C++](../../lang/cpp/meters/gauge.md)
 * [Go](../../lang/go/meters/gauge.md)
+* [Java](../../lang/java/meters/gauge.md)
+* [Node.js](../../lang/nodejs/meters/gauge.md)
 * [Python](../../lang/py/meters/gauge.md)
-* [Ruby](../../lang/rb/meters/gauge.md)
+
+### Best-Effort Support
+
+* Rust (internal library)

@@ -18,18 +18,12 @@ different languages for this singular polyglot use case.
 These libraries are fully-supported by the team and see wide use across Netflix. Issues are fixed
 in a timely manner and updates are published regularly.
 
-* [Java](java/usage.md) (GA)
-* [Node.js](nodejs/usage.md) (GA)
+* [C++](cpp/usage.md)
+* [Go](go/usage.md)
+* [Java](java/usage.md)
+* [Node.js](nodejs/usage.md)
+* [Python](py/usage.md)
 
 ## Best-Effort Support
 
-!!! warning
-    Support for these languages is experimental and subject to change.
-    
-    <span style="color:red">**Do not use these libraries unless you understand and accept that
-    risk.**</span>
-
-* [C++](cpp/usage.md) (Alpha)
-* [Go](go/usage.md) (Beta)
-* [Python](py/usage.md) (Beta)
-* [Ruby](rb/usage.md) (Alpha)
+* Rust (internal library)

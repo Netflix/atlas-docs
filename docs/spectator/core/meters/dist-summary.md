@@ -66,12 +66,12 @@ thus reported as rates per second, while the `max` is reported as a gauge.
 
 ### First-Class Support
 
-* [Java](../../lang/java/meters/dist-summary.md)
-* [Node.js](../../lang/nodejs/meters/dist-summary.md)
-
-### Experimental Support
-
 * [C++](../../lang/cpp/meters/dist-summary.md)
 * [Go](../../lang/go/meters/dist-summary.md)
+* [Java](../../lang/java/meters/dist-summary.md)
+* [Node.js](../../lang/nodejs/meters/dist-summary.md)
 * [Python](../../lang/py/meters/dist-summary.md)
-* [Ruby](../../lang/rb/meters/dist-summary.md)
+
+### Best-Effort Support
+
+* Rust (internal library)

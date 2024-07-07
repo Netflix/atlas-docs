@@ -69,12 +69,12 @@ thus reported as rates per second, while the `max` is reported as a gauge.
 
 ### First-Class Support
 
-* [Java](../../lang/java/meters/timer.md)
-* [Node.js](../../lang/nodejs/meters/timer.md)
-
-### Experimental Support
-
 * [C++](../../lang/cpp/meters/timer.md)
 * [Go](../../lang/go/meters/timer.md)
+* [Java](../../lang/java/meters/timer.md)
+* [Node.js](../../lang/nodejs/meters/timer.md)
 * [Python](../../lang/py/meters/timer.md)
-* [Ruby](../../lang/rb/meters/timer.md)
+
+### Best-Effort Support
+
+* Rust (internal library)
