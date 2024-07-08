@@ -1,21 +1,10 @@
-## Project
+# spectator-cpp Usage
 
-[![Build Status](https://travis-ci.org/Netflix/spectator-cpp.svg?branch=master)](https://travis-ci.org/Netflix/spectator-cpp)
-[![codecov](https://codecov.io/gh/Netflix/spectator-cpp/branch/master/graph/badge.svg)](https://codecov.io/gh/Netflix/spectator-cpp)
+C++ thin-client [metrics library] for use with [Atlas] and [SpectatorD].
 
-* [Source](https://github.com/Netflix/spectator-cpp)
-* **Product Lifecycle:** Alpha
-
-This implements a basic [Spectator](https://github.com/Netflix/spectator) library for
-instrumenting C++ applications and sending metrics to an Atlas aggregator service.
-
-## Install Library
-
-1. TBD
-
-1. If running at Netflix, see the [Netflix Integration] section.
-
-[Netflix Integration]: #netflix-integration
+[metrics library]: https://github.com/Netflix/spectator-cpp
+[Atlas]: ../../../overview.md
+[SpectatorD]: ../../agent/usage.md
 
 ## Instrumenting Code
 
@@ -43,21 +32,20 @@ class Server {
         response_size_{registry->GetDistributionSummary("server.responseSizes")} {}
 
   Response Handle(const Request& request) {
-    using spectator::Registry;
-    auto start = Registry::clock::now();
+    auto start = std::chrono::steady_clock::now();
 
     // do some work and obtain a response...
     Response res{200, 64};
 
-    // Update the counter id with dimensions based on the request. The
-    // counter will then be looked up in the registry which should be
-    // fairly cheap, such as lookup of id object in a map
-    // However, it is more expensive than having a local variable set
-    // to the counter.
-    auto cnt_id = request_count_id_->WithTag("country", request.country)
-                      ->WithTag("status", std::to_string(res.status));
+    // Update the Counter id with dimensions, based on information in the request. The Counter
+    // will be looked up in the Registry, which is a fairly cheap operation, about the same as
+    // the lookup of an id object in a map. However, it is more expensive than having a local
+    // variable set to the Counter.
+    auto cnt_id = request_count_id_
+        ->WithTag("country", request.country)
+        ->WithTag("status", std::to_string(res.status));
     registry_->GetCounter(std::move(cnt_id))->Increment();
-    request_latency_->Record(Registry::clock::now() - start);
+    request_latency_->Record(std::chrono::steady_clock::now() - start);
     response_size_->Record(res.size);
     return res;
   }
@@ -70,14 +58,14 @@ class Server {
 };
 
 Request get_next_request() {
-  //...
   return Request{"US"};
 }
 
 int main() {
-  spectator::Registry registry{spectator::GetConfiguration()};
-
-  registry.Start();
+  auto logger = spdlog::stdout_color_mt("console"); 
+  std::unordered_map<std::string, std::string> common_tags{{"xatlas.process", "some-sidecar"}};
+  spectator::Config cfg{"unix:/run/spectatord/spectatord.unix", common_tags};
+  spectator::Registry registry{std::move(cfg), logger);
 
   Server server{&registry};
 
@@ -86,12 +74,15 @@ int main() {
     auto req = get_next_request();
     server.Handle(req);
   }
-
-  registry.Stop();
 }
 ```
 
-## Netflix Integration
+## High-Volume Publishing
 
-Copy the `netflix_config.cc` file from the `netflix-spectator-cppconf` repository in Stash to a
-directory where your sources reside.
+By default, the library sends every meter change to the spectatord sidecar immediately. This involves a blocking
+`send` call and underlying system calls, and may not be the most efficient way to publish metrics in high-volume
+use cases. For this purpose a simple buffering functionality in `Publisher` is implemented, and it can be turned
+on by passing a buffer size to the `spectator::Config` constructor. It is important to note that, until this buffer
+fills up, the `Publisher` will not send nay meters to the sidecar. Therefore, if your application doesn't emit
+meters at a high rate, you should either keep the buffer very small, or do not configure a buffer size at all,
+which will fall back to the "publish immediately" mode of operation.

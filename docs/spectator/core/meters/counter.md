@@ -19,7 +19,7 @@ graph.
 
 ### First-Class Support
 
-* [C++](../../lang/cpp/meters/counter.md)
+* [C++](../../lang/cpp/usage.md)
 * [Go](../../lang/go/meters/counter.md)
 * [Java](../../lang/java/meters/counter.md)
 * [Node.js](../../lang/nodejs/meters/counter.md)
