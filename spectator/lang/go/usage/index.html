@@ -14,7 +14,7 @@
         <link rel="prev" href="../../cpp/usage/">
       
       
-        <link rel="next" href="../meters/counter/">
+        <link rel="next" href="../migrations/">
       
       
       <link rel="icon" href="../../../../images/favicon.ico">
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project" class="md-skip">
+        <a href="#spectator-go-usage" class="md-skip">
           Skip to content
         </a>
       
@@ -5524,9 +5524,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#install-library" class="md-nav__link">
+  <a href="#supported-go-versions" class="md-nav__link">
     <span class="md-ellipsis">
-      Install Library
+      Supported Go Versions
     </span>
   </a>
   
@@ -5542,9 +5542,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#netflix-integration" class="md-nav__link">
+  <a href="#logging" class="md-nav__link">
     <span class="md-ellipsis">
-      Netflix Integration
+      Logging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runtime Metrics
     </span>
   </a>
   
@@ -5565,146 +5574,16 @@
   
   
   
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_3_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_3_2" id="__nav_5_4_3_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Meters
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_4_3_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_3_2">
-            <span class="md-nav__icon md-icon"></span>
-            Meters
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../meters/counter/" class="md-nav__link">
+      <a href="../migrations/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Counters
+    Migrations
   </span>
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../meters/dist-summary/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Distribution Summaries
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../meters/gauge/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Gauges
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../meters/percentile-timer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Percentile Timers
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../meters/timer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Timers
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -7538,9 +7417,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#install-library" class="md-nav__link">
+  <a href="#supported-go-versions" class="md-nav__link">
     <span class="md-ellipsis">
-      Install Library
+      Supported Go Versions
     </span>
   </a>
   
@@ -7556,9 +7435,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#netflix-integration" class="md-nav__link">
+  <a href="#logging" class="md-nav__link">
     <span class="md-ellipsis">
-      Netflix Integration
+      Logging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runtime Metrics
     </span>
   </a>
   
@@ -7582,37 +7470,27 @@
   
 
 
-<h1 id="project">Project<a class="headerlink" href="#project" title="Permanent link">&para;</a></h1>
-<p><a href="https://travis-ci.org/Netflix/spectator-go"><img alt="Build Status" src="https://travis-ci.org/Netflix/spectator-go.svg?branch=master" /></a> </p>
-<ul>
-<li><a href="https://github.com/Netflix/spectator-go">Source</a></li>
-<li><strong>Product Lifecycle:</strong> Beta</li>
-</ul>
-<p>This implements a basic <a href="https://github.com/Netflix/spectator">Spectator</a> library for instrumenting
-golang applications and sending metrics to an Atlas aggregator service.</p>
-<h2 id="install-library">Install Library<a class="headerlink" href="#install-library" title="Permanent link">&para;</a></h2>
-<ol>
-<li>
-<p>Add a <code>github.com/Netflix/spectator-go</code> remote import to your code. </p>
-</li>
-<li>
-<p>If running at Netflix, see the <a href="#netflix-integration">Netflix Integration</a> section.</p>
-</li>
-</ol>
+<h1 id="spectator-go-usage">spectator-go Usage<a class="headerlink" href="#spectator-go-usage" title="Permanent link">&para;</a></h1>
+<p>Go thin-client <a href="https://github.com/Netflix/spectator-go">metrics library</a> for use with <a href="../../../../overview/">Atlas</a> and <a href="../../../agent/usage/">SpectatorD</a>.</p>
+<h2 id="supported-go-versions">Supported Go Versions<a class="headerlink" href="#supported-go-versions" title="Permanent link">&para;</a></h2>
+<p>This library currently targets the <a href="https://go.dev/dl/">latest two stable versions</a> of Go.</p>
+<p>There is one language feature used in the project which requires at least 1.21 - the
+<a href="https://go.dev/blog/slog">log/slog structured logging library</a>.</p>
 <h2 id="instrumenting-code">Instrumenting Code<a class="headerlink" href="#instrumenting-code" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator/meter&quot;</span>
 <span class="w">    </span><span class="s">&quot;strconv&quot;</span>
 <span class="w">    </span><span class="s">&quot;time&quot;</span>
 <span class="p">)</span>
 
 <span class="kd">type</span><span class="w"> </span><span class="nx">Server</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">registry</span><span class="w">       </span><span class="o">*</span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Registry</span>
-<span class="w">    </span><span class="nx">requestCountId</span><span class="w"> </span><span class="o">*</span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Id</span>
-<span class="w">    </span><span class="nx">requestLatency</span><span class="w"> </span><span class="o">*</span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Timer</span>
-<span class="w">    </span><span class="nx">responseSizes</span><span class="w">  </span><span class="o">*</span><span class="nx">spectator</span><span class="p">.</span><span class="nx">DistributionSummary</span>
+<span class="w">    </span><span class="nx">registry</span><span class="w">       </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Registry</span>
+<span class="w">    </span><span class="nx">requestCountId</span><span class="w"> </span><span class="o">*</span><span class="nx">meter</span><span class="p">.</span><span class="nx">Id</span>
+<span class="w">    </span><span class="nx">requestLatency</span><span class="w"> </span><span class="o">*</span><span class="nx">meter</span><span class="p">.</span><span class="nx">Timer</span>
+<span class="w">    </span><span class="nx">responseSizes</span><span class="w">  </span><span class="o">*</span><span class="nx">meter</span><span class="p">.</span><span class="nx">DistributionSummary</span>
 <span class="p">}</span>
 
 <span class="kd">type</span><span class="w"> </span><span class="nx">Request</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
@@ -7625,27 +7503,27 @@ golang applications and sending metrics to an Atlas aggregator service.</p>
 <span class="p">}</span>
 
 <span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="nx">Server</span><span class="p">)</span><span class="w"> </span><span class="nx">Handle</span><span class="p">(</span><span class="nx">request</span><span class="w"> </span><span class="o">*</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">res</span><span class="w"> </span><span class="o">*</span><span class="nx">Response</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">clock</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">registry</span><span class="p">.</span><span class="nx">Clock</span><span class="p">()</span>
-<span class="w">    </span><span class="nx">start</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">clock</span><span class="p">.</span><span class="nx">Now</span><span class="p">()</span>
+<span class="w">    </span><span class="nx">start</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">()</span>
 
-<span class="w">    </span><span class="c1">// initialize res</span>
+<span class="w">    </span><span class="c1">// initialize response</span>
 <span class="w">    </span><span class="nx">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">Response</span><span class="p">{</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">}</span>
 
-<span class="w">    </span><span class="c1">// Update the counter id with dimensions based on the request. The</span>
-<span class="w">    </span><span class="c1">// counter will then be looked up in the registry which should be</span>
-<span class="w">    </span><span class="c1">// fairly cheap, such as lookup of id object in a map</span>
-<span class="w">    </span><span class="c1">// However, it is more expensive than having a local variable set</span>
-<span class="w">    </span><span class="c1">// to the counter.</span>
-<span class="w">    </span><span class="nx">cntId</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">requestCountId</span><span class="p">.</span><span class="nx">WithTag</span><span class="p">(</span><span class="s">&quot;country&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">request</span><span class="p">.</span><span class="nx">country</span><span class="p">).</span><span class="nx">WithTag</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">strconv</span><span class="p">.</span><span class="nx">Itoa</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">))</span>
-<span class="w">    </span><span class="nx">s</span><span class="p">.</span><span class="nx">registry</span><span class="p">.</span><span class="nx">CounterWithId</span><span class="p">(</span><span class="nx">cntId</span><span class="p">).</span><span class="nx">Increment</span><span class="p">()</span>
+<span class="w">    </span><span class="c1">// Update the counter with dimensions based on the request.</span>
+<span class="w">    </span><span class="nx">tags</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+<span class="w">        </span><span class="s">&quot;country&quot;</span><span class="p">:</span><span class="w"> </span><span class="nx">request</span><span class="p">.</span><span class="nx">country</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;status&quot;</span><span class="p">:</span><span class="w">  </span><span class="nx">strconv</span><span class="p">.</span><span class="nx">Itoa</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">),</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">requestCounterWithTags</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">requestCountId</span><span class="p">.</span><span class="nx">WithTags</span><span class="p">(</span><span class="nx">tags</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">registry</span><span class="p">.</span><span class="nx">CounterWithId</span><span class="p">(</span><span class="nx">requestCounterWithTags</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">counter</span><span class="p">.</span><span class="nx">Increment</span><span class="p">()</span>
 
 <span class="w">    </span><span class="c1">// ...</span>
-<span class="w">    </span><span class="nx">s</span><span class="p">.</span><span class="nx">requestLatency</span><span class="p">.</span><span class="nx">Record</span><span class="p">(</span><span class="nx">clock</span><span class="p">.</span><span class="nx">Now</span><span class="p">().</span><span class="nx">Sub</span><span class="p">(</span><span class="nx">start</span><span class="p">))</span>
+<span class="w">    </span><span class="nx">s</span><span class="p">.</span><span class="nx">requestLatency</span><span class="p">.</span><span class="nx">Record</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Since</span><span class="p">(</span><span class="nx">start</span><span class="p">))</span>
 <span class="w">    </span><span class="nx">s</span><span class="p">.</span><span class="nx">responseSizes</span><span class="p">.</span><span class="nx">Record</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">size</span><span class="p">)</span>
 <span class="w">    </span><span class="k">return</span>
 <span class="p">}</span>
 
-<span class="kd">func</span><span class="w"> </span><span class="nx">newServer</span><span class="p">(</span><span class="nx">registry</span><span class="w"> </span><span class="o">*</span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Registry</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="nx">Server</span><span class="w"> </span><span class="p">{</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">newServer</span><span class="p">(</span><span class="nx">registry</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Registry</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="nx">Server</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">Server</span><span class="p">{</span>
 <span class="w">        </span><span class="nx">registry</span><span class="p">,</span>
 <span class="w">        </span><span class="nx">registry</span><span class="p">.</span><span class="nx">NewId</span><span class="p">(</span><span class="s">&quot;server.requestCount&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">),</span>
@@ -7660,18 +7538,12 @@ golang applications and sending metrics to an Atlas aggregator service.</p>
 <span class="p">}</span>
 
 <span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">commonTags</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;nf.app&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;nf.region&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;us-west-1&quot;</span><span class="p">}</span>
-<span class="w">    </span><span class="nx">config</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Config</span><span class="p">{</span><span class="nx">Frequency</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">,</span><span class="w"> </span><span class="nx">Timeout</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">Uri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://example.org/api/v1/publish&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">CommonTags</span><span class="p">:</span><span class="w"> </span><span class="nx">commonTags</span><span class="p">}</span>
-<span class="w">    </span><span class="nx">registry</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">commonTags</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;nf.platform&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_platform&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;process_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_process&quot;</span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// if desired, replace the logger with a custom one, using the third parameter here:</span>
+<span class="w">    </span><span class="nx">config</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewConfig</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">commonTags</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
 
-<span class="w">    </span><span class="c1">// optionally set custom logger (needs to implement Debugf, Infof, Errorf)</span>
-<span class="w">    </span><span class="c1">// registry.SetLogger(logger)</span>
-<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Start</span><span class="p">()</span>
-<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Stop</span><span class="p">()</span>
-
-<span class="w">    </span><span class="c1">// collect memory and file descriptor metrics</span>
-<span class="w">    </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">CollectRuntimeMetrics</span><span class="p">(</span><span class="nx">registry</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">registry</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
 
 <span class="w">    </span><span class="nx">server</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">newServer</span><span class="p">(</span><span class="nx">registry</span><span class="p">)</span>
 
@@ -7682,22 +7554,14 @@ golang applications and sending metrics to an Atlas aggregator service.</p>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="netflix-integration">Netflix Integration<a class="headerlink" href="#netflix-integration" title="Permanent link">&para;</a></h2>
-<p>Create a Netflix Spectator Config to be used by <code>spectator-go</code>, replacing <code>STASH_HOSTNAME</code>
-with the hostname of the internal Stash server.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="nx">nfspectator</span><span class="w"> </span><span class="s">&quot;STASH_HOSTNAME/cldmta/netflix-spectator-goconf&quot;</span>
-<span class="w">  </span><span class="nx">spectator</span><span class="w"> </span><span class="s">&quot;github.com/Netflix/spectator-go&quot;</span>
-<span class="p">)</span>
-
-<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">config</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">nfspectator</span><span class="p">.</span><span class="nx">Config</span><span class="p">()</span>
-<span class="w">    </span><span class="nx">registry</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Start</span><span class="p">()</span>
-<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Stop</span><span class="p">()</span>
-<span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="o">...</span>
-<span class="p">}</span>
-</code></pre></div>
+<h2 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h2>
+<p>Logging is implemented with the standard Golang <a href="https://pkg.go.dev/log/slog">slog package</a>. The logger defines interfaces
+for <a href="https://github.com/Netflix/spectator-go/blob/main/spectator/logger/logger.go">Debugf, Infof, and Errorf</a>. There are useful messages implemented at the Debug level which can
+help diagnose the metric publishing workflow. The logger can be overridden by providing one as the
+third parameter of the <code>Config</code> constructor.</p>
+<h2 id="runtime-metrics">Runtime Metrics<a class="headerlink" href="#runtime-metrics" title="Permanent link">&para;</a></h2>
+<p>Use <a href="https://github.com/Netflix/spectator-go-runtime-metrics">spectator-go-runtime-metrics</a>. Follow instructions
+in the <a href="https://github.com/Netflix/spectator-go-runtime-metrics">README</a> to enable collection.</p>
 
 
 
