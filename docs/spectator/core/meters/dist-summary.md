@@ -67,7 +67,7 @@ thus reported as rates per second, while the `max` is reported as a gauge.
 ### First-Class Support
 
 * [C++](../../lang/cpp/usage.md)
-* [Go](../../lang/go/meters/dist-summary.md)
+* [Go](../../lang/go/usage.md)
 * [Java](../../lang/java/meters/dist-summary.md)
 * [Node.js](../../lang/nodejs/meters/dist-summary.md)
 * [Python](../../lang/py/meters/dist-summary.md)

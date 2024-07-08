@@ -1,20 +1,17 @@
-# Project
+# spectator-go Usage
 
-[![Build Status](https://travis-ci.org/Netflix/spectator-go.svg?branch=master)](https://travis-ci.org/Netflix/spectator-go) 
+Go thin-client [metrics library] for use with [Atlas] and [SpectatorD].
 
-* [Source](https://github.com/Netflix/spectator-go)
-* **Product Lifecycle:** Beta
+[metrics library]: https://github.com/Netflix/spectator-go
+[Atlas]: ../../../overview.md
+[SpectatorD]: ../../agent/usage.md
 
-This implements a basic [Spectator](https://github.com/Netflix/spectator) library for instrumenting
-golang applications and sending metrics to an Atlas aggregator service.
+## Supported Go Versions
 
-## Install Library
+This library currently targets the [latest two stable versions](https://go.dev/dl/) of Go.
 
-1. Add a `github.com/Netflix/spectator-go` remote import to your code. 
-
-1. If running at Netflix, see the [Netflix Integration] section.
-
-[Netflix Integration]: #netflix-integration
+There is one language feature used in the project which requires at least 1.21 - the
+[log/slog structured logging library](https://go.dev/blog/slog).
 
 ## Instrumenting Code
 
@@ -22,16 +19,17 @@ golang applications and sending metrics to an Atlas aggregator service.
 package main
 
 import (
-	"github.com/Netflix/spectator-go"
+	"github.com/Netflix/spectator-go/v2/spectator"
+	"github.com/Netflix/spectator-go/v2/spectator/meter"
 	"strconv"
 	"time"
 )
 
 type Server struct {
-	registry       *spectator.Registry
-	requestCountId *spectator.Id
-	requestLatency *spectator.Timer
-	responseSizes  *spectator.DistributionSummary
+	registry       spectator.Registry
+	requestCountId *meter.Id
+	requestLatency *meter.Timer
+	responseSizes  *meter.DistributionSummary
 }
 
 type Request struct {
@@ -44,27 +42,27 @@ type Response struct {
 }
 
 func (s *Server) Handle(request *Request) (res *Response) {
-	clock := s.registry.Clock()
-	start := clock.Now()
+	start := time.Now()
 
-	// initialize res
+	// initialize response
 	res = &Response{200, 64}
 
-	// Update the counter id with dimensions based on the request. The
-	// counter will then be looked up in the registry which should be
-	// fairly cheap, such as lookup of id object in a map
-	// However, it is more expensive than having a local variable set
-	// to the counter.
-	cntId := s.requestCountId.WithTag("country", request.country).WithTag("status", strconv.Itoa(res.status))
-	s.registry.CounterWithId(cntId).Increment()
+	// Update the counter with dimensions based on the request.
+	tags := map[string]string{
+		"country": request.country,
+		"status":  strconv.Itoa(res.status),
+	}
+	requestCounterWithTags := s.requestCountId.WithTags(tags)
+	counter := s.registry.CounterWithId(requestCounterWithTags)
+	counter.Increment()
 
 	// ...
-	s.requestLatency.Record(clock.Now().Sub(start))
+	s.requestLatency.Record(time.Since(start))
 	s.responseSizes.Record(res.size)
 	return
 }
 
-func newServer(registry *spectator.Registry) *Server {
+func newServer(registry spectator.Registry) *Server {
 	return &Server{
 		registry,
 		registry.NewId("server.requestCount", nil),
@@ -79,18 +77,12 @@ func getNextRequest() *Request {
 }
 
 func main() {
-	commonTags := map[string]string{"nf.app": "example", "nf.region": "us-west-1"}
-	config := &spectator.Config{Frequency: 5 * time.Second, Timeout: 1 * time.Second,
-		Uri: "http://example.org/api/v1/publish", CommonTags: commonTags}
-	registry := spectator.NewRegistry(config)
+	commonTags := map[string]string{"nf.platform": "my_platform", "process_name": "my_process"}
+	// if desired, replace the logger with a custom one, using the third parameter here:
+	config, _ := spectator.NewConfig("", commonTags, nil)
 
-	// optionally set custom logger (needs to implement Debugf, Infof, Errorf)
-	// registry.SetLogger(logger)
-	registry.Start()
-	defer registry.Stop()
-
-	// collect memory and file descriptor metrics
-	spectator.CollectRuntimeMetrics(registry)
+	registry, _ := spectator.NewRegistry(config)
+	defer registry.Close()
 
 	server := newServer(registry)
 
@@ -102,22 +94,16 @@ func main() {
 }
 ```
 
-## Netflix Integration
+## Logging
 
-Create a Netflix Spectator Config to be used by `spectator-go`, replacing `STASH_HOSTNAME`
-with the hostname of the internal Stash server.
+Logging is implemented with the standard Golang [slog package](https://pkg.go.dev/log/slog). The logger defines interfaces
+for [Debugf, Infof, and Errorf]. There are useful messages implemented at the Debug level which can
+help diagnose the metric publishing workflow. The logger can be overridden by providing one as the
+third parameter of the `Config` constructor.
 
-```go
-import (
-  nfspectator "STASH_HOSTNAME/cldmta/netflix-spectator-goconf"
-  spectator "github.com/Netflix/spectator-go"
-)
+[Debugf, Infof, and Errorf]: https://github.com/Netflix/spectator-go/blob/main/spectator/logger/logger.go
 
-func main() {
-    config := nfspectator.Config()
-    registry := spectator.NewRegistry(config)
-    registry.Start()
-    defer registry.Stop()
-    # ...
-}
-```
+## Runtime Metrics
+
+Use [spectator-go-runtime-metrics](https://github.com/Netflix/spectator-go-runtime-metrics). Follow instructions
+in the [README](https://github.com/Netflix/spectator-go-runtime-metrics) to enable collection.
