@@ -205,3 +205,5 @@ class ProtocolParserTest(unittest.TestCase):
         self.assertEqual({"foo": "bar", "baz": "quux"}, meter_id.tags())
         self.assertEqual("1", value)
 ```
+
+[SpectatorD]: ../../agent/usage.md
