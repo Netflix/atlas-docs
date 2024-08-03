@@ -6866,6 +6866,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#output-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Location
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#writing-tests" class="md-nav__link">
     <span class="md-ellipsis">
       Writing Tests
@@ -6874,15 +6883,6 @@
   
     <nav class="md-nav" aria-label="Writing Tests">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#overriding-output-location" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overriding Output Location
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#protocol-parser" class="md-nav__link">
@@ -7645,6 +7645,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#output-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Location
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#writing-tests" class="md-nav__link">
     <span class="md-ellipsis">
       Writing Tests
@@ -7653,15 +7662,6 @@
   
     <nav class="md-nav" aria-label="Writing Tests">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#overriding-output-location" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overriding Output Location
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#protocol-parser" class="md-nav__link">
@@ -7869,6 +7869,24 @@ in the <code>Registry</code>:</li>
 <span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 <span class="n">registry</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">increment</span><span class="p">()</span>
 </code></pre></div>
+<h2 id="output-location">Output Location<a class="headerlink" href="#output-location" title="Permanent link">&para;</a></h2>
+<p>If you need to override the default output location (UDP) of the <code>Registry</code>, then you can set a
+<code>Config</code> class location to one of the following supported values:</p>
+<ul>
+<li><code>none</code>   - Disable output.</li>
+<li><code>memory</code> - Write to memory.</li>
+<li><code>stderr</code> - Write to standard error for the process.</li>
+<li><code>stdout</code> - Write to standard out for the process.</li>
+<li><code>udp</code>    - Write to the default UDP port for <code>spectatord</code>.</li>
+<li><code>unix</code>   - Write to the default unix datagram socket for <code>spectatord</code>.</li>
+<li><code>file://$path_to_file</code> - Write to a custom file (e.g. <code>file:///tmp/foo/bar</code>).</li>
+<li><code>udp://$host:$port</code>    - Write to a custom UDP socket.</li>
+</ul>
+<p>The <code>SPECTATOR_OUTPUT_LOCATION</code> environment variable accepts the same values, and can be used to
+override the value provided to the <code>Config</code> class, which may be useful in CI/CD contexts. For
+example, if you want to disable metrics publishing from the <code>Registry</code>, then you can set:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SPECTATOR_OUTPUT_LOCATION</span><span class="o">=</span>none
+</code></pre></div>
 <h2 id="writing-tests">Writing Tests<a class="headerlink" href="#writing-tests" title="Permanent link">&para;</a></h2>
 <p>To write tests against this library, instantiate an instance of the <code>Registry</code> and provide a <code>Config</code>
 that selects the <a href="https://github.com/Netflix/spectator-py/blob/main/spectator/writer/memory_writer.py">MemoryWriter</a>.
@@ -7890,24 +7908,6 @@ updates.</p>
 
         <span class="n">c</span><span class="o">.</span><span class="n">increment</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s2">&quot;c:server.numRequests:1&quot;</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">writer</span><span class="p">()</span><span class="o">.</span><span class="n">last_line</span><span class="p">())</span>
-</code></pre></div>
-<h3 id="overriding-output-location">Overriding Output Location<a class="headerlink" href="#overriding-output-location" title="Permanent link">&para;</a></h3>
-<p>If you need to override the default output location (UDP) of the <code>Registry</code>, then you can set a
-<code>Config</code> class location to one of the following supported values:</p>
-<ul>
-<li><code>none</code>   - Disable output.</li>
-<li><code>memory</code> - Write to memory.</li>
-<li><code>stderr</code> - Write to standard error for the process.</li>
-<li><code>stdout</code> - Write to standard out for the process.</li>
-<li><code>udp</code>    - Write to the default UDP port for spectatord.</li>
-<li><code>unix</code>   - Write to the default unix datagram socket for spectatord.</li>
-<li><code>file://$path_to_file</code> - Write to a custom file (e.g. <code>file:///tmp/foo/bar</code>).</li>
-<li><code>udp://$host:$port</code>    - Write to a custom UDP socket.</li>
-</ul>
-<p>The <code>SPECTATOR_OUTPUT_LOCATION</code> environment variable accepts the same values, and can be used to
-override the value provided to the <code>Config</code> class, which may be useful in CI/CD contexts. For
-example, if you want to disable metrics publishing from the <code>Registry</code>, then you can set:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SPECTATOR_OUTPUT_LOCATION</span><span class="o">=</span>none
 </code></pre></div>
 <h3 id="protocol-parser">Protocol Parser<a class="headerlink" href="#protocol-parser" title="Permanent link">&para;</a></h3>
 <p>A <a href="../../../agent/usage/">SpectatorD</a> line protocol parser is available, which ca be used for validating  the results

@@ -7670,7 +7670,10 @@
 <h2 id="migrating-from-02-to-10">Migrating from 0.2 to 1.0<a class="headerlink" href="#migrating-from-02-to-10" title="Permanent link">&para;</a></h2>
 <p>Version 1.0 consists of a major rewrite that cleans up and simplifies the <code>spectator-py</code> thin client
 API. It is designed to send metrics through <a href="https://github.com/Netflix-Skunkworks/spectatord">spectatord</a>.
-As a result, some functionality has been moved to other modules, or removed.</p>
+As a result, some functionality has been moved to other modules, or removed. Most uses of the various
+meters through the <code>GlobalRegistry</code> will continue to work as expected, although migrating to the new
+<code>Registry</code> usage pattern is advised. A key addition is the ability to work directly with complex
+<code>MeterId</code> objects, which offers more ways to compose tags.</p>
 <h3 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h3>
 <h4 id="config">Config<a class="headerlink" href="#config" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7709,7 +7712,7 @@ class. It has been preserved, because it continues to fulfill the purpose of sim
 and <code>PercentileTimer</code> meters record their values after exiting a block of code, and there are a few
 uses of this class across the organization.</li>
 </ul>
-<p><strong>Before:</strong></p>
+<p>Before:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span>
 
@@ -7718,7 +7721,7 @@ uses of this class across the organization.</li>
 <span class="k">with</span> <span class="n">server_latency</span><span class="o">.</span><span class="n">stopwatch</span><span class="p">():</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </code></pre></div>
-<p><strong>After:</strong></p>
+<p>After:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
 <span class="kn">from</span> <span class="nn">spectator.stopwatch</span> <span class="kn">import</span> <span class="n">StopWatch</span>
@@ -7744,12 +7747,12 @@ maintained to help minimize the amount of code change that application owners ne
 when adopting the thin-client version of the library. Replace with direct use of <code>Registry</code>.</li>
 <li>There are no plans to remove the <code>GlobalRegistry</code>, until we know that all uses have been removed.</li>
 </ul>
-<p><strong>Before:</strong></p>
+<p>Before:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span>
 
 <span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;server.queueSize&quot;</span><span class="p">,</span> <span class="n">ttl_seconds</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </code></pre></div>
-<p><strong>After:</strong></p>
+<p>After:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
 
 <span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
@@ -7758,7 +7761,7 @@ when adopting the thin-client version of the library. Replace with direct use of
 <h2 id="migrating-from-01-to-02">Migrating from 0.1 to 0.2<a class="headerlink" href="#migrating-from-01-to-02" title="Permanent link">&para;</a></h2>
 <ul>
 <li>This library no longer publishes directly to the Atlas backends. It now publishes to the
-[SpectatorD] sidecar which is bundled with all standard AMIs and containers. If you must
+<a href="../../../agent/usage/">SpectatorD</a> sidecar which is bundled with all standard AMIs and containers. If you must
 have the previous direct publishing behavior, because SpectatorD is not yet available on the
 platform where your code runs, then you can pin to version <code>0.1.18</code>.</li>
 <li>The internal Netflix configuration companion library is no longer required and this dependency
@@ -7801,7 +7804,7 @@ GlobalRegistry.pct_timer(&quot;server.requestSize&quot;).record(0.1)
 </code></pre></div>
 </li>
 <li>
-<p>Implemented new meter types supported by [SpectatorD]: <code>age_gauge</code>, <code>max_gauge</code> and
+<p>Implemented new meter types supported by <a href="../../../agent/usage/">SpectatorD</a>: <code>age_gauge</code>, <code>max_gauge</code> and
 <code>monotonic_counter</code>. See the SpectatorD documentation or the class docstrings for
 more details.</p>
 </li>
