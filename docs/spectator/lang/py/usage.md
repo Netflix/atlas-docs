@@ -219,6 +219,28 @@ registry = Registry(config)
 registry.counter("server.numRequests").increment()
 ```
 
+## Output Location
+
+If you need to override the default output location (UDP) of the `Registry`, then you can set a
+`Config` class location to one of the following supported values:
+
+* `none`   - Disable output.
+* `memory` - Write to memory.
+* `stderr` - Write to standard error for the process.
+* `stdout` - Write to standard out for the process.
+* `udp`    - Write to the default UDP port for `spectatord`.
+* `unix`   - Write to the default unix datagram socket for `spectatord`.
+* `file://$path_to_file` - Write to a custom file (e.g. `file:///tmp/foo/bar`).
+* `udp://$host:$port`    - Write to a custom UDP socket.
+
+The `SPECTATOR_OUTPUT_LOCATION` environment variable accepts the same values, and can be used to
+override the value provided to the `Config` class, which may be useful in CI/CD contexts. For
+example, if you want to disable metrics publishing from the `Registry`, then you can set:
+
+```shell
+export SPECTATOR_OUTPUT_LOCATION=none
+```
+
 ## Writing Tests
 
 To write tests against this library, instantiate an instance of the `Registry` and provide a `Config`
@@ -243,28 +265,6 @@ class MetricsTest(unittest.TestCase):
 
         c.increment()
         self.assertEqual("c:server.numRequests:1", r.writer().last_line())
-```
-
-### Overriding Output Location
-
-If you need to override the default output location (UDP) of the `Registry`, then you can set a
-`Config` class location to one of the following supported values:
-
-* `none`   - Disable output.
-* `memory` - Write to memory.
-* `stderr` - Write to standard error for the process.
-* `stdout` - Write to standard out for the process.
-* `udp`    - Write to the default UDP port for spectatord.
-* `unix`   - Write to the default unix datagram socket for spectatord.
-* `file://$path_to_file` - Write to a custom file (e.g. `file:///tmp/foo/bar`).
-* `udp://$host:$port`    - Write to a custom UDP socket.
-
-The `SPECTATOR_OUTPUT_LOCATION` environment variable accepts the same values, and can be used to
-override the value provided to the `Config` class, which may be useful in CI/CD contexts. For
-example, if you want to disable metrics publishing from the `Registry`, then you can set:
-
-```shell
-export SPECTATOR_OUTPUT_LOCATION=none
 ```
 
 ### Protocol Parser

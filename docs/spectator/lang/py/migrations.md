@@ -2,7 +2,10 @@
 
 Version 1.0 consists of a major rewrite that cleans up and simplifies the `spectator-py` thin client
 API. It is designed to send metrics through [spectatord](https://github.com/Netflix-Skunkworks/spectatord).
-As a result, some functionality has been moved to other modules, or removed.
+As a result, some functionality has been moved to other modules, or removed. Most uses of the various
+meters through the `GlobalRegistry` will continue to work as expected, although migrating to the new
+`Registry` usage pattern is advised. A key addition is the ability to work directly with complex
+`MeterId` objects, which offers more ways to compose tags.
 
 ### New
 
@@ -44,7 +47,7 @@ class. It has been preserved, because it continues to fulfill the purpose of sim
 and `PercentileTimer` meters record their values after exiting a block of code, and there are a few
 uses of this class across the organization.
 
-**Before:**
+Before:
 
 ```python
 import time
@@ -56,7 +59,7 @@ with server_latency.stopwatch():
     time.sleep(5)
 ```
 
-**After:**
+After:
 
 ```python
 import time
@@ -85,7 +88,7 @@ maintained to help minimize the amount of code change that application owners ne
 when adopting the thin-client version of the library. Replace with direct use of `Registry`.
 * There are no plans to remove the `GlobalRegistry`, until we know that all uses have been removed.
 
-**Before:**
+Before:
 
 ```python
 from spectator import GlobalRegistry
@@ -93,7 +96,7 @@ from spectator import GlobalRegistry
 GlobalRegistry.gauge("server.queueSize", ttl_seconds=120).set(10)
 ```
 
-**After:**
+After:
 
 ```python
 from spectator.registry import Registry
@@ -156,3 +159,5 @@ to SpectatorD.
 * Implemented new meter types supported by [SpectatorD]: `age_gauge`, `max_gauge` and
 `monotonic_counter`. See the SpectatorD documentation or the class docstrings for
 more details.
+
+[SpectatorD]: ../../agent/usage.md
