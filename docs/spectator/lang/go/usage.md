@@ -96,14 +96,15 @@ func main() {
 
 ## Logging
 
-Logging is implemented with the standard Golang [slog package](https://pkg.go.dev/log/slog). The logger defines interfaces
-for [Debugf, Infof, and Errorf]. There are useful messages implemented at the Debug level which can
-help diagnose the metric publishing workflow. The logger can be overridden by providing one as the
-third parameter of the `Config` constructor.
+Logging is implemented with the standard Golang [slog package](https://pkg.go.dev/log/slog). The
+logger defines interfaces for [Debugf, Infof, and Errorf]. There are useful messages implemented at
+the Debug level which can help diagnose the metric publishing workflow. The logger can be overridden
+by providing one as the third parameter of the `Config` constructor.
 
 [Debugf, Infof, and Errorf]: https://github.com/Netflix/spectator-go/blob/main/spectator/logger/logger.go
 
 ## Runtime Metrics
 
-Use [spectator-go-runtime-metrics](https://github.com/Netflix/spectator-go-runtime-metrics). Follow instructions
-in the [README](https://github.com/Netflix/spectator-go-runtime-metrics) to enable collection.
+Use [spectator-go-runtime-metrics](https://github.com/Netflix/spectator-go-runtime-metrics). Follow
+instructions in the [README](https://github.com/Netflix/spectator-go-runtime-metrics) to enable
+collection.

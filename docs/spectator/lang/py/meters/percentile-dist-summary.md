@@ -1,5 +1,5 @@
 The value tracks the distribution of events, with percentile estimates. It is similar to a
-Percentile Timer, but more general, because the size does not have to be a period of time.
+`PercentileTimer`, but more general, because the size does not have to be a period of time.
 
 For example, it can be used to measure the payload sizes of requests hitting a server or the
 number of records returned from a query.
@@ -11,7 +11,11 @@ added to Percentile Distribution Summaries and ensure that they have a small bou
 Call `record()` with a value:
 
 ```python
-from spectator import GlobalRegistry
+from spectator.registry import Registry
 
-GlobalRegistry.pct_distribution_summary("server.requestSize").record(10)
+registry = Registry()
+registry.pct_distribution_summary("server.requestSize").record(10)
+
+request_size = registry.new_id("server.requestSize")
+registry.pct_distribution_summary_with_id(request_size).record(10)
 ```
