@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://netflix.github.io/atlas-docs/spectator/lang/py/meters/pct-timer/">
+        <link rel="canonical" href="https://netflix.github.io/atlas-docs/spectator/lang/py/meters/monotonic-counter-uint/">
       
       
-        <link rel="prev" href="../pct-dist-summary/">
+        <link rel="prev" href="../monotonic-counter/">
       
       
-        <link rel="next" href="../timer/">
+        <link rel="next" href="../percentile-dist-summary/">
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Percentile Timers - Atlas Docs</title>
+        <title>Monotonic Counter Uint - Atlas Docs</title>
       
     
     
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Percentile Timers
+              Monotonic Counter Uint
             
           </span>
         </div>
@@ -6553,7 +6553,7 @@
         
   
   <span class="md-ellipsis">
-    Counters
+    Counter
   </span>
   
 
@@ -6574,7 +6574,7 @@
         
   
   <span class="md-ellipsis">
-    Distribution Summaries
+    Distribution Summary
   </span>
   
 
@@ -6595,7 +6595,7 @@
         
   
   <span class="md-ellipsis">
-    Gauges
+    Gauge
   </span>
   
 
@@ -6616,7 +6616,7 @@
         
   
   <span class="md-ellipsis">
-    Percentile Timers
+    Percentile Timer
   </span>
   
 
@@ -6637,7 +6637,7 @@
         
   
   <span class="md-ellipsis">
-    Timers
+    Timer
   </span>
   
 
@@ -6775,7 +6775,7 @@
         
   
   <span class="md-ellipsis">
-    Age Gauges
+    Age Gauge
   </span>
   
 
@@ -6796,7 +6796,7 @@
         
   
   <span class="md-ellipsis">
-    Counters
+    Counter
   </span>
   
 
@@ -6817,7 +6817,7 @@
         
   
   <span class="md-ellipsis">
-    Distribution Summaries
+    Distribution Summary
   </span>
   
 
@@ -6859,7 +6859,7 @@
         
   
   <span class="md-ellipsis">
-    Max Gauges
+    Max Gauge
   </span>
   
 
@@ -6876,32 +6876,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../mono-counter/" class="md-nav__link">
+      <a href="../monotonic-counter/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Monotonic Counters
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../pct-dist-summary/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Percentile Distribution Summaries
+    Monotonic Counter
   </span>
   
 
@@ -6929,7 +6908,7 @@
         
   
   <span class="md-ellipsis">
-    Percentile Timers
+    Monotonic Counter Uint
   </span>
   
 
@@ -6947,11 +6926,53 @@
   
   
     <li class="md-nav__item">
+      <a href="../percentile-dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Distribution Summary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../percentile-timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Timer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../timer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Timers
+    Timer
   </span>
   
 
@@ -7353,29 +7374,22 @@
   
 
 
-  <h1>Percentile Timers</h1>
+  <h1>Monotonic Counter Uint</h1>
 
-<p>The value is the number of seconds that have elapsed for an event, with percentile estimates.</p>
-<p>This metric type will track the data distribution by maintaining a set of Counters. The
-distribution can then be used on the server side to estimate percentiles, while still
-allowing for arbitrary slicing and dicing based on dimensions.</p>
-<p>In order to maintain the data distribution, they have a higher storage cost, with a worst-case of
-up to 300X that of a standard Timer. Be diligent about any additional dimensions added to Percentile
-Timers and ensure that they have a small bounded cardinality.</p>
-<p>Call <code>record()</code> with a value:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span>
+<p>A Monotonic Counter (uint64) is used to measure the rate at which an event is occurring, when the
+source data is a monotonically increasing number. A minimum of two samples must be sent, in order to
+calculate a delta value and report it to the backend as a rate-per-second. A variety of networking
+metrics may be reported monotonically, and this metric type provides a convenient means of recording
+these values, at the expense of a slower time-to-first metric.</p>
+<p>Call <code>set()</code> when an event occurs:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">c_uint64</span>
+<span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
 
-<span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">pct_timer</span><span class="p">(</span><span class="s2">&quot;server.requestLatency&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
-</code></pre></div>
-<p>A <code>stopwatch()</code> method is available which may be used as a <a href="https://docs.python.org/3/reference/datamodel.html#context-managers">Context Manager</a>
-to automatically record the number of seconds that have elapsed while executing a block of code:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span>
+<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">monotonic_counter_uint</span><span class="p">(</span><span class="s2">&quot;iface.bytes&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">c_uint64</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
-<span class="n">t</span> <span class="o">=</span> <span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">pct_timer</span><span class="p">(</span><span class="s2">&quot;thread.sleep&quot;</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">t</span><span class="o">.</span><span class="n">stopwatch</span><span class="p">():</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">iface_bytes</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">new_id</span><span class="p">(</span><span class="s2">&quot;iface.bytes&quot;</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">monotonic_counter_uint_with_id</span><span class="p">(</span><span class="n">iface_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">c_uint64</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 </code></pre></div>
 
 

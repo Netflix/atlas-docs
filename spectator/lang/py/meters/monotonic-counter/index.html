@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://netflix.github.io/atlas-docs/spectator/lang/py/meters/pct-dist-summary/">
+        <link rel="canonical" href="https://netflix.github.io/atlas-docs/spectator/lang/py/meters/monotonic-counter/">
       
       
-        <link rel="prev" href="../mono-counter/">
+        <link rel="prev" href="../max-gauge/">
       
       
-        <link rel="next" href="../pct-timer/">
+        <link rel="next" href="../monotonic-counter-uint/">
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Percentile Distribution Summaries - Atlas Docs</title>
+        <title>Monotonic Counter - Atlas Docs</title>
       
     
     
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Percentile Distribution Summaries
+              Monotonic Counter
             
           </span>
         </div>
@@ -6553,7 +6553,7 @@
         
   
   <span class="md-ellipsis">
-    Counters
+    Counter
   </span>
   
 
@@ -6574,7 +6574,7 @@
         
   
   <span class="md-ellipsis">
-    Distribution Summaries
+    Distribution Summary
   </span>
   
 
@@ -6595,7 +6595,7 @@
         
   
   <span class="md-ellipsis">
-    Gauges
+    Gauge
   </span>
   
 
@@ -6616,7 +6616,7 @@
         
   
   <span class="md-ellipsis">
-    Percentile Timers
+    Percentile Timer
   </span>
   
 
@@ -6637,7 +6637,7 @@
         
   
   <span class="md-ellipsis">
-    Timers
+    Timer
   </span>
   
 
@@ -6775,7 +6775,7 @@
         
   
   <span class="md-ellipsis">
-    Age Gauges
+    Age Gauge
   </span>
   
 
@@ -6796,7 +6796,7 @@
         
   
   <span class="md-ellipsis">
-    Counters
+    Counter
   </span>
   
 
@@ -6817,7 +6817,7 @@
         
   
   <span class="md-ellipsis">
-    Distribution Summaries
+    Distribution Summary
   </span>
   
 
@@ -6859,28 +6859,7 @@
         
   
   <span class="md-ellipsis">
-    Max Gauges
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../mono-counter/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Monotonic Counters
+    Max Gauge
   </span>
   
 
@@ -6908,7 +6887,7 @@
         
   
   <span class="md-ellipsis">
-    Percentile Distribution Summaries
+    Monotonic Counter
   </span>
   
 
@@ -6926,11 +6905,53 @@
   
   
     <li class="md-nav__item">
-      <a href="../pct-timer/" class="md-nav__link">
+      <a href="../monotonic-counter-uint/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Percentile Timers
+    Monotonic Counter Uint
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../percentile-dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Distribution Summary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../percentile-timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Timer
   </span>
   
 
@@ -6951,7 +6972,7 @@
         
   
   <span class="md-ellipsis">
-    Timers
+    Timer
   </span>
   
 
@@ -7353,19 +7374,21 @@
   
 
 
-  <h1>Percentile Distribution Summaries</h1>
+  <h1>Monotonic Counter</h1>
 
-<p>The value tracks the distribution of events, with percentile estimates. It is similar to a
-Percentile Timer, but more general, because the size does not have to be a period of time.</p>
-<p>For example, it can be used to measure the payload sizes of requests hitting a server or the
-number of records returned from a query.</p>
-<p>In order to maintain the data distribution, they have a higher storage cost, with a worst-case of
-up to 300X that of a standard Distribution Summary. Be diligent about any additional dimensions
-added to Percentile Distribution Summaries and ensure that they have a small bounded cardinality.</p>
-<p>Call <code>record()</code> with a value:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span>
+<p>A Monotonic Counter (float) is used to measure the rate at which an event is occurring, when the
+source data is a monotonically increasing number. A minimum of two samples must be sent, in order to
+calculate a delta value and report it to the backend as a rate-per-second. A variety of networking
+metrics may be reported monotonically, and this metric type provides a convenient means of recording
+these values, at the expense of a slower time-to-first metric.</p>
+<p>Call <code>set()</code> when an event occurs:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
 
-<span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">pct_distribution_summary</span><span class="p">(</span><span class="s2">&quot;server.requestSize&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">monotonic_counter</span><span class="p">(</span><span class="s2">&quot;iface.bytes&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">iface_bytes</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">new_id</span><span class="p">(</span><span class="s2">&quot;iface.bytes&quot;</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">monotonic_counter_with_id</span><span class="p">(</span><span class="n">iface_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </code></pre></div>
 
 

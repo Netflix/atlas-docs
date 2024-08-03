@@ -6553,7 +6553,7 @@
         
   
   <span class="md-ellipsis">
-    Counters
+    Counter
   </span>
   
 
@@ -6574,7 +6574,7 @@
         
   
   <span class="md-ellipsis">
-    Distribution Summaries
+    Distribution Summary
   </span>
   
 
@@ -6595,7 +6595,7 @@
         
   
   <span class="md-ellipsis">
-    Gauges
+    Gauge
   </span>
   
 
@@ -6616,7 +6616,7 @@
         
   
   <span class="md-ellipsis">
-    Percentile Timers
+    Percentile Timer
   </span>
   
 
@@ -6637,7 +6637,7 @@
         
   
   <span class="md-ellipsis">
-    Timers
+    Timer
   </span>
   
 
@@ -6775,7 +6775,7 @@
         
   
   <span class="md-ellipsis">
-    Age Gauges
+    Age Gauge
   </span>
   
 
@@ -6796,7 +6796,7 @@
         
   
   <span class="md-ellipsis">
-    Counters
+    Counter
   </span>
   
 
@@ -6817,7 +6817,7 @@
         
   
   <span class="md-ellipsis">
-    Distribution Summaries
+    Distribution Summary
   </span>
   
 
@@ -6867,7 +6867,7 @@
         
   
   <span class="md-ellipsis">
-    Max Gauges
+    Max Gauge
   </span>
   
 
@@ -6884,11 +6884,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../mono-counter/" class="md-nav__link">
+      <a href="../monotonic-counter/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Monotonic Counters
+    Monotonic Counter
   </span>
   
 
@@ -6905,11 +6905,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../pct-dist-summary/" class="md-nav__link">
+      <a href="../monotonic-counter-uint/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Percentile Distribution Summaries
+    Monotonic Counter Uint
   </span>
   
 
@@ -6926,11 +6926,32 @@
   
   
     <li class="md-nav__item">
-      <a href="../pct-timer/" class="md-nav__link">
+      <a href="../percentile-dist-summary/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Percentile Timers
+    Percentile Distribution Summary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../percentile-timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Timer
   </span>
   
 
@@ -6951,7 +6972,7 @@
         
   
   <span class="md-ellipsis">
-    Timers
+    Timer
   </span>
   
 
@@ -7362,16 +7383,24 @@ when a state change occurs, there is no information about what might have occurr
 then a gauge for the size will show the size when it was sampled. The size may have been much
 higher or lower at some point during interval, but that is not known.</p>
 <p>Call <code>set()</code> with a value:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
 
-<span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;server.queueSize&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;server.queueSize&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">queue_size</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">new_id</span><span class="p">(</span><span class="s2">&quot;server.queueSize&quot;</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">gauge_with_id</span><span class="p">(</span><span class="n">queue_size</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </code></pre></div>
 <p>Gauges will report the last set value for 15 minutes. This done so that updates to the values do
 not need to be collected on a tight 1-minute schedule to ensure that Atlas shows unbroken lines in
 graphs. A custom TTL may be configured for gauges. SpectatorD enforces a minimum TTL of 5 seconds.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
 
-<span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;server.queueSize&quot;</span><span class="p">,</span> <span class="n">ttl_seconds</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;server.queueSize&quot;</span><span class="p">,</span> <span class="n">ttl_seconds</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">queue_size</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">new_id</span><span class="p">(</span><span class="s2">&quot;server.queueSize&quot;</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">gauge_with_id</span><span class="p">(</span><span class="n">queue_size</span><span class="p">,</span> <span class="n">ttl_seconds</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </code></pre></div>
 
 

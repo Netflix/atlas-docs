@@ -6636,7 +6636,7 @@
         
   
   <span class="md-ellipsis">
-    Counters
+    Counter
   </span>
   
 
@@ -6657,7 +6657,7 @@
         
   
   <span class="md-ellipsis">
-    Distribution Summaries
+    Distribution Summary
   </span>
   
 
@@ -6678,7 +6678,7 @@
         
   
   <span class="md-ellipsis">
-    Gauges
+    Gauge
   </span>
   
 
@@ -6699,7 +6699,7 @@
         
   
   <span class="md-ellipsis">
-    Percentile Timers
+    Percentile Timer
   </span>
   
 
@@ -6720,7 +6720,7 @@
         
   
   <span class="md-ellipsis">
-    Timers
+    Timer
   </span>
   
 
@@ -6854,7 +6854,7 @@
         
   
   <span class="md-ellipsis">
-    Age Gauges
+    Age Gauge
   </span>
   
 
@@ -6875,7 +6875,7 @@
         
   
   <span class="md-ellipsis">
-    Counters
+    Counter
   </span>
   
 
@@ -6896,7 +6896,7 @@
         
   
   <span class="md-ellipsis">
-    Distribution Summaries
+    Distribution Summary
   </span>
   
 
@@ -6938,7 +6938,7 @@
         
   
   <span class="md-ellipsis">
-    Max Gauges
+    Max Gauge
   </span>
   
 
@@ -6955,11 +6955,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../py/meters/mono-counter/" class="md-nav__link">
+      <a href="../../py/meters/monotonic-counter/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Monotonic Counters
+    Monotonic Counter
   </span>
   
 
@@ -6976,11 +6976,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../py/meters/pct-dist-summary/" class="md-nav__link">
+      <a href="../../py/meters/monotonic-counter-uint/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Percentile Distribution Summaries
+    Monotonic Counter Uint
   </span>
   
 
@@ -6997,11 +6997,32 @@
   
   
     <li class="md-nav__item">
-      <a href="../../py/meters/pct-timer/" class="md-nav__link">
+      <a href="../../py/meters/percentile-dist-summary/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Percentile Timers
+    Percentile Distribution Summary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../py/meters/percentile-timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Timer
   </span>
   
 
@@ -7022,7 +7043,7 @@
         
   
   <span class="md-ellipsis">
-    Timers
+    Timer
   </span>
   
 
@@ -7555,13 +7576,14 @@
 <span class="p">}</span>
 </code></pre></div>
 <h2 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h2>
-<p>Logging is implemented with the standard Golang <a href="https://pkg.go.dev/log/slog">slog package</a>. The logger defines interfaces
-for <a href="https://github.com/Netflix/spectator-go/blob/main/spectator/logger/logger.go">Debugf, Infof, and Errorf</a>. There are useful messages implemented at the Debug level which can
-help diagnose the metric publishing workflow. The logger can be overridden by providing one as the
-third parameter of the <code>Config</code> constructor.</p>
+<p>Logging is implemented with the standard Golang <a href="https://pkg.go.dev/log/slog">slog package</a>. The
+logger defines interfaces for <a href="https://github.com/Netflix/spectator-go/blob/main/spectator/logger/logger.go">Debugf, Infof, and Errorf</a>. There are useful messages implemented at
+the Debug level which can help diagnose the metric publishing workflow. The logger can be overridden
+by providing one as the third parameter of the <code>Config</code> constructor.</p>
 <h2 id="runtime-metrics">Runtime Metrics<a class="headerlink" href="#runtime-metrics" title="Permanent link">&para;</a></h2>
-<p>Use <a href="https://github.com/Netflix/spectator-go-runtime-metrics">spectator-go-runtime-metrics</a>. Follow instructions
-in the <a href="https://github.com/Netflix/spectator-go-runtime-metrics">README</a> to enable collection.</p>
+<p>Use <a href="https://github.com/Netflix/spectator-go-runtime-metrics">spectator-go-runtime-metrics</a>. Follow
+instructions in the <a href="https://github.com/Netflix/spectator-go-runtime-metrics">README</a> to enable
+collection.</p>
 
 
 

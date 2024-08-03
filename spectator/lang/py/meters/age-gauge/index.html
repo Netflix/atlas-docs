@@ -22,7 +22,7 @@
     
     
       
-        <title>Age Gauges - Atlas Docs</title>
+        <title>Age Gauge - Atlas Docs</title>
       
     
     
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Age Gauges
+              Age Gauge
             
           </span>
         </div>
@@ -6553,7 +6553,7 @@
         
   
   <span class="md-ellipsis">
-    Counters
+    Counter
   </span>
   
 
@@ -6574,7 +6574,7 @@
         
   
   <span class="md-ellipsis">
-    Distribution Summaries
+    Distribution Summary
   </span>
   
 
@@ -6595,7 +6595,7 @@
         
   
   <span class="md-ellipsis">
-    Gauges
+    Gauge
   </span>
   
 
@@ -6616,7 +6616,7 @@
         
   
   <span class="md-ellipsis">
-    Percentile Timers
+    Percentile Timer
   </span>
   
 
@@ -6637,7 +6637,7 @@
         
   
   <span class="md-ellipsis">
-    Timers
+    Timer
   </span>
   
 
@@ -6782,7 +6782,7 @@
         
   
   <span class="md-ellipsis">
-    Age Gauges
+    Age Gauge
   </span>
   
 
@@ -6804,7 +6804,7 @@
         
   
   <span class="md-ellipsis">
-    Counters
+    Counter
   </span>
   
 
@@ -6825,7 +6825,7 @@
         
   
   <span class="md-ellipsis">
-    Distribution Summaries
+    Distribution Summary
   </span>
   
 
@@ -6867,7 +6867,7 @@
         
   
   <span class="md-ellipsis">
-    Max Gauges
+    Max Gauge
   </span>
   
 
@@ -6884,11 +6884,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../mono-counter/" class="md-nav__link">
+      <a href="../monotonic-counter/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Monotonic Counters
+    Monotonic Counter
   </span>
   
 
@@ -6905,11 +6905,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../pct-dist-summary/" class="md-nav__link">
+      <a href="../monotonic-counter-uint/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Percentile Distribution Summaries
+    Monotonic Counter Uint
   </span>
   
 
@@ -6926,11 +6926,32 @@
   
   
     <li class="md-nav__item">
-      <a href="../pct-timer/" class="md-nav__link">
+      <a href="../percentile-dist-summary/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Percentile Timers
+    Percentile Distribution Summary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../percentile-timer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Timer
   </span>
   
 
@@ -6951,7 +6972,7 @@
         
   
   <span class="md-ellipsis">
-    Timers
+    Timer
   </span>
   
 
@@ -7353,7 +7374,7 @@
   
 
 
-  <h1>Age Gauges</h1>
+  <h1>Age Gauge</h1>
 
 <p>The value is the time in seconds since the epoch at which an event has successfully occurred, or
 <code>0</code> to use the current time in epoch seconds. After an Age Gauge has been set, it will continue
@@ -7361,14 +7382,22 @@ reporting the number of seconds since the last time recorded, for as long as the
 process runs. The purpose of this metric type is to enable users to more easily implement the
 Time Since Last Success alerting pattern.</p>
 <p>To set a specific time as the last success:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
 
-<span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">age_gauge</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1611081000</span><span class="p">)</span>
+<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">age_gauge</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1611081000</span><span class="p">)</span>
+
+<span class="n">last_success</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">new_id</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">age_gauge_with_id</span><span class="p">(</span><span class="n">last_success</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1611081000</span><span class="p">)</span>
 </code></pre></div>
 <p>To set <code>now()</code> as the last success:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
 
-<span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">age_gauge</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">age_gauge</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="n">last_success</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">new_id</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">age_gauge_with_id</span><span class="p">(</span><span class="n">last_success</span><span class="p">)</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
 </code></pre></div>
 <p>By default, a maximum of <code>1000</code> Age Gauges are allowed per <code>spectatord</code> process, because there is no
 mechanism for cleaning them up. This value may be tuned with the <code>--age_gauge_limit</code> flag on the
@@ -7376,7 +7405,7 @@ mechanism for cleaning them up. This value may be tuned with the <code>--age_gau
 <p>Since Age Gauges are long-lived entities that reside in the memory of the SpectatorD process, if
 you need to delete and re-create them for any reason, then you can use the <a href="../../../../agent/usage/#admin-server">SpectatorD admin server</a>
 to accomplish this task. You can delete all Age Gauges or a single Age Gauge.</p>
-<p>Example:</p>
+<p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>curl -X DELETE \
 http://localhost:1234/metrics/A
 </code></pre></div>
