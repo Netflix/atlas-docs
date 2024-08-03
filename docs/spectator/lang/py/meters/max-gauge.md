@@ -6,7 +6,11 @@ standard Gauges, Max Gauges do not continue to report to the backend, and there 
 Call `set()` with a value:
 
 ```python
-from spectator import GlobalRegistry
+from spectator.registry import Registry
 
-GlobalRegistry.max_gauge("server.queueSize").set(10)
+registry = Registry()
+registry.max_gauge("server.queueSize").set(10)
+
+queue_size = registry.new_id("server.queueSize")
+registry.max_gauge_with_id(queue_size).set(10)
 ```

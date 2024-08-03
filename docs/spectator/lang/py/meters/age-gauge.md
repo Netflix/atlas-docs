@@ -7,17 +7,25 @@ Time Since Last Success alerting pattern.
 To set a specific time as the last success:
 
 ```python
-from spectator import GlobalRegistry
+from spectator.registry import Registry
 
-GlobalRegistry.age_gauge("time.sinceLastSuccess").set(1611081000)
+registry = Registry()
+registry.age_gauge("time.sinceLastSuccess").set(1611081000)
+
+last_success = registry.new_id("time.sinceLastSuccess")
+registry.age_gauge_with_id(last_success).set(1611081000)
 ```
 
 To set `now()` as the last success:
 
 ```python
-from spectator import GlobalRegistry
+from spectator.registry import Registry
 
-GlobalRegistry.age_gauge("time.sinceLastSuccess").set(0)
+registry = Registry()
+registry.age_gauge("time.sinceLastSuccess").now()
+
+last_success = registry.new_id("time.sinceLastSuccess")
+registry.age_gauge_with_id(last_success).now()
 ```
 
 By default, a maximum of `1000` Age Gauges are allowed per `spectatord` process, because there is no
@@ -28,7 +36,7 @@ Since Age Gauges are long-lived entities that reside in the memory of the Specta
 you need to delete and re-create them for any reason, then you can use the [SpectatorD admin server]
 to accomplish this task. You can delete all Age Gauges or a single Age Gauge.
 
-Example:
+**Example:**
 
 ```
 curl -X DELETE \

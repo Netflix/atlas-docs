@@ -11,20 +11,28 @@ Timers and ensure that they have a small bounded cardinality.
 Call `record()` with a value:
 
 ```python
-from spectator import GlobalRegistry
+from spectator.registry import Registry
 
-GlobalRegistry.pct_timer("server.requestLatency").record(0.01)
+registry = Registry()
+registry.pct_timer("server.requestLatency").record(0.01)
+
+request_latency = registry.new_id("server.requestLatency")
+registry.pct_timer_with_id(request_latency).record(0.01)
 ```
 
-A `stopwatch()` method is available which may be used as a [Context Manager](https://docs.python.org/3/reference/datamodel.html#context-managers)
-to automatically record the number of seconds that have elapsed while executing a block of code:
+A `StopWatch` class is available, which may be used as a [Context Manager] to automatically record
+the number of seconds that have elapsed while executing a block of code:
 
 ```python
 import time
-from spectator import GlobalRegistry
+from spectator.registry import Registry
+from spectator.stopwatch import StopWatch
 
-t = GlobalRegistry.pct_timer("thread.sleep")
+registry = Registry()
+thread_sleep = registry.pct_timer("thread.sleep")
 
-with t.stopwatch():
+with StopWatch(thread_sleep):
     time.sleep(5)
 ```
+
+[Context Manager]: https://docs.python.org/3/reference/datamodel.html#context-managers
