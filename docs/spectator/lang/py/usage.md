@@ -135,6 +135,11 @@ logging.basicConfig(
 logging.getLogger('spectator.meter.meter_id').setLevel(logging.DEBUG)
 ```
 
+## Runtime Metrics
+
+Use [spectator-py-runtime-metrics](https://github.com/Netflix/spectator-py-runtime-metrics). Follow
+instructions in the README to enable collection.
+
 ## Working with MeterId Objects
 
 Each metric stored in Atlas is uniquely identified by the combination of the name and the tags
