@@ -13,9 +13,9 @@ of something like "milli-milliseconds".
 ## Querying
 
 !!! Note
-    Distribution summaries report summarized statistics about the measurements for a time window
-    including the `totalAmount`, `count`, `max` and `totalOfSquares`. If you were to simply query for
-    the name of your timer via
+Distribution summaries report summarized statistics about the measurements for a time window
+including the `totalAmount`, `count`, `max` and `totalOfSquares`. If you were to simply query for
+the name of your timer via
 
     @@@ atlas-stacklang
     /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.payload.size,:eq,:and
@@ -28,7 +28,7 @@ via a filter, or use one of the operators below to generate a useful response.
 
 ### Average Measurement (:dist-avg)
 
-To compute the average latency across an arbitrary group, use the [:dist-avg] function:
+To compute the average size across an arbitrary group, use the [:dist-avg] function:
 
 @@@ atlas-stacklang
 /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.payload.size,:eq,:and,:dist-avg,(,nf.asg,),:by
@@ -38,11 +38,16 @@ To compute the average latency across an arbitrary group, use the [:dist-avg] fu
 
 ### Maximum Measurement (:dist-max)
 
-To compute the maximum latency across a group, use [:dist-max]:
+To compute the maximum size across a group, use [:dist-max]:
 
 @@@ atlas-stacklang
 /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.payload.size,:eq,:and,:dist-max,(,nf.asg,),:by
 @@@
+
+!!! Note
+    Distribution summaries do not aggregate well over dimensions. Each measurement is recorded with a mapping of tags.
+    Therefore, when using [:dist-max] to query over a set of filters, the response will represent the maximum size for a
+    given set of tag values within the group, **not** the accumulate value of measurements across the entire group.
 
 [:dist-max]: ../../../asl/ref/dist-max.md
 
