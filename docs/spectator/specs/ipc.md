@@ -131,7 +131,7 @@ processed in a server.
     Distribution summaries are not suitable for use-cases trying to perform hierarchical accumulation across dimensions.
     Each measurement is recorded with a certain set of dimensions, as illustrated below with the inflight metric.
     Therefore, when using the [:dist-max] operator to query over a set of filters, the response will represent the
-    maximum inflight count for a given set of tag values within the group, **not** the accumulate value of measurements
+    maximum inflight count for a given set of tag values within the group, **not** the accumulated value of measurements
     across the entire group.
 
 **Unit:** inflight message count
@@ -220,7 +220,7 @@ IPC messages from a client.
     Distribution summaries are not suitable for use-cases trying to perform hierarchical accumulation across dimensions.
     Each measurement is recorded with a certain set of dimensions, as illustrated below with the inflight metric.
     Therefore, when using the [:dist-max] operator to query over a set of filters, the response will represent the 
-    maximum inflight count for a given set of tag values within the group, **not** the accumulate value of measurements 
+    maximum inflight count for a given set of tag values within the group, **not** the accumulated value of measurements 
     across the entire group.
 
 **Unit:** inflight message count
