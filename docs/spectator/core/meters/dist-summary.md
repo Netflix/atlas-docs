@@ -13,9 +13,9 @@ of something like "milli-milliseconds".
 ## Querying
 
 !!! Note
-Distribution summaries report summarized statistics about the measurements for a time window
-including the `totalAmount`, `count`, `max` and `totalOfSquares`. If you were to simply query for
-the name of your timer via
+    Distribution summaries report summarized statistics about the measurements for a time window
+    including the `totalAmount`, `count`, `max` and `totalOfSquares`. If you were to simply query for
+    the name of your timer via
 
     @@@ atlas-stacklang
     /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.payload.size,:eq,:and
