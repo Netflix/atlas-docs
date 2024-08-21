@@ -127,6 +127,13 @@ This is a [distribution summary] of the size in bytes of outbound messages sent 
 This is a [distribution summary] that shows the number of inbound IPC messages currently being
 processed in a server.
 
+!!! Note
+    Distribution summaries are not suitable for use-cases trying to perform hierarchical accumulation across dimensions.
+    Each measurement is recorded with a certain set of dimensions, as illustrated below with the inflight metric.
+    Therefore, when using the [:dist-max] operator to query over a set of filters, the response will represent the
+    maximum inflight count for a given set of tag values within the group, **not** the accumulated value of measurements
+    across the entire group.
+
 **Unit:** inflight message count
 
 **Dimensions:**
@@ -209,6 +216,13 @@ This is a [distribution summary] of the size in bytes of outbound messages sent 
 This is a [distribution summary] that shows the number of currently outstanding outbound
 IPC messages from a client.
 
+!!! Note
+    Distribution summaries are not suitable for use-cases trying to perform hierarchical accumulation across dimensions.
+    Each measurement is recorded with a certain set of dimensions, as illustrated below with the inflight metric.
+    Therefore, when using the [:dist-max] operator to query over a set of filters, the response will represent the 
+    maximum inflight count for a given set of tag values within the group, **not** the accumulated value of measurements 
+    across the entire group.
+
 **Unit:** inflight message count
 
 **Dimensions:**
@@ -224,3 +238,4 @@ IPC messages from a client.
 
 [percentile timer]: https://www.javadoc.io/page/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/histogram/PercentileTimer.html
 [distribution summary]: ../core/meters/dist-summary.md
+[:dist-max]: ../../asl/ref/dist-max.md

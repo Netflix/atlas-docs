@@ -28,7 +28,7 @@ via a filter, or use one of the operators below to generate a useful response.
 
 ### Average Measurement (:dist-avg)
 
-To compute the average latency across an arbitrary group, use the [:dist-avg] function:
+To compute the average size across an arbitrary group, use the [:dist-avg] function:
 
 @@@ atlas-stacklang
 /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.payload.size,:eq,:and,:dist-avg,(,nf.asg,),:by
@@ -38,7 +38,7 @@ To compute the average latency across an arbitrary group, use the [:dist-avg] fu
 
 ### Maximum Measurement (:dist-max)
 
-To compute the maximum latency across a group, use [:dist-max]:
+To compute the maximum size across a group, use [:dist-max]:
 
 @@@ atlas-stacklang
 /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.payload.size,:eq,:and,:dist-max,(,nf.asg,),:by
