@@ -7780,6 +7780,14 @@ implementations.</p>
 <h3 id="ipcserverinflight">ipc.server.inflight<a class="headerlink" href="#ipcserverinflight" title="Permanent link">&para;</a></h3>
 <p>This is a <a href="../../core/meters/dist-summary/">distribution summary</a> that shows the number of inbound IPC messages currently being
 processed in a server.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Distribution summaries are not suitable for use-cases trying to perform hierarchical accumulation across dimensions.
+Each measurement is recorded with a certain set of dimensions, as illustrated below with the inflight metric.
+Therefore, when using the <a href="../../../asl/ref/dist-max/">:dist-max</a> operator to query over a set of filters, the response will represent the
+maximum inflight count for a given set of tag values within the group, <strong>not</strong> the accumulated value of measurements
+across the entire group.</p>
+</div>
 <p><strong>Unit:</strong> inflight message count</p>
 <p><strong>Dimensions:</strong></p>
 <ul>
@@ -7849,6 +7857,14 @@ processed in a server.</p>
 <h3 id="ipcclientinflight">ipc.client.inflight<a class="headerlink" href="#ipcclientinflight" title="Permanent link">&para;</a></h3>
 <p>This is a <a href="../../core/meters/dist-summary/">distribution summary</a> that shows the number of currently outstanding outbound
 IPC messages from a client.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Distribution summaries are not suitable for use-cases trying to perform hierarchical accumulation across dimensions.
+Each measurement is recorded with a certain set of dimensions, as illustrated below with the inflight metric.
+Therefore, when using the <a href="../../../asl/ref/dist-max/">:dist-max</a> operator to query over a set of filters, the response will represent the 
+maximum inflight count for a given set of tag values within the group, <strong>not</strong> the accumulated value of measurements 
+across the entire group.</p>
+</div>
 <p><strong>Unit:</strong> inflight message count</p>
 <p><strong>Dimensions:</strong></p>
 <ul>
