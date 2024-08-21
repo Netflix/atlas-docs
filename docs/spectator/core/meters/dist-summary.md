@@ -44,11 +44,6 @@ To compute the maximum size across a group, use [:dist-max]:
 /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.payload.size,:eq,:and,:dist-max,(,nf.asg,),:by
 @@@
 
-!!! Note
-    Distribution summaries do not aggregate well over dimensions. Each measurement is recorded with a mapping of tags.
-    Therefore, when using [:dist-max] to query over a set of filters, the response will represent the maximum size for a
-    given set of tag values within the group, **not** the accumulate value of measurements across the entire group.
-
 [:dist-max]: ../../../asl/ref/dist-max.md
 
 ### Standard Deviation of Measurement (:dist-stddev)
