@@ -24,11 +24,11 @@ class Block:
         ATLAS_URI
     ]
 
-    example_pattern = re.compile('([^:]+): (.+)')
-    options_pattern = re.compile('.+@@@ ([a-z\\-]+)(?:$| { (.+) })')
-    query_pattern = re.compile('.*q=([^&]+)')
-    number_pattern = re.compile('^[-+]?\d+(.\d)?$')
-    color_pattern = re.compile('^1(,1)+$')
+    example_pattern = re.compile(r'([^:]+): (.+)')
+    options_pattern = re.compile(r'.+@@@ ([a-z\\-]+)(?:$| { (.+) })')
+    query_pattern = re.compile(r'.*q=([^&]+)')
+    number_pattern = re.compile(r'^[-+]?\d+(.\d)?$')
+    color_pattern = re.compile(r'^1(,1)+$')
 
     def __init__(self, webserver: Optional[NoopWebserver] = None) -> None:
         self.webserver: AtlasWebServer = AtlasWebServer() if not webserver else webserver
