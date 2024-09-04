@@ -114,6 +114,6 @@ collection.
 This client is stateless, and sends a UDP packet (or unixgram) to `spectatord` each time a meter is
 updated. If you are performing high-volume operations, on the order of tens-of-thousands or millions
 of operations per second, then you should pre-aggregate your metrics and report them at a cadence
-closer to the `spectatord` publish interval of 5 seconds, or the Atlas metrics granularity of 1 minute.
-This will keep the CPU usage related to `spectator-go` and `spectatord` low (around 1% or less), as
-compared to up to 40% for high-volume scenarios.
+closer to the `spectatord` publish interval of 5 seconds. This will keep the CPU usage related to
+`spectator-go` and `spectatord` low (around 1% or less), as compared to up to 40% for high-volume
+scenarios.
