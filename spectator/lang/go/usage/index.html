@@ -5559,6 +5559,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#design-considerations-reporting-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Considerations - Reporting Intervals
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -7473,6 +7482,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#design-considerations-reporting-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Considerations - Reporting Intervals
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -7584,6 +7602,13 @@ by providing one as the third parameter of the <code>Config</code> constructor.<
 <p>Use <a href="https://github.com/Netflix/spectator-go-runtime-metrics">spectator-go-runtime-metrics</a>. Follow
 instructions in the <a href="https://github.com/Netflix/spectator-go-runtime-metrics">README</a> to enable
 collection.</p>
+<h2 id="design-considerations-reporting-intervals">Design Considerations - Reporting Intervals<a class="headerlink" href="#design-considerations-reporting-intervals" title="Permanent link">&para;</a></h2>
+<p>This client is stateless, and sends a UDP packet (or unixgram) to <code>spectatord</code> each time a meter is
+updated. If you are performing high-volume operations, on the order of tens-of-thousands or millions
+of operations per second, then you should pre-aggregate your metrics and report them at a cadence
+closer to the <code>spectatord</code> publish interval of 5 seconds, or the Atlas metrics granularity of 1 minute.
+This will keep the CPU usage related to <code>spectator-go</code> and <code>spectatord</code> low (around 1% or less), as
+compared to up to 40% for high-volume scenarios.</p>
 
 
 
