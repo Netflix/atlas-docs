@@ -6902,6 +6902,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#design-considerations-reporting-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Considerations - Reporting Intervals
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#writing-tests" class="md-nav__link">
     <span class="md-ellipsis">
       Writing Tests
@@ -7708,6 +7717,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#design-considerations-reporting-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Considerations - Reporting Intervals
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#writing-tests" class="md-nav__link">
     <span class="md-ellipsis">
       Writing Tests
@@ -7958,6 +7976,13 @@ the following contents:</p>
 </code></pre></div>
 <p>This will report all metrics that are sent to the Atlas backend in the <code>spectatord</code> logs, which will
 provide an opportunity to correlate metrics publishing events from your client code.</p>
+<h2 id="design-considerations-reporting-intervals">Design Considerations - Reporting Intervals<a class="headerlink" href="#design-considerations-reporting-intervals" title="Permanent link">&para;</a></h2>
+<p>This client is stateless, and sends a UDP packet (or unixgram) to <code>spectatord</code> each time a meter is
+updated. If you are performing high-volume operations, on the order of tens-of-thousands or millions
+of operations per second, then you should pre-aggregate your metrics and report them at a cadence
+closer to the <code>spectatord</code> publish interval of 5 seconds. This will keep the CPU usage related to
+<code>spectator-py</code> and <code>spectatord</code> low (around 1% or less), as compared to up to 40% for high-volume
+scenarios.</p>
 <h2 id="writing-tests">Writing Tests<a class="headerlink" href="#writing-tests" title="Permanent link">&para;</a></h2>
 <p>To write tests against this library, instantiate an instance of the <code>Registry</code> and provide a <code>Config</code>
 that selects the <a href="https://github.com/Netflix/spectator-py/blob/main/spectator/writer/memory_writer.py">MemoryWriter</a>.
