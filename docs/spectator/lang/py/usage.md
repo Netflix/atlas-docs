@@ -246,6 +246,27 @@ example, if you want to disable metrics publishing from the `Registry`, then you
 export SPECTATOR_OUTPUT_LOCATION=none
 ```
 
+## Batch Usage
+
+When using `spectator-py` to report metrics from a batch job, ensure that the batch job runs for at
+least five (5), if not ten (10) seconds in duration. This is necessary in order to allow sufficient
+time for `spectatord` to publish metrics to the Atlas backend; it publishes every five seconds. If
+your job does not run this long, or you find you are missing metrics that were reported at the end
+of your job run, then add a five-second sleep before exiting: `time.sleep(5)`. This will allow time
+for the metrics to be sent.
+
+## Debug Metrics Delivery to `spectatord`
+
+In order to see debug log messages from `spectatord`, create an `/etc/default/spectatord` file with
+the following contents:
+
+```shell
+SPECTATORD_OPTIONS="--verbose"
+```
+
+This will report all metrics that are sent to the Atlas backend in the `spectatord` logs, which will
+provide an opportunity to correlate metrics publishing events from your client code.
+
 ## Writing Tests
 
 To write tests against this library, instantiate an instance of the `Registry` and provide a `Config`
