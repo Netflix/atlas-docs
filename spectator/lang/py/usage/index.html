@@ -6884,6 +6884,24 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#batch-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Batch Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug-metrics-delivery-to-spectatord" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debug Metrics Delivery to spectatord
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#writing-tests" class="md-nav__link">
     <span class="md-ellipsis">
       Writing Tests
@@ -7672,6 +7690,24 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#batch-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Batch Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug-metrics-delivery-to-spectatord" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debug Metrics Delivery to spectatord
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#writing-tests" class="md-nav__link">
     <span class="md-ellipsis">
       Writing Tests
@@ -7908,6 +7944,20 @@ override the value provided to the <code>Config</code> class, which may be usefu
 example, if you want to disable metrics publishing from the <code>Registry</code>, then you can set:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SPECTATOR_OUTPUT_LOCATION</span><span class="o">=</span>none
 </code></pre></div>
+<h2 id="batch-usage">Batch Usage<a class="headerlink" href="#batch-usage" title="Permanent link">&para;</a></h2>
+<p>When using <code>spectator-py</code> to report metrics from a batch job, ensure that the batch job runs for at
+least five (5), if not ten (10) seconds in duration. This is necessary in order to allow sufficient
+time for <code>spectatord</code> to publish metrics to the Atlas backend; it publishes every five seconds. If
+your job does not run this long, or you find you are missing metrics that were reported at the end
+of your job run, then add a five-second sleep before exiting: <code>time.sleep(5)</code>. This will allow time
+for the metrics to be sent.</p>
+<h2 id="debug-metrics-delivery-to-spectatord">Debug Metrics Delivery to <code>spectatord</code><a class="headerlink" href="#debug-metrics-delivery-to-spectatord" title="Permanent link">&para;</a></h2>
+<p>In order to see debug log messages from <code>spectatord</code>, create an <code>/etc/default/spectatord</code> file with
+the following contents:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">SPECTATORD_OPTIONS</span><span class="o">=</span><span class="s2">&quot;--verbose&quot;</span>
+</code></pre></div>
+<p>This will report all metrics that are sent to the Atlas backend in the <code>spectatord</code> logs, which will
+provide an opportunity to correlate metrics publishing events from your client code.</p>
 <h2 id="writing-tests">Writing Tests<a class="headerlink" href="#writing-tests" title="Permanent link">&para;</a></h2>
 <p>To write tests against this library, instantiate an instance of the <code>Registry</code> and provide a <code>Config</code>
 that selects the <a href="https://github.com/Netflix/spectator-py/blob/main/spectator/writer/memory_writer.py">MemoryWriter</a>.
