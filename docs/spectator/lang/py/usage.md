@@ -267,6 +267,15 @@ SPECTATORD_OPTIONS="--verbose"
 This will report all metrics that are sent to the Atlas backend in the `spectatord` logs, which will
 provide an opportunity to correlate metrics publishing events from your client code.
 
+## Design Considerations - Reporting Intervals
+
+This client is stateless, and sends a UDP packet (or unixgram) to `spectatord` each time a meter is
+updated. If you are performing high-volume operations, on the order of tens-of-thousands or millions
+of operations per second, then you should pre-aggregate your metrics and report them at a cadence
+closer to the `spectatord` publish interval of 5 seconds. This will keep the CPU usage related to
+`spectator-py` and `spectatord` low (around 1% or less), as compared to up to 40% for high-volume
+scenarios.
+
 ## Writing Tests
 
 To write tests against this library, instantiate an instance of the `Registry` and provide a `Config`
