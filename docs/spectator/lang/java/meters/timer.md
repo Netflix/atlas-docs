@@ -46,6 +46,8 @@ is recommended to use a monotonically increasing source for measuring the times,
 occasionally having bogus measurements due to time adjustments. For more information, see the
 [Clock documentation](../../../core/clock.md).
 
+**Note:** If the amount recorded is less than 0 the value will be dropped.
+
 ## LongTaskTimer
 
 To get started, create an instance using the [Registry](../registry/overview.md):

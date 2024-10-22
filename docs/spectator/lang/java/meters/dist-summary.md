@@ -22,3 +22,4 @@ Then call record when an event occurs:
   }
 }
 ```
+**Note:** If the amount recorded is less than 0 the value will be dropped.
