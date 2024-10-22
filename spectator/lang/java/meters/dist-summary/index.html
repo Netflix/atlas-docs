@@ -7396,11 +7396,12 @@ setup as part of application initialization. For example:</p>
 <span class="w">  </span><span class="p">}</span>
 </code></pre></div>
 <p>Then call record when an event occurs:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Response</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<p><div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Response</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">requestSize</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">sizeInBytes</span><span class="p">());</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+<strong>Note:</strong> If the amount recorded is less than 0 the value will be dropped.</p>
 
 
 

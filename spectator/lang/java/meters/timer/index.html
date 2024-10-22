@@ -7493,6 +7493,7 @@ to control the timing. In actual usage, it will typically get mapped to the syst
 is recommended to use a monotonically increasing source for measuring the times, to avoid
 occasionally having bogus measurements due to time adjustments. For more information, see the
 <a href="../../../../core/clock/">Clock documentation</a>.</p>
+<p><strong>Note:</strong> If the amount recorded is less than 0 the value will be dropped.</p>
 <h2 id="longtasktimer">LongTaskTimer<a class="headerlink" href="#longtasktimer" title="Permanent link">&para;</a></h2>
 <p>To get started, create an instance using the <a href="../../registry/overview/">Registry</a>:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.spectator.api.patterns.LongTaskTimer</span><span class="p">;</span>
