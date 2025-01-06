@@ -77,12 +77,36 @@ int main() {
 }
 ```
 
-## High-Volume Publishing
+## Usage
 
-By default, the library sends every meter change to the spectatord sidecar immediately. This involves a blocking
-`send` call and underlying system calls, and may not be the most efficient way to publish metrics in high-volume
-use cases. For this purpose a simple buffering functionality in `Publisher` is implemented, and it can be turned
-on by passing a buffer size to the `spectator::Config` constructor. It is important to note that, until this buffer
-fills up, the `Publisher` will not send nay meters to the sidecar. Therefore, if your application doesn't emit
-meters at a high rate, you should either keep the buffer very small, or do not configure a buffer size at all,
-which will fall back to the "publish immediately" mode of operation.
+We do not publish this library as a binary artifact, because it can be used across a variety of CPU
+and OS platforms, and we do not want to incur this support overheard for a library that is not on
+the Paved Path. However, this is a Conan 2 and CMake project, so you can pull the latest code, and
+add some build configuration to use it in your project.
+
+As an example of how this is done, see the [atlas-system-agent] project.
+
+* Download the latest `spectator-cpp` code ([conanfile.py#L39-L57]).
+* Add the library to your CMake build ([lib/CMakeLists.txt#L1-L32]).
+
+This library has a few dependencies ([conanfile.py#L6-L13]), including a recent `abseil`.
+
+[atlas-system-agent]: https://github.com/Netflix-Skunkworks/atlas-system-agent/tree/main
+[conanfile.py#L39-L57]: https://github.com/Netflix-Skunkworks/atlas-system-agent/blob/main/conanfile.py#L39-L57
+[lib/CMakeLists.txt#L1-L32]: https://github.com/Netflix-Skunkworks/atlas-system-agent/blob/main/lib/CMakeLists.txt#L1-L32
+[conanfile.py#L6-L13]: https://github.com/Netflix/spectator-cpp/blob/main/conanfile.py#L6-L13
+
+### High-Volume Publishing
+
+By default, the library sends every meter change to the `spectatord` sidecar immediately. This
+involves a blocking `send` call and underlying system calls, and may not be the most efficient way
+to publish metrics in high-volume use cases.
+
+For this purpose, a simple buffering functionality in `Publisher` is implemented, and it can be
+turned on by passing a buffer size to the `spectator::Config` constructor ([config.h#L8-L12]). It
+is important to note that, until this buffer fills up, the `Publisher` will not send any meters to
+the sidecar. Therefore, if your application doesn't emit meters at a high rate, you should either
+keep the buffer very small, or do not configure a buffer size at all, which will fall back to the
+"publish immediately" mode of operation.
+
+[config.h#L8-L12]: https://github.com/Netflix/spectator-cpp/blob/main/spectator/config.h#L8-L12
