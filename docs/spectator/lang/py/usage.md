@@ -20,6 +20,39 @@ pip install netflix-spectator-py
 
 ## Instrumenting Code
 
+### Simple Example
+
+```python
+import logging
+
+from flask import Flask, request, Response
+from flask.logging import default_handler
+from spectator.registry import Registry
+
+root_logger = logging.getLogger()
+root_logger.setLevel(logging.DEBUG)
+root_logger.addHandler(default_handler)
+
+registry = Registry()
+
+app = Flask(__name__)
+
+@app.route("/")
+def root():
+    return Response("Usage: /api/v1/play?country=foo&title=bar")
+
+@app.route("/api/v1/play", methods=["GET", "POST"])
+def play():
+    country = request.args.get("country", default="none")
+    title = request.args.get("title", default="none")
+    registry.counter("server.requestCount", {"version": "v1"}).increment()
+    return Response(f"requested play for country={country} title={title}")
+```
+
+Save this snippet as `app.py`, then `flask --app app run`.
+
+### Complex Example
+
 ```python
 import logging
 
@@ -33,7 +66,7 @@ root_logger = logging.getLogger()
 root_logger.setLevel(logging.DEBUG)
 root_logger.addHandler(default_handler)
 
-config = Config(location="none", extra_common_tags={"nf.platform": "my_platform"})
+config = Config(extra_common_tags={"nf.platform": "my_platform"})
 registry = Registry(config)
 
 request_count_id = registry.new_id("server.requestCount", {"version": "v1"})
@@ -42,11 +75,9 @@ response_size = registry.distribution_summary("server.responseSize")
 
 app = Flask(__name__)
 
-
 @app.route("/")
 def root():
     return Response("Usage: /api/v1/play?country=foo&title=bar")
-
 
 @app.route("/api/v1/play", methods=["GET", "POST"])
 def play():
