@@ -1,6 +1,6 @@
-## Migrating from 0.2 to 1.0
+## Migrating to 1.X
 
-Version 1.0 consists of a major rewrite that cleans up and simplifies the `spectator-py` thin client
+Version 1.X consists of a major rewrite that cleans up and simplifies the `spectator-py` thin client
 API. It is designed to send metrics through [spectatord](https://github.com/Netflix-Skunkworks/spectatord).
 As a result, some functionality has been moved to other modules, or removed. Most uses of the various
 meters through the `GlobalRegistry` will continue to work as expected, although migrating to the new
@@ -18,8 +18,24 @@ new option for picking the default Unix Domain Socket for `spectatord`.
 object are merged with two process-specific tags that may be present in environment variables.
 * Any `MeterId` or `Meter` objects created through `Registry` methods will contain these extra tags.
 
+#### Common Tags
+
+A few local environment common tags are now automatically added to all Meters. Their values are read
+from the environment variables.
+
+| Tag          | Environment Variable |
+|--------------|----------------------|
+| nf.container | TITUS_CONTAINER_NAME |
+| nf.process   | NETFLIX_PROCESS_NAME |
+
+Tags from environment variables take precedence over tags passed on code when creating the `Config`.
+
+Note that common tags sourced by [spectatord](https://github.com/Netflix-Skunkworks/spectatord) can't be overwritten.
+
 #### Meters
 
+* Implemented new meter types supported by [SpectatorD]: `AgeGauge`, `MaxGauge` and `MonotonicCounter`.
+See the `spectatord` documentation or the class docstrings for more details.
 * The `AgeGauge` meter added a `now()` method, which sets `0` as the value, so you do not need to
 remember this special value.
 * Add `MonotonicCounterUint` with a `c_uint64` data type, to support `uint64` data types. These are
@@ -38,7 +54,11 @@ tag operations related to `MeterId` objects. This follows the way they work in t
 
 #### Meters
 
-* Separate classes for each `Meter` type. Relocated to a new module, `spectator.meter`.
+* Separate classes for each `Meter` type. Relocated to a new module, `spectator.meter`, and exposed
+through top-level imports, for convenience.
+* The `MeterId` class was moved to the `spectator.meter` module and simplified.
+* The `spectator.histogram` meters `PercentileTimer` and `PercentileDistribution` summary were moved
+to `spectator.meter` and are now accessible from the `Registry` interface.
 
 #### StopWatch
 
@@ -46,6 +66,7 @@ tag operations related to `MeterId` objects. This follows the way they work in t
 class. It has been preserved, because it continues to fulfill the purpose of simplifying how `Timer`
 and `PercentileTimer` meters record their values after exiting a block of code, and there are a few
 uses of this class across the organization.
+* The `Clock` class continues to exist, in order to support testing the `StopWatch` deterministically.
 
 Before:
 
@@ -74,11 +95,29 @@ with StopWatch(server_latency):
 
 #### Writers
 
-* Separate classes for each `Writer` type. Relocated to a new module, `spectator.writer`.
+* Separate classes for each `Writer` type. Relocated to a new module, `spectator.writer`, and exposed
+through top-level imports, for convenience.
 
 ### Removed
 
-* All remnants of the previous thick-client API.
+All the removed items are from the legacy thick client.
+
+* `spectator.http` is removed. Use the standard library HTTP client, or Requests instead.
+* The `Meter` classes no longer have `_measure()` methods. Meters are now stateless and do not store
+  measurements. The individual recording methods will call the writer to send the protocol line to
+  `spectatord`.
+* `spectator.config` is simplified and local to this library. There is no longer a need to import the internal
+  configuration library.
+* `spectator.registry` no longer has a `start()` method. The `Registry` is now effectively stateless and there is
+  nothing to start other than opening the output location.
+* `spectator.registry` no longer has a `stop()` function. Instead, use `close()` to close the Registry. Once the
+  registry is closed, it can't be started again. This is intended for final clean up of sockets or file handles.
+* `spectator.registry` no longer reports `spectator.measurements` metrics. Instead, you can use `spectatord` metrics to
+  troubleshoot metrics delivery.
+* `spectator.registry` no longer keeps track of the Meters it creates. This means that you can't get a list of all Meters
+  from the Registry. If you need to keep track of Meters, you can do so in your application code.
+* `spectator.histogram` meters `PercentileTimer` and `PercentileDistributionSummary` no longer support defining min/max
+  values.
 
 ### Deprecated
 
@@ -104,7 +143,22 @@ registry = Registry()
 registry.gauge("server.queueSize", ttl_seconds=120).set(10)
 ```
 
-## Migrating from 0.1 to 0.2
+### Migration Steps
+
+1. Make sure you're not relying on any of the [removed functionality](#removed).
+2. Update imports for `Config`, `Registry`, and any `Meter`s and `Writer`s that are used for testing.
+3. If you want to collect runtime metrics, add the [spectator-py-runtime-metrics] library, and follow
+   the instructions in the README.
+4. If you use `PercentileDistributionSummary` or `PercentileTimer`, then update your code to use the
+   respective functions provided by the `Registry` to initialize these meters.
+5. Remove the dependency on the `spectator-py` internal configuration library - it is no longer required.
+6. There is no longer an option to `start()` or `stop()` the Registry at runtime. If you need to
+   configure a `Registry` that doesn't emit metrics for testing purposes, then create a `Config` object
+   with a `location` of `none`, to configure a no-op writer, and pass it to the `Registry`.
+
+[spectator-py-runtime-metrics]: https://github.com/Netflix/spectator-py-runtime-metrics
+
+## Migrating to 0.2
 
 * This library no longer publishes directly to the Atlas backends. It now publishes to the
 [SpectatorD] sidecar which is bundled with all standard AMIs and containers. If you must

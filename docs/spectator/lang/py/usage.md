@@ -337,7 +337,7 @@ class MetricsTest(unittest.TestCase):
 
 ### Protocol Parser
 
-A [SpectatorD] line protocol parser is available, which ca be used for validating the results
+A [SpectatorD] line protocol parser is available, which can be used for validating the results
 captured by a `MemoryWriter`.
 
 ```python
