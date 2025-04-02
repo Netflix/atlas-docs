@@ -63,8 +63,7 @@ After:
 
 ```python
 import time
-from spectator.registry import Registry
-from spectator.stopwatch import StopWatch
+from spectator import Registry, StopWatch
 
 registry = Registry()
 server_latency = registry.pct_timer("serverLatency")
@@ -99,7 +98,7 @@ GlobalRegistry.gauge("server.queueSize", ttl_seconds=120).set(10)
 After:
 
 ```python
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.gauge("server.queueSize", ttl_seconds=120).set(10)

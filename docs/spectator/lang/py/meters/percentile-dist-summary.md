@@ -11,7 +11,7 @@ added to Percentile Distribution Summaries and ensure that they have a small bou
 Call `record()` with a value:
 
 ```python
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.pct_distribution_summary("server.requestSize").record(10)

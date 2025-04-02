@@ -1,5 +1,7 @@
 # spectator-py Usage
 
+[![PyPI version](https://badge.fury.io/py/netflix-spectator-py.svg)](https://badge.fury.io/py/netflix-spectator-py)
+
 Python thin-client [metrics library] for use with [Atlas] and [SpectatorD].
 
 [metrics library]: https://github.com/Netflix/spectator-py
@@ -8,7 +10,7 @@ Python thin-client [metrics library] for use with [Atlas] and [SpectatorD].
 
 ## Supported Python Versions
 
-This library currently targets the Python >= 3.8.
+This library currently targets Python >= 3.8.
 
 ## Installing
 
@@ -27,7 +29,7 @@ import logging
 
 from flask import Flask, request, Response
 from flask.logging import default_handler
-from spectator.registry import Registry
+from spectator import Registry
 
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.DEBUG)
@@ -41,12 +43,21 @@ app = Flask(__name__)
 def root():
     return Response("Usage: /api/v1/play?country=foo&title=bar")
 
-@app.route("/api/v1/play", methods=["GET", "POST"])
+@app.route("/api/v1/play")
 def play():
-    country = request.args.get("country", default="none")
-    title = request.args.get("title", default="none")
-    registry.counter("server.requestCount", {"version": "v1"}).increment()
-    return Response(f"requested play for country={country} title={title}")
+    country = request.args.get("country", default="unknown")
+    title = request.args.get("title", default="unknown")
+
+    if country == "unknown" or title == "unknown":
+        status = 404
+        message = f"invalid play request for country={country} title={title}"
+    else:
+        status = 200
+        message = f"requested play for country={country} title={title}"
+
+    tags = {"path": "v1_play", "country": country, "title": title, "status": str(status)}
+    registry.counter("server.requestCount", tags).increment()
+    return Response(message, status=status)
 ```
 
 Save this snippet as `app.py`, then `flask --app app run`.
@@ -58,20 +69,18 @@ import logging
 
 from flask import Flask, request, Response
 from flask.logging import default_handler
-from spectator.config import Config
-from spectator.registry import Registry
-from spectator.stopwatch import StopWatch
+from spectator import Config, Registry, StopWatch
 
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.DEBUG)
 root_logger.addHandler(default_handler)
 
-config = Config(extra_common_tags={"nf.platform": "my_platform"})
+config = Config(extra_common_tags={"platform": "flask-demo"})
 registry = Registry(config)
 
-request_count_id = registry.new_id("server.requestCount", {"version": "v1"})
-request_latency = registry.timer("server.requestLatency")
-response_size = registry.distribution_summary("server.responseSize")
+request_count_id = registry.new_id("server.requestCount", {"path": "v1_play"})
+request_latency = registry.timer("server.requestLatency", {"path": "v1_play"})
+response_size = registry.distribution_summary("server.responseSize", {"path": "v1_play"})
 
 app = Flask(__name__)
 
@@ -79,31 +88,26 @@ app = Flask(__name__)
 def root():
     return Response("Usage: /api/v1/play?country=foo&title=bar")
 
-@app.route("/api/v1/play", methods=["GET", "POST"])
+@app.route("/api/v1/play")
 def play():
-    if request.method == "GET":
-        with StopWatch(request_latency):
-            status_code = 200
-            country = request.args.get("country", default="none")
-            title = request.args.get("title", default="none")
+    with StopWatch(request_latency):
+        country = request.args.get("country", default="unknown")
+        title = request.args.get("title", default="unknown")
 
-            tags = {"country": country, "title": title, "status": str(status_code)}
-            request_count_with_tags = request_count_id.with_tags(tags)
-            counter = registry.counter_with_id(request_count_with_tags)
-            counter.increment()
-
+        if country == "unknown" or title == "unknown":
+            status = 404
+            message = f"invalid play request for country={country} title={title}"
+        else:
+            status = 200
             message = f"requested play for country={country} title={title}"
-            response_size.record(len(message))
-            return Response(message, status=status_code)
-    else:
-        status_code = 405
 
-        tags = {"status": str(status_code)}
-        request_count_with_tags = request_count_id.with_tags(tags)
-        counter = registry.counter_with_id(request_count_with_tags)
-        counter.increment()
+        tags = {"country": country, "title": title, "status": str(status)}
+        request_count = registry.counter_with_id(request_count_id.with_tags(tags))
 
-        return Response("unsupported request method", status=status_code)
+        request_count.increment()
+        response_size.record(len(message))
+
+        return Response(message, status=status)
 ```
 
 Save this snippet as `app.py`, then `flask --app app run`.
@@ -116,7 +120,7 @@ Instantiate a `Registry` object, with either a default or custom `Config`, and u
 manage `MeterId` and `Meter` objects.
 
 ```python
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.counter("server.requestCount").increment()
@@ -130,10 +134,10 @@ implement when adopting the thin client version of the library. It existed as a 
 thick client because it was stateful, and required starting background threads. The thin client
 version is stateless. 
 
-Importing the `GlobalRegistry` instantiates a `Registry` with a default `Config` that applies
-process-specific common tags based on environment variables and opens a UDP socket to the local
-[SpectatorD] agent. The remainder of the instance-specific common tags are provided by [SpectatorD].
-Once imported, the `GlobalRegistry` can be used to create and manage Meters.
+Importing the `GlobalRegistry` instantiates a `Registry` with a default `Config`, and opens a UDP
+socket to the local [SpectatorD] agent when publishing metrics. The instance-specific common tags
+are provided by [SpectatorD]. Once imported, the `GlobalRegistry` can be used to create and manage
+Meters.
 
 ```python
 from spectator import GlobalRegistry
@@ -187,7 +191,7 @@ number of successful requests, then you must cast integers to strings. The `Mete
 validate these values, dropping or changing any that are not valid, and reporting a warning log.
 
 ```python
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.counter("server.numRequests", {"statusCode": str(200)}).increment()
@@ -247,8 +251,7 @@ export SPECTATOR_OUTPUT_LOCATION="udp://[::1]:1234"
 * Provide a custom `Config` for the `Registry`:
 
 ```python
-from spectator.config import Config
-from spectator.registry import Registry
+from spectator import Config, Registry
 
 config = Config(location="udp://[::1]:1234")
 registry = Registry(config)
@@ -318,8 +321,7 @@ updates.
 ```python
 import unittest
 
-from spectator.config import Config
-from spectator.registry import Registry
+from spectator import Config, Registry
 
 class MetricsTest(unittest.TestCase):
 
@@ -335,14 +337,13 @@ class MetricsTest(unittest.TestCase):
 
 ### Protocol Parser
 
-A [SpectatorD] line protocol parser is available, which ca be used for validating  the results
+A [SpectatorD] line protocol parser is available, which ca be used for validating the results
 captured by a `MemoryWriter`.
 
 ```python
 import unittest
 
-from spectator.meter.counter import Counter
-from spectator.protocol_parser import get_meter_class, parse_protocol_line
+from spectator import Counter, get_meter_class, parse_protocol_line
 
 class ProtocolParserTest(unittest.TestCase):
 

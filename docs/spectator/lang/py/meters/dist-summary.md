@@ -9,7 +9,7 @@ This means that a `4K` tick label will represent 4 kilobytes, rather than 4 kilo
 Call `record()` with a value:
 
 ```python
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.distribution_summary("server.requestSize").record(10)
