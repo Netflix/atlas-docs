@@ -14,7 +14,7 @@
         <link rel="prev" href="../percentile-timer/">
       
       
-        <link rel="next" href="../../../py/usage/">
+        <link rel="next" href="../../migrations/">
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
@@ -6314,6 +6314,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../age-gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Age Gauge
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../counter/" class="md-nav__link">
         
   
@@ -6377,6 +6398,90 @@
   
   
     <li class="md-nav__item">
+      <a href="../max-gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Max Gauge
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monotonic-counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monotonic Counter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monotonic-counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monotonic Counter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../percentile-dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Distribution Summary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../percentile-timer/" class="md-nav__link">
         
   
@@ -6423,6 +6528,27 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../migrations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migrations
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -7137,7 +7263,22 @@
 
   <h1>Timer</h1>
 
-<p>TBD</p>
+<p>A Timer is used to measure how long (in seconds) some event is taking.</p>
+<p>Call <code>record()</code> with a value:</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
+<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">timer</span><span class="p">(</span><span class="s2">&quot;server.requestLatency&quot;</span><span class="p">).</span><span class="nx">record</span><span class="p">(</span><span class="mf">0.01</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">request_latency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;server.requestLatency&quot;</span><span class="p">);</span>
+<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">timer_with_id</span><span class="p">(</span><span class="nx">request_latency</span><span class="p">).</span><span class="nx">record</span><span class="p">(</span><span class="mf">0.01</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">hrtime</span><span class="p">();</span>
+<span class="c1">// do work</span>
+<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">timer</span><span class="p">(</span><span class="s2">&quot;server.requestLatency&quot;</span><span class="p">).</span><span class="nx">record</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">hrtime</span><span class="p">(</span><span class="nx">start</span><span class="p">));</span>
+</code></pre></div>
+<p>The <code>record()</code> method accepts <code>number[]</code> output from <code>hrtime</code> and converts it to seconds, as a
+convenience for recording latencies.</p>
 
 
 

@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://netflix.github.io/atlas-docs/spectator/lang/py/usage/">
       
       
-        <link rel="prev" href="../../nodejs/meters/timer/">
+        <link rel="prev" href="../../nodejs/migrations/">
       
       
         <link rel="next" href="../meters/age-gauge/">
@@ -6315,6 +6315,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../nodejs/meters/age-gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Age Gauge
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../nodejs/meters/counter/" class="md-nav__link">
         
   
@@ -6378,6 +6399,90 @@
   
   
     <li class="md-nav__item">
+      <a href="../../nodejs/meters/max-gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Max Gauge
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodejs/meters/monotonic-counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monotonic Counter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodejs/meters/monotonic-counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monotonic Counter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodejs/meters/percentile-dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Distribution Summary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../nodejs/meters/percentile-timer/" class="md-nav__link">
         
   
@@ -6416,6 +6521,27 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodejs/migrations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migrations
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -7767,20 +7893,22 @@ communication with <a href="../../../agent/usage/">SpectatorD</a> on dual-stacke
 <p>On IPv6-only systems, it may be necessary to change the default configuration using one of the
 following methods:</p>
 <ul>
-<li>Configure the following environment variable, which will override the default location <code>Config</code>
-in the <code>Registry</code>:</li>
-</ul>
+<li>
+<p>Configure the following environment variable, which will override the default location <code>Config</code>
+in the <code>Registry</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SPECTATOR_OUTPUT_LOCATION</span><span class="o">=</span><span class="s2">&quot;udp://[::1]:1234&quot;</span>
 </code></pre></div>
-<ul>
-<li>Provide a custom <code>Config</code> for the <code>Registry</code>:</li>
-</ul>
+</li>
+<li>
+<p>Provide a custom <code>Config</code> for the <code>Registry</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">Config</span><span class="p">,</span> <span class="n">Registry</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="s2">&quot;udp://[::1]:1234&quot;</span><span class="p">)</span>
 <span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 <span class="n">registry</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">increment</span><span class="p">()</span>
 </code></pre></div>
+</li>
+</ul>
 <h2 id="output-location">Output Location<a class="headerlink" href="#output-location" title="Permanent link">&para;</a></h2>
 <p>If you need to override the default output location (UDP) of the <code>Registry</code>, then you can set a
 <code>Config</code> class location to one of the following supported values:</p>

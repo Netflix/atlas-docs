@@ -6314,6 +6314,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../age-gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Age Gauge
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../counter/" class="md-nav__link">
         
   
@@ -6385,6 +6406,90 @@
   
   
     <li class="md-nav__item">
+      <a href="../max-gauge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Max Gauge
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monotonic-counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monotonic Counter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monotonic-counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monotonic Counter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../percentile-dist-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Percentile Distribution Summary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../percentile-timer/" class="md-nav__link">
         
   
@@ -6423,6 +6528,27 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../migrations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migrations
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -7137,7 +7263,21 @@
 
   <h1>Distribution Summary</h1>
 
-<p>TBD</p>
+<p>A Distribution Summary is used to track the distribution of events. It is similar to a Timer, but
+more general, in that the size does not have to be a period of time. For example, a Distribution
+Summary could be used to measure the payload sizes of requests hitting a server.</p>
+<p>Always use base units when recording data, to ensure that the tick labels presented on Atlas graphs
+are readable. If you are measuring payload size, then use bytes, not kilobytes (or some other unit).
+This means that a <code>4K</code> tick label will represent 4 kilobytes, rather than 4 kilo-kilobytes.</p>
+<p>Call <code>record()</code> with a value:</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
+<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">distribution_summary</span><span class="p">(</span><span class="s2">&quot;server.requestSize&quot;</span><span class="p">).</span><span class="nx">record</span><span class="p">(</span><span class="mf">10</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">request_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;server.requestSize&quot;</span><span class="p">);</span>
+<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">distribution_summary_with_id</span><span class="p">(</span><span class="nx">request_size</span><span class="p">).</span><span class="nx">record</span><span class="p">(</span><span class="mf">10</span><span class="p">);</span>
+</code></pre></div>
 
 
 
