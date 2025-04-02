@@ -244,19 +244,19 @@ following methods:
 * Configure the following environment variable, which will override the default location `Config`
 in the `Registry`:
 
-```shell
-export SPECTATOR_OUTPUT_LOCATION="udp://[::1]:1234"
-```
+    ```shell
+    export SPECTATOR_OUTPUT_LOCATION="udp://[::1]:1234"
+    ```
 
 * Provide a custom `Config` for the `Registry`:
 
-```python
-from spectator import Config, Registry
-
-config = Config(location="udp://[::1]:1234")
-registry = Registry(config)
-registry.counter("server.numRequests").increment()
-```
+    ```python
+    from spectator import Config, Registry
+    
+    config = Config(location="udp://[::1]:1234")
+    registry = Registry(config)
+    registry.counter("server.numRequests").increment()
+    ```
 
 ## Output Location
 
