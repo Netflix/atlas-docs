@@ -417,9 +417,8 @@ captured by a `MemoryWriter`.
 
 ```typescript
 import {assert} from "chai";
-import {parse_protocol_line} from "../src/index.js";
+import {Id, parse_protocol_line} from "../src/index.js";
 import {describe, it} from "node:test";
-import {Id} from "../src/meter/id.js";
 
 describe("Protocol Parser Tests", (): void => {
     it("parse counter with multiple tags", (): void => {
