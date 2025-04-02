@@ -14,7 +14,7 @@
         <link rel="prev" href="../../cpp/usage/">
       
       
-        <link rel="next" href="../migrations/">
+        <link rel="next" href="../meters/age-gauge/">
       
       
       <link rel="icon" href="../../../../images/favicon.ico">
@@ -6042,6 +6042,51 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#working-with-meterid-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working with MeterId Objects
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#meter-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Meter Types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Location
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#batch-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Batch Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug-metrics-delivery-to-spectatord" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debug Metrics Delivery to spectatord
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#design-considerations-reporting-intervals" class="md-nav__link">
     <span class="md-ellipsis">
       Design Considerations - Reporting Intervals
@@ -6050,9 +6095,312 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#writing-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing Tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#protocol-parser" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protocol Parser
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4_3_2" id="__nav_5_4_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Meters
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_4_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Meters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meters/age-gauge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Age Gauge
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meters/counter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Counter
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meters/dist-summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Distribution Summary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meters/gauge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gauges
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../py/meters/max-gauge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Max Gauge
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meters/monotonic-counter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Monotonic Counter
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meters/monotonic-counter-uint/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Monotonic Counter Uint
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meters/percentile-dist-summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Percentile Distribution Summary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meters/percentile-timer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Percentile Timer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meters/timer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Timer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -7998,11 +8346,80 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#working-with-meterid-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working with MeterId Objects
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#meter-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Meter Types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Location
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#batch-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Batch Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug-metrics-delivery-to-spectatord" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debug Metrics Delivery to spectatord
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#design-considerations-reporting-intervals" class="md-nav__link">
     <span class="md-ellipsis">
       Design Considerations - Reporting Intervals
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing Tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#protocol-parser" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protocol Parser
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -8118,6 +8535,81 @@ by providing one as the third parameter of the <code>Config</code> constructor.<
 <p>Use <a href="https://github.com/Netflix/spectator-go-runtime-metrics">spectator-go-runtime-metrics</a>. Follow
 instructions in the <a href="https://github.com/Netflix/spectator-go-runtime-metrics">README</a> to enable
 collection.</p>
+<h2 id="working-with-meterid-objects">Working with MeterId Objects<a class="headerlink" href="#working-with-meterid-objects" title="Permanent link">&para;</a></h2>
+<p>Each metric stored in Atlas is uniquely identified by the combination of the name and the tags
+associated with it. In <code>spectator-go</code>, this data is represented with <code>Id</code> objects, created
+by the <code>Registry</code>. The <code>NewId()</code> method returns new <code>Id</code> objects, which have extra common
+tags applied, and which can be further customized by calling the <code>WithTag()</code> and <code>WithTags()</code>
+methods. Each <code>Id</code> will create and store a validated subset of the <code>spectatord</code> protocol line
+to be written for each <code>Meter</code>, when it is instantiated. <code>Id</code> objects can be passed around and
+used concurrently. Manipulating the tags with the provided methods will create new <code>Id</code> objects.</p>
+<p>Note that <strong>all tag keys and values must be strings.</strong> For example, if you want to keep track of the
+number of successful requests, then you must cast integers to strings. The <code>Id</code> class will
+validate these values, dropping or changing any that are not valid, and reporting a warning log.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">config</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewConfig</span><span class="p">(</span><span class="s">&quot;udp&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">registry</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Counter</span><span class="p">(</span><span class="s">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;statusCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;200&quot;</span><span class="p">}).</span><span class="nx">Increment</span><span class="p">()</span>
+
+<span class="w">    </span><span class="nx">numRequests</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">NewId</span><span class="p">(</span><span class="s">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;statusCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;200&quot;</span><span class="p">})</span>
+<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">CounterWithId</span><span class="p">(</span><span class="nx">numRequests</span><span class="p">).</span><span class="nx">Increment</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Atlas metrics will be consumed by users many times after the data has been reported, so they should
+be chosen thoughtfully, while considering how they will be used. See the <a href="../../../../concepts/naming/">naming conventions</a> page
+for general guidelines on metrics naming and restrictions.</p>
+<h2 id="meter-types">Meter Types<a class="headerlink" href="#meter-types" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../meters/age-gauge/">Age Gauge</a></li>
+<li><a href="../meters/counter/">Counter</a></li>
+<li><a href="../meters/dist-summary/">Distribution Summary</a></li>
+<li><a href="../meters/gauge/">Gauge</a></li>
+<li><a href="../meters/max-gauge/">Max Gauge</a></li>
+<li><a href="../meters/monotonic-counter/">Monotonic Counter</a></li>
+<li><a href="../meters/monotonic-counter-uint/">Monotonic Counter Uint</a></li>
+<li><a href="../meters/percentile-dist-summary/">Percentile Distribution Summary</a></li>
+<li><a href="../meters/percentile-timer/">Percentile Timer</a></li>
+<li><a href="../meters/timer/">Timer</a></li>
+</ul>
+<h2 id="output-location">Output Location<a class="headerlink" href="#output-location" title="Permanent link">&para;</a></h2>
+<p><code>spectator.Registry</code> now supports different writers. The default writer is <code>writer.UdpWriter</code> which
+sends metrics to <a href="https://github.com/Netflix-Skunkworks/spectatord">spectatord</a> through UDP.</p>
+<p>Writers can be configured through <code>spectator.Config.Location</code>.</p>
+<p>Possible values are:</p>
+<ul>
+<li><code>""</code>: Empty string will default to <code>udp</code>.</li>
+<li><code>none</code>: Configures a no-op writer that does nothing. Can be used to disable metrics collection.</li>
+<li><code>memory</code>: Writes metrics to memory. Useful for testing.</li>
+<li><code>stderr</code>: Writes metrics to stderr.</li>
+<li><code>stdout</code>: Writes metrics to stdout.</li>
+<li><code>udp</code>    - Write metrics to the default spectatord UDP port. This is the default value.</li>
+<li><code>unix</code>   - Write metrics to the default spectatord Unix Domain Socket. Useful for high-volume scenarios.</li>
+<li><code>file:///path/to/file</code>: Writes metrics to a file.</li>
+<li><code>unix:///path/to/socket</code>: Writes metrics to a Unix domain socket.</li>
+<li><code>udp://host:port</code>: Writes metrics to a UDP socket.</li>
+</ul>
+<p>Location can also be set through the environment variable <code>SPECTATOR_OUTPUT_LOCATION</code>. If both are set,
+the environment variable takes precedence over the passed config. </p>
+<p>The environment variable <code>SPECTATOR_OUTPUT_LOCATION</code> can be set to <code>none</code> to disable metrics collection.</p>
+<h2 id="batch-usage">Batch Usage<a class="headerlink" href="#batch-usage" title="Permanent link">&para;</a></h2>
+<p>When using <code>spectator-go</code> to report metrics from a batch job, ensure that the batch job runs for at
+least five (5), if not ten (10) seconds in duration. This is necessary in order to allow sufficient
+time for <code>spectatord</code> to publish metrics to the Atlas backend; it publishes every five seconds. If
+your job does not run this long, or you find you are missing metrics that were reported at the end
+of your job run, then add a five-second sleep before exiting. This will allow time for the metrics
+to be sent.</p>
+<h2 id="debug-metrics-delivery-to-spectatord">Debug Metrics Delivery to <code>spectatord</code><a class="headerlink" href="#debug-metrics-delivery-to-spectatord" title="Permanent link">&para;</a></h2>
+<p>In order to see debug log messages from <code>spectatord</code>, create an <code>/etc/default/spectatord</code> file with
+the following contents:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">SPECTATORD_OPTIONS</span><span class="o">=</span><span class="s2">&quot;--verbose&quot;</span>
+</code></pre></div>
+<p>This will report all metrics that are sent to the Atlas backend in the <code>spectatord</code> logs, which will
+provide an opportunity to correlate metrics publishing events from your client code.</p>
 <h2 id="design-considerations-reporting-intervals">Design Considerations - Reporting Intervals<a class="headerlink" href="#design-considerations-reporting-intervals" title="Permanent link">&para;</a></h2>
 <p>This client is stateless, and sends a UDP packet (or unixgram) to <code>spectatord</code> each time a meter is
 updated. If you are performing high-volume operations, on the order of tens-of-thousands or millions
@@ -8125,6 +8617,67 @@ of operations per second, then you should pre-aggregate your metrics and report 
 closer to the <code>spectatord</code> publish interval of 5 seconds. This will keep the CPU usage related to
 <code>spectator-go</code> and <code>spectatord</code> low (around 1% or less), as compared to up to 40% for high-volume
 scenarios.</p>
+<h2 id="writing-tests">Writing Tests<a class="headerlink" href="#writing-tests" title="Permanent link">&para;</a></h2>
+<p>To write tests against this library, instantiate a test instance of the <code>Registry</code> and configure it
+to use the <a href="https://github.com/Netflix/spectator-go/blob/main/spectator/writer/writer.go#L18-L21">MemoryWriter</a>,
+which stores all updates in an <code>Array</code>. Maintain a handle to the <code>MemoryWriter</code>, then inspect the
+<code>Lines()</code> to verify your metrics updates. See the source code for more testing examples.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator/logger&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator/writer&quot;</span>
+<span class="w">    </span><span class="s">&quot;testing&quot;</span>
+<span class="w">    </span><span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">TestRegistryWithMemoryWriter_Counter</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">mw</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">writer</span><span class="p">.</span><span class="nx">MemoryWriter</span><span class="p">{}</span>
+<span class="w">    </span><span class="nx">r</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">NewTestRegistry</span><span class="p">(</span><span class="nx">mw</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Counter</span><span class="p">(</span><span class="s">&quot;test_counter&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">counter</span><span class="p">.</span><span class="nx">Increment</span><span class="p">()</span>
+<span class="w">    </span><span class="nx">expected</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;c:test_counter:1&quot;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">mw</span><span class="p">.</span><span class="nx">Lines</span><span class="p">())</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">mw</span><span class="p">.</span><span class="nx">Lines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">expected</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Expected &#39;%s&#39;, got &#39;%s&#39;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">expected</span><span class="p">,</span><span class="w"> </span><span class="nx">mw</span><span class="p">.</span><span class="nx">Lines</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">NewTestRegistry</span><span class="p">(</span><span class="nx">mw</span><span class="w"> </span><span class="o">*</span><span class="nx">writer</span><span class="p">.</span><span class="nx">MemoryWriter</span><span class="p">)</span><span class="w"> </span><span class="nx">Registry</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">spectatordRegistry</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">config</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">Config</span><span class="p">{},</span>
+<span class="w">        </span><span class="nx">writer</span><span class="p">:</span><span class="w"> </span><span class="nx">mw</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">:</span><span class="w"> </span><span class="nx">logger</span><span class="p">.</span><span class="nx">NewDefaultLogger</span><span class="p">(),</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="protocol-parser">Protocol Parser<a class="headerlink" href="#protocol-parser" title="Permanent link">&para;</a></h3>
+<p>A <a href="../../../agent/usage/">SpectatorD</a> line protocol parser is available, which can be used for validating the results
+captured by a <code>MemoryWriter</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;testing&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">TestParseProtocolLineWithValidInput</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">line</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;c:meterId,tag1=value1,tag2=value2:value&quot;</span>
+<span class="w">    </span><span class="nx">meterType</span><span class="p">,</span><span class="w"> </span><span class="nx">meterId</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ParseProtocolLine</span><span class="p">(</span><span class="nx">line</span><span class="p">)</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Unexpected error: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">meterType</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Expected &#39;c&#39;, got &#39;%s&#39;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">meterType</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">meterId</span><span class="p">.</span><span class="nx">Name</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;meterId&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">meterId</span><span class="p">.</span><span class="nx">Tags</span><span class="p">()[</span><span class="s">&quot;tag1&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;value1&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">meterId</span><span class="p">.</span><span class="nx">Tags</span><span class="p">()[</span><span class="s">&quot;tag2&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;value2&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Unexpected meterId: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">meterId</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;value&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Expected &#39;value&#39;, got &#39;%s&#39;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 
 
 
