@@ -3,7 +3,7 @@ A Timer is used to measure how long (in seconds) some event is taking.
 Call `record()` with a value:
 
 ```python
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.timer("server.requestLatency").record(0.01)
@@ -17,8 +17,7 @@ the number of seconds that have elapsed while executing a block of code:
 
 ```python
 import time
-from spectator.registry import Registry
-from spectator.stopwatch import StopWatch
+from spectator import Registry, StopWatch
 
 registry = Registry()
 thread_sleep = registry.timer("thread.sleep")

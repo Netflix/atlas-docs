@@ -9,7 +9,7 @@ higher or lower at some point during interval, but that is not known.
 Call `set()` with a value:
 
 ```python
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.gauge("server.queueSize").set(10)
@@ -23,7 +23,7 @@ not need to be collected on a tight 1-minute schedule to ensure that Atlas shows
 graphs. A custom TTL may be configured for gauges. SpectatorD enforces a minimum TTL of 5 seconds.
 
 ```python
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.gauge("server.queueSize", ttl_seconds=120).set(10)

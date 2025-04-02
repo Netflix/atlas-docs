@@ -7,7 +7,7 @@ these values, at the expense of a slower time-to-first metric.
 Call `set()` when an event occurs:
 
 ```python
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.monotonic_counter("iface.bytes").set(10)

@@ -7,7 +7,7 @@ Time Since Last Success alerting pattern.
 To set a specific time as the last success:
 
 ```python
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.age_gauge("time.sinceLastSuccess").set(1611081000)
@@ -19,7 +19,7 @@ registry.age_gauge_with_id(last_success).set(1611081000)
 To set `now()` as the last success:
 
 ```python
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.age_gauge("time.sinceLastSuccess").now()

@@ -8,7 +8,7 @@ Call `set()` when an event occurs:
 
 ```python
 from ctypes import c_uint64
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.monotonic_counter_uint("iface.bytes").set(c_uint64(1))

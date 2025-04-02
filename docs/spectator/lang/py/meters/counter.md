@@ -7,7 +7,7 @@ be used to convert them back into a value-per-step on a graph.
 Call `increment()` when an event occurs:
 
 ```python
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.counter("server.numRequests").increment()
@@ -20,7 +20,7 @@ You can also pass a value to `increment()`. This is useful when a collection of 
 together:
 
 ```python
-from spectator.registry import Registry
+from spectator import Registry
 
 registry = Registry()
 registry.counter("queue.itemsAdded").increment(10)
