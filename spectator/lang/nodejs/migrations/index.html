@@ -8481,8 +8481,6 @@ which was not used or their capabilities are replicated in the currently availab
    update a <code>Gauge</code> metric with the value. Alternatively, consider a <code>Gauge</code> with a TTL, or an <code>AgeGauge</code>.</li>
 <li><code>HttpClient</code> has been removed, and it was never exported. Use the standard <code>https</code> client, or another library, instead.</li>
 <li><code>Meter</code>s no longer have a <code>measure()</code> method. Meters are now stateless and do not store measurements.</li>
-<li><code>Config</code> is simplified and local to this library. There is no longer a need to import the internal
-  configuration library.</li>
 <li><code>Registry</code> no longer has a <code>start()</code> function. The <code>Registry</code> is now effectively stateless and there is
   nothing to start other than opening the output location.</li>
 <li><code>Registry</code> no longer has a <code>stop()</code> function. Instead, use <code>close()</code> to close the registry. Once the
