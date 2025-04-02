@@ -7145,7 +7145,7 @@ allowing for arbitrary slicing and dicing based on dimensions.</p>
 up to 300X that of a standard Timer. Be diligent about any additional dimensions added to Percentile
 Timers and ensure that they have a small bounded cardinality.</p>
 <p>Call <code>record()</code> with a value:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">Registry</span>
 
 <span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
 <span class="n">registry</span><span class="o">.</span><span class="n">pct_timer</span><span class="p">(</span><span class="s2">&quot;server.requestLatency&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
@@ -7156,8 +7156,7 @@ Timers and ensure that they have a small bounded cardinality.</p>
 <p>A <code>StopWatch</code> class is available, which may be used as a <a href="https://docs.python.org/3/reference/datamodel.html#context-managers">Context Manager</a> to automatically record
 the number of seconds that have elapsed while executing a block of code:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
-<span class="kn">from</span> <span class="nn">spectator.stopwatch</span> <span class="kn">import</span> <span class="n">StopWatch</span>
+<span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">Registry</span><span class="p">,</span> <span class="n">StopWatch</span>
 
 <span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
 <span class="n">thread_sleep</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">pct_timer</span><span class="p">(</span><span class="s2">&quot;thread.sleep&quot;</span><span class="p">)</span>

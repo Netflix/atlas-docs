@@ -7484,8 +7484,7 @@ uses of this class across the organization.</li>
 </code></pre></div>
 <p>After:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
-<span class="kn">from</span> <span class="nn">spectator.stopwatch</span> <span class="kn">import</span> <span class="n">StopWatch</span>
+<span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">Registry</span><span class="p">,</span> <span class="n">StopWatch</span>
 
 <span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
 <span class="n">server_latency</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">pct_timer</span><span class="p">(</span><span class="s2">&quot;serverLatency&quot;</span><span class="p">)</span>
@@ -7514,7 +7513,7 @@ when adopting the thin-client version of the library. Replace with direct use of
 <span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;server.queueSize&quot;</span><span class="p">,</span> <span class="n">ttl_seconds</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </code></pre></div>
 <p>After:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">Registry</span>
 
 <span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
 <span class="n">registry</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;server.queueSize&quot;</span><span class="p">,</span> <span class="n">ttl_seconds</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>

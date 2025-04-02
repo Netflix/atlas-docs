@@ -7144,7 +7144,7 @@ metrics may be reported monotonically, and this metric type provides a convenien
 these values, at the expense of a slower time-to-first metric.</p>
 <p>Call <code>set()</code> when an event occurs:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">c_uint64</span>
-<span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
+<span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">Registry</span>
 
 <span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
 <span class="n">registry</span><span class="o">.</span><span class="n">monotonic_counter_uint</span><span class="p">(</span><span class="s2">&quot;iface.bytes&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">c_uint64</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>

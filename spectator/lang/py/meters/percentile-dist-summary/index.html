@@ -7145,7 +7145,7 @@ number of records returned from a query.</p>
 up to 300X that of a standard Distribution Summary. Be diligent about any additional dimensions
 added to Percentile Distribution Summaries and ensure that they have a small bounded cardinality.</p>
 <p>Call <code>record()</code> with a value:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">Registry</span>
 
 <span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
 <span class="n">registry</span><span class="o">.</span><span class="n">pct_distribution_summary</span><span class="p">(</span><span class="s2">&quot;server.requestSize&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>

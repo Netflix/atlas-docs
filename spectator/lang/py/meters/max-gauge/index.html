@@ -7142,7 +7142,7 @@ value to the backend. This ensures that only the maximum value observed during a
 is sent to the backend, thus over-riding the last-write-wins semantics of standard Gauges. Unlike
 standard Gauges, Max Gauges do not continue to report to the backend, and there is no TTL.</p>
 <p>Call <code>set()</code> with a value:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">Registry</span>
 
 <span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
 <span class="n">registry</span><span class="o">.</span><span class="n">max_gauge</span><span class="p">(</span><span class="s2">&quot;server.queueSize&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
