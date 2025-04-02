@@ -6,14 +6,14 @@ Time Since Last Success alerting pattern.
 
 To set a specific time as the last success:
 
-```python
-from spectator import Registry
+```javascript
+import {Registry} from "nflx-spectator";
 
-registry = Registry()
-registry.age_gauge("time.sinceLastSuccess").set(1611081000)
+const registry = new Registry();
+void registry.age_gauge("time.sinceLastSuccess").set(1611081000);
 
-last_success = registry.new_id("time.sinceLastSuccess")
-registry.age_gauge_with_id(last_success).set(1611081000)
+const last_success = registry.new_id("time.sinceLastSuccess");
+void registry.age_gauge_with_id(last_success).set(1611081000);
 ```
 
 To set `now()` as the last success:
