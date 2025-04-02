@@ -7269,13 +7269,13 @@ reporting the number of seconds since the last time recorded, for as long as the
 process runs. The purpose of this metric type is to enable users to more easily implement the
 Time Since Last Success alerting pattern.</p>
 <p>To set a specific time as the last success:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spectator</span> <span class="kn">import</span> <span class="n">Registry</span>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
 
-<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
-<span class="n">registry</span><span class="o">.</span><span class="n">age_gauge</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1611081000</span><span class="p">)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
+<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">age_gauge</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">).</span><span class="nx">set</span><span class="p">(</span><span class="mf">1611081000</span><span class="p">);</span>
 
-<span class="n">last_success</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">new_id</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span>
-<span class="n">registry</span><span class="o">.</span><span class="n">age_gauge_with_id</span><span class="p">(</span><span class="n">last_success</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1611081000</span><span class="p">)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">last_success</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">);</span>
+<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">age_gauge_with_id</span><span class="p">(</span><span class="nx">last_success</span><span class="p">).</span><span class="nx">set</span><span class="p">(</span><span class="mf">1611081000</span><span class="p">);</span>
 </code></pre></div>
 <p>To set <code>now()</code> as the last success:</p>
 <div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
