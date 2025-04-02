@@ -84,8 +84,6 @@ which was not used or their capabilities are replicated in the currently availab
    update a `Gauge` metric with the value. Alternatively, consider a `Gauge` with a TTL, or an `AgeGauge`.
 * `HttpClient` has been removed, and it was never exported. Use the standard `https` client, or another library, instead.
 * `Meter`s no longer have a `measure()` method. Meters are now stateless and do not store measurements.
-* `Config` is simplified and local to this library. There is no longer a need to import the internal
-  configuration library.
 * `Registry` no longer has a `start()` function. The `Registry` is now effectively stateless and there is
   nothing to start other than opening the output location.
 * `Registry` no longer has a `stop()` function. Instead, use `close()` to close the registry. Once the
