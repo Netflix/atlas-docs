@@ -79,6 +79,6 @@ Note that common tags sourced by [spectatord](https://github.com/Netflix-Skunkwo
 4. If you use `PercentileDistributionSummary` or `PercentileTimer`, then  you need to update your code to use the
    respective functions provided by the `Registry` to initialize these meters.
 5. Remove the dependency on the `spectator-go` internal configuration library - it is no longer required.
-6. There is no longer an option to `start()` or `stop()` the registry at runtime. If you need to configure a `Registry`
+6. There is no longer an option to `start()` or `stop()` the `Registry` at runtime. If you need to configure a `Registry`
    that doesn't emit metrics, for testing purposes, you can use the `spectator.Config.Location` option with `none` to
    configure a no-op writer.
