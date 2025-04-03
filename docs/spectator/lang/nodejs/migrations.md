@@ -109,6 +109,6 @@ which was not used or their capabilities are replicated in the currently availab
 5. If you use meters such as `PercentileDistributionSummary` or `PercentileTimer`, then you need to update your code
    to use the respective functions provided by the `Registry` to initialize these meters.
 6. Remove the dependency on the `spectator-js` internal configuration library - it is no longer required.
-7. There is no longer an option to `start()` or `stop(0`) the Registry at runtime. If you need to configure a `Registry`
+7. There is no longer an option to `start()` or `stop()` the `Registry` at runtime. If you need to configure a `Registry`
    that doesn't emit metrics, for testing purposes, you can set the `Config` object `location` parameter to `none` to
    configure a no-op writer.
