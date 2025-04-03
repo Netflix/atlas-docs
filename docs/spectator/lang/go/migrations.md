@@ -73,7 +73,7 @@ Note that common tags sourced by [spectatord](https://github.com/Netflix-Skunkwo
 ### Migration Steps
 
 1. Make sure you're not relying on any of the [removed functionality](#removed).
-2. Update imports for `Config` and `Registry`, and to use `meters` package instead of `spectator` for Meters.
+2. Update imports for `Config` and `Registry`, and use the `meters` package instead of `spectator` for Meters.
 3. If you want to collect runtime metrics, add the [spectator-go-runtime-metrics](https://github.com/Netflix/spectator-go-runtime-metrics)
    library, and follow the instructions in the README.
 4. If you use `PercentileDistributionSummary` or `PercentileTimer`, then  you need to update your code to use the
