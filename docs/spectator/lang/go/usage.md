@@ -77,8 +77,11 @@ func getNextRequest() *Request {
 }
 
 func main() {
-	commonTags := map[string]string{"nf.platform": "my_platform", "process_name": "my_process"}
-	// if desired, replace the logger with a custom one, using the third parameter here:
+	commonTags := map[string]string{
+		"platform": "my_platform",
+		"process": "my_process"
+	}
+	// third paramater can be used to configure a custom logger
 	config, _ := spectator.NewConfig("", commonTags, nil)
 
 	registry, _ := spectator.NewRegistry(config)
@@ -105,9 +108,22 @@ by providing one as the third parameter of the `Config` constructor.
 
 ## Runtime Metrics
 
-Use [spectator-go-runtime-metrics](https://github.com/Netflix/spectator-go-runtime-metrics). Follow
-instructions in the [README](https://github.com/Netflix/spectator-go-runtime-metrics) to enable
-collection.
+Use [spectator-go-runtime-metrics](https://github.com/Netflix/spectator-go-runtime-metrics).
+
+```go
+import (
+	"github.com/Netflix/spectator-go-runtime-metrics/runmetrics"
+	"github.com/Netflix/spectator-go/v2/spectator"
+)
+
+func main() {
+	config, _ := spectator.NewConfig("", nil, nil)
+	registry, _ := spectator.NewRegistry(config)
+	defer registry.Close()
+
+	runmetrics.CollectRuntimeMetrics(registry)
+}
+```
 
 ## Working with MeterId Objects
 
@@ -129,8 +145,9 @@ import (
 )
 
 func main() {
-	config, _ := spectator.NewConfig("udp", nil, nil)
+	config, _ := spectator.NewConfig("", nil, nil)
 	registry, _ := spectator.NewRegistry(config)
+	defer registry.Close()
 
 	registry.Counter("server.numRequests", map[string]string{"statusCode": "200"}).Increment()
 

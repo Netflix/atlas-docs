@@ -51,7 +51,8 @@ Note that common tags sourced by [spectatord](https://github.com/Netflix-Skunkwo
 * `spectator.HttpClient` has been removed. Use the standard `http.Client` instead.
 * `spectator.Meter`s no longer have a `Measure() []Measurement` function. Meters are now stateless and do not store
   measurements.
-* `spectator.Clock` has been removed. Use the standard `time` package instead.
+* `spectator.Clock` has been removed. Use the standard `time` package instead. Thus, `registry.Clock().Now()` calls
+  become `time.Now()` calls.
 * `spectator.Config` is simplified and local to this library. There is no longer a need to import the internal
   configuration library.
 * `spectator.Registry` no longer has a `Start()` function. The `Registry` is now effectively stateless and there is
