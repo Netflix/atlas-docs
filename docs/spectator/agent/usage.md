@@ -31,7 +31,7 @@ spectatord: A daemon that listens for metrics and reports them to Atlas.
       dropped.); default: false;
     --enable_external (Enable external publishing.); default: false;
     --enable_socket (Enable UNIX domain socket support. Default is true on Linux
-      and false on MacOS.); default: true;
+      and false on MacOS and Windows.); default: false;
     --enable_statsd (Enable statsd support.); default: false;
     --ipv4_only (Enable IPv4-only UDP listeners. This option should only be used
       in environments where it is impossible to run IPv6.); default: false;
@@ -47,6 +47,10 @@ spectatord: A daemon that listens for metrics and reports them to Atlas.
       to override common tags such as nf.app, and only use it with a secondary
       spectatord process.); default: false;
     --port (Port number for the UDP socket.); default: 1234;
+    --process_name (The nf.process tag value that will be added to internal
+      status metrics. We do not set the corresponding environment value, because
+      only the internal status metrics should have this tag, and all other
+      metrics should be exempt.); default: "spectatord";
     --socket_path (Path to the UNIX domain socket.);
       default: "/run/spectatord/spectatord.unix";
     --statsd_port (Port number for the statsd socket.); default: 8125;
