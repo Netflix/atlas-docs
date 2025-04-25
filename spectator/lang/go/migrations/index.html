@@ -8451,7 +8451,8 @@ from the environment variables.</p>
 <li><code>spectator.HttpClient</code> has been removed. Use the standard <code>http.Client</code> instead.</li>
 <li><code>spectator.Meter</code>s no longer have a <code>Measure() []Measurement</code> function. Meters are now stateless and do not store
   measurements.</li>
-<li><code>spectator.Clock</code> has been removed. Use the standard <code>time</code> package instead.</li>
+<li><code>spectator.Clock</code> has been removed. Use the standard <code>time</code> package instead. Thus, <code>registry.Clock().Now()</code> calls
+  become <code>time.Now()</code> calls.</li>
 <li><code>spectator.Config</code> is simplified and local to this library. There is no longer a need to import the internal
   configuration library.</li>
 <li><code>spectator.Registry</code> no longer has a <code>Start()</code> function. The <code>Registry</code> is now effectively stateless and there is
