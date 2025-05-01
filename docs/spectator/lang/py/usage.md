@@ -172,8 +172,19 @@ logging.getLogger('spectator.meter.meter_id').setLevel(logging.DEBUG)
 
 ## Runtime Metrics
 
-Use [spectator-py-runtime-metrics](https://github.com/Netflix/spectator-py-runtime-metrics). Follow
-instructions in the README to enable collection.
+Use [spectator-py-runtime-metrics]. Follow instructions in the README to enable collection.
+
+```python
+from spectator import Registry
+from runmetrics.stats_collector import StatsCollector
+
+if __name__ == "__main__":
+    registry = Registry()
+    # optionally add a stable worker id tag to runtime metrics, for forked processes
+    StatsCollector(registry, worker_id=None).start()
+```
+
+[spectator-py-runtime-metrics]: https://github.com/Netflix/spectator-py-runtime-metrics
 
 ## Working with MeterId Objects
 
