@@ -108,6 +108,22 @@ All the removed items are from the legacy thick client.
   `spectatord`.
 * `spectator.config` is simplified and local to this library. There is no longer a need to import the internal
   configuration library.
+* `spectator.registry` no longer has a `clock()` method. There are three choices for replacement:
+    * Use `time.time()` as a replacement for `clock().wall_time()`.
+    * Use `time.perf_counter()` as a replacement for `clock().monotonic_time()`.
+    * Use the `StopWatch` Context Manager.
+
+        ```python
+        import time
+        from spectator import Registry, StopWatch
+        
+        registry = Registry()
+        thread_sleep = registry.timer("thread.sleep")
+    
+        with StopWatch(thread_sleep):
+            time.sleep(5)
+        ```
+
 * `spectator.registry` no longer has a `start()` method. The `Registry` is now effectively stateless and there is
   nothing to start other than opening the output location.
 * `spectator.registry` no longer has a `stop()` function. Instead, use `close()` to close the Registry. Once the
