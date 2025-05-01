@@ -8606,8 +8606,29 @@ through top-level imports, for convenience.</li>
   <code>spectatord</code>.</li>
 <li><code>spectator.config</code> is simplified and local to this library. There is no longer a need to import the internal
   configuration library.</li>
-<li><code>spectator.registry</code> no longer has a <code>start()</code> method. The <code>Registry</code> is now effectively stateless and there is
-  nothing to start other than opening the output location.</li>
+<li>
+<p><code>spectator.registry</code> no longer has a <code>clock()</code> method. There are three choices for replacement:</p>
+<ul>
+<li>Use <code>time.time()</code> as a replacement for <code>clock().wall_time()</code>.</li>
+<li>Use <code>time.perf_counter()</code> as a replacement for <code>clock().monotonic_time()</code>.</li>
+<li>
+<p>Use the <code>StopWatch</code> Context Manager.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spectator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registry</span><span class="p">,</span> <span class="n">StopWatch</span>
+
+<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
+<span class="n">thread_sleep</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="s2">&quot;thread.sleep&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">StopWatch</span><span class="p">(</span><span class="n">thread_sleep</span><span class="p">):</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+</li>
+</ul>
+</li>
+<li>
+<p><code>spectator.registry</code> no longer has a <code>start()</code> method. The <code>Registry</code> is now effectively stateless and there is
+  nothing to start other than opening the output location.</p>
+</li>
 <li><code>spectator.registry</code> no longer has a <code>stop()</code> function. Instead, use <code>close()</code> to close the Registry. Once the
   registry is closed, it can't be started again. This is intended for final clean up of sockets or file handles.</li>
 <li><code>spectator.registry</code> no longer reports <code>spectator.measurements</code> metrics. Instead, you can use <code>spectatord</code> metrics to

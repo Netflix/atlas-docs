@@ -8747,8 +8747,15 @@ logger to <code>DEBUG</code> level, before the first metric is recorded. For exa
 <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;spectator.meter.meter_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="runtime-metrics">Runtime Metrics<a class="headerlink" href="#runtime-metrics" title="Permanent link">&para;</a></h2>
-<p>Use <a href="https://github.com/Netflix/spectator-py-runtime-metrics">spectator-py-runtime-metrics</a>. Follow
-instructions in the README to enable collection.</p>
+<p>Use <a href="https://github.com/Netflix/spectator-py-runtime-metrics">spectator-py-runtime-metrics</a>. Follow instructions in the README to enable collection.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">spectator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registry</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">runmetrics.stats_collector</span><span class="w"> </span><span class="kn">import</span> <span class="n">StatsCollector</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
+    <span class="c1"># optionally add a stable worker id tag to runtime metrics, for forked processes</span>
+    <span class="n">StatsCollector</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="n">worker_id</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</code></pre></div>
 <h2 id="working-with-meterid-objects">Working with MeterId Objects<a class="headerlink" href="#working-with-meterid-objects" title="Permanent link">&para;</a></h2>
 <p>Each metric stored in Atlas is uniquely identified by the combination of the name and the tags
 associated with it. In <code>spectator-py</code>, this data is represented with <code>MeterId</code> objects, created
