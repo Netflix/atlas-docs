@@ -1,6 +1,8 @@
 The following color palettes are supported:
 
 * [armytage](#armytage)
+* [dark24](#dark24)
+* [light24](#light24)
 * [epic](#epic)
 * [blues](#blues)
 * [greens](#greens)
@@ -14,7 +16,7 @@ with a given label will always get the same color.
 
 ## Armytage
 
-This is the default color palette, it comes from the paper
+This is the default color palette for the light theme, it comes from the paper
 [A Colour Alphabet and the Limits of Colour Coding](http://www.aic-color.org/journal/previous_archivos/v5/jaic_v5_06.pdf)
 by Paul Green-Armytage. Two colors, Xanthin and Yellow, are excluded because users found them hard
 to distinguish from a white background when used for a single pixel line. So overall there are
@@ -26,6 +28,36 @@ to distinguish from a white background when used for a single pixel line. So ove
 
 @@@ atlas-graph { show-expr=false }
 /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=armytage&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+@@@
+
+## Dark24
+
+This is a color palette suitable for light backgrounds based on the [Polychrome dark palette]. Overall there are
+24 distinct colors with this palette.
+
+[Polychrome dark palette]: https://rdrr.io/rforge/Polychrome/man/palettes.html
+
+@@@ atlas-uri { hilite=palette%3Ddark24 }
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=dark24&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+@@@
+
+@@@ atlas-graph { show-expr=false }
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=dark24&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+@@@
+
+## Light24
+
+This is a color palette suitable for dark backgrounds based on the [Polychrome light palette]. It is the default
+for the dark theme. Overall there are 24 distinct colors with this palette.
+
+[Polychrome light palette]: https://rdrr.io/rforge/Polychrome/man/palettes.html
+
+@@@ atlas-uri { hilite=palette%3Dlight24 }
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=light24&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+@@@
+
+@@@ atlas-graph { show-expr=false }
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=light24&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 @@@
 
 ## Epic
