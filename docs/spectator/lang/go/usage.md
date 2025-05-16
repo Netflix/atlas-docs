@@ -191,9 +191,9 @@ Possible values are:
 * `stdout`: Writes metrics to stdout.
 * `udp`    - Write metrics to the default spectatord UDP port. This is the default value.
 * `unix`   - Write metrics to the default spectatord Unix Domain Socket. Useful for high-volume scenarios.
-* `file:///path/to/file`: Writes metrics to a file.
-* `unix:///path/to/socket`: Writes metrics to a Unix domain socket.
-* `udp://host:port`: Writes metrics to a UDP socket.
+* `file:///path/to/file`: Writes metrics to a custom file (e.g. `file:///tmp/foo/bar`).
+* `udp://host:port`: Writes metrics to a custom UDP socket (e.g. `udp://127.0.0.1:1235`).
+* `unix:///path/to/socket`: Writes metrics to a custom Unix domain socket (e.g. `unix:///tmp/some.socket`).
 
 Location can also be set through the environment variable `SPECTATOR_OUTPUT_LOCATION`. If both are set,
 the environment variable takes precedence over the passed config. 
