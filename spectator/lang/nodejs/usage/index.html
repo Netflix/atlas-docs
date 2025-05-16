@@ -8911,9 +8911,10 @@ in the <code>Registry</code>:</p>
 <li><code>stderr</code> - Write to standard error for the process.</li>
 <li><code>stdout</code> - Write to standard out for the process.</li>
 <li><code>udp</code>    - Write to the default UDP port for <code>spectatord</code>.</li>
-<li><code>unix</code>   - Write to the default unix datagram socket for <code>spectatord</code>.</li>
+<li><code>unix</code>   - Write to the default Unix domain socket for <code>spectatord</code>.</li>
 <li><code>file://$path_to_file</code> - Write to a custom file (e.g. <code>file:///tmp/foo/bar</code>).</li>
-<li><code>udp://$host:$port</code>    - Write to a custom UDP socket.</li>
+<li><code>udp://$host:$port</code>    - Write to a custom UDP socket (e.g. <code>udp://127.0.0.1:1235</code>).</li>
+<li><code>unix://$path_to_file</code> - Write to a custom Unix domain socket (e.g. <code>unix:///tmp/some.socket</code>).</li>
 </ul>
 <p>The <code>SPECTATOR_OUTPUT_LOCATION</code> environment variable accepts the same values, and can be used to
 override the value provided to the <code>Config</code> class, which may be useful in CI/CD contexts. For

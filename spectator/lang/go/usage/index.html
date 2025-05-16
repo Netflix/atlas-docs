@@ -8604,9 +8604,9 @@ sends metrics to <a href="https://github.com/Netflix-Skunkworks/spectatord">spec
 <li><code>stdout</code>: Writes metrics to stdout.</li>
 <li><code>udp</code>    - Write metrics to the default spectatord UDP port. This is the default value.</li>
 <li><code>unix</code>   - Write metrics to the default spectatord Unix Domain Socket. Useful for high-volume scenarios.</li>
-<li><code>file:///path/to/file</code>: Writes metrics to a file.</li>
-<li><code>unix:///path/to/socket</code>: Writes metrics to a Unix domain socket.</li>
-<li><code>udp://host:port</code>: Writes metrics to a UDP socket.</li>
+<li><code>file:///path/to/file</code>: Writes metrics to a custom file (e.g. <code>file:///tmp/foo/bar</code>).</li>
+<li><code>udp://host:port</code>: Writes metrics to a custom UDP socket (e.g. <code>udp://127.0.0.1:1235</code>).</li>
+<li><code>unix:///path/to/socket</code>: Writes metrics to a custom Unix domain socket (e.g. <code>unix:///tmp/some.socket</code>).</li>
 </ul>
 <p>Location can also be set through the environment variable <code>SPECTATOR_OUTPUT_LOCATION</code>. If both are set,
 the environment variable takes precedence over the passed config. </p>
