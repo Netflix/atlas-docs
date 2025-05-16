@@ -279,9 +279,10 @@ If you need to override the default output location (UDP) of the `Registry`, the
 * `stderr` - Write to standard error for the process.
 * `stdout` - Write to standard out for the process.
 * `udp`    - Write to the default UDP port for `spectatord`.
-* `unix`   - Write to the default unix datagram socket for `spectatord`.
+* `unix`   - Write to the default Unix domain socket for `spectatord`.
 * `file://$path_to_file` - Write to a custom file (e.g. `file:///tmp/foo/bar`).
-* `udp://$host:$port`    - Write to a custom UDP socket.
+* `udp://$host:$port`    - Write to a custom UDP socket (e.g. `udp://127.0.0.1:1235`).
+* `unix://$path_to_file` - Write to a custom Unix domain socket (e.g. `unix:///tmp/some.socket`).
 
 The `SPECTATOR_OUTPUT_LOCATION` environment variable accepts the same values, and can be used to
 override the value provided to the `Config` class, which may be useful in CI/CD contexts. For
