@@ -53,11 +53,11 @@ for the dark theme. Overall there are 24 distinct colors with this palette.
 [Polychrome light palette]: https://rdrr.io/rforge/Polychrome/man/palettes.html
 
 @@@ atlas-uri { hilite=palette%3Dlight24 }
-/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=light24&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=light24&theme=dark&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 @@@
 
 @@@ atlas-graph { show-expr=false }
-/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=light24&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=light24&theme=dark&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 @@@
 
 ## Epic

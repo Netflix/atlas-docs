@@ -12,6 +12,15 @@ Set the color for the line. The value should be one of:
 * 6 digit hex RBG, e.g. ff0000 is red.
 * 8 digit hex ARGB, e.g. ffff0000 is red. The first byte is the [alpha](alpha.md)
   setting to use with the color.
+* Named colors. These are useful when working with [themes](../../api/graph/theme.md), they provide
+  a few shades for some common colors. The specific colors will vary based on the theme to ensure
+  they have good contrast with the background color. Available options:
+    * `blue1`, `blue2`, `blue3`
+    * `gray1`, `gray2`, `gray3`
+    * `green1`, `green2`, `green3`
+    * `orange1`, `orange2`, `orange3`
+    * `purple1`, `purple2`, `purple3`
+    * `red1`, `red2`, `red3`
 
 For queries with multiple time series, color palettes are available to automatically assign
 different colors to the various series. See [Color Palettes](../../api/graph/color-palettes.md).
