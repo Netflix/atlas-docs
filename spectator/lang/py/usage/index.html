@@ -7748,6 +7748,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -8637,6 +8646,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -8948,6 +8966,16 @@ captured by a <code>MemoryWriter</code>.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">({</span><span class="s2">&quot;foo&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;baz&quot;</span><span class="p">:</span> <span class="s2">&quot;quux&quot;</span><span class="p">},</span> <span class="nb">id</span><span class="o">.</span><span class="n">tags</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </code></pre></div>
+<h2 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h2>
+<p>On an <code>m5d.2xlarge</code> EC2 instance, with <code>Python 3.11.12</code> and <code>netflix-spectator-py==1.0.6</code>, we have
+observed the following single-threaded performance numbers across a two-minute test window:</p>
+<ul>
+<li>80,626 requests/second over <code>udp</code></li>
+<li>90,811 requests/second over <code>unix</code></li>
+</ul>
+<p>The benchmark incremented a single counter with two tags in a tight loop, to simulate real-world tag
+usage, and the rate-per-second observed on the corresponding Atlas graph matched. The protocol line
+was <code>74</code> characters in length.</p>
 
 
 
