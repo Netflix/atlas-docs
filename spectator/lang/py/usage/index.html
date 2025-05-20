@@ -8874,12 +8874,12 @@ in the <code>Registry</code>:</p>
 <p>If you need to override the default output location (UDP) of the <code>Registry</code>, then you can set a
 <code>Config</code> class location to one of the following supported values:</p>
 <ul>
-<li><code>none</code>   - Disable output.</li>
-<li><code>memory</code> - Write to memory.</li>
+<li><code>none</code>   - A no-op writer that does nothing. Used to disable metrics collection.</li>
+<li><code>memory</code> - Write to memory. Useful for testing.</li>
 <li><code>stderr</code> - Write to standard error for the process.</li>
-<li><code>stdout</code> - Write to standard out for the process.</li>
-<li><code>udp</code>    - Write to the default UDP port for <code>spectatord</code>.</li>
-<li><code>unix</code>   - Write to the default Unix domain socket for <code>spectatord</code>.</li>
+<li><code>stdout</code> - Write to standard output for the process.</li>
+<li><code>udp</code>    - Write to the default UDP port for <code>spectatord</code>. This is the default location.</li>
+<li><code>unix</code>   - Write to the default Unix Domain Socket for <code>spectatord</code>.  Useful for high-volume scenarios.</li>
 <li><code>file://$path_to_file</code> - Write to a custom file (e.g. <code>file:///tmp/foo/bar</code>).</li>
 <li><code>udp://$host:$port</code>    - Write to a custom UDP socket (e.g. <code>udp://127.0.0.1:1235</code>).</li>
 <li><code>unix://$path_to_file</code> - Write to a custom Unix domain socket (e.g. <code>unix:///tmp/some.socket</code>).</li>

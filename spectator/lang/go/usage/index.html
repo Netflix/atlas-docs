@@ -8643,16 +8643,16 @@ sends metrics to <a href="https://github.com/Netflix-Skunkworks/spectatord">spec
 <p>Writers can be configured through <code>spectator.Config.Location</code>.</p>
 <p>Possible values are:</p>
 <ul>
-<li><code>""</code>: Empty string will default to <code>udp</code>.</li>
-<li><code>none</code>: Configures a no-op writer that does nothing. Can be used to disable metrics collection.</li>
-<li><code>memory</code>: Writes metrics to memory. Useful for testing.</li>
-<li><code>stderr</code>: Writes metrics to stderr.</li>
-<li><code>stdout</code>: Writes metrics to stdout.</li>
-<li><code>udp</code>    - Write metrics to the default spectatord UDP port. This is the default value.</li>
-<li><code>unix</code>   - Write metrics to the default spectatord Unix Domain Socket. Useful for high-volume scenarios.</li>
-<li><code>file:///path/to/file</code>: Writes metrics to a custom file (e.g. <code>file:///tmp/foo/bar</code>).</li>
-<li><code>udp://host:port</code>: Writes metrics to a custom UDP socket (e.g. <code>udp://127.0.0.1:1235</code>).</li>
-<li><code>unix:///path/to/socket</code>: Writes metrics to a custom Unix domain socket (e.g. <code>unix:///tmp/some.socket</code>).</li>
+<li><code>""</code>     - Empty string will default to <code>udp</code>.</li>
+<li><code>none</code>   - A no-op writer that does nothing. Used to disable metrics collection.</li>
+<li><code>memory</code> - Write to memory. Useful for testing.</li>
+<li><code>stderr</code> - Write to standard error for the process.</li>
+<li><code>stdout</code> - Write to standard output for the process.</li>
+<li><code>udp</code>    - Write to the default UDP port for <code>spectatord</code>. This is the default location.</li>
+<li><code>unix</code>   - Write to the default Unix Domain Socket for <code>spectatord</code>. Useful for high-volume scenarios.</li>
+<li><code>file:///path/to/file</code>   - Write to a custom file (e.g. <code>file:///tmp/foo/bar</code>).</li>
+<li><code>udp://host:port</code>        - Write to a custom UDP socket (e.g. <code>udp://127.0.0.1:1235</code>).</li>
+<li><code>unix:///path/to/socket</code> - Write to a custom Unix domain socket (e.g. <code>unix:///tmp/some.socket</code>).</li>
 </ul>
 <p>Location can also be set through the environment variable <code>SPECTATOR_OUTPUT_LOCATION</code>. If both are set,
 the environment variable takes precedence over the passed config. </p>
