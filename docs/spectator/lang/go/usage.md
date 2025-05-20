@@ -184,16 +184,16 @@ Writers can be configured through `spectator.Config.Location`.
 
 Possible values are:
 
-* `""`: Empty string will default to `udp`.
-* `none`: Configures a no-op writer that does nothing. Can be used to disable metrics collection.
-* `memory`: Writes metrics to memory. Useful for testing.
-* `stderr`: Writes metrics to stderr.
-* `stdout`: Writes metrics to stdout.
-* `udp`    - Write metrics to the default spectatord UDP port. This is the default value.
-* `unix`   - Write metrics to the default spectatord Unix Domain Socket. Useful for high-volume scenarios.
-* `file:///path/to/file`: Writes metrics to a custom file (e.g. `file:///tmp/foo/bar`).
-* `udp://host:port`: Writes metrics to a custom UDP socket (e.g. `udp://127.0.0.1:1235`).
-* `unix:///path/to/socket`: Writes metrics to a custom Unix domain socket (e.g. `unix:///tmp/some.socket`).
+* `""`     - Empty string will default to `udp`.
+* `none`   - A no-op writer that does nothing. Used to disable metrics collection.
+* `memory` - Write to memory. Useful for testing.
+* `stderr` - Write to standard error for the process.
+* `stdout` - Write to standard output for the process.
+* `udp`    - Write to the default UDP port for `spectatord`. This is the default location.
+* `unix`   - Write to the default Unix Domain Socket for `spectatord`. Useful for high-volume scenarios.
+* `file:///path/to/file`   - Write to a custom file (e.g. `file:///tmp/foo/bar`).
+* `udp://host:port`        - Write to a custom UDP socket (e.g. `udp://127.0.0.1:1235`).
+* `unix:///path/to/socket` - Write to a custom Unix domain socket (e.g. `unix:///tmp/some.socket`).
 
 Location can also be set through the environment variable `SPECTATOR_OUTPUT_LOCATION`. If both are set,
 the environment variable takes precedence over the passed config. 

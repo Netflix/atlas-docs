@@ -274,12 +274,12 @@ in the `Registry`:
 If you need to override the default output location (UDP) of the `Registry`, then you can set a
 `Config` class location to one of the following supported values:
 
-* `none`   - Disable output.
-* `memory` - Write to memory.
+* `none`   - A no-op writer that does nothing. Used to disable metrics collection.
+* `memory` - Write to memory. Useful for testing.
 * `stderr` - Write to standard error for the process.
-* `stdout` - Write to standard out for the process.
-* `udp`    - Write to the default UDP port for `spectatord`.
-* `unix`   - Write to the default Unix domain socket for `spectatord`.
+* `stdout` - Write to standard output for the process.
+* `udp`    - Write to the default UDP port for `spectatord`. This is the default location.
+* `unix`   - Write to the default Unix Domain Socket for `spectatord`.  Useful for high-volume scenarios.
 * `file://$path_to_file` - Write to a custom file (e.g. `file:///tmp/foo/bar`).
 * `udp://$host:$port`    - Write to a custom UDP socket (e.g. `udp://127.0.0.1:1235`).
 * `unix://$path_to_file` - Write to a custom Unix domain socket (e.g. `unix:///tmp/some.socket`).
