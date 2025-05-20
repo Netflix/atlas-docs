@@ -369,3 +369,15 @@ class ProtocolParserTest(unittest.TestCase):
 ```
 
 [SpectatorD]: ../../agent/usage.md
+
+## Performance
+
+On an `m5d.2xlarge` EC2 instance, with `Python 3.11.12` and `netflix-spectator-py==1.0.6`, we have
+observed the following single-threaded performance numbers across a two-minute test window:
+
+* 80,626 requests/second over `udp`
+* 90,811 requests/second over `unix`
+
+The benchmark incremented a single counter with two tags in a tight loop, to simulate real-world tag
+usage, and the rate-per-second observed on the corresponding Atlas graph matched. The protocol line
+was `74` characters in length.
