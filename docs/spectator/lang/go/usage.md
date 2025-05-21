@@ -300,3 +300,18 @@ func TestParseProtocolLineWithValidInput(t *testing.T) {
 ```
 
 [SpectatorD]: ../../agent/usage.md
+
+## Performance
+
+On an `m5d.2xlarge` EC2 instance, with `Go 1.24.3` and `github.com/Netflix/spectator-go/v2 v2.0.13`, we
+have observed the following single-threaded performance numbers across a two-minute test window:
+
+* 135,771 requests/second over `udp`
+* 206,641 requests/second over `unix`
+
+The benchmark incremented a single counter with two tags in a tight loop, to simulate real-world tag
+usage, and the rate-per-second observed on the corresponding Atlas graph matched. The protocol line
+was `74` characters in length.
+
+The Go process CPU usage was ~112% and the `spectatord` process CPU usage was ~62% on this 8 vCPU
+system, for `udp`. It was ~113% and ~85%, respectively, for `unix`.
