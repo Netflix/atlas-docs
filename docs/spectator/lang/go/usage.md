@@ -267,28 +267,19 @@ captured by a `MemoryWriter`.
 
 ```golang
 import (
+	"github.com/Netflix/spectator-go/v2/spectator"
 	"testing"
 )
 
 func TestParseProtocolLineWithValidInput(t *testing.T) {
-	line := "c:meterId,tag1=value1,tag2=value2:value"
-	meterType, meterId, value, err := ParseProtocolLine(line)
+	line := "c:meterId,tag1=value1,tag2=value2:50"
+	meterType, meterId, value, err := spectator.ParseProtocolLine(line)
 
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-	}
-
-	if meterType != "c" {
-		t.Errorf("Expected 'c', got '%s'", meterType)
-	}
-
-	if meterId.Name() != "meterId" || meterId.Tags()["tag1"] != "value1" || meterId.Tags()["tag2"] != "value2" {
-		t.Errorf("Unexpected meterId: %v", meterId)
-	}
-
-	if value != "value" {
-		t.Errorf("Expected 'value', got '%s'", value)
-	}
+	assert.NoError(t, err)
+	assert.EqualValues(t, "c", meterType)
+	assert.EqualValues(t, "meterId", meterId.Name())
+	assert.EqualValues(t, map[string]string{"tag1": "value1", "tag2": "value2"}, meterId.Tags())
+	assert.EqualValues(t, "50", value)
 }
 ```
 
