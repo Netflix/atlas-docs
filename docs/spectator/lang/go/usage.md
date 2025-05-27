@@ -271,12 +271,12 @@ import (
 )
 
 func TestParseProtocolLineWithValidInput(t *testing.T) {
-	line := "c:meterId,tag1=value1,tag2=value2:50"
+	line := "c:name,tag1=value1,tag2=value2:50"
 	meterType, meterId, value, err := spectator.ParseProtocolLine(line)
 
 	assert.NoError(t, err)
 	assert.EqualValues(t, "c", meterType)
-	assert.EqualValues(t, "meterId", meterId.Name())
+	assert.EqualValues(t, "name", meterId.Name())
 	assert.EqualValues(t, map[string]string{"tag1": "value1", "tag2": "value2"}, meterId.Tags())
 	assert.EqualValues(t, "50", value)
 }
