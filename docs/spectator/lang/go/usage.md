@@ -240,29 +240,22 @@ which stores all updates in an `Array`. Maintain a handle to the `MemoryWriter`,
 ```golang
 import (
 	"fmt"
-	"github.com/Netflix/spectator-go/v2/spectator/logger"
+	"github.com/Netflix/spectator-go/v2/spectator"
 	"github.com/Netflix/spectator-go/v2/spectator/writer"
 	"testing"
 	"time"
 )
 
 func TestRegistryWithMemoryWriter_Counter(t *testing.T) {
-	mw := &writer.MemoryWriter{}
-	r := NewTestRegistry(mw)
+	config, _ := spectator.NewConfig("memory", nil, nil)
+	registry, _ = spectator.NewRegistry(config)
+	mw := registry.GetWriter().(*writer.MemoryWriter)
 
-	counter := r.Counter("test_counter", nil)
+	counter := registry.Counter("test_counter", nil)
 	counter.Increment()
 	expected := "c:test_counter:1"
 	if len(mw.Lines()) != 1 || mw.Lines()[0] != expected {
 		t.Errorf("Expected '%s', got '%s'", expected, mw.Lines()[0])
-	}
-}
-
-func NewTestRegistry(mw *writer.MemoryWriter) Registry {
-	return &spectatordRegistry{
-		config: &Config{},
-		writer: mw,
-		logger: logger.NewDefaultLogger(),
 	}
 }
 ```
