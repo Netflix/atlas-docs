@@ -253,10 +253,9 @@ func TestRegistryWithMemoryWriter_Counter(t *testing.T) {
 
 	counter := registry.Counter("test_counter", nil)
 	counter.Increment()
-	expected := "c:test_counter:1"
-	if len(mw.Lines()) != 1 || mw.Lines()[0] != expected {
-		t.Errorf("Expected '%s', got '%s'", expected, mw.Lines()[0])
-	}
+
+	assert.Len(t, mw.Lines(), 1)
+	assert.EqualValues(t, "c:test_counter:1", mw.Lines()[0])
 }
 ```
 
