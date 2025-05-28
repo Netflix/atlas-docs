@@ -241,21 +241,24 @@ which stores all updates in an `Array`. Maintain a handle to the `MemoryWriter`,
 import (
 	"fmt"
 	"github.com/Netflix/spectator-go/v2/spectator"
+	"github.com/Netflix/spectator-go/v2/spectator/logger"
 	"github.com/Netflix/spectator-go/v2/spectator/writer"
 	"testing"
 	"time"
 )
 
 func TestRegistryWithMemoryWriter_Counter(t *testing.T) {
-	config, _ := spectator.NewConfig("memory", nil, nil)
+	config, _ := spectator.NewConfig("memory", nil, logger.NewDefaultLogger())
 	registry, _ = spectator.NewRegistry(config)
 	mw := registry.GetWriter().(*writer.MemoryWriter)
 
 	counter := registry.Counter("test_counter", nil)
 	counter.Increment()
 
-	assert.Len(t, mw.Lines(), 1)
-	assert.EqualValues(t, "c:test_counter:1", mw.Lines()[0])
+	expected := "c:test_counter:1"
+	if len(mw.Lines()) != 1 || mw.Lines()[0] != expected {
+		t.Errorf("Expected '%s', got '%s'", expected, mw.Lines()[0])
+	}
 }
 ```
 
@@ -274,11 +277,21 @@ func TestParseProtocolLineWithValidInput(t *testing.T) {
 	line := "c:name,tag1=value1,tag2=value2:50"
 	meterType, meterId, value, err := spectator.ParseProtocolLine(line)
 
-	assert.NoError(t, err)
-	assert.EqualValues(t, "c", meterType)
-	assert.EqualValues(t, "name", meterId.Name())
-	assert.EqualValues(t, map[string]string{"tag1": "value1", "tag2": "value2"}, meterId.Tags())
-	assert.EqualValues(t, "50", value)
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
+
+	if meterType != "c" {
+		t.Errorf("Unexpected meter type: %v", meterType)
+	}
+
+	if meterId.Name() != "name" || meterId.Tags()["tag1"] != "value1" || meterId.Tags()["tag2"] != "value2" {
+		t.Errorf("Unexpected meter id: %v", meterId)
+	}
+
+	if value != "50" {
+		t.Errorf("Unexpected value: %v", value)
+	}
 }
 ```
 
