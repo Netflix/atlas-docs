@@ -65,7 +65,7 @@ high CPU usage for a period:</p>
 when everything is fine.</p>
 <h2 id="dampening">Dampening<a class="headerlink" href="#dampening" title="Permanent link">&para;</a></h2>
 <p>Our threshold alert above will trigger if the CPU usage is ever recorded to be above the
-threshold. Alert conditions are often combined with a check for the number of occurences. This
+threshold. Alert conditions are often combined with a check for the number of occurrences. This
 is done by using the <a href="stateful-rolling-count">:rolling-count</a> operator to get a line showing
 how many times the input signal has been true withing a specified window and then applying a
 second threshold to the rolling count.</p>
