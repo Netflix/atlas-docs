@@ -448,3 +448,17 @@ describe("Protocol Parser Tests", (): void => {
 ```
 
 [SpectatorD]: ../../agent/usage.md
+
+## Performance
+
+On an `m5d.2xlarge` EC2 instance, with `Node.js v22.16.0` and `nflx-spectator: ^3.0.5`, we have
+observed the following single-threaded performance numbers across a two-minute test window:
+
+* ??? requests/second over `udp`
+
+The benchmark incremented a single counter with two tags in a tight loop, to simulate real-world tag
+usage, and the rate-per-second observed on the corresponding Atlas graph matched. The protocol line
+was `74` characters in length.
+
+The Node.js process CPU usage was ~100% and the `spectatord` process CPU usage was ~55% on this 8
+vCPU system.
