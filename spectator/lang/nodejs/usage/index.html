@@ -6318,6 +6318,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/perf-test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Performance
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -7395,6 +7418,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -7696,6 +7728,29 @@
   
   <span class="md-ellipsis">
     Migrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../perf-test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Performance
     
   </span>
   
@@ -8070,6 +8125,29 @@
   
   <span class="md-ellipsis">
     Migrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../py/perf-test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Performance
     
   </span>
   
@@ -8679,6 +8757,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -9066,6 +9153,17 @@ captured by a <code>MemoryWriter</code>.</p>
 <span class="w">    </span><span class="p">});</span>
 <span class="p">});</span>
 </code></pre></div>
+<h2 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h2>
+<p>On an <code>m5d.2xlarge</code> EC2 instance, with <code>Node.js v22.16.0</code> and <code>nflx-spectator: ^3.0.5</code>, we have
+observed the following single-threaded performance numbers across a two-minute test window:</p>
+<ul>
+<li>??? requests/second over <code>udp</code></li>
+</ul>
+<p>The benchmark incremented a single counter with two tags in a tight loop, to simulate real-world tag
+usage, and the rate-per-second observed on the corresponding Atlas graph matched. The protocol line
+was <code>74</code> characters in length.</p>
+<p>The Node.js process CPU usage was ~100% and the <code>spectatord</code> process CPU usage was ~55% on this 8
+vCPU system.</p>
 
 
 
