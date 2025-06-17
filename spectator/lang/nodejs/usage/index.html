@@ -9157,13 +9157,14 @@ captured by a <code>MemoryWriter</code>.</p>
 <p>On an <code>m5d.2xlarge</code> EC2 instance, with <code>Node.js v22.16.0</code> and <code>nflx-spectator: ^3.0.5</code>, we have
 observed the following single-threaded performance numbers across a two-minute test window:</p>
 <ul>
-<li>??? requests/second over <code>udp</code></li>
+<li>85,317 requests/second over <code>udp</code> with <code>await</code></li>
 </ul>
 <p>The benchmark incremented a single counter with two tags in a tight loop, to simulate real-world tag
 usage, and the rate-per-second observed on the corresponding Atlas graph matched. The protocol line
 was <code>74</code> characters in length.</p>
-<p>The Node.js process CPU usage was ~100% and the <code>spectatord</code> process CPU usage was ~55% on this 8
+<p>The Node.js process CPU usage was ~100% and the <code>spectatord</code> process CPU usage was ~50% on this 8
 vCPU system.</p>
+<p>Without <code>await</code>, a heap limit allocation fail error will occur around 5.5M iterations at 34 seconds.</p>
 
 
 
