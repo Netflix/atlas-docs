@@ -8379,25 +8379,30 @@
 <span class="kd">const</span><span class="w"> </span><span class="nx">max_duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">60</span><span class="p">;</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">performance</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">elapsed</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">elapsed</span><span class="p">(</span><span class="nx">start</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">((</span><span class="nx">performance</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">start</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1000</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">rate</span><span class="p">(</span><span class="nx">iterations</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="nx">iterations</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">elapsed</span><span class="p">()).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;start spectator-js udp benchmark&quot;</span><span class="p">);</span>
 <span class="kd">let</span><span class="w"> </span><span class="nx">iteration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
 <span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// without await, a heap limit allocation fail error will occur around 5.5M iterations (34 sec)</span>
+<span class="w">    </span><span class="c1">// without await, a heap limit allocation fail error will occur</span>
+<span class="w">    </span><span class="c1">// around 5.5M iterations (34 sec)</span>
 <span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter</span><span class="p">(</span><span class="s2">&quot;spectator-js.publish&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">tags</span><span class="p">).</span><span class="nx">increment</span><span class="p">();</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">iteration</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mf">500000</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;iterations&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">iteration</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;elapsed&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">elapsed</span><span class="p">());</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">elapsed</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">max_duration</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">elapsed</span><span class="p">(</span><span class="nx">start</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">max_duration</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="k">break</span><span class="p">;</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="nx">iteration</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;iterations&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">iteration</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rate/sec&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">iteration</span><span class="o">/</span><span class="nx">elapsed</span><span class="p">()).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;iterations&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">iteration</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rate/sec&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">rate</span><span class="p">(</span><span class="nx">iteration</span><span class="p">));</span>
 
 <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">();</span>
 </code></pre></div>
