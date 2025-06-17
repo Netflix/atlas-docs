@@ -460,7 +460,7 @@ The benchmark incremented a single counter with two tags in a tight loop, to sim
 usage, and the rate-per-second observed on the corresponding Atlas graph matched. The protocol line
 was `74` characters in length.
 
-The Node.js process CPU usage was ~100% and the `spectatord` process CPU usage was ~50% on this 8
+The Node.js process CPU usage was ~100% and the `spectatord` process CPU usage was ~45% on this 8
 vCPU system.
 
 Without `await`, a heap limit allocation fail error will occur around 5.5M iterations at 34 seconds.
