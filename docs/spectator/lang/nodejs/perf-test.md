@@ -16,25 +16,30 @@ const tags = {"location": "udp", "version": "correct-horse-battery-staple"};
 const max_duration = 2 * 60;
 const start = performance.now();
 
-function elapsed() {
+function elapsed(start) {
     return ((performance.now() - start) / 1000).toFixed(2);
+}
+
+function rate(iterations) {
+    return (iterations / elapsed()).toFixed(2);
 }
 
 console.log("start spectator-js udp benchmark");
 let iteration = 1;
 while (true) {
-    // without await, a heap limit allocation fail error will occur around 5.5M iterations (34 sec)
+    // without await, a heap limit allocation fail error will occur
+    // around 5.5M iterations (34 sec)
     await registry.counter("spectator-js.publish", tags).increment();
     if (iteration % 500000 === 0) {
         console.log("iterations", iteration, "elapsed", elapsed());
-        if (elapsed() > max_duration) {
+        if (elapsed(start) > max_duration) {
             break;
         }
     }
     iteration += 1;
 }
 
-console.log("iterations", iteration, "rate/sec", (iteration/elapsed()).toFixed(2));
+console.log("iterations", iteration, "rate/sec", rate(iteration));
 
 process.exit();
 ```
