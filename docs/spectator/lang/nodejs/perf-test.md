@@ -34,7 +34,7 @@ while (true) {
     iteration += 1;
 }
 
-console.log("iterations", iteration, "rate/sec", iteration/elapsed());
+console.log("iterations", iteration, "rate/sec", (iteration/elapsed()).toFixed(2));
 
 process.exit();
 ```
