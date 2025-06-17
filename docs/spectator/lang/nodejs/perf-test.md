@@ -35,6 +35,8 @@ while (true) {
 }
 
 console.log("iterations", iteration, "rate/sec", iteration/elapsed());
+
+process.exit();
 ```
 
 ## Results
