@@ -16,7 +16,7 @@ const tags = {"location": "udp", "version": "correct-horse-battery-staple"};
 const max_duration = 2 * 60;
 const start = performance.now();
 
-function elapsed(start) {
+function elapsed() {
     return ((performance.now() - start) / 1000).toFixed(2);
 }
 
@@ -32,7 +32,7 @@ while (true) {
     await registry.counter("spectator-js.publish", tags).increment();
     if (iteration % 500000 === 0) {
         console.log("iterations", iteration, "elapsed", elapsed());
-        if (elapsed(start) > max_duration) {
+        if (elapsed() > max_duration) {
             break;
         }
     }
