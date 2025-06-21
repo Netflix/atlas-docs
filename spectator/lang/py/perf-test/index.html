@@ -8394,15 +8394,13 @@
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;start spectator-py </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2"> benchmark&quot;</span><span class="p">)</span>
 <span class="n">iteration</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="k">while</span> <span class="n">elapsed</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">max_duration</span><span class="p">:</span>
     <span class="n">registry</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="s2">&quot;spectator-py.publish&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span><span class="o">.</span><span class="n">increment</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">iteration</span> <span class="o">%</span> <span class="mi">500000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iterations=</span><span class="si">{</span><span class="n">iteration</span><span class="si">}</span><span class="s2"> elapsed=</span><span class="si">{</span><span class="n">elapsed</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">elapsed</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">max_duration</span><span class="p">:</span>
-            <span class="k">break</span>
     <span class="n">iteration</span> <span class="o">+=</span> <span class="mi">1</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iterations=</span><span class="si">{</span><span class="n">iteration</span><span class="si">}</span><span class="s2"> rate/sec=</span><span class="si">{</span><span class="n">iteration</span><span class="o">/</span><span class="n">elapsed</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iterations=</span><span class="si">{</span><span class="n">iteration</span><span class="si">}</span><span class="s2"> elapsed=</span><span class="si">{</span><span class="n">elapsed</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> rate/sec=</span><span class="si">{</span><span class="n">iteration</span><span class="o">/</span><span class="n">elapsed</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="results">Results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h2>
 <p>See <a href="../usage/#performance">Usage &gt; Performance</a>.</p>
