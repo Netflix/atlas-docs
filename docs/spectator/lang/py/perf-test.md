@@ -31,15 +31,13 @@ def elapsed():
 
 print(f"start spectator-py {location} benchmark")
 iteration = 1
-while True:
+while elapsed() < max_duration:
     registry.counter("spectator-py.publish", tags).increment()
     if iteration % 500000 == 0:
         print(f"iterations={iteration} elapsed={elapsed():.2f}")
-        if elapsed() > max_duration:
-            break
     iteration += 1
 
-print(f"iterations={iteration} rate/sec={iteration/elapsed():.2f}")
+print(f"iterations={iteration} elapsed={elapsed():.2f} rate/sec={iteration/elapsed():.2f}")
 ```
 
 ## Results
