@@ -10,12 +10,12 @@ Test maximum single-threaded throughput for two minutes.
 import logging
 import time
 
-from spectator import Config, Registry
-
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(thread)d - %(message)s'
 )
+
+from spectator import Config, Registry
 
 location = "udp"
 # location = "unix"
