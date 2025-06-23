@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#overview" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -560,6 +565,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Consolidation
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -571,6 +589,41 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further Explanation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8259,6 +8312,32 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further Explanation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8278,7 +8357,57 @@
 
   <h1>Consolidation</h1>
 
-<p>TODO</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Consolidation is automatically applied based upon the size of the query window.</li>
+<li>There is a hard maximum of 1,440 datapoints per line, which is one day of data with a 1-minute step size.</li>
+<li>There must be at least 1 pixel per datapoint.</li>
+<li>The unit is preserved across consolidation.</li>
+<li>The consolidation function will match the aggregation function used (i.e. avg for avg/sum, max for max).</li>
+</ul>
+<h2 id="further-explanation">Further Explanation<a class="headerlink" href="#further-explanation" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Step size will change based on the amount of data requested.<ul>
+<li>For short time windows, with graphs that are the default width, you will get a 1m step size up to ~12 hours.</li>
+<li>For longer time windows, such as multiple days, the step size can increase to 2m, 5m, 10m, or more.</li>
+<li>The step size can change as the graph width changes - this is most often noticed on very wide monitors.</li>
+</ul>
+</li>
+<li>One pixel per datapoint.<ul>
+<li>In addition to the hard limit on datapoints per line, the pixel width is also considered, in order to be able to
+render one pixel per data point.</li>
+<li>The maximum number of datapoints for a line is the smaller of 1,440 and number of pixels that can be visualized.</li>
+<li>This can be demonstrated by viewing a metric for the last day:<ul>
+<li>If you maximize the graph canvas, the Step size switches to 1m.</li>
+<li>If you minimize the graph canvas, the Step size switches to 5m.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Unit is preserved.<ul>
+<li>The y-axis unit is preserved for any step size changes.</li>
+</ul>
+</li>
+<li>Consolidation function matches aggregation function.<ul>
+<li>Let’s say you are looking at a graph of Stream Starts per Second (SPS), which is reported by thousands of instances.</li>
+<li>This is typically done with a sum aggregation, because you want to see the total value across the fleet.</li>
+<li>If you look at this data across a three hour window with a default canvas size, then it will be a 1-minute step size,
+and no consolidation is applied.</li>
+<li>If you expand the time range to 24 hours, then the amount of data selected is now large enough that it must be
+combined, in order to graph it.</li>
+<li>The step size changes to 5-minute, and a consolidation function is applied to combine multiple minutes of data
+into a single point on the graph.</li>
+<li>Since the aggregation is a sum in this case, the consolidation is an average. This means that each point on the graph
+is now the average value of the five minutes of data from the previous graph across the same time range.</li>
+<li>If you had used a max aggregation, then a max consolidation would be applied. The consolidation function is automatically
+chosen on your behalf, to provide the most correct value on the graph.</li>
+<li>As long as your graph lines are continuous, you should not notice any significant changes due to the application of the
+consolidation function.</li>
+<li>If your graph lines are sparsely populated, with many zero or NaN values, then you will see significant changes due to
+consolidation, because zero or low values will pull down an average.</li>
+</ul>
+</li>
+</ul>
 
 
 
