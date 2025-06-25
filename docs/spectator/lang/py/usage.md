@@ -292,6 +292,20 @@ example, if you want to disable metrics publishing from the `Registry`, then you
 export SPECTATOR_OUTPUT_LOCATION=none
 ```
 
+## Line Buffer
+
+The Config `buffer_size` parameter is used to configure an optional `LineBuffer`, which caches protocol lines
+locally, before flushing them to `spectatord`. Flushes occur under two conditions: (1) the buffer size is
+exceeded, or (2) five seconds has elapsed. The buffer is available for the `SocketWriter` (udp and unix),
+where performance matters most, and it can increase the maximum RPS of communication to `spectatord` from ~80K
+to 150K (1.8X). The `LineBuffer` is disabled by default (with size zero), to ensure that the default operation
+of the library works under most circumstances. Under single-threaded performance testing, a 2KB buffer is a good
+configuration.
+
+When the `LineBuffer` is enabled, a background thread is started which will flush metrics every five seconds,
+which means that some care should be exercised when a custom Registry with buffering is instantiated in pre-fork
+environments.
+
 ## Batch Usage
 
 When using `spectator-py` to report metrics from a batch job, ensure that the batch job runs for at
@@ -375,8 +389,8 @@ class ProtocolParserTest(unittest.TestCase):
 On an `m5d.2xlarge` EC2 instance, with `Python 3.11.12` and `netflix-spectator-py==1.0.6`, we have
 observed the following single-threaded performance numbers across a two-minute test window:
 
-* 80,626 requests/second over `udp`
-* 90,811 requests/second over `unix`
+* 80,626 requests/second over `udp` (up to ~150K with a 2KB LineBuffer)
+* 90,811 requests/second over `unix` (up to ~150K with a 2KB LineBuffer)
 
 The benchmark incremented a single counter with two tags in a tight loop, to simulate real-world tag
 usage, and the rate-per-second observed on the corresponding Atlas graph matched. The protocol line
