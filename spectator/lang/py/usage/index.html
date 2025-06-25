@@ -7744,6 +7744,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#line-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line Buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#batch-usage" class="md-nav__link">
     <span class="md-ellipsis">
       Batch Usage
@@ -8665,6 +8674,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#line-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line Buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#batch-usage" class="md-nav__link">
     <span class="md-ellipsis">
       Batch Usage
@@ -8976,6 +8994,17 @@ override the value provided to the <code>Config</code> class, which may be usefu
 example, if you want to disable metrics publishing from the <code>Registry</code>, then you can set:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SPECTATOR_OUTPUT_LOCATION</span><span class="o">=</span>none
 </code></pre></div>
+<h2 id="line-buffer">Line Buffer<a class="headerlink" href="#line-buffer" title="Permanent link">&para;</a></h2>
+<p>The Config <code>buffer_size</code> parameter is used to configure an optional <code>LineBuffer</code>, which caches protocol lines
+locally, before flushing them to <code>spectatord</code>. Flushes occur under two conditions: (1) the buffer size is
+exceeded, or (2) five seconds has elapsed. The buffer is available for the <code>SocketWriter</code> (udp and unix),
+where performance matters most, and it can increase the maximum RPS of communication to <code>spectatord</code> from ~80K
+to 150K (1.8X). The <code>LineBuffer</code> is disabled by default (with size zero), to ensure that the default operation
+of the library works under most circumstances. Under single-threaded performance testing, a 2KB buffer is a good
+configuration.</p>
+<p>When the <code>LineBuffer</code> is enabled, a background thread is started which will flush metrics every five seconds,
+which means that some care should be exercised when a custom Registry with buffering is instantiated in pre-fork
+environments.</p>
 <h2 id="batch-usage">Batch Usage<a class="headerlink" href="#batch-usage" title="Permanent link">&para;</a></h2>
 <p>When using <code>spectator-py</code> to report metrics from a batch job, ensure that the batch job runs for at
 least five (5), if not ten (10) seconds in duration. This is necessary in order to allow sufficient
@@ -9039,8 +9068,8 @@ captured by a <code>MemoryWriter</code>.</p>
 <p>On an <code>m5d.2xlarge</code> EC2 instance, with <code>Python 3.11.12</code> and <code>netflix-spectator-py==1.0.6</code>, we have
 observed the following single-threaded performance numbers across a two-minute test window:</p>
 <ul>
-<li>80,626 requests/second over <code>udp</code></li>
-<li>90,811 requests/second over <code>unix</code></li>
+<li>80,626 requests/second over <code>udp</code> (up to ~150K with a 2KB LineBuffer)</li>
+<li>90,811 requests/second over <code>unix</code> (up to ~150K with a 2KB LineBuffer)</li>
 </ul>
 <p>The benchmark incremented a single counter with two tags in a tight loop, to simulate real-world tag
 usage, and the rate-per-second observed on the corresponding Atlas graph matched. The protocol line
