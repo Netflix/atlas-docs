@@ -6115,6 +6115,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#line-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line Buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#batch-usage" class="md-nav__link">
     <span class="md-ellipsis">
       Batch Usage
@@ -8497,6 +8506,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#line-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line Buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#batch-usage" class="md-nav__link">
     <span class="md-ellipsis">
       Batch Usage
@@ -8730,7 +8748,7 @@ sends metrics to <a href="https://github.com/Netflix-Skunkworks/spectatord">spec
 <p>Writers can be configured through <code>spectator.Config.Location</code>.</p>
 <p>Possible values are:</p>
 <ul>
-<li><code>""</code>     - Empty string will default to <code>udp</code>.</li>
+<li><code>""</code>     - Empty string will default to <code>udp</code>, with the <code>LineBuffer</code> disabled by default.</li>
 <li><code>none</code>   - A no-op writer that does nothing. Used to disable metrics collection.</li>
 <li><code>memory</code> - Write to memory. Useful for testing.</li>
 <li><code>stderr</code> - Write to standard error for the process.</li>
@@ -8744,6 +8762,15 @@ sends metrics to <a href="https://github.com/Netflix-Skunkworks/spectatord">spec
 <p>Location can also be set through the environment variable <code>SPECTATOR_OUTPUT_LOCATION</code>. If both are set,
 the environment variable takes precedence over the passed config. </p>
 <p>The environment variable <code>SPECTATOR_OUTPUT_LOCATION</code> can be set to <code>none</code> to disable metrics collection.</p>
+<h2 id="line-buffer">Line Buffer<a class="headerlink" href="#line-buffer" title="Permanent link">&para;</a></h2>
+<p>The <code>NewConfigWithBuffer</code> factory function takes a <code>bufferSize</code> parameter that configures an optional
+<code>LineBuffer</code>, which caches protocol lines locally, before flushing them to <code>spectatord</code>. Flushes occur
+under two conditions: (1) the buffer size is exceeded, or (2) five seconds has elapsed. The buffer is
+available for the <code>UdpWriter</code> and the <code>UnixgramWriter</code>, where performance matters most. The <code>LineBuffer</code>
+is disabled by default (with size zero) in the standard <code>NewConfig</code> factory function, to ensure that the
+default operation of the library works under most circumstances. For high-performance scenarios, a 60KB
+buffer size is recommended. The maximum buffer size for udp sockets and unix domain sockets on Linux is
+64KB, so stay under this limit.</p>
 <h2 id="batch-usage">Batch Usage<a class="headerlink" href="#batch-usage" title="Permanent link">&para;</a></h2>
 <p>When using <code>spectator-go</code> to report metrics from a batch job, ensure that the batch job runs for at
 least five (5), if not ten (10) seconds in duration. This is necessary in order to allow sufficient
