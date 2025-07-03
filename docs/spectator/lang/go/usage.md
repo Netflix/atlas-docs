@@ -184,7 +184,7 @@ Writers can be configured through `spectator.Config.Location`.
 
 Possible values are:
 
-* `""`     - Empty string will default to `udp`.
+* `""`     - Empty string will default to `udp`, with the `LineBuffer` disabled by default.
 * `none`   - A no-op writer that does nothing. Used to disable metrics collection.
 * `memory` - Write to memory. Useful for testing.
 * `stderr` - Write to standard error for the process.
@@ -199,6 +199,17 @@ Location can also be set through the environment variable `SPECTATOR_OUTPUT_LOCA
 the environment variable takes precedence over the passed config. 
 
 The environment variable `SPECTATOR_OUTPUT_LOCATION` can be set to `none` to disable metrics collection.
+
+## Line Buffer
+
+The `NewConfigWithBuffer` factory function takes a `bufferSize` parameter that configures an optional
+`LineBuffer`, which caches protocol lines locally, before flushing them to `spectatord`. Flushes occur
+under two conditions: (1) the buffer size is exceeded, or (2) five seconds has elapsed. The buffer is
+available for the `UdpWriter` and the `UnixgramWriter`, where performance matters most. The `LineBuffer`
+is disabled by default (with size zero) in the standard `NewConfig` factory function, to ensure that the
+default operation of the library works under most circumstances. For high-performance scenarios, a 60KB
+buffer size is recommended. The maximum buffer size for udp sockets and unix domain sockets on Linux is
+64KB, so stay under this limit.
 
 ## Batch Usage
 
