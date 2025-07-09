@@ -19,6 +19,7 @@ int main()
     
     auto r = Registry(Config(WriterConfig(WriterTypes::UDP)));
     //auto r = Registry(Config(WriterConfig(WriterTypes::Unix)));
+    
     std::unordered_map<std::string, std::string>  tags = { {"location", "udp"}, {"version", "correct-horse-battery-staple"}};
 
     // Set maximum duration to 2 minutes

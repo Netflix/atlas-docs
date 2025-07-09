@@ -20,6 +20,8 @@ spdlog, gtest and boost. These dependencies are managed through conan.
 
 ## Instrumenting Code
 
+{% raw %}
+
 ```cpp
 #include <registry.h>
 
@@ -46,6 +48,8 @@ int main()
 }
 ```
 
+{% endraw %}
+
 ## Logging
 
 Logging is implemented with spdlog and the default location is standard output. The default log level is spdlog::level::info. The Logger class is a singleton
@@ -71,6 +75,8 @@ Note that **all tag keys and values must be strings.** For example, if you want 
 number of successful requests, then you must cast integers to strings. The `Id` class will
 validate these values, dropping or changing any that are not valid, and reporting a warning log.
 
+{% raw %}
+
 ```cpp
 #include <registry.h>
 
@@ -93,6 +99,8 @@ int main()
     numRequestsCounter.Increment();
 }
 ```
+
+{% endraw %}
 
 Atlas metrics will be consumed by users many times after the data has been reported, so they should
 be chosen thoughtfully, while considering how they will be used. See the [naming conventions] page
@@ -183,62 +191,10 @@ to use the [MemoryWriter](https://github.com/Netflix/spectator-go/blob/main/spec
 which stores all updates in an `Array`. Maintain a handle to the `MemoryWriter`, then inspect the
 `Lines()` to verify your metrics updates. See the source code for more testing examples.
 
-```golang
-import (
-  "fmt"
-  "github.com/Netflix/spectator-go/v2/spectator"
-  "github.com/Netflix/spectator-go/v2/spectator/writer"
-  "testing"
-  "time"
-)
-
-func TestRegistryWithMemoryWriter_Counter(t *testing.T) {
-  config, _ := spectator.NewConfig("memory", nil, nil)
-  registry, _ = spectator.NewRegistry(config)
-  mw := registry.GetWriter().(*writer.MemoryWriter)
-
-  counter := registry.Counter("test_counter", nil)
-  counter.Increment()
-
-  expected := "c:test_counter:1"
-  if len(mw.Lines()) != 1 || mw.Lines()[0] != expected {
-    t.Errorf("Expected '%s', got '%s'", expected, mw.Lines()[0])
-  }
-}
-```
-
 ### Protocol Parser
 
 A [SpectatorD] line protocol parser is available, which can be used for validating the results
 captured by a `MemoryWriter`.
-
-```golang
-import (
-  "github.com/Netflix/spectator-go/v2/spectator"
-  "testing"
-)
-
-func TestParseProtocolLineWithValidInput(t *testing.T) {
-  line := "c:name,tag1=value1,tag2=value2:50"
-  meterType, meterId, value, err := spectator.ParseProtocolLine(line)
-
-  if err != nil {
-    t.Errorf("Unexpected error: %v", err)
-  }
-
-  if meterType != "c" {
-    t.Errorf("Unexpected meter type: %v", meterType)
-  }
-
-  if meterId.Name() != "name" || meterId.Tags()["tag1"] != "value1" || meterId.Tags()["tag2"] != "value2" {
-    t.Errorf("Unexpected meter id: %v", meterId)
-  }
-
-  if value != "50" {
-    t.Errorf("Unexpected value: %v", value)
-  }
-}
-```
 
 [SpectatorD]: ../../agent/usage.md
 
