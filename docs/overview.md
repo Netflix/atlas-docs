@@ -12,11 +12,10 @@ of data. In addition there were a number of trends in the company which presaged
 increase in metric volume:
 
 * Rolling pushes to [Red/Black deployments](http://techblog.netflix.com/2012/06/asgard-web-based-cloud-management-and.html).
-* Leveraging [auto-scaling for large clusters](http://techblog.netflix.com/2012/01/auto-scaling-in-amazon-cloud.html).
-  Netflix has always used auto-scaling groups in AWS, but initially most were configured with fixed
-  size and just used as a group and to replace instances.
-* Expansion internationally into [Latin America](http://blog.netflix.com/2011/07/netflix-is-coming-to-latin-america.html)
-  and [Europe](http://ukirelandblog.netflix.com/2012_01_01_archive.html). This led to an increase
+* Leveraging auto-scaling for large clusters. Netflix has always used auto-scaling groups in AWS,
+  but initially most were configured with fixed size and just used as a group and to replace
+  instances.
+* Expansion internationally into Latin America and Europe. This led to an increase
   in the number of countries being tracked for key metrics and for Europe it was the first move
   into additional AWS regions. With additional regions we also wanted to have better isolation so
   a problem with monitoring in one region would not impact another, but at the same time have
