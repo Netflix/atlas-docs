@@ -8,8 +8,22 @@ In order to maintain the data distribution, they have a higher storage cost, wit
 up to 300X that of a standard Distribution Summary. Be diligent about any additional dimensions
 added to Percentile Distribution Summaries and ensure that they have a small bounded cardinality.
 
-Call `record()` with a value:
+Call `Record()` with a value:
 
 ```cpp
+#include <registry.h>
 
+int main()
+{
+    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto r = Registry(config);
+
+    // Option 1: Directly create a Percentile Distribution Summary
+    auto serverSize = r.pct_distribution_summary("server.requestSize");
+    serverSize.Record(10);
+
+    // Option 2: Create a Percentile Distribution Summary from a MeterID
+    auto requestSizeMeter = r.new_id("server.requestSize");
+    r.pct_distribution_summary_with_id(requestSizeMeter).Record(10);
+}
 ```

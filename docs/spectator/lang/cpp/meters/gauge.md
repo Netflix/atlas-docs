@@ -6,10 +6,24 @@ Consider monitoring the behavior of a queue of tasks. If the data is being colle
 then a gauge for the size will show the size when it was sampled. The size may have been much
 higher or lower at some point during interval, but that is not known.
 
-Call `set()` with a value:
+Call `Set()` with a value:
 
 ```cpp
+#include <registry.h>
 
+int main()
+{
+    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto r = Registry(config);
+
+    // Option 1: Directly create a Gauge
+    auto serverQueueSize = r.gauge("server.queueSize");
+    serverQueueSize.Set(10);
+
+    // Option 2: Create a Gauge from a MeterID
+    auto serverQueueMeter = r.new_id("server.queueSize");
+    r.gauge_with_id(serverQueueMeter).Set(10);
+}
 ```
 
 Gauges will report the last set value for 15 minutes. This done so that updates to the values do
@@ -17,5 +31,20 @@ not need to be collected on a tight 1-minute schedule to ensure that Atlas shows
 graphs. A custom TTL may be configured for gauges. SpectatorD enforces a minimum TTL of 5 seconds.
 
 ```cpp
+#include <registry.h>
+
+int main()
+{
+    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto r = Registry(config);
+
+    // Option 1: Directly create a Gauge
+    auto serverQueueSize = r.gauge("server.queueSize", {}, 120);
+    serverQueueSize.Set(10);
+
+    // Option 2: Create a Gauge from a MeterID
+    auto serverQueueMeter = r.new_id("server.queueSize");
+    r.gauge_with_id(serverQueueMeter, 120).Set(10);
+}
 
 ```

@@ -8,17 +8,22 @@ In order to maintain the data distribution, they have a higher storage cost, wit
 up to 300X that of a standard Timer. Be diligent about any additional dimensions added to Percentile
 Timers and ensure that they have a small bounded cardinality.
 
-Call `record()` with a value:
+Call `Record()` with a value:
 
 ```cpp
+#include <registry.h>
 
+int main()
+{
+    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto r = Registry(config);
+
+    // Option 1: Directly create a Percentile Timer
+    auto serverLatency = r.pct_timer("server.requestLatency");
+    serverLatency.Record(10);
+
+    // Option 2: Create a Percentile Timer from a MeterID
+    auto requestLatencyMeter = r.new_id("server.requestLatency");
+    r.pct_timer_with_id(requestLatencyMeter).Record(10);
+}
 ```
-
-A `StopWatch` class is available, which may be used as a [Context Manager] to automatically record
-the number of seconds that have elapsed while executing a block of code:
-
-```cpp
-
-```
-
-[Context Manager]: https://docs.python.org/3/reference/datamodel.html#context-managers

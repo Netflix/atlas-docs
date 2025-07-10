@@ -6,8 +6,22 @@ Always use base units when recording data, to ensure that the tick labels presen
 are readable. If you are measuring payload size, then use bytes, not kilobytes (or some other unit).
 This means that a `4K` tick label will represent 4 kilobytes, rather than 4 kilo-kilobytes.
 
-Call `record()` with a value:
+Call `Record()` with a value:
 
 ```cpp
+#include <registry.h>
 
+int main()
+{
+    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto r = Registry(config);
+
+    // Option 1: Directly create a Distribution Summary
+    auto serverRequestSize = r.distribution_summary("server.requestSize");
+    serverRequestSize.Record(42);
+
+    // Option 2: Create a Distribution Summary from a MeterID
+    auto serverRequestMeter = r.new_id("server.requestSize");
+    r.distribution_summary_with_id(serverRequestMeter).Record(42);
+}
 ```

@@ -7,13 +7,41 @@ Time Since Last Success alerting pattern.
 To set a specific time as the last success:
 
 ```cpp
+#include <registry.h>
 
+int main()
+{
+    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto r = Registry(config);
+
+    // Option 1: Directly create an Age Gauge
+    auto successAgeGauge = r.age_gauge("time.sinceLastSuccess");
+    successAgeGauge.Set(1611081000);
+
+    // Option 2: Create an Age Gauge from a MeterID
+    auto successMeter = r.new_id("time.sinceLastSuccess");
+    r.age_gauge_with_id(successMeter).Set(1611081000);
+}
 ```
 
-To set `now()` as the last success:
+To set `Now()` as the last success:
 
 ```cpp
+#include <registry.h>
 
+int main()
+{
+    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto r = Registry(config);
+
+    // Option 1: Directly create an Age Gauge
+    auto successAgeGauge = r.age_gauge("time.sinceLastSuccess");
+    successAgeGauge.Set(1611081000);
+
+    // Option 2: Create an Age Gauge from a MeterID
+    auto successMeter = r.new_id("time.sinceLastSuccess");
+    r.age_gauge_with_id(successMeter).Set(1611081000);
+}
 ```
 
 By default, a maximum of `1000` Age Gauges are allowed per `spectatord` process, because there is no

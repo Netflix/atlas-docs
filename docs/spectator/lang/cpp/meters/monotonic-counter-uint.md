@@ -4,8 +4,22 @@ calculate a delta value and report it to the backend as a rate-per-second. A var
 metrics may be reported monotonically, and this metric type provides a convenient means of recording
 these values, at the expense of a slower time-to-first metric.
 
-Call `set()` when an event occurs:
+Call `Set()` when an event occurs:
 
 ```cpp
+#include <registry.h>
 
+int main()
+{
+    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto r = Registry(config);
+
+    // Option 1: Directly create a Monotonic Counter uint64_t
+    auto interfaceBytes = r.monotonic_counter_uint("iface.bytes");
+    interfaceBytes.Set(10);
+
+    // Option 2: Create a Monotonic Counter uint64_t from a MeterID
+    auto interfaceBytesMeter = r.new_id("iface.bytes");
+    r.monotonic_counter_uint_with_id(interfaceBytesMeter).Set(10);
+}
 ```
