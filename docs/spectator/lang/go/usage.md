@@ -217,7 +217,7 @@ usage.
 
 The buffers are available for the UdpWriter and the UnixWriter.
 
-### Line Buffer (bufferSize <= 65536)
+### Line Buffer
 
 This is a single string buffer, protected by a mutex, that offers write performance up to ~1M lines/sec
 (spectatord maximum), with a latency per write ranging from 0.1 to 32 us, depending upon the number of
@@ -240,7 +240,7 @@ Example configuration:
 config, _ := NewConfigWithBuffer("udp", nil, nil, 61440, 5*time.Second)
 ```
 
-### Low Latency Buffer (bufferSize > 65536)
+### Low Latency Buffer
 
 LowLatencyBuffer (bufferSize > 65536), which builds arrays of buffers that are optimized for introducing
 the least amount of latency in highly multithreaded applications that record many metrics. It offers write
