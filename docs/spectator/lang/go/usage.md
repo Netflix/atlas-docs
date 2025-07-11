@@ -242,7 +242,7 @@ config, _ := NewConfigWithBuffer("udp", nil, nil, 61440, 5*time.Second)
 
 ### Low Latency Buffer
 
-THe Low Latency Buffer builds arrays of buffers that are optimized for introducing the least amount of
+The Low Latency Buffer builds arrays of buffers that are optimized for introducing the least amount of
 latency in highly multithreaded applications that record many metrics. It offers write performance up to
 ~1 M lines/sec (spectatord maximum), with a latency per write ranging from 0.6 to 7 us, depending upon
 the number of threads in use.
