@@ -205,11 +205,11 @@ The environment variable `SPECTATOR_OUTPUT_LOCATION` can be set to `none` to dis
 Three modes of operation are available, for applications that operate at different scales:
 
 * **Small.** No buffer (size 0 bytes). Write immediately to the socket upon every metric update, up to
-~150K lines/sec, with delays from 1 to 450 us, depending on thread count. No metrics are dropped, due
-to mutex locks.
+~150K lines/sec, with delays from 2 to 450 us, depending on thread count and socket type. No metrics are
+dropped, due to mutex locks.
 * **Medium.** LineBuffer (size <= 65536 bytes), which writes to the socket upon overflow, or upon a
-flush interval, up to ~1M lines/sec, with delays from 0.1 to 32 us, depending on thread count. No metrics
-are dropped. Status metrics are published to monitor usage.
+flush interval, up to ~1M lines/sec, with delays from 0.1 to 32 us, depending on thread count and socket
+type. No metrics are dropped. Status metrics are published to monitor usage.
 * **Large.** LowLatencyBuffer (size > 65536 bytes), which writes to the socket on a flush interval, up
 to ~1M lines/sec, with delays from 0.6 to 7 us, depending on thread count. The true minimum size is 2 *
 CPU * 60KB, or 122,880 bytes for 1 CPU. Metrics may be dropped. Status metrics are published to monitor
