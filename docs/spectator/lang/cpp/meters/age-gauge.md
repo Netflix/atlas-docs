@@ -36,11 +36,11 @@ int main()
 
     // Option 1: Directly create an Age Gauge
     auto successAgeGauge = r.CreateAgeGauge("time.sinceLastSuccess");
-    successAgeGauge.Set(1611081000);
+    successAgeGauge.Now();
 
     // Option 2: Create an Age Gauge from a MeterID
     auto successMeter = r.CreateNewId("time.sinceLastSuccess");
-    r.CreateAgeGauge(successMeter).Set(1611081000);
+    r.CreateAgeGauge(successMeter).Now();
 }
 ```
 

@@ -12,11 +12,12 @@ This library currently utilzes C++ 20.
 
 ## Installing & Building
 
-If your project utilizes CMake you can incorporate this project by simply calling CMake's add_subdirectory() command on the root folder of the project.
-If you wish to simply build the Spectator-CPP thin client you can utilize the Docker containter instructions found 
-here https://github.com/Netflix/spectator-cpp/tree/main/Dockerfiles. The container installs a minimal set of depencies 
-to build the project in the container, such as g++-13, python3, and conan. The project only has 3 external dependencies 
-spdlog, gtest and boost. These dependencies are managed through conan.
+If your project uses CMake, you can easily integrate this library by calling `add_subdirectory()`
+on the root folder. To build the Spectator-CPP thin client independently, follow the Docker
+container instructions at [Dockerfiles](https://github.com/Netflix/spectator-cpp/tree/main/Dockerfiles).
+The container provides a minimal build environment with g++-13, python3, and conan. Spectator-CPP
+relies on just three external dependencies—spdlog, gtest, and boost—which are managed automatically
+via conan.
 
 ## Instrumenting Code
 
@@ -40,11 +41,13 @@ int main()
     auto threadGauge = r.CreateGauge("threads");
     auto queueGauge = r.CreateGauge("queue-size", {{"my-tags", "bar"}});
 
-    auto memoryWriter = static_cast<MemoryWriter*>(WriterTestHelper::GetImpl());
-    EXPECT_TRUE(memoryWriter->IsEmpty());
+    threadGauge.Set(GetNumThreads());
+    queueGauge.Set(GetQueueSize());
 
-    threadGauge.Set(GetNumThreads()); // Metric sent to SpectatorD: "g:threads,platform=my-platform,process=my-process:5.000000\n"
-    queueGauge.Set(GetQueueSize());   // Metric sent to SpectatorD: "g:queue-size,my-tags=bar,platform=my-platform,process=my-process:10.000000\n"
+    /* Metrics Sent: 
+        "g:threads,platform=my-platform,process=my-process:5.000000\n"
+        "g:queue-size,my-tags=bar,platform=my-platform,process=my-process:10.000000\n"
+    */
 }
 ```
 
@@ -52,14 +55,14 @@ int main()
 
 ## Logging
 
-Logging is implemented with spdlog and the default location is standard output. The default log level is spdlog::level::info. The Logger class is a singleton
-and provides a function Logger::GetLogger(). You can change the logger level by simply calling Logger::GetLogger()->set_level(spdlog::level::debug); as long as
-the logger has been created successfully
+Logging uses the `spdlog` library and outputs to standard output by default, with a default log
+level of `spdlog::level::info`. The `Logger` class is a singleton and provides the
+`Logger::GetLogger()` function to access the logger instance. To change the log level, call
+`Logger::GetLogger()->set_level(spdlog::level::debug);` after the logger has been successfully created.
 
 ## Runtime Metrics
 
 Coming Soon
-
 
 ## Working with MeterId Objects
 
@@ -97,7 +100,6 @@ int main()
     // Option 2: Directly creating a Counter
     auto numRequestsCounter = registry.CreateCounter("server.numRequests2", {{"statusCode", std::to_string(200)}});
     numRequestsCounter.Increment();
-
 }
 ```
 
@@ -122,69 +124,94 @@ for general guidelines on metrics naming and restrictions.
 * [Percentile Timer](./meters/percentile-timer.md)
 * [Timer](./meters/timer.md)
 
-## Output Location
+## Output Locations
 
-`spectator.Registry` now supports three different writers. The writer types are Memory Writer, UDP Writer,
-and a UDS (Unix Domain Socket) Writer. In order to define the writer type you must initialize the Registry 
-with a Config object. A Config Object takes a required WriterConfig object and optional extra tags. A WriterConfig object
-takes a location and an optional buffering parameter. Buffering is allowed for all writer types.
+`spectator.Registry` supports three output writer types: Memory Writer, UDP Writer, and Unix Domain
+Socket (UDS) Writer. To specify the writer type, initialize the Registry with a `Config` object. A
+`Config` requires a `WriterConfig` (which defines the writer type and location) and can optionally
+include extra tags to be applied to all metrics.  The `WriterConfig` also accepts an optional
+buffer size parameter, enabling buffering for all writer types.
+
+### Writer Config Constructors
 
 ```cpp
-// Writer Config Constructors
-
-// Option 1: Define a location and no buffering
+// Constructor 1: Define a location and no buffering
 WriterConfig(const std::string& type)
 
-// Option 2: Define a location with buffering
+// Constructor 2: Define a location with buffering
 WriterConfig(const std::string& type, unsigned int bufferSize);
-
-
-// Config Constructor
-// Required WriterConfig with optional extraTags to be applied to all metrics
-Config(const WriterConfig& writerConfig, const std::unordered_map<std::string, std::string>& extraTags = {});
 ```
+
+### Writer Config Examples
 
 {% raw %}
 
 ```cpp
-// Default Writer Config Examples
-WriterConfig wConfig(WriterTypes::Memory); // write metrics to memory for testing
-WriterConfig wConfig(WriterTypes::UDP); // the default UDP address for `spectatord`.
-WriterConfig wConfig(WriterTypes::Unix, 4096); // the default unix address for spectatord with buffering
+/* Default Writer Config Examples */
 
-// Custom Writer Config Location Examples
-const std::string udpUrl = std::string(WriterTypes::UDPURL) + "192.168.1.100:8125";
-const WriterConfig wConfig(udpUrl);
+// Write metrics to memory for testing
+WriterConfig wConfig(WriterTypes::Memory); 
 
-const std::string unixUrl = std::string(WriterTypes::UnixURL) + "/var/run/custom/socket.sock";
-const WriterConfig wConfig(unixUrl, 4096);
+// Default UDP address for spectatord
+WriterConfig wConfig(WriterTypes::UDP); 
 
-// Config Examples
+// Default UDS address for spectatord with buffering
+WriterConfig wConfig(WriterTypes::Unix, 4096); 
+
+/* Custom Writer Config Location Examples */
+
+// Custom UDP writer location
+std::string udpUrl = std::string(WriterTypes::UDPURL) + "192.168.1.100:8125";
+WriterConfig wConfig(udpUrl);
+
+// Custom UDS writer location
+std::string unixUrl = std::string(WriterTypes::UnixURL) + "/var/run/custom/socket.sock";
+WriterConfig wConfig(unixUrl, 4096);
+```
+
+{% endraw %}
+
+### Config Constructor
+
+```cpp
+// Constructor: WriterConfig & optional extraTags for all metrics
+Config(const WriterConfig& writerConfig, const std::unordered_map<std::string, std::string>& extraTags = {});
+```
+
+### Config Examples
+
+{% raw %}
+
+```cpp
+/* Config Examples */
+
+// Config with a WriterConfig & no extra tags
 Config config = Config(WriterConfig(WriterTypes::Memory));
 
+// Config with a WriterConfig & extra tags
 std::unordered_map<std::string, std::string> commonTags{{"platform", "my-platform"}, {"process", "my-process"}};
 Config config = Config(WriterConfig(WriterTypes::Memory), commonTags);
 
-// Registry Initialization
-WriterConfig wConfig(WriterTypes::Memory); // write metrics to memory for testing
+/* Registry Initialization */
+WriterConfig wConfig(WriterTypes::Memory);
 Config config = Config(wConfig);
 Registry registry(config);
 ```
+
 {% endraw %}
 
-Location can also be set through the environment variable `SPECTATOR_OUTPUT_LOCATION`. If both are set,
-the environment variable takes precedence over the value passed to the WriterConfig. If either values provided to the WriterConfig are
-invalid a runtime exception will be thrown.
+Location can also be set through the environment variable `SPECTATOR_OUTPUT_LOCATION`. If both are
+set, the environment variable takes precedence over the value passed to the WriterConfig. If either
+values provided to the WriterConfig are invalid a runtime exception will be thrown.
 
 ## Line Buffer
 
-The WriterConfig has an optional to set a default `bufferSize` parameter. If this parameter is not set each time 
-a meter is recorded, that meter will send the metric to spectatord using the writer type defined in your WriterConfig.
-If the meter is set the buffer will cache protocol lines locally before flushing them to `spectatord`. Flushes occur only 
-under one condition that the buffer size has been exceeded.or high-performance scenarios, a 60KB
-buffer size is recommended. The maximum buffer size for udp sockets and unix domain sockets on Linux is
-64KB, so stay under this limit.
-
+The `WriterConfig` allows you to set an optional `bufferSize` parameter. If `bufferSize` is not
+set, each metric is sent immediately to `spectatord` using the configured writer type. If
+`bufferSize` is set, metrics are buffered locally and only flushed to `spectatord` when the buffer
+exceeds the specified size. For high-performance scenarios, a buffer size of 60KB is recommended.
+The maximum buffer size for UDP and Unix Domain Socket writers on Linux is 64KB, so ensure your
+buffer size does not exceed this limit.
 
 ## Batch Usage
 
@@ -219,9 +246,9 @@ scenarios.
 ## Writing Tests
 
 To write tests against this library, instantiate a test instance of the `Registry` and configure it
-to use the [MemoryWriter](https://github.com/Netflix/spectator-go/blob/main/spectator/writer/writer.go#L18-L21),
-which stores all updates in an `Vector`. Maintain a handle to the `MemoryWriter`, then inspect the
-`Lines()` to verify your metrics updates. See the source code for more testing examples.
+to use the `MemoryWriter`, which stores all updates in a `Vector`. Maintain a handle to the
+`MemoryWriter`, then inspect the protocol lines with `GetMessages()` to verify your metric updates.
+See the source code for more testing examples.
 
 {% raw %}
 
@@ -238,29 +265,28 @@ int main()
     // Create a handle to the Writer
     auto memoryWriter = static_cast<MemoryWriter*>(WriterTestHelper::GetImpl());
 
-
     numRequestsCounter.Increment();
 
     auto messages = memoryWriter->GetMessages();
-    for (const auto& message : messages)
-    {
+    for (const auto& message : messages) {
         std::cout << message; // Print all messages sent to SpectatorD
     }
 }
 ```
+
 {% endraw %}
 
 ## Performance
 
-On an `m5d.2xlarge` EC2 instance, with `spectator-cpp-2.0` and `github.com/Netflix/spectator-cpp/v2 v2.0.13`, we
-have observed the following single-threaded performance numbers across a two-minute test window:
+On an `m5d.2xlarge` EC2 instance, with `spectator-cpp-2.0` and
+`github.com/Netflix/spectator-cpp/v2 v2.0.13`, we have observed the following single-threaded
+performance numbers across a two-minute test window:
 
-*  requests/second over `udp`
-*  requests/second over `unix`
+* requests/second over `udp`
+* requests/second over `unix`
 
-The benchmark incremented a single counter with two tags in a tight loop, to simulate real-world tag
-usage, and the rate-per-second observed on the corresponding Atlas graph matched. The protocol line
-was `74` characters in length.
+The benchmark incremented a single counter with two tags in a tight loop, to simulate real-world
+tag usage, and the rate-per-second observed on the corresponding Atlas graph matched. The protocol 
+line was `74` characters in length.
 
-The Go process CPU usage was ~112% and the `spectatord` process CPU usage was ~62% on this 8 vCPU
-system, for `udp`. It was ~113% and ~85%, respectively, for `unix`.
+The Go process CPU usage was ~112% and the `spectatord` process CPU usage was ~62% on this 8 vCPU system, for `udp`. It was ~113% and ~85%, respectively, for `unix`.
