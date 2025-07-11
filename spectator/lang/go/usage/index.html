@@ -6125,18 +6125,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#line-buffer-buffersize-65536" class="md-nav__link">
+  <a href="#line-buffer" class="md-nav__link">
     <span class="md-ellipsis">
-      Line Buffer (bufferSize &lt;= 65536)
+      Line Buffer
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#low-latency-buffer-buffersize-65536" class="md-nav__link">
+  <a href="#low-latency-buffer" class="md-nav__link">
     <span class="md-ellipsis">
-      Low Latency Buffer (bufferSize &gt; 65536)
+      Low Latency Buffer
     </span>
   </a>
   
@@ -8540,18 +8540,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#line-buffer-buffersize-65536" class="md-nav__link">
+  <a href="#line-buffer" class="md-nav__link">
     <span class="md-ellipsis">
-      Line Buffer (bufferSize &lt;= 65536)
+      Line Buffer
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#low-latency-buffer-buffersize-65536" class="md-nav__link">
+  <a href="#low-latency-buffer" class="md-nav__link">
     <span class="md-ellipsis">
-      Low Latency Buffer (bufferSize &gt; 65536)
+      Low Latency Buffer
     </span>
   </a>
   
@@ -8825,7 +8825,7 @@ CPU * 60KB, or 122,880 bytes for 1 CPU. Metrics may be dropped. Status metrics a
 usage.</li>
 </ul>
 <p>The buffers are available for the UdpWriter and the UnixWriter.</p>
-<h3 id="line-buffer-buffersize-65536">Line Buffer (bufferSize &lt;= 65536)<a class="headerlink" href="#line-buffer-buffersize-65536" title="Permanent link">&para;</a></h3>
+<h3 id="line-buffer">Line Buffer<a class="headerlink" href="#line-buffer" title="Permanent link">&para;</a></h3>
 <p>This is a single string buffer, protected by a mutex, that offers write performance up to ~1M lines/sec
 (spectatord maximum), with a latency per write ranging from 0.1 to 32 us, depending upon the number of
 threads in use.</p>
@@ -8842,7 +8842,7 @@ interval.</li>
 <p>Example configuration:</p>
 <div class="highlight"><pre><span></span><code>config, _ := NewConfigWithBuffer(&quot;udp&quot;, nil, nil, 61440, 5*time.Second)
 </code></pre></div>
-<h3 id="low-latency-buffer-buffersize-65536">Low Latency Buffer (bufferSize &gt; 65536)<a class="headerlink" href="#low-latency-buffer-buffersize-65536" title="Permanent link">&para;</a></h3>
+<h3 id="low-latency-buffer">Low Latency Buffer<a class="headerlink" href="#low-latency-buffer" title="Permanent link">&para;</a></h3>
 <p>LowLatencyBuffer (bufferSize &gt; 65536), which builds arrays of buffers that are optimized for introducing
 the least amount of latency in highly multithreaded applications that record many metrics. It offers write
 performance up to ~1 M lines/sec (spectatord maximum), with a latency per write ranging from 0.6 to 7 us,
