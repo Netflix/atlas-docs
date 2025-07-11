@@ -242,10 +242,10 @@ config, _ := NewConfigWithBuffer("udp", nil, nil, 61440, 5*time.Second)
 
 ### Low Latency Buffer
 
-LowLatencyBuffer (bufferSize > 65536), which builds arrays of buffers that are optimized for introducing
-the least amount of latency in highly multithreaded applications that record many metrics. It offers write
-performance up to ~1 M lines/sec (spectatord maximum), with a latency per write ranging from 0.6 to 7 us,
-depending upon the number of threads in use.
+THe Low Latency Buffer builds arrays of buffers that are optimized for introducing the least amount of
+latency in highly multithreaded applications that record many metrics. It offers write performance up to
+~1 M lines/sec (spectatord maximum), with a latency per write ranging from 0.6 to 7 us, depending upon
+the number of threads in use.
 
 This is achieved by spreading data access across a number of different mutexes, and only writing buffers
 from a goroutine that runs periodically, according to the flushInterval. There is a front buffer and a back
