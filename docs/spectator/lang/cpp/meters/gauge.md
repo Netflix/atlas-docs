@@ -17,12 +17,12 @@ int main()
     auto r = Registry(config);
 
     // Option 1: Directly create a Gauge
-    auto serverQueueSize = r.gauge("server.queueSize");
+    auto serverQueueSize = r.CreateGauge("server.queueSize");
     serverQueueSize.Set(10);
 
     // Option 2: Create a Gauge from a MeterID
-    auto serverQueueMeter = r.new_id("server.queueSize");
-    r.gauge_with_id(serverQueueMeter).Set(10);
+    auto serverQueueMeter = r.CreateNewId("server.queueSize");
+    r.CreateGauge(serverQueueMeter).Set(10);
 }
 ```
 
@@ -39,12 +39,12 @@ int main()
     auto r = Registry(config);
 
     // Option 1: Directly create a Gauge
-    auto serverQueueSize = r.gauge("server.queueSize", {}, 120);
+    auto serverQueueSize = r.CreateGauge("server.queueSize", {}, 120);
     serverQueueSize.Set(10);
 
     // Option 2: Create a Gauge from a MeterID
-    auto serverQueueMeter = r.new_id("server.queueSize");
-    r.gauge_with_id(serverQueueMeter, 120).Set(10);
+    auto serverQueueMeter = r.CreateNewId("server.queueSize");
+    r.CreateGauge(serverQueueMeter, 120).Set(10);
 }
 
 ```

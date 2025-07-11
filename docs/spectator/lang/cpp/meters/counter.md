@@ -15,12 +15,12 @@ int main()
     auto r = Registry(config);
 
     // Option 1: Directly create a Counter
-    auto serverRequestCounter = r.counter("server.numRequests");
+    auto serverRequestCounter = r.CreateCounter("server.numRequests");
     serverRequestCounter.Increment();
 
     // Option 2: Create a Counter from a MeterID
-    auto serverRequestMeter = r.new_id("server.numRequests");
-    r.counter_with_id(serverRequestMeter).Increment();
+    auto serverRequestMeter = r.CreateNewId("server.numRequests");
+    r.CreateCounter(serverRequestMeter).Increment();
 }
 ```
 
@@ -36,11 +36,11 @@ int main()
     auto r = Registry(config);
 
     // Option 1: Directly create a Counter
-    auto serverRequestCounter = r.counter("server.numRequests");
+    auto serverRequestCounter = r.CreateCounter("server.numRequests");
     serverRequestCounter.Increment(10);
 
     // Option 2: Create a Counter from a MeterID
-    auto serverRequestMeter = r.new_id("server.numRequests");
-    r.counter_with_id(serverRequestMeter).Increment(10);
+    auto serverRequestMeter = r.CreateNewId("server.numRequests");
+    r.CreateCounter(serverRequestMeter).Increment(10);
 }
 ```

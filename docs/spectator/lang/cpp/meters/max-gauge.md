@@ -14,11 +14,11 @@ int main()
     auto r = Registry(config);
 
     // Option 1: Directly create a Max Gauge
-    auto serverQueueSize = r.max_gauge("server.queueSize");
+    auto serverQueueSize = r.CreateMaxGauge("server.queueSize");
     serverQueueSize.Set(10);
 
     // Option 2: Create a Gauge from a MeterID
-    auto serverQueueMeter = r.new_id("server.queueSize");
-    r.max_gauge_with_id(serverQueueMeter).Set(10);
+    auto serverQueueMeter = r.CreateNewId("server.queueSize");
+    r.CreateMaxGauge(serverQueueMeter).Set(10);
 }
 ```

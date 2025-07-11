@@ -17,11 +17,11 @@ int main()
     auto r = Registry(config);
 
     // Option 1: Directly create a Distribution Summary
-    auto serverRequestSize = r.distribution_summary("server.requestSize");
+    auto serverRequestSize = r.CreateDistributionSummary("server.requestSize");
     serverRequestSize.Record(42);
 
     // Option 2: Create a Distribution Summary from a MeterID
-    auto serverRequestMeter = r.new_id("server.requestSize");
-    r.distribution_summary_with_id(serverRequestMeter).Record(42);
+    auto serverRequestMeter = r.CreateNewId("server.requestSize");
+    r.CreateDistributionSummary(serverRequestMeter).Record(42);
 }
 ```

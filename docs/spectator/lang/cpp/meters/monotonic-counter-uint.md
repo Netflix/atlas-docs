@@ -15,11 +15,11 @@ int main()
     auto r = Registry(config);
 
     // Option 1: Directly create a Monotonic Counter uint64_t
-    auto interfaceBytes = r.monotonic_counter_uint("iface.bytes");
+    auto interfaceBytes = r.CreateMonotonicCounterUint("iface.bytes");
     interfaceBytes.Set(10);
 
     // Option 2: Create a Monotonic Counter uint64_t from a MeterID
-    auto interfaceBytesMeter = r.new_id("iface.bytes");
-    r.monotonic_counter_uint_with_id(interfaceBytesMeter).Set(10);
+    auto interfaceBytesMeter = r.CreateNewId("iface.bytes");
+    r.CreateMonotonicCounterUint(interfaceBytesMeter).Set(10);
 }
 ```

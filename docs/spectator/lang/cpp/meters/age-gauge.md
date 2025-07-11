@@ -15,12 +15,12 @@ int main()
     auto r = Registry(config);
 
     // Option 1: Directly create an Age Gauge
-    auto successAgeGauge = r.age_gauge("time.sinceLastSuccess");
+    auto successAgeGauge = r.CreateAgeGauge("time.sinceLastSuccess");
     successAgeGauge.Set(1611081000);
 
     // Option 2: Create an Age Gauge from a MeterID
-    auto successMeter = r.new_id("time.sinceLastSuccess");
-    r.age_gauge_with_id(successMeter).Set(1611081000);
+    auto successMeter = r.CreateNewId("time.sinceLastSuccess");
+    r.CreateAgeGauge(successMeter).Set(1611081000);
 }
 ```
 
@@ -35,12 +35,12 @@ int main()
     auto r = Registry(config);
 
     // Option 1: Directly create an Age Gauge
-    auto successAgeGauge = r.age_gauge("time.sinceLastSuccess");
+    auto successAgeGauge = r.CreateAgeGauge("time.sinceLastSuccess");
     successAgeGauge.Set(1611081000);
 
     // Option 2: Create an Age Gauge from a MeterID
-    auto successMeter = r.new_id("time.sinceLastSuccess");
-    r.age_gauge_with_id(successMeter).Set(1611081000);
+    auto successMeter = r.CreateNewId("time.sinceLastSuccess");
+    r.CreateAgeGauge(successMeter).Set(1611081000);
 }
 ```
 

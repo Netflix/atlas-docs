@@ -19,11 +19,11 @@ int main()
     auto r = Registry(config);
 
     // Option 1: Directly create a Percentile Distribution Summary
-    auto serverSize = r.pct_distribution_summary("server.requestSize");
+    auto serverSize = r.CreatePercentDistributionSummary("server.requestSize");
     serverSize.Record(10);
 
     // Option 2: Create a Percentile Distribution Summary from a MeterID
-    auto requestSizeMeter = r.new_id("server.requestSize");
-    r.pct_distribution_summary_with_id(requestSizeMeter).Record(10);
+    auto requestSizeMeter = r.CreateNewId("server.requestSize");
+    r.CreatePercentDistributionSummary(requestSizeMeter).Record(10);
 }
 ```

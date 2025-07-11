@@ -19,11 +19,11 @@ int main()
     auto r = Registry(config);
 
     // Option 1: Directly create a Percentile Timer
-    auto serverLatency = r.pct_timer("server.requestLatency");
+    auto serverLatency = r.CreatePercentTimer("server.requestLatency");
     serverLatency.Record(10);
 
     // Option 2: Create a Percentile Timer from a MeterID
-    auto requestLatencyMeter = r.new_id("server.requestLatency");
-    r.pct_timer_with_id(requestLatencyMeter).Record(10);
+    auto requestLatencyMeter = r.CreateNewId("server.requestLatency");
+    r.CreatePercentTimer(requestLatencyMeter).Record(10);
 }
 ```

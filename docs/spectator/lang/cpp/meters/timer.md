@@ -11,11 +11,11 @@ int main()
     auto r = Registry(config);
 
     // Option 1: Directly create a Timer
-    auto serverLatency = r.timer("server.requestLatency");
+    auto serverLatency = r.CreateTimer("server.requestLatency");
     serverLatency.Record(10);
 
     // Option 2: Create a Timer from a MeterID
-    auto requestLatencyMeter = r.new_id("server.requestLatency");
-    r.timer_with_id(requestLatencyMeter).Record(10);
+    auto requestLatencyMeter = r.CreateNewId("server.requestLatency");
+    r.CreateTimer(requestLatencyMeter).Record(10);
 }
 ```
