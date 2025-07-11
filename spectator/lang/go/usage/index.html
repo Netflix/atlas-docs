@@ -8843,10 +8843,10 @@ interval.</li>
 <div class="highlight"><pre><span></span><code>config, _ := NewConfigWithBuffer(&quot;udp&quot;, nil, nil, 61440, 5*time.Second)
 </code></pre></div>
 <h3 id="low-latency-buffer">Low Latency Buffer<a class="headerlink" href="#low-latency-buffer" title="Permanent link">&para;</a></h3>
-<p>LowLatencyBuffer (bufferSize &gt; 65536), which builds arrays of buffers that are optimized for introducing
-the least amount of latency in highly multithreaded applications that record many metrics. It offers write
-performance up to ~1 M lines/sec (spectatord maximum), with a latency per write ranging from 0.6 to 7 us,
-depending upon the number of threads in use.</p>
+<p>THe Low Latency Buffer builds arrays of buffers that are optimized for introducing the least amount of
+latency in highly multithreaded applications that record many metrics. It offers write performance up to
+~1 M lines/sec (spectatord maximum), with a latency per write ranging from 0.6 to 7 us, depending upon
+the number of threads in use.</p>
 <p>This is achieved by spreading data access across a number of different mutexes, and only writing buffers
 from a goroutine that runs periodically, according to the flushInterval. There is a front buffer and a back
 buffer, and these are rotated during the periodic flush. The inactive buffer is flushed, while the active
