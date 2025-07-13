@@ -284,7 +284,7 @@ On an `m5d.2xlarge` EC2 instance, with `spectator-cpp-2.0` and
 performance numbers across a two-minute test window:
 
 * 113,655.11 requests/second over `udp`
-* 132490.97 requests/second over `unix`
+* 132,490.97 requests/second over `unix`
 
 The benchmark incremented a single counter with two tags in a tight loop, to simulate real-world
 tag usage, and the rate-per-second observed on the corresponding Atlas graph matched. The protocol
