@@ -8,7 +8,7 @@ CPP thin-client [metrics library] for use with [Atlas] and [SpectatorD].
 
 ## Supported CPP Versions
 
-This library currently utilzes C++ 20.
+This library currently utilizes C++ 20.
 
 ## Installing & Building
 
@@ -58,7 +58,8 @@ int main()
 Logging uses the `spdlog` library and outputs to standard output by default, with a default log
 level of `spdlog::level::info`. The `Logger` class is a singleton and provides the
 `Logger::GetLogger()` function to access the logger instance. To change the log level, call
-`Logger::GetLogger()->set_level(spdlog::level::debug);` after the logger has been successfully created.
+`Logger::GetLogger()->set_level(spdlog::level::debug);` after the logger has been successfully
+created.
 
 ## Runtime Metrics
 
@@ -68,14 +69,14 @@ Coming Soon
 
 Each metric stored in Atlas is uniquely identified by the combination of the name and the tags
 associated with it. In `spectator-cpp`, this data is represented with `MeterId` objects, created
-by the `Registry`. The `CreateNewId()` method returns new a `MeterId` object, which have extra common
-tags applied, and which can be further customized by calling the `WithTag()` and `WithTags()`
-methods. Each `MeterId` will create and store a validated subset of the `spectatord` protocol line
-to be written for each `Meter`, when it is instantiated. Manipulating the tags with the provided methods
- will create new `MeterId` objects.
+by the `Registry`. The `CreateNewId()` method returns new a `MeterId` object, which have extra
+common tags applied, and which can be further customized by calling the `WithTag()` and
+`WithTags()` methods. Each `MeterId` will create and store a validated subset of the `spectatord`
+protocol line to be written for each `Meter`, when it is instantiated. Manipulating the tags with
+the provided methods will create new `MeterId` objects.
 
-Note that **all tag keys and values must be strings.** For example, if you want to keep track of the
-number of successful requests, then you must cast integers to strings. The `Id` class will
+Note that **all tag keys and values must be strings.** For example, if you want to keep track of
+the number of successful requests, then you must cast integers to strings. The `Id` class will
 validate these values, dropping or changing any that are not valid, and reporting a warning log.
 
 {% raw %}
