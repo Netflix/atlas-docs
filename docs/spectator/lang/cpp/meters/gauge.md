@@ -46,5 +46,4 @@ int main()
     auto serverQueueMeter = r.CreateNewId("server.queueSize");
     r.CreateGauge(serverQueueMeter, 120).Set(10);
 }
-
 ```

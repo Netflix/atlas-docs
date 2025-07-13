@@ -1,6 +1,7 @@
 ## Migrating to 2.X
 
-Version 2.X consists of a major rewrite that greatly simplifies spectator-cpp and the process in which it sends metrics to SpectatorD
+Version 2.X consists of a major rewrite that greatly simplifies spectator-cpp and the process in
+which it sends metrics to SpectatorD
 
 ### New
 
