@@ -71,9 +71,11 @@ common tags applied, and which can be further customized by calling the `WithTag
 protocol line to be written for each `Meter`, when it is instantiated. Manipulating the tags with
 the provided methods will create new `MeterId` objects.
 
-Note that **all tag keys and values must be strings.** For example, if you want to keep track of
-the number of successful requests, then you must cast integers to strings. The `Id` class will
-validate these values, dropping or changing any that are not valid, and reporting a warning log.
+Note that **all tag keys and values must be strings.** Tags are represented as
+`std::unordered_map<std::string, std::string>`. For example, to track the number of successful
+requests, ensure your tags use string values, such as `{"statusCode": std::to_string(200)}`. The
+`MeterId` class validates all provided tag keys and values: if either is empty or contains only
+whitespace, it will be dropped, and any invalid characters will be replaced with an underscore.
 
 {% raw %}
 

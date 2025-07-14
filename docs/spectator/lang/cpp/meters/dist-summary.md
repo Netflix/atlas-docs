@@ -1,6 +1,8 @@
 A Distribution Summary is used to track the distribution of events. It is similar to a Timer, but
 more general, in that the size does not have to be a period of time. For example, a Distribution
-Summary could be used to measure the payload sizes of requests hitting a server.
+Summary could be used to measure the payload sizes of requests hitting a server. Note that the C++
+implementation of Distribution Summary allows for the recording of floating point values, which the
+other thin clients do not allow.
 
 Always use base units when recording data, to ensure that the tick labels presented on Atlas graphs
 are readable. If you are measuring payload size, then use bytes, not kilobytes (or some other unit).
