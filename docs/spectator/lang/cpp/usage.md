@@ -235,8 +235,10 @@ This client is stateless, and sends a UDP packet (or unixgram) to `spectatord` e
 updated. If you are performing high-volume operations, on the order of tens-of-thousands or millions
 of operations per second, then you should pre-aggregate your metrics and report them at a cadence
 closer to the `spectatord` publish interval of 5 seconds. This will keep the CPU usage related to
-`spectator-go` and `spectatord` low (around 1% or less), as compared to up to 40% for high-volume
-scenarios.
+`spectator-cpp` and `spectatord` low (around 1% or less), as compared to up to 40% for high-volume
+scenarios. If you choose to use the `WriterConfig` with the buffering feature enabled, metrics will
+only be sent when the buffer exceeds its size. The buffer is protected by a mutex, allowing
+multiple threads to safely write metrics concurrently.
 
 ## Writing Tests
 
