@@ -61,10 +61,6 @@ level of `spdlog::level::info`. The `Logger` class is a singleton and provides t
 `Logger::GetLogger()->set_level(spdlog::level::debug);` after the logger has been successfully
 created.
 
-## Runtime Metrics
-
-Coming Soon
-
 ## Working with MeterId Objects
 
 Each metric stored in Atlas is uniquely identified by the combination of the name and the tags
@@ -280,8 +276,8 @@ int main()
 ## Performance
 
 On an `m5d.2xlarge` EC2 instance, with `spectator-cpp-2.0` and
-`github.com/Netflix/spectator-cpp/v2 v2.0.13`, we have observed the following single-threaded
-performance numbers across a two-minute test window:
+`github.com/Netflix/spectator-cpp/v2 v2.0.0`, we have observed the following single-threaded
+performance numbers across a two-minute test window (unbuffered scenario):
 
 * 113,655.11 requests/second over `udp`
 * 132,490.97 requests/second over `unix`
