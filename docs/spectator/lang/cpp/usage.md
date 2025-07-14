@@ -16,7 +16,7 @@ If your project uses CMake, you can easily integrate this library by calling `ad
 on the root folder. To build the Spectator-CPP thin client independently, follow the Docker
 container instructions at [Dockerfiles](https://github.com/Netflix/spectator-cpp/tree/main/Dockerfiles).
 The container provides a minimal build environment with g++-13, python3, and conan. Spectator-CPP
-relies on just three external dependencies—spdlog, gtest, and boost—which are managed automatically
+relies on just three external dependencies (spdlog, gtest, and boost), which are managed automatically
 via conan.
 
 ## Instrumenting Code
@@ -69,7 +69,7 @@ Coming Soon
 
 Each metric stored in Atlas is uniquely identified by the combination of the name and the tags
 associated with it. In `spectator-cpp`, this data is represented with `MeterId` objects, created
-by the `Registry`. The `CreateNewId()` method returns new a `MeterId` object, which have extra
+by the `Registry`. The `CreateNewId()` method returns new a `MeterId` object, which has extra
 common tags applied, and which can be further customized by calling the `WithTag()` and
 `WithTags()` methods. Each `MeterId` will create and store a validated subset of the `spectatord`
 protocol line to be written for each `Meter`, when it is instantiated. Manipulating the tags with
@@ -203,7 +203,7 @@ Registry registry(config);
 
 Location can also be set through the environment variable `SPECTATOR_OUTPUT_LOCATION`. If both are
 set, the environment variable takes precedence over the value passed to the WriterConfig. If either
-values provided to the WriterConfig are invalid a runtime exception will be thrown.
+values provided to the WriterConfig are invalid, then a runtime exception will be thrown.
 
 ## Line Buffer
 
