@@ -141,8 +141,6 @@ WriterConfig(const std::string& type, unsigned int bufferSize);
 
 ### Writer Config Examples
 
-{% raw %}
-
 ```cpp
 /* Default Writer Config Examples */
 
@@ -165,8 +163,6 @@ WriterConfig wConfig(udpUrl);
 std::string unixUrl = std::string(WriterTypes::UnixURL) + "/var/run/custom/socket.sock";
 WriterConfig wConfig(unixUrl, 4096);
 ```
-
-{% endraw %}
 
 ### Config Constructor
 
