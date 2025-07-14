@@ -32,7 +32,7 @@ int main()
     std::unordered_map<std::string, std::string> commonTags{{"platform", "my-platform"}, {"process", "my-process"}};
 
     // Create a config which defines the way you send metrics to SpectatorD
-    auto config = Config(WriterConfig(WriterTypes::Memory), commonTags);
+    auto config = Config(WriterConfig(WriterTypes::UDP), commonTags);
     
     // Initialize the Registry with the Config (Always required before sending metrics)
     auto r = Registry(config);
@@ -88,7 +88,7 @@ int main()
     std::unordered_map<std::string, std::string> commonTags{{"platform", "my-platform"}, {"process", "my-process"}};
 
     // Initialize the Registry
-    auto config = Config(WriterConfig(WriterTypes::Memory), commonTags);
+    auto config = Config(WriterConfig(WriterTypes::UDP), commonTags);
     auto registry = Registry(config);
 
 

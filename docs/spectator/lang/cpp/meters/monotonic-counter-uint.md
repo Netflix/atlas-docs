@@ -11,7 +11,7 @@ Call `Set()` when an event occurs:
 
 int main()
 {
-    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto config = Config(WriterConfig(WriterTypes::UDP));
     auto r = Registry(config);
 
     // Option 1: Directly create a Monotonic Counter uint64_t

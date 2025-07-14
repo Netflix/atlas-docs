@@ -13,7 +13,7 @@ Call `Set()` with a value:
 
 int main()
 {
-    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto config = Config(WriterConfig(WriterTypes::UDP));
     auto r = Registry(config);
 
     // Option 1: Directly create a Gauge
@@ -35,7 +35,7 @@ graphs. A custom TTL may be configured for gauges. SpectatorD enforces a minimum
 
 int main()
 {
-    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto config = Config(WriterConfig(WriterTypes::UDP));
     auto r = Registry(config);
 
     // Option 1: Directly create a Gauge

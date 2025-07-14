@@ -11,7 +11,7 @@ Call `Increment()` when an event occurs:
 
 int main()
 {
-    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto config = Config(WriterConfig(WriterTypes::UDP));
     auto r = Registry(config);
 
     // Option 1: Directly create a Counter
@@ -32,7 +32,7 @@ together:
 
 int main()
 {
-    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto config = Config(WriterConfig(WriterTypes::UDP));
     auto r = Registry(config);
 
     // Option 1: Directly create a Counter

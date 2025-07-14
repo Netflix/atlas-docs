@@ -15,7 +15,7 @@ Call `Record()` with a value:
 
 int main()
 {
-    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto config = Config(WriterConfig(WriterTypes::UDP));
     auto r = Registry(config);
 
     // Option 1: Directly create a Percentile Timer

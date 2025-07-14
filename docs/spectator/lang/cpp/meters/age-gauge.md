@@ -11,7 +11,7 @@ To set a specific time as the last success:
 
 int main()
 {
-    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto config = Config(WriterConfig(WriterTypes::UDP));
     auto r = Registry(config);
 
     // Option 1: Directly create an Age Gauge
@@ -31,7 +31,7 @@ To set `Now()` as the last success:
 
 int main()
 {
-    auto config = Config(WriterConfig(WriterTypes::Memory));
+    auto config = Config(WriterConfig(WriterTypes::UDP));
     auto r = Registry(config);
 
     // Option 1: Directly create an Age Gauge
