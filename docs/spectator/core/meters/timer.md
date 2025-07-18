@@ -61,7 +61,7 @@ To compute the standard deviation of measurements across all instances for a tim
 
 ### Raw Statistics
 
-Note that it is possible to plot the individual statics by filtering on the `statistic` tag.
+Note that it is possible to plot the individual statistics by filtering on the `statistic` tag.
 If you choose to do so, note that the `count`, `totalAmount` and `totalOfSquares` are counters
 thus reported as rates per second, while the `max` is reported as a gauge.
 
