@@ -71,7 +71,7 @@ Legends can be disabled using the `no_legend` graph parameter.
 
 ## Disable Stats
 
-You can also save veritical space and keep the legend by disabling the summary stats shown in the
+You can also save vertical space and keep the legend by disabling the summary stats shown in the
 legend using the `no_legend_stats` graph parameter.
 
 @@@ atlas-uri { hilite=no_legend_stats }
@@ -85,7 +85,7 @@ legend using the `no_legend_stats` graph parameter.
 ## Sorting
 
 By default the legend for an [axis](multi-y.md) will be ordered based on the order of the
-expressions on the stack. If an expression results in multple lines, i.e. a
+expressions on the stack. If an expression results in multiple lines, i.e. a
 [group by](basics.md#group-by), then they will be sorted by the label.
 
 @@@ atlas-uri
