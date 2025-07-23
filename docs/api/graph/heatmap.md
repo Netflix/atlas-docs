@@ -46,7 +46,7 @@ Reds Palette (`&heatmap_palette=reds`): /api/v1/graph?e=2012-01-01T00:00&q=name,
 A custom palette may be provided by listing the hex colors to use in _descending_ order,
 meaning the color to use for the highest cell counts must appear first.
 
-@@@ atlas-uri { highlight=heatmap_palette }
+@@@ atlas-uri { hilite=heatmap_palette }
 /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_palette=(,8cd1b9,46adbc,2a91b8,1978b3,335ca9,413e95,361566,)
 @@@
 
