@@ -1,3 +1,5 @@
+## Percentile Timer
+
 The value is the number of seconds that have elapsed for an event, with percentile estimates.
 
 This metric type will track the data distribution by maintaining a set of Counters. The
@@ -27,3 +29,7 @@ int main()
     r.CreatePercentTimer(requestLatencyMeter).Record(10);
 }
 ```
+
+## Units
+
+See [Timer Units](timer.md#units) for an explanation.

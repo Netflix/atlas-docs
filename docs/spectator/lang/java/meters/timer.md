@@ -92,3 +92,15 @@ e.g., update a different Timer, if an exception is thrown.
 * Being a Gauge, it is inappropriate for short tasks. In particular, Gauges are sampled and if it
 is not sampled during the execution, or the sampling period is a significant subset of the expected
 duration, then the duration value will not be meaningful.
+
+## Units
+
+Java Timers always report values to backends in seconds (see [Use Base Units]). The API allows
+for recording elapsed time in different units, so it can easily be used with the common ways of
+measuring elapsed time provided by the SDK, such as [System.nanoTime()] (monotonic time) and
+[System.currentTimeMillis()] (wall clock). Regardless of how it is recorded, when queried on the
+backend, the unit will be seconds.
+
+[Use Base Units]: ../../../../concepts/naming.md#use-base-units
+[System.nanoTime()]: https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#nanoTime()
+[System.currentTimeMillis()]: https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#currentTimeMillis()

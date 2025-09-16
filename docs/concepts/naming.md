@@ -95,7 +95,21 @@ further filter the data to a subset in which you have an interest.
 
 ## Use Base Units
 
-Keep measurements in base units where possible. It is better to have all timers in seconds, disk
-sizes in bytes, and network rates in bytes/second. This allows any SI unit prefixes applied to
-tick labels on a graph to have an obvious meaning, such as 1k meaning 1 kilobyte, as opposed to
-1 kilo-megabyte.
+**Keep measurements in base units, whenever and wherever possible.**
+
+It is best to have timers in `seconds`, disk sizes in `bytes`, and network rates in `bytes/second`.
+This allows any International System of Units (SI) prefixes applied to [tick labels] on a graph to
+have an obvious meaning, such as:
+
+* `1 m` meaning `1 millisecond`, as opposed to `1 milli-millisecond`, for timers.
+* `1 k` meaning `1 kilobyte`, as opposed to `1 kilo-megabyte`, for disk sizes.
+* `1 M` meaning `1 megabyte/second`, as opposed to `1 mega-kilobyte`, for network rates.
+
+Atlas automatically applies tick labels to the Y-axis of the graph, in order to accurately report
+the magnitude of values, while keeping them within the view window.
+
+Some meters in some clients, such as [Java Timers], will automatically constrain values to base
+units in their implementations.
+
+[tick labels]: ../api/graph/tick.md
+[Java Timers]: ../spectator/lang/java/meters/timer.md#units
