@@ -7044,6 +7044,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#units" class="md-nav__link">
+    <span class="md-ellipsis">
+      Units
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -8673,6 +8682,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#units" class="md-nav__link">
+    <span class="md-ellipsis">
+      Units
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -8770,6 +8788,12 @@ e.g., update a different Timer, if an exception is thrown.</li>
 is not sampled during the execution, or the sampling period is a significant subset of the expected
 duration, then the duration value will not be meaningful.</li>
 </ul>
+<h2 id="units">Units<a class="headerlink" href="#units" title="Permanent link">&para;</a></h2>
+<p>Java Timers always report values to backends in seconds (see <a href="../../../../../concepts/naming/#use-base-units">Use Base Units</a>). The API allows
+for recording elapsed time in different units, so it can easily be used with the common ways of
+measuring elapsed time provided by the SDK, such as <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#nanoTime()">System.nanoTime()</a> (monotonic time) and
+<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#currentTimeMillis()">System.currentTimeMillis()</a> (wall clock). Regardless of how it is recorded, when queried on the
+backend, the unit will be seconds.</p>
 
 
 

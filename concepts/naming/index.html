@@ -8931,10 +8931,19 @@ can successfully reason about the values. For example, if you select <code>threa
 can see the total number of threads in all pools. You can then group by or select an <code>id</code> to
 further filter the data to a subset in which you have an interest.</p>
 <h2 id="use-base-units">Use Base Units<a class="headerlink" href="#use-base-units" title="Permanent link">&para;</a></h2>
-<p>Keep measurements in base units where possible. It is better to have all timers in seconds, disk
-sizes in bytes, and network rates in bytes/second. This allows any SI unit prefixes applied to
-tick labels on a graph to have an obvious meaning, such as 1k meaning 1 kilobyte, as opposed to
-1 kilo-megabyte.</p>
+<p><strong>Keep measurements in base units, whenever and wherever possible.</strong></p>
+<p>It is best to have timers in <code>seconds</code>, disk sizes in <code>bytes</code>, and network rates in <code>bytes/second</code>.
+This allows any International System of Units (SI) prefixes applied to <a href="../../api/graph/tick/">tick labels</a> on a graph to
+have an obvious meaning, such as:</p>
+<ul>
+<li><code>1 m</code> meaning <code>1 millisecond</code>, as opposed to <code>1 milli-millisecond</code>, for timers.</li>
+<li><code>1 k</code> meaning <code>1 kilobyte</code>, as opposed to <code>1 kilo-megabyte</code>, for disk sizes.</li>
+<li><code>1 M</code> meaning <code>1 megabyte/second</code>, as opposed to <code>1 mega-kilobyte</code>, for network rates.</li>
+</ul>
+<p>Atlas automatically applies tick labels to the Y-axis of the graph, in order to accurately report
+the magnitude of values, while keeping them within the view window.</p>
+<p>Some meters in some clients, such as <a href="../../spectator/lang/java/meters/timer/#units">Java Timers</a>, will automatically constrain values to base
+units in their implementations.</p>
 
 
 
