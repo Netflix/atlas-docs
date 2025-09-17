@@ -1,3 +1,5 @@
+## Timer
+
 A Timer is used to measure how long (in seconds) some event is taking.
 
 Call `record()` with a value:
@@ -18,3 +20,11 @@ func main() {
 	registry.TimerWithId(requestLatency).Record(500 * time.Millisecond)
 }
 ```
+
+## Units
+
+Go Timers always report values to backends in seconds (see [Use Base Units]). The API accepts a
+[time.Duration] value, which is converted to seconds when reporting.
+
+[Use Base Units]: ../../../../concepts/naming.md#use-base-units
+[time.Duration]: https://pkg.go.dev/time#Duration

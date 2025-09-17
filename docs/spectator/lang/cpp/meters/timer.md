@@ -1,3 +1,5 @@
+## Timer
+
 A Timer is used to measure how long (in seconds) some event is taking.
 
 Call `Record()` with a value:
@@ -19,3 +21,10 @@ int main()
     r.CreateTimer(requestLatencyMeter).Record(10);
 }
 ```
+
+## Units
+
+Ensure that you always report values in seconds (see [Use Base Units]). The API does not offer any
+guarantees that the value will be in seconds.
+
+[Use Base Units]: ../../../../concepts/naming.md#use-base-units

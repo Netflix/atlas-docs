@@ -1,3 +1,5 @@
+## Timer
+
 A Timer is used to measure how long (in seconds) some event is taking.
 
 Call `record()` with a value:
@@ -27,3 +29,10 @@ with StopWatch(thread_sleep):
 ```
 
 [Context Manager]: https://docs.python.org/3/reference/datamodel.html#context-managers
+
+## Units
+
+Ensure that you always report values in seconds (see [Use Base Units]). The API does not offer any
+guarantees that the value will be in seconds.
+
+[Use Base Units]: ../../../../concepts/naming.md#use-base-units
