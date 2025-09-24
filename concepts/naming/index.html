@@ -655,6 +655,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#use-short-prefixes-for-categorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Short Prefixes for Categorization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#use-camelcase" class="md-nav__link">
     <span class="md-ellipsis">
       Use camelCase
@@ -697,6 +706,25 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#cardinality-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cardinality Considerations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-for-simple-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design for Simple Queries
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Design for Simple Queries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#discouraged-approach" class="md-nav__link">
     <span class="md-ellipsis">
       Discouraged Approach
@@ -711,6 +739,11 @@
       Recommended Approach
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -8756,6 +8789,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#use-short-prefixes-for-categorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Short Prefixes for Categorization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#use-camelcase" class="md-nav__link">
     <span class="md-ellipsis">
       Use camelCase
@@ -8798,6 +8840,25 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#cardinality-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cardinality Considerations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-for-simple-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design for Simple Queries
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Design for Simple Queries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#discouraged-approach" class="md-nav__link">
     <span class="md-ellipsis">
       Discouraged Approach
@@ -8812,6 +8873,11 @@
       Recommended Approach
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -8854,82 +8920,121 @@
 <ol>
 <li>Names<ul>
 <li>Describe the measurement being collected</li>
+<li>Use short prefixes for categorization (max 2 levels)</li>
 <li>Use camelCase</li>
-<li>Static</li>
-<li>Succinct</li>
+<li>Static - no dynamic content</li>
+<li>Succinct - avoid long names</li>
 </ul>
 </li>
 <li>Tags<ul>
 <li>Should be used for dimensional filtering</li>
-<li>Be careful about combinatorial explosion</li>
+<li>Be careful about combinatorial explosion and cardinality</li>
+<li>Tag combinations should be stable over time</li>
 <li>Tag keys should be static</li>
 <li>Use <code>id</code> to distinguish between instances</li>
+</ul>
+</li>
+<li>Query Design<ul>
+<li>Avoid the need for regex and expensive pattern matching</li>
+<li>Design for simple queries with incremental drill-down</li>
+<li>Support exact matches and simple filters</li>
 </ul>
 </li>
 <li>Use Base Units</li>
 </ol>
 <h2 id="names">Names<a class="headerlink" href="#names" title="Permanent link">&para;</a></h2>
 <h3 id="describe-the-measurement">Describe the Measurement<a class="headerlink" href="#describe-the-measurement" title="Permanent link">&para;</a></h3>
+<p>Names should clearly describe what is being measured. A good name allows someone to understand the
+metric without needing additional context.</p>
+<h3 id="use-short-prefixes-for-categorization">Use Short Prefixes for Categorization<a class="headerlink" href="#use-short-prefixes-for-categorization" title="Permanent link">&para;</a></h3>
+<p>Common names should use short prefixes to broadly categorize metrics, for example <code>ipc.server.call</code>
+or <code>jvm.gc.pause</code>. The prefix should generally have no more than 2 levels to keep names succinct.
+This is not a package hierarchy like in Java - it's simply a way to group related metrics.</p>
+<p>Examples of good prefixes:
+* <code>ipc.*</code> for inter-process communication metrics
+* <code>jvm.*</code> for Java Virtual Machine metrics
+* <code>db.*</code> for database metrics</p>
+<p>The prefix provides just enough context to understand the broad category and perhaps a sub-category,
+while the rest of the name specifies the actual measurement. Remember that metrics will already be
+scoped by other dimensions like application name, instance, etc., so the name itself should focus
+on describing the measurement rather than providing extensive context. Avoid unnecessary boiler
+plate like <code>com.netflix.*</code>.</p>
 <h3 id="use-camelcase">Use camelCase<a class="headerlink" href="#use-camelcase" title="Permanent link">&para;</a></h3>
-<p>The main goal here is to promote consistency, which makes it easier for users. The choice of
-style is somewhat arbitrary, but camelCase was chosen because:</p>
-<ul>
-<li>Used by SNMP</li>
-<li>Used by Java</li>
-<li>It was commonly used at Netflix when the guideline was written</li>
-</ul>
-<p>The exception to this rule is where there is an established common case. For example, with
-Amazon regions, it is preferred to use <code>us-east-1</code> rather than <code>usEast1</code> as it is the more
-common form.</p>
+<p>For segments within a name, use camel case to distinguish words if needed. For example
+<code>jvm.gc.concurrentPhaseTime</code>.</p>
+<p>The exception to this rule is where there is an established common case. For example, with Amazon
+regions, it is preferred to use <code>us-east-1</code> rather than <code>usEast1</code> as it is the more common form.</p>
 <h3 id="static">Static<a class="headerlink" href="#static" title="Permanent link">&para;</a></h3>
-<p>There should not be any dynamic content in a metric name, such as <code>requests.$APP_NAME</code>. Metric
-names and tag keys are how users interact with the data, and dynamic values make them difficult
-to use. Dynamic information is better suited for tag values, such as <code>nf.app</code> or <code>status</code>. </p>
+<p>There should not be any dynamic content in a metric name, such as <code>requests.$APP_NAME</code>. Metric names
+and tag keys are how users interact with the data, and dynamic values make them difficult to use.
+Dynamic information is better suited for tag values.</p>
 <h3 id="succinct">Succinct<a class="headerlink" href="#succinct" title="Permanent link">&para;</a></h3>
-<p>Long names should be avoided. In many cases, long names are the result of combining many pieces
-of information together into a single string. In this case, consider either discarding information
-that is not useful or encoding the information in tag values.  </p>
+<p>Long names should be avoided. In many cases, long names are the result of combining many pieces of
+information together into a single string. In this case, consider either discarding information
+that is not useful or encoding the information in tag values. Shorter names are easier to read,
+type, and view when working with the data.</p>
 <h2 id="tags">Tags<a class="headerlink" href="#tags" title="Permanent link">&para;</a></h2>
-<p>Historically, tags have been used to play one of two roles:</p>
-<ul>
-<li><strong>Dimensions.</strong> This is the primary use of tags and this feature allows the data to be filtered
-into subsets by values of interest.</li>
-<li><strong>Namespace.</strong> Similar to packages in Java, this allows grouping related data. This type of usage
-is discouraged.</li>
-</ul>
+<p>Tags should be used for dimensional filtering - they allow data to be filtered into subsets by
+values of interest. Using tags as a namespace mechanism is discouraged.</p>
 <p>As a general rule, it should be possible to use the name as a pivot. If only the name is selected,
 then the user should be able to use other dimensions to filter the data and successfully reason
-about the value being shown. </p>
+about the aggregate value being shown.</p>
+<h3 id="cardinality-considerations">Cardinality Considerations<a class="headerlink" href="#cardinality-considerations" title="Permanent link">&para;</a></h3>
+<p><strong>Keep combinatorial complexity in mind.</strong> The full combination of tags creates unique time series,
+and each combination consumes storage and processing resources. Tag combinations should be stable
+over time to avoid constantly creating new time series.</p>
+<p>Consider the cardinality impact:
+* A metric with 3 tag keys, each with 10 possible values = 1,000 potential time series
+* A metric with 5 tag keys, each with 10 possible values = 100,000 potential time series</p>
+<p>Guidelines for managing cardinality:
+* <strong>Limit high-cardinality dimensions.</strong> Avoid tags with unbounded or very large value sets
+* <strong>Use stable identifiers.</strong> Tag values should remain consistent over time</p>
+<h3 id="design-for-simple-queries">Design for Simple Queries<a class="headerlink" href="#design-for-simple-queries" title="Permanent link">&para;</a></h3>
+<p><strong>Avoid regex and expensive pattern matching.</strong> Design metric names and tag structures so they can
+be queried simply and allow users to incrementally drill into the data. This improves both query
+performance and user experience.</p>
+<p>Good query patterns:
+* <code>name,threadpool.size,:eq</code> - exact match on name
+* <code>name,threadpool.size,:eq,id,server-requests,:eq,:and</code> - add exact tag filter
+* <code>name,threadpool.*,:re</code> - simple prefix pattern (use sparingly)</p>
+<p>Avoid patterns that require expensive operations:
+* Complex regex patterns that must scan many metric names
+* Queries that require examining all tag combinations to find matches
+* Dynamic name construction that makes direct queries impossible</p>
+<p>Design principle: Users should be able to start with a broad query and progressively add filters
+to narrow down to the specific data they need.</p>
 <p>As a concrete example, suppose we have two metrics:</p>
 <ol>
 <li>The number of threads currently in a thread pool.</li>
 <li>The number of rows in a database table.</li>
 </ol>
-<h3 id="discouraged-approach">Discouraged Approach<a class="headerlink" href="#discouraged-approach" title="Permanent link">&para;</a></h3>
+<h4 id="discouraged-approach">Discouraged Approach<a class="headerlink" href="#discouraged-approach" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="n">Id</span><span class="w"> </span><span class="n">poolSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;size&quot;</span><span class="p">)</span>
 <span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;class&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ThreadPool&quot;</span><span class="p">)</span>
 <span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;server-requests&quot;</span><span class="p">);</span>
 
 <span class="n">Id</span><span class="w"> </span><span class="n">poolSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;size&quot;</span><span class="p">)</span>
 <span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;class&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Database&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;table&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;users&quot;</span><span class="p">);</span><span class="w">  </span>
+<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;table&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;users&quot;</span><span class="p">);</span>
 </code></pre></div>
 <p>In this approach, if you select the name <code>size</code>, then it will match both the <code>ThreadPool</code> and
-<code>Database</code> classes. This results in a value that is the an aggregate of the number of threads
-and the number of items in a database, which has no meaning. </p>
-<h3 id="recommended-approach">Recommended Approach<a class="headerlink" href="#recommended-approach" title="Permanent link">&para;</a></h3>
+<code>Database</code> classes. This results in a value that is an aggregate of the number of threads and the
+number of items in a database, which has no meaning.</p>
+<h4 id="recommended-approach">Recommended Approach<a class="headerlink" href="#recommended-approach" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="n">Id</span><span class="w"> </span><span class="n">poolSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;threadpool.size&quot;</span><span class="p">)</span>
 <span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;server-requests&quot;</span><span class="p">);</span>
 
 <span class="n">Id</span><span class="w"> </span><span class="n">poolSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;db.size&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;table&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;users&quot;</span><span class="p">);</span><span class="w">  </span>
+<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;table&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;users&quot;</span><span class="p">);</span>
 </code></pre></div>
-<p>This variation provides enough context, so that if just the name is selected, the value can be
-reasoned about and is at least potentially meaningful.</p>
-<p>This variation provides enough context in the name so that the meaning is more apparent and you
-can successfully reason about the values. For example, if you select <code>threadpool.size</code>, then you
-can see the total number of threads in all pools. You can then group by or select an <code>id</code> to
-further filter the data to a subset in which you have an interest.</p>
+<p>This variation provides enough context in the name so that the meaning is more apparent and you can
+successfully reason about the values. For example, if you select <code>threadpool.size</code>, then you can
+see the total number of threads in all pools. You can then group by or select an <code>id</code> to further
+filter the data to a subset in which you have an interest.</p>
+<p>This approach also supports simple queries without regex patterns:
+* <code>name,threadpool.size,:eq</code> gives you all thread pool sizes
+* <code>name,db.size,:eq</code> gives you all database sizes
+* <code>name,threadpool.size,:eq,id,server-requests,:eq,:and</code> drills down to a specific pool</p>
 <h2 id="use-base-units">Use Base Units<a class="headerlink" href="#use-base-units" title="Permanent link">&para;</a></h2>
 <p><strong>Keep measurements in base units, whenever and wherever possible.</strong></p>
 <p>It is best to have timers in <code>seconds</code>, disk sizes in <code>bytes</code>, and network rates in <code>bytes/second</code>.
@@ -8940,10 +9045,10 @@ have an obvious meaning, such as:</p>
 <li><code>1 k</code> meaning <code>1 kilobyte</code>, as opposed to <code>1 kilo-megabyte</code>, for disk sizes.</li>
 <li><code>1 M</code> meaning <code>1 megabyte/second</code>, as opposed to <code>1 mega-kilobyte</code>, for network rates.</li>
 </ul>
-<p>Atlas automatically applies tick labels to the Y-axis of the graph, in order to accurately report
-the magnitude of values, while keeping them within the view window.</p>
-<p>Some meters in some clients, such as <a href="../../spectator/lang/java/meters/timer/#units">Java Timers</a>, will automatically constrain values to base
-units in their implementations.</p>
+<p>Atlas automatically applies tick labels to the Y-axis of the graph, in order to accurately report the
+magnitude of values, while keeping them within the view window.</p>
+<p>Some meters in some clients, such as <a href="../../spectator/lang/java/meters/timer/#units">Java Timers</a>, will automatically constrain values to base units
+in their implementations.</p>
 
 
 
