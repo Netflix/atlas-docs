@@ -4,15 +4,25 @@ There are two variants of the `:and` operator.
 ## Choosing
 
 @@@ atlas-signature
-q2: Query
-q1: Query
+query2: Query
+query1: Query
 -->
-(q1 AND q2): Query
+(query1 AND query2): Query
 @@@
 
 This first variant is used for [choosing](../tutorial.md#choosing) the set of time series to
-operate on. It is a binary operator that matches if both of the sub-queries match. For example,
-consider the following query:
+operate on. It is a binary operator that matches if both of the sub-queries match.
+
+### Parameters
+
+* **query1**: First query condition that must match
+* **query2**: Second query condition that must also match
+
+### Examples
+
+Combine two conditions to select specific time series:
+
+For example, consider the following query:
 
 @@@ atlas-stacklang { hilite=:and }
 /api/v1/graph?q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and
@@ -64,7 +74,16 @@ ts1: TimeSeriesExpr
 @@@
 
 Compute a new time series where each interval has the value `(a AND b)` where `a`
-and `b` are the corresponding intervals in the input time series. For example:
+and `b` are the corresponding intervals in the input time series.
+
+### Parameters
+
+* **ts1**: First time series expression
+* **ts2**: Second time series expression
+
+### Examples
+
+Boolean AND operation on time series values:
 
 | **Time** | **a** | **b** | **a AND b** |
 |----------|-------|-------|-------------|
@@ -76,9 +95,17 @@ and `b` are the corresponding intervals in the input time series. For example:
 
 The result will be a [signal time series](../alerting-expressions.md#signal-line) that will
 be `1.0` for all intervals where the corresponding values of `a` and `b` are both non-zero.
-Example:
+
+Creating a signal that's true only when time is between 300 and 310 minutes:
 
 @@@ atlas-example { hilite=:and }
 Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,310,:lt
 After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,310,:lt,:and
 @@@
+
+## Related Operations
+
+* [:or](or.md) - Logical OR operation (matches if either condition is true)
+* [:not](not.md) - Logical NOT operation (inverts boolean values)
+* [:eq](eq.md) - Basic equality comparison for building query conditions
+* [:gt](gt.md), [:lt](lt.md) - Comparison operations for building math conditions

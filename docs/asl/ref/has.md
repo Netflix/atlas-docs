@@ -1,13 +1,22 @@
 @@@ atlas-signature
-k: String
+key: String
 -->
 Query
 @@@
 
-Select time series that have a specified key. For example, consider the following
-query:
+Select time series that have a specified tag key, regardless of the key's value. This is useful
+for filtering based on the presence of optional tags or finding time series that have been
+tagged with specific dimensions.
 
-@@@ atlas-stacklang { hilite=:eq }
+## Parameters
+
+* **key**: The tag key name to check for existence (e.g., `nf.node`, `status`, `env`)
+
+## Examples
+
+Select all time series that have a node identifier:
+
+@@@ atlas-stacklang { hilite=:has }
 /api/v1/graph?q=nf.node,:has
 @@@
 
@@ -46,3 +55,13 @@ included in the result set:
   </tr>
   </tbody>
 </table>
+
+Notice that only time series with a value in the `nf.node` column are highlighted, while
+`numRequests` which has no `nf.node` tag is not selected.
+
+## Related Operations
+
+* [:eq](eq.md) - Check if a key has a specific value
+* [:re](re.md) - Check if a key matches a regular expression pattern
+* [:in](in.md) - Check if a key's value is in a list of options
+* [:not](not.md) - Invert the query condition (e.g., select series that DON'T have a key)

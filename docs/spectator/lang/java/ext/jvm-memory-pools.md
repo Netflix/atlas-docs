@@ -1,7 +1,7 @@
 # Memory Pools
 
 Uses the [MemoryPoolMXBean](https://docs.oracle.com/en/java/javase/17/docs/api/java.management/java/lang/management/MemoryPoolMXBean.html)
-provided by the JDK to monitor the sizes of java memory spaces such as perm gen, eden, old gen, etc. 
+provided by the JDK to monitor the sizes of java memory spaces such as perm gen, eden, old gen, etc.
 
 ## Getting Started
 
@@ -41,7 +41,7 @@ committed is:
 > The Java virtual machine may release memory to the system and committed could be less than
 > init. committed will always be greater than or equal to used.
 
-**Unit:** bytes 
+**Unit:** bytes
 
 **Dimensions:**
 
@@ -60,7 +60,7 @@ max is:
 > `used > committed` even if `used <= max` would still be true (for example, when the
 > system is low on virtual memory).
 
-**Unit:** bytes 
+**Unit:** bytes
 
 **Dimensions:**
 

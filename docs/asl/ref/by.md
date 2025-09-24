@@ -4,13 +4,23 @@ Group by operator. There are two variants of the `:by` operator.
 
 @@@ atlas-signature
 keys: List[String]
-AggregationFunction
+aggregationFunc: AggregationFunction
 -->
 DataExpr
 @@@
 
-Groups the matching time series by a set of keys and applies an aggregation to matches of the
-group.
+Groups the matching time series by a set of tag keys and applies an aggregation function to
+each group. This allows you to aggregate data separately for different values of the specified
+keys, rather than aggregating everything together.
+
+### Parameters
+
+* **aggregationFunc**: An aggregation function (like `:sum`, `:max`, `:count`) that will be applied to each group
+* **keys**: A list of tag key names to group by (e.g., `name`, `nf.app`)
+
+### Examples
+
+Group CPU metrics by name and apply sum aggregation to each group:
 
 @@@ atlas-stacklang { hilite=:by }
 /api/v1/graph?q=name,ssCpu,:re,(,name,),:by
@@ -82,16 +92,35 @@ The `name` tag is included in the result set since it is used for the grouping.
 
 @@@ atlas-signature
 keys: List[String]
-TimeSeriesExpr
+expr: TimeSeriesExpr
 -->
 TimeSeriesExpr
 @@@
 
-Groups the time series from the input expression by a set of keys and applies an aggregation
-to matches of the group. The keys used for this grouping must be a subset of keys from the
-initial group by clause. Example:
+Groups the time series from the input expression by a set of tag keys and applies an aggregation
+to each group. The keys used for this grouping must be a subset of keys from the initial grouping
+operation. This variant allows for hierarchical grouping where you first group by a broader set
+of keys, then regroup by a subset.
+
+### Parameters
+
+* **expr**: A time series expression that contains grouped data
+* **keys**: A list of tag key names to group by (must be subset of original grouping keys)
+
+### Examples
+
+First group by cluster and node, then regroup by cluster only (counting nodes per cluster):
 
 @@@ atlas-example { hilite=:by }
 Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,nf.node,),:by
 After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,nf.node,),:by,:count,(,nf.cluster,),:by
 @@@
+
+## Related Operations
+
+* [:sum](sum.md) - Sum aggregation function (commonly used with grouping)
+* [:max](max.md) - Maximum aggregation function
+* [:min](min.md) - Minimum aggregation function
+* [:avg](avg.md) - Average aggregation function
+* [:count](count.md) - Count aggregation function
+* [:eq](eq.md) - Equality filter (creates exact tag matches that preserve grouping)

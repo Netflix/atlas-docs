@@ -1,12 +1,22 @@
 @@@ atlas-signature
-vs: List[String]
-k: String
+values: List[String]
+key: String
 -->
-(k in vs): Query
+(key in values): Query
 @@@
 
-Select time series where the value for a key is in the specified set. For example, consider
-the following query:
+Select time series where the value for a key matches any value in the specified list. This is
+more efficient than using multiple `:eq` conditions combined with `:or` when you need to match
+against several possible values for the same key.
+
+## Parameters
+
+* **key**: The tag key to check (e.g., `name`, `nf.app`, `status`)
+* **values**: A list of possible values to match against
+
+## Examples
+
+Select time series where the name is either "ssCpuUser" or "ssCpuSystem":
 
 @@@ atlas-stacklang { hilite=:in }
 /api/v1/graph?q=name,(,ssCpuUser,ssCpuSystem,),:in
@@ -47,4 +57,14 @@ included in the result set:
   </tr>
   </tbody>
 </table>
+
+This is equivalent to but more efficient than:
+`name,ssCpuUser,:eq,name,ssCpuSystem,:eq,:or`
+
+## Related Operations
+
+* [:eq](eq.md) - Check for a single specific value
+* [:re](re.md) - Match using regular expressions
+* [:has](has.md) - Check if a key exists regardless of value
+* [:or](or.md) - Logical OR operation
 

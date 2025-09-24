@@ -132,7 +132,7 @@ The `GlobalRegistry` concept is a hold-over from the thick-client version of thi
 has been maintained to help minimize the amount of code change that application owners need to
 implement when adopting the thin client version of the library. It existed as a concept in the
 thick client because it was stateful, and required starting background threads. The thin client
-version is stateless. 
+version is stateless.
 
 Importing the `GlobalRegistry` instantiates a `Registry` with a default `Config`, and opens a UDP
 socket to the local [SpectatorD] agent when publishing metrics. The instance-specific common tags
@@ -263,7 +263,7 @@ in the `Registry`:
 
     ```python
     from spectator import Config, Registry
-    
+
     config = Config(location="udp://[::1]:1234")
     registry = Registry(config)
     registry.counter("server.numRequests").increment()

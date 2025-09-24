@@ -2,7 +2,7 @@
 
 Buffer pools, such as direct byte buffers, can be monitored at a high level using the
 [BufferPoolMXBean](https://docs.oracle.com/en/java/javase/17/docs/api/java.management/java/lang/management/BufferPoolMXBean.html)
-provided by the JDK. 
+provided by the JDK.
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ Jmx.registerStandardMXBeans(registry);
 
 Gauge showing the current number of distinct buffers.
 
-**Unit:** count 
+**Unit:** count
 
 **Dimensions:**
 
@@ -33,10 +33,9 @@ Gauge showing the current number of distinct buffers.
 
 Gauge showing the current number of bytes used by all buffers.
 
-**Unit:** bytes 
+**Unit:** bytes
 
 **Dimensions:**
 
 * `id`: type of buffers. Value will be either `direct` for direct byte buffers or `mapped` for
   memory mapped files.
-  

@@ -1,17 +1,28 @@
 @@@ atlas-signature
-v: String
-k: String
+value: String
+key: String
 -->
-(k=~/^v/i): Query
+(key=~/^value/i): Query
 @@@
 
 !!! warning
-    Ignoring the case will always result if a full scan for the key. This should be used
-    sparingly and only for tag queries. If a case-insensitive match is not required, use
-    [:re](re.md) intead.
+    Case-insensitive matching requires a full scan of all time series for the specified key,
+    which can be significantly slower than exact matches. Use this operator sparingly and only
+    when case-insensitive matching is genuinely required. For case-sensitive regex matching,
+    use [:re](re.md) instead.
 
 Select time series where the value for a key matches the specified regular expression with
-case insensitive matching. For example, consider the following query:
+case insensitive matching. The regular expression value will be automatically anchored at the start.
+For more information on supported patterns, see the [Java regular expressions] documentation.
+
+## Parameters
+
+* **key**: The tag key to match against (e.g., `name`, `nf.app`)
+* **value**: A regular expression pattern to match against the key's value (case-insensitive)
+
+## Examples
+
+Case-insensitive matching where query casing doesn't match the data:
 
 @@@ atlas-stacklang { hilite=:reic }
 /api/v1/graph?q=name,ssCPU,:reic
@@ -53,8 +64,14 @@ included in the result set:
   </tbody>
 </table>
 
-Notice that the casing for the query does not match the data. The regular expression value will
-be automatically anchored at the start. For more information on supported patterns, see the
-[Java regular expressions] documentation.
+Notice that the casing for the query (`ssCPU`) does not match the data (`ssCpu`), but the
+case-insensitive matching still finds the correct time series.
+
+## Related Operations
+
+* [:re](re.md) - Case-sensitive regular expression matching (much faster)
+* [:eq](eq.md) - Exact string matching (fastest option)
+* [:in](in.md) - Match against multiple exact values
+* [:has](has.md) - Check if a tag key exists
 
 [Java regular expressions]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html

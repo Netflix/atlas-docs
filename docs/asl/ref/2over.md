@@ -1,16 +1,25 @@
 @@@ atlas-signature
-b
-a
+top: Any
+second: Any
 -->
-b
-a
-b
-a
+top: Any
+second: Any
+top: Any
+second: Any
 @@@
 
-Shorthand equivalent to writing: `:over,:over`
+Copy both items from the stack and place copies on top. This operator provides a convenient
+way to duplicate both items on a two-item stack. It's equivalent to the sequence `:over,:over`
+but more clearly expresses the intent to copy both items.
 
-Example:
+## Parameters
+
+* **top**: The item on top of the stack (will be copied)
+* **second**: The second item from the top (will be copied)
+
+## Examples
+
+Copying two items from deeper stack positions:
 
 @@@ atlas-stacklang
 /api/v1/graph?q=a,b,:2over
@@ -33,3 +42,22 @@ Example:
 <td></td>
 <td>a</td>
 </tr></tbody></table>
+
+## Equivalent Sequence
+
+The `:2over` operation is exactly equivalent to:
+
+```
+:over,:over
+```
+
+Both sequences produce the same result, but `:2over` is more concise and clearly indicates
+the intent to copy two items from deeper positions.
+
+## Related Operations
+
+* [:over](over.md) - Copy single item from second position (component operation)
+* [:pick](pick.md) - Copy item from arbitrary position (more general)
+* [:dup](dup.md) - Copy top item only
+* [:nip](nip.md) - Remove second item (opposite of adding)
+* [:tuck](tuck.md) - Copy top item to third position

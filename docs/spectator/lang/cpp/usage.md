@@ -33,7 +33,7 @@ int main()
 
     // Create a config which defines the way you send metrics to SpectatorD
     auto config = Config(WriterConfig(WriterTypes::UDP), commonTags);
-    
+
     // Initialize the Registry with the Config (Always required before sending metrics)
     auto r = Registry(config);
 
@@ -44,7 +44,7 @@ int main()
     threadGauge.Set(GetNumThreads());
     queueGauge.Set(GetQueueSize());
 
-    /* Metrics Sent: 
+    /* Metrics Sent:
         "g:threads,platform=my-platform,process=my-process:5.000000\n"
         "g:queue-size,my-tags=bar,platform=my-platform,process=my-process:10.000000\n"
     */
@@ -147,13 +147,13 @@ WriterConfig(const std::string& type, unsigned int bufferSize);
 /* Default Writer Config Examples */
 
 // Write metrics to memory for testing
-WriterConfig wConfig(WriterTypes::Memory); 
+WriterConfig wConfig(WriterTypes::Memory);
 
 // Default UDP address for spectatord
-WriterConfig wConfig(WriterTypes::UDP); 
+WriterConfig wConfig(WriterTypes::UDP);
 
 // Default UDS address for spectatord with buffering
-WriterConfig wConfig(WriterTypes::Unix, 4096); 
+WriterConfig wConfig(WriterTypes::Unix, 4096);
 
 /* Custom Writer Config Location Examples */
 

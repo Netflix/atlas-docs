@@ -135,9 +135,9 @@ Shades of red.
 
 ## Custom
 
-A custom color palette can be provided for a graph by using a list of  comma separated 
-[hex color](../../asl/ref/color.md) values following the ASL list format `(,HEX,HEX,HEX,)`. 
-This is mainly used to customize the colors for the result of a group by where you 
+A custom color palette can be provided for a graph by using a list of  comma separated
+[hex color](../../asl/ref/color.md) values following the ASL list format `(,HEX,HEX,HEX,)`.
+This is mainly used to customize the colors for the result of a group by where you
 cannot set the color for each line using the list.
 
 @@@ atlas-uri

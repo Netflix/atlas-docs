@@ -3,12 +3,22 @@ Count aggregation operator. There are two variants of the `:count` operator.
 ## Aggregation
 
 @@@ atlas-signature
-Query
+query: Query
 -->
 AggregationFunction
 @@@
 
-Compute the number of time series that match the query and have a value for a given interval.
+Compute the number of time series that match the query and have a value (non-NaN) for each
+time interval. This is useful for understanding how many instances are reporting data at
+any given time.
+
+### Parameters
+
+* **query**: A query expression that selects the time series to count
+
+### Examples
+
+Count how many time series match the query and have data:
 
 @@@ atlas-stacklang { hilite=:count }
 /api/v1/graph?q=name,ssCpuUser,:eq,:count
@@ -78,15 +88,32 @@ as part of the choosing criteria or are included in a [group by](by.md).
 ## Math
 
 @@@ atlas-signature
-TimeSeriesExpr
+expr: TimeSeriesExpr
 -->
 TimeSeriesExpr
 @@@
 
-Compute the number of time series from the input expression and have a value for a given interval.
-Example:
+Compute the number of time series from the input expression that have a value (non-NaN) for
+each time interval. This variant is typically used when you need to apply a different aggregation
+function for grouping first, then count across the groups.
+
+### Parameters
+
+* **expr**: A time series expression that may contain multiple series to count
+
+### Examples
+
+First group by cluster, then count how many clusters have data:
 
 @@@ atlas-example { hilite=:count }
 Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
 After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:count
 @@@
+
+## Related Operations
+
+* [:sum](sum.md) - Sum aggregation function
+* [:max](max.md) - Maximum aggregation function
+* [:min](min.md) - Minimum aggregation function
+* [:avg](avg.md) - Average aggregation function (uses count internally)
+* [:by](by.md) - Group time series by tag values before aggregating

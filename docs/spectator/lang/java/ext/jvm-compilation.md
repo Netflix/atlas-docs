@@ -20,7 +20,7 @@ Jmx.registerStandardMXBeans(registry);
 ### jvm.compilation.compilationTime
 
 Counter reporting the amount of elapsed time spent in compilation. If multiple threads are used for
-compilation, then this value represents the summation of the time each thread spent in compilation. 
+compilation, then this value represents the summation of the time each thread spent in compilation.
 
 **Unit:** seconds/second
 

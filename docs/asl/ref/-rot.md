@@ -1,16 +1,25 @@
 @@@ atlas-signature
-b
-a
+top: Any
+second: Any
 ...
 -->
-a
+second: Any
 ...
-b
+top: Any
 @@@
 
-Rotate the stack so that the item at the top is now at the bottom.
+Rotate the stack so that the item at the top is moved to the bottom of the stack, and all other items
+move up one position.
 
-Example: 
+## Parameters
+
+* **top**: The item currently at the top of the stack that will be moved to the bottom
+* **second**: The item in the second position that will become the new top item
+* **...**: Any additional items on the stack that will each move up one position
+
+## Examples
+
+This example shows how the stack is rotated with four items:
 
 @@@ atlas-stacklang
 /api/v1/graph?q=a,b,c,d,:-rot
@@ -33,3 +42,9 @@ Example:
 <td>a</td>
 <td>d</td>
 </tr></tbody></table>
+
+## Related Operations
+
+* [:rot](rot.md) - Rotate in the opposite direction (bottom to top)
+* [:swap](swap.md) - Exchange the top two stack items
+* [:over](over.md) - Copy the second item to the top

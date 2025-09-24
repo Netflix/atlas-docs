@@ -3,13 +3,21 @@ Sum aggregation operator. There are two variants of the `:sum` operator.
 ## Aggregation
 
 @@@ atlas-signature
-Query
+query: Query
 -->
 AggregationFunction
 @@@
 
 Compute the sum of all the time series that match the query. Sum is the default aggregate
-used if a query is specified with no explicit aggregate function. Example with implicit sum:
+function used if a query is specified with no explicit aggregate function.
+
+### Parameters
+
+* **query**: A query expression that selects the time series to aggregate
+
+### Examples
+
+Example with implicit sum (`:sum` is applied automatically):
 
 @@@ atlas-stacklang { hilite=:sum }
 /api/v1/graph?q=name,ssCpuUser,:eq
@@ -85,15 +93,33 @@ as part of the choosing criteria or are included in a [group by](by.md).
 ## Math
 
 @@@ atlas-signature
-TimeSeriesExpr
+expr: TimeSeriesExpr
 -->
 TimeSeriesExpr
 @@@
 
-Compute the sum of all the time series from the input expression. This is typically used when
-there is a need to use some other aggregation for the grouping. Example:
+Compute the sum of all the time series from the input expression. This variant is typically
+used when you need to apply a different aggregation function for grouping first, then sum
+the results.
+
+### Parameters
+
+* **expr**: A time series expression that may contain multiple series to sum
+
+### Examples
+
+First group by cluster using max aggregation, then sum all the groups:
 
 @@@ atlas-example { hilite=:sum }
 Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:max,(,nf.cluster,),:by
 After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:max,(,nf.cluster,),:by,:sum
 @@@
+
+## Related Operations
+
+* [:max](max.md) - Maximum aggregation function
+* [:min](min.md) - Minimum aggregation function
+* [:avg](avg.md) - Average aggregation function
+* [:count](count.md) - Count aggregation function
+* [:by](by.md) - Group time series by tag values before aggregating
+* [:add](add.md) - Mathematical addition of time series (different from aggregation)

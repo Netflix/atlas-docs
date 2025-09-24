@@ -324,7 +324,7 @@ in the `Registry`:
 
     ```javascript
     import {Config, Registry} from "nflx-spectator";
-    
+
     const config = new Config("udp://[::1]:1234");
     const registry = new Registry(config);
     void registry.counter("server.numRequests").increment();

@@ -92,7 +92,7 @@ percentage chart for a group by:
 Since 1.8.
 
 Plotting many time series with a heat map can be useful for identifying concentrations of
-measurements where individual lines may produce too much noise. 
+measurements where individual lines may produce too much noise.
 
 See [Heatmap](heatmap.md) for more details.
 

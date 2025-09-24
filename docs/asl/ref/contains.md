@@ -1,19 +1,28 @@
 @@@ atlas-signature
-v: String
-k: String
+value: String
+key: String
 -->
 Query
 @@@
 
-Select time series where the value for a key includes the specified substring. For example,
-consider the following query:
+Select time series where the value for a tag key contains the specified substring anywhere
+within the value. This provides a more efficient alternative to regular expressions when you
+only need simple substring matching. It performs exact substring matching and is case-sensitive.
+
+## Parameters
+
+* **key**: The tag key to check (e.g., `name`, `nf.app`)
+* **value**: The substring that must appear anywhere within tag values
+
+## Examples
+
+Find all metrics whose name contains "Cpu":
 
 @@@ atlas-stacklang { hilite=:contains }
 /api/v1/graph?q=name,Cpu,:contains
 @@@
 
-When matching against the sample data in the table below, the highlighted time series would be
-included in the result set:
+When matching against sample data, the highlighted time series would be included:
 
 <table>
   <thead>
@@ -47,3 +56,11 @@ included in the result set:
   </tr>
   </tbody>
 </table>
+
+## Related Operations
+
+* [:starts](starts.md) - Match by prefix only
+* [:ends](ends.md) - Match by suffix only
+* [:eq](eq.md) - Exact string matching
+* [:re](re.md) - Full regular expression matching (more powerful but slower)
+* [:and](and.md) / [:or](or.md) - Combine with other query conditions

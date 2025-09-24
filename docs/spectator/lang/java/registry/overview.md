@@ -165,7 +165,7 @@ configure it to work with the Global Registry by calling `add`:
 ```java
 public void init() {
   Registry registry = // Choose an appropriate implementation
-  
+
   // Add it to the global registry so it will receive
   // any activity on the global registry
   Spectator.globalRegistry().add(registry);

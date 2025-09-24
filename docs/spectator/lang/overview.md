@@ -7,7 +7,7 @@ Spectator implementations in many languages, which function as thin clients that
 Atlas. Our goal is to have partners invested in each experimental language who will provide
 the necessary expertise to develop idiomatic solutions, deliver real-world feedback on library
 usage, and shoulder some of the support and maintenance burden.
- 
+
 We think this is a more sustainable path over the long-term than expanding our team to support N
 different languages for this singular polyglot use case.
 

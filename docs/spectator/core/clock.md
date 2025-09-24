@@ -64,7 +64,7 @@ meaningful unless compared with another sample to get a delta.
 If timing code is written to the Clock interface, then alternative implementations can be
 plugged-in. For test cases, it is common to use [ManualClock] so that tests can be reliable
 and fast without having to rely on hacks like sleep or assuming something will run in less
-than a certain amount of time. 
+than a certain amount of time.
 
 ```java
 ManualClock clock = new ManualClock();

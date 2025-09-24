@@ -79,7 +79,7 @@ which was not used or their capabilities are replicated in the currently availab
    task. For example, if you have a 4-hour job that runs once a day, you could start it when the task starts and end it
    when the task ends. During the operating window, it would show how long the task has been running. Outside of that,
    interval it would show 0. Implement a `setInterval` to track job status while it remains active, and update a `Gauge`
-   metric with the total number of seconds elapsed. 
+   metric with the total number of seconds elapsed.
 * `PolledMeter` has been removed. Implement a `setInterval` to track the value of interest at a 1-minute interval, and
    update a `Gauge` metric with the value. Alternatively, consider a `Gauge` with a TTL, or an `AgeGauge`.
 * `HttpClient` has been removed, and it was never exported. Use the standard `https` client, or another library, instead.

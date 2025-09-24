@@ -28,7 +28,7 @@ Putting it all together:
 The resulting [PNG] plot displays time along the X axis, automatically scaled to the proper
 time range. The Y [axis labels] are scaled using metric prefixes to show the measured value.
 A [legend] is displayed under the plot with the name(s) of the expression results and a set
-of statistics computed on the plotted data for the time window. The small text at the very 
+of statistics computed on the plotted data for the time window. The small text at the very
 bottom reflect query parameters and step size along with some processing statistics.
 
 [PNG]: outputs.md
@@ -88,8 +88,8 @@ Example that [negates](../../asl/ref/neg.md) the value of a line:
 /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,:neg&s=e-2d
 @@@
 
-Example that [negates](../../asl/ref/neg.md) and then applies 
-[absolute value](../../asl/ref/abs.md) to get the original value back (since all values were 
+Example that [negates](../../asl/ref/neg.md) and then applies
+[absolute value](../../asl/ref/abs.md) to get the original value back (since all values were
 positive in the input):
 
 @@@ atlas-uri { hilite=:abs }
@@ -102,7 +102,7 @@ positive in the input):
 
 ## Binary Operations
 
-Lines can be combined using binary math operators such as [add](../../asl/ref/add.md) or 
+Lines can be combined using binary math operators such as [add](../../asl/ref/add.md) or
 [multiply](../../asl/ref/mul.md). Example using [divide](../../asl/ref/div.md):
 
 @@@ atlas-uri { hilite=:div }

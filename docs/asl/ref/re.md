@@ -1,8 +1,8 @@
 @@@ atlas-signature
-v: String
-k: String
+value: String
+key: String
 -->
-(k=~/^v/): Query
+(key=~/^value/): Query
 @@@
 
 !!! warning
@@ -11,7 +11,18 @@ k: String
     regular expressions.
 
 Select time series where the value for a key matches the specified regular expression.
-For example, consider the following query:
+The regular expression value will be automatically anchored at the start and the matching is
+case sensitive. Always try to have a simple prefix on the expression to allow for more efficient
+matching of the expression.
+
+## Parameters
+
+* **key**: The tag key to match against (e.g., `name`, `nf.app`)
+* **value**: A regular expression pattern to match against the key's value (case-sensitive)
+
+## Examples
+
+Case-sensitive regex matching with a prefix pattern:
 
 @@@ atlas-stacklang { hilite=:re }
 /api/v1/graph?q=name,ssCpu,:re
@@ -53,9 +64,15 @@ included in the result set:
   </tbody>
 </table>
 
-The regular expression value will be automatically anchored at the start and the matching is
-case sensitive. Always try to have a simple prefix on the expression to allow for more efficient
-matching of the expression. For more information on supported patterns, see the
-[Java regular expressions] documentation.
+## Related Operations
+
+* [:eq](eq.md) - Exact string matching (much faster)
+* [:reic](reic.md) - Case-insensitive regular expression matching
+* [:in](in.md) - Match against a list of possible values
+* [:has](has.md) - Check if a tag key exists regardless of value
+
+## See Also
+
+For more information on supported patterns, see the [Java regular expressions] documentation.
 
 [Java regular expressions]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html

@@ -24,7 +24,7 @@ At a minimum, you need to:
         * [Node.js](lang/nodejs/usage.md)
         * [Python](lang/py/usage.md)
     * Best-Effort Support
-        * Rust (internal library)   
+        * Rust (internal library)
 
 1. Instrument some code, referring to the core usage guides on the following meter types:
 

@@ -116,10 +116,10 @@ All the removed items are from the legacy thick client.
         ```python
         import time
         from spectator import Registry, StopWatch
-        
+
         registry = Registry()
         thread_sleep = registry.timer("thread.sleep")
-    
+
         with StopWatch(thread_sleep):
             time.sleep(5)
         ```
@@ -195,7 +195,7 @@ to SpectatorD.
     # before
     from spectator import GlobalRegistry
     from spectator.histogram import PercentileDistributionSummary
-    
+
     d = PercentileDistributionSummary(GlobalRegistry, "server.requestSize")
     d.record(10)
     ```
@@ -203,7 +203,7 @@ to SpectatorD.
     ```
     # after
     from spectator import GlobalRegistry
-    
+
     GlobalRegistry.pct_distribution_summary("server.requestSize").record(10)
     ```
 
@@ -213,15 +213,15 @@ to SpectatorD.
     # before
     from spectator import GlobalRegistry
     from spectator.histogram import PercentileTimer
-    
+
     t = PercentileTimer(GlobalRegistry, "server.requestSize")
     t.record(0.01)
     ```
-    
+
     ```
     # after
     from spectator import GlobalRegistry
-    
+
     GlobalRegistry.pct_timer("server.requestSize").record(0.1)
     ```
 

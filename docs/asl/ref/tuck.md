@@ -1,15 +1,23 @@
 @@@ atlas-signature
-b
-a
+top: Any
+second: Any
 -->
-b
-a
-b
+top: Any
+second: Any
+top: Any
 @@@
 
-Shorthand equivalent to writing: `:swap,:over` 
+Copy the top item to the third position on the stack. This is equivalent to the sequence `:swap,:over`
+and is useful when you need the top item to be accessible after a binary operation.
 
-Example:
+## Parameters
+
+* **top**: The item currently at the top of the stack that will be copied to the third position
+* **second**: The item in the second position (remains unchanged)
+
+## Examples
+
+Basic tuck operation:
 
 @@@ atlas-stacklang
 /api/v1/graph?q=a,b,:tuck
@@ -28,3 +36,15 @@ Example:
 <td></td>
 <td>b</td>
 </tr></tbody></table>
+
+Equivalent sequence using swap and over:
+
+@@@ atlas-stacklang
+/api/v1/graph?q=a,b,:swap,:over
+@@@
+
+## Related Operations
+
+* [:over](over.md) - Copy the second item to the top
+* [:swap](swap.md) - Exchange the top two items
+* [:dup](dup.md) - Duplicate the top item
