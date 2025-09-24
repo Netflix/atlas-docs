@@ -25,6 +25,46 @@ There are only four reserved symbols used for structuring the expression: `,:()`
    passed to the [call](./ref/call.md) command. For example, `(,:dup,)` will push a list with a single
    string value of `":dup"` on to the stack.
 
+### Escaping Reserved Symbols
+
+When you need to include the reserved symbols `,:()` as literal characters within your data, you can
+escape them using Unicode escape sequences. This is useful when working with tag values or string
+literals that contain these special characters.
+
+Unicode escape sequences use the format `\uXXXX` where `XXXX` is the four-digit hexadecimal Unicode
+code point. For example:
+
+- `,` (comma) can be escaped as `\u002C`
+- `:` (colon) can be escaped as `\u003A` 
+- `(` (left parenthesis) can be escaped as `\u0028`
+- `)` (right parenthesis) can be escaped as `\u0029`
+
+#### Example
+
+Consider a scenario where you want to match a tag value that contains a colon:
+
+```
+name,:foo,:eq          # Invalid - colon in :foo is interpreted as a command
+name,\u003Afoo,:eq     # Valid - colon is escaped and treated as literal text
+```
+
+In the first case, `:foo` would be interpreted as a command, which would cause an error. In the
+second case, `\u003Afoo` represents the literal string `:foo`.
+
+#### Preserving Whitespace
+
+Unicode escaping can also be used to preserve whitespace at the beginning and end of tokens,
+which is normally trimmed during parsing. This is useful when exact spacing is important for your
+data:
+
+```
+tag,\u0020value\u0020,:eq    # Preserves leading and trailing spaces around "value"
+```
+
+Without escaping, leading and trailing whitespace would be automatically removed from tokens
+during parsing.
+
+
 ## Data Model
 
 The stack language is primarily used for representing expressions over tagged time series
