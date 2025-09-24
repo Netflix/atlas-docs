@@ -1,16 +1,16 @@
 The Graph API is the primary means to retrieve data from an Atlas store.
 
-The default response is a PNG image plotting data matching the 
-[Atlas Stack Language](../../asl/tutorial.md) expression along with optional parameters 
-to control time ranges, size, style, labels, etc. For a quick overview by example see 
+The default response is a PNG image plotting data matching the
+[Atlas Stack Language](../../asl/tutorial.md) expression along with optional parameters
+to control time ranges, size, style, labels, etc. For a quick overview by example see
 the [examples](examples.md) page.
 
-If graphs look familiar, that's because the design and language were inspired by 
+If graphs look familiar, that's because the design and language were inspired by
 [RRDtool](https://oss.oetiker.ch/rrdtool/). RRD style graphs offer concise and highly
 customizable views of time series data. While a number of observability tools offer
 dynamic charts, a major benefit of these PNG graphs is the ability to snapshot data
-in time, particularly when that data may expire from a high throughput data store; 
-PNGs are forever. Additionally, the majority of email and on-call systems support 
+in time, particularly when that data may expire from a high throughput data store;
+PNGs are forever. Additionally, the majority of email and on-call systems support
 images out of the box without having to worry about porting a dynamic graphing
 library to various browsers and clients.
 
@@ -31,10 +31,10 @@ Additional Output formats, including JSON, can be found in [Outputs](outputs.md)
 
 ### Data
 
-The only required query param is `q` which is the [query expression](../../asl/tutorial.md) 
-used by the user to select and manipulate data. The simplest API query you can make is 
+The only required query param is `q` which is the [query expression](../../asl/tutorial.md)
+used by the user to select and manipulate data. The simplest API query you can make is
 `/api/v1/graph?q=42`. This will produce a graph from Atlas with a straight line having a
-value of `42` for 3 hours[*](#defaults) with a legend including statistics for the query period. 
+value of `42` for 3 hours[*](#defaults) with a legend including statistics for the query period.
 
 All query params related to fetching data:
 
@@ -43,7 +43,7 @@ All query params related to fetching data:
 | `q`    | Query expression      | must be specified by user  | [expr](../../asl/tutorial.md)               |
 | `step` | Step size for data    | auto                       | [duration](../time-parameters.md#durations) |
 
-!!! Warning 
+!!! Warning
     In most cases users should not set `step` directly. The `step` parameter
     is deprecated.
 

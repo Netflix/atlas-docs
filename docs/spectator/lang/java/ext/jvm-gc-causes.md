@@ -40,7 +40,7 @@ The GC locker prevents GC from occurring when JNI code is in a
 [critical region](https://docs.oracle.com/en/java/javase/17/docs/specs/jni/functions.html#getprimitivearraycritical-releaseprimitivearraycritical).
 If GC is needed while a thread is in a critical region, then it will allow them to complete,
 i.e. call the corresponding release function. Other threads will not be permitted to enter a
-critical region. Once all threads are out of critical regions a GC event will be triggered. 
+critical region. Once all threads are out of critical regions a GC event will be triggered.
 
 ### Heap_Inspection_Initiated_GC
 
@@ -62,7 +62,7 @@ Another common example would be clicking the Heap Dump button on the Monitor tab
 ### WhiteBox_Initiated_Young_GC
 
 Most likely you'll never see this value. Used for testing hotspot, it indicates something
-called `sun.hotspot.WhiteBox.youngGC()`. 
+called `sun.hotspot.WhiteBox.youngGC()`.
 
 ### No_GC
 
@@ -141,7 +141,7 @@ A humongous allocation is one where the size is greater than 50% of the G1 regio
 a humongous allocation the jvm checks if it should do a routine
 [evacuation pause](#g1_evacuation_pause) without regard to the actual allocation size, but if
 triggered due to this check the cause will be listed as humongous allocation. This cause is
-also used for any collections used to free up enough space for the allocation. 
+also used for any collections used to free up enough space for the allocation.
 
 ### Last_ditch_collection
 

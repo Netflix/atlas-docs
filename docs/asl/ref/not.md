@@ -1,11 +1,20 @@
 @@@ atlas-signature
-q: Query
+query: Query
 -->
-(!q): Query
+(!query): Query
 @@@
 
-Select time series that have a specified key. For example, consider the following
-query:
+Invert a query condition, selecting time series that do NOT match the specified query. This is
+the logical NOT operation for queries, allowing you to exclude time series that match certain
+criteria.
+
+## Parameters
+
+* **query**: The query condition to invert (result will include time series that DON'T match this query)
+
+## Examples
+
+Select time series that do NOT have a node identifier:
 
 @@@ atlas-stacklang { hilite=:not }
 /api/v1/graph?q=nf.node,:has,:not
@@ -46,3 +55,13 @@ included in the result set:
   </tr>
   </tbody>
 </table>
+
+Notice that only `numRequests` (which has no `nf.node` tag) is highlighted, while all the time
+series that have node identifiers are excluded.
+
+## Related Operations
+
+* [:and](and.md) - Logical AND operation (can be combined with NOT for complex conditions)
+* [:or](or.md) - Logical OR operation (can be combined with NOT for complex conditions)
+* [:has](has.md) - Check if a key exists (commonly used with NOT)
+* [:eq](eq.md) - Basic equality comparison (can be inverted with NOT)

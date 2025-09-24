@@ -9,7 +9,7 @@ metric lifetimes, and route metrics to the correct backend.
 
 The preferred method of using `spectatord` is to use one of the thin-client implementations,
 however, the text-based protocol was designed to make it easy for community-supported clients
-to be developed. It is also easy to use in shell scripts with common command line tools.  
+to be developed. It is also easy to use in shell scripts with common command line tools.
 
 [SpectatorD]: https://github.com/Netflix-Skunkworks/spectatord
 [Atlas]: https://github.com/Netflix/atlas
@@ -176,7 +176,7 @@ but this can be modified with the `--admin_port` flag. The endpoints which chang
 only be accessed from localhost.
 
 * `GET /`
-    * Returns a service description and list of available endpoints. 
+    * Returns a service description and list of available endpoints.
 * `GET /config`
     * Returns the current SpectatorD configuration, including the current set of common tags.
 * `GET /config/common_tags`
@@ -203,7 +203,7 @@ only be accessed from localhost.
     * Return an object containing lists of all metrics currently known to the Registry, grouped
     by type.
 * `DELETE /metrics/A`
-    * Delete all AgeGauge metrics from the Registry. 
+    * Delete all AgeGauge metrics from the Registry.
 * `DELETE /metrics/A/{id}`
     * Delete one AgeGauge metric from the Registry, identified by the `id`.
     * Example:
@@ -213,7 +213,7 @@ only be accessed from localhost.
         http://localhost:1234/metrics/A/fooIsTheName,some.tag=val1,some.otherTag=val2
         ```
 * `DELETE /metrics/g`
-    * Delete all Gauge metrics from the Registry. 
+    * Delete all Gauge metrics from the Registry.
 * `DELETE /metrics/g/{id}`
     * Delete one Gauge metric from the Registry, identified by the `id`.
     * Example:
@@ -242,7 +242,7 @@ Unix Dgram         8             11.46s (873k rps)   9.89s (1011k rps)
 Unix Dgram         32            10.38s (963k rps)   8.49s (1178k rps)
 ```
 
-The UDP transport is particularly sensitive the max receive buffer size (16MB on our systems). 
+The UDP transport is particularly sensitive the max receive buffer size (16MB on our systems).
 
 Our tests indicate that sending 430K rps to the UDP port did not drop packets, but if there is a
 need for higher throughput, then tweaking `/proc/sys/net/unix/max_dgram_qlen` is recommended.

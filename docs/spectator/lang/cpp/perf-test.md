@@ -54,7 +54,7 @@ int main()
 
     Logger::info("Iterations completed: {}", iterations);
     Logger::info("Total elapsed time: {:.2f} seconds", total_elapsed);
-    Logger::info("Rate: {:.2f} iterations/second", rate_per_second);              
+    Logger::info("Rate: {:.2f} iterations/second", rate_per_second);
     return 0;
 }
 ```

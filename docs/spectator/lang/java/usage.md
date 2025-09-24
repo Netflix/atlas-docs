@@ -1,7 +1,7 @@
 ## Project
 
 * [Source](https://github.com/Netflix/spectator)
-* [Javadoc](https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/) 
+* [Javadoc](https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/)
 * **Product Lifecycle:** GA
 * **Requirements:** Java >= 8
 

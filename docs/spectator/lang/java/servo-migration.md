@@ -65,7 +65,7 @@ guides on how Servo constructs can be ported over. The sub-sections are the clas
 types supported by Servo.
 
 For users at Netflix, we are not actively pushing teams to migrate or do any additional work. Servo
-is still supported and if it works for your use-case, then feel free to continue using it. 
+is still supported and if it works for your use-case, then feel free to continue using it.
 
 ### Registration
 
@@ -148,7 +148,7 @@ class Foo {
 ```
 
 This ensures that there is a single copy for a given id. In spectator this
-example would look like: 
+example would look like:
 
 ```java
 public class Foo {
@@ -348,7 +348,7 @@ Not supported, see the [overview of differences](#differences).
 
 ### BasicStopwatch
 
-There isn't an explicit stopwatch class in Spectator. Use a timing call directly. 
+There isn't an explicit stopwatch class in Spectator. Use a timing call directly.
 
 Servo:
 

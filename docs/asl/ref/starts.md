@@ -1,19 +1,28 @@
 @@@ atlas-signature
-v: String
-k: String
+value: String
+key: String
 -->
 Query
 @@@
 
-Select time series where the value for a key has the specified prefix. For example, consider
-the following query:
+Select time series where the value for a tag key starts with the specified prefix string.
+This provides a more efficient alternative to regular expressions when you only need simple
+prefix matching. It performs exact prefix matching and is case-sensitive.
+
+## Parameters
+
+* **key**: The tag key to check (e.g., `name`, `nf.app`)
+* **value**: The prefix string that tag values must start with
+
+## Examples
+
+Find all metrics whose name starts with "ssCpu":
 
 @@@ atlas-stacklang { hilite=:starts }
 /api/v1/graph?q=name,ssCpu,:starts
 @@@
 
-When matching against the sample data in the table below, the highlighted time series would be
-included in the result set:
+When matching against sample data, the highlighted time series would be included:
 
 <table>
   <thead>
@@ -47,3 +56,11 @@ included in the result set:
   </tr>
   </tbody>
 </table>
+
+## Related Operations
+
+* [:ends](ends.md) - Match by suffix instead of prefix
+* [:contains](contains.md) - Match by substring anywhere in the value
+* [:eq](eq.md) - Exact string matching
+* [:re](re.md) - Full regular expression matching (more powerful but slower)
+* [:and](and.md) / [:or](or.md) - Combine with other query conditions

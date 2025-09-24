@@ -31,7 +31,7 @@ By default all axes will pick up [axis settings](../../asl/ref/axis.md) with no 
 @@@
 
 Bounds and other axis settings can be set per axis, e.g., this graph moves the constant line for
-`42` to a separate axis and sets the lower bound to `0` via the `&l.1=0` parameter. This would 
+`42` to a separate axis and sets the lower bound to `0` via the `&l.1=0` parameter. This would
 work as well for `&u.1=100e3`. Append the index after the `l.` or `u.` :
 
 @@@ atlas-uri

@@ -1,12 +1,22 @@
 @@@ atlas-signature
-v: String
-k: String
+value: String
+key: String
 -->
-(k == v): Query
+(key == value): Query
 @@@
 
-Select time series that have a specified value for a key. For example, consider the following
-query:
+Select time series that have a specified value for a key. This is the most common operator for
+filtering time series data and forms the foundation of most queries. The comparison is case-sensitive
+and requires an exact string match.
+
+## Parameters
+
+* **key**: The tag key to match against (e.g., `name`, `nf.app`, `status`)
+* **value**: The exact value that the key must equal for a time series to be included
+
+## Examples
+
+Select all time series where the name tag equals "ssCpuUser":
 
 @@@ atlas-stacklang { hilite=:eq }
 /api/v1/graph?q=name,ssCpuUser,:eq
@@ -47,3 +57,11 @@ included in the result set:
   </tr>
   </tbody>
 </table>
+
+## Related Operations
+
+* [:and](and.md) - Combine multiple query conditions
+* [:or](or.md) - Match any of multiple query conditions
+* [:re](re.md) - Match using regular expressions (case-sensitive)
+* [:in](in.md) - Match against a list of possible values
+* [:has](has.md) - Check if a tag key exists regardless of value

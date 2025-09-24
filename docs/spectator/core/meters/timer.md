@@ -1,9 +1,9 @@
 # Timer
 
 A Timer is used to measure how long (in seconds) some event is taking. Timer measurements
-are typically short, less than 1 minute. 
+are typically short, less than 1 minute.
 
-A selection of specialized timers include: 
+A selection of specialized timers include:
 
 * `LongTaskTimer` - Periodically reports the time taken for a long running task (> 1 minute). See
   the [Long Task Timer] pattern for details.
@@ -26,7 +26,7 @@ A selection of specialized timers include:
 
     you would get a nonsense value that is the sum of the reported statistics.
 
-When querying the results of a timer, use one of the operators below to generate a useful 
+When querying the results of a timer, use one of the operators below to generate a useful
 response.
 
 ### Average Measurement (:dist-avg)

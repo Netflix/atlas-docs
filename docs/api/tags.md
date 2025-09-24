@@ -23,9 +23,9 @@ Specifies the output format to use. The default is `json`.
 
 ### Limit (limit)
 
-Maximum number of results to return before paging the response. If the response is paged 
-a `x-nflx-atlas-next-offset` will be set to indicate the next offset. Pass the value with an 
-[offset](#offset-offset) param to get the next part of the list. If the header is not present 
+Maximum number of results to return before paging the response. If the response is paged
+a `x-nflx-atlas-next-offset` will be set to indicate the next offset. Pass the value with an
+[offset](#offset-offset) param to get the next part of the list. If the header is not present
 there is no more data.
 
 ### Offset (offset)
@@ -36,5 +36,5 @@ If the response is paged this param is used to indicate where the next request s
 
 Query expression used to select a set of metrics and manipulate them for
 presentation in a graph. The query expression can use query
-and std commands described in the reference. 
+and std commands described in the reference.
 

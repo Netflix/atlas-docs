@@ -1,12 +1,12 @@
 # Log4j1 Appender
 
 Custom appender for [log4j1](http://logging.apache.org/log4j/1.2/) to track the number of
-log messages reported. 
+log messages reported.
 
 !!! note
     Log4j 1.x has reached [end of life][eol] and is no longer supported by Apache. This extension
     is provided for some users that have difficulty moving to a supported version of log4j.
-    
+
 [eol]: https://blogs.apache.org/foundation/entry/apache_logging_services_project_announces
 
 ## Getting Started

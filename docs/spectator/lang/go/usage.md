@@ -196,7 +196,7 @@ Possible values are:
 * `unix:///path/to/socket` - Write to a custom Unix domain socket (e.g. `unix:///tmp/some.socket`).
 
 Location can also be set through the environment variable `SPECTATOR_OUTPUT_LOCATION`. If both are set,
-the environment variable takes precedence over the passed config. 
+the environment variable takes precedence over the passed config.
 
 The environment variable `SPECTATOR_OUTPUT_LOCATION` can be set to `none` to disable metrics collection.
 
@@ -268,7 +268,7 @@ writes to spectatord. Note that the spectatord publish interval is every 5 secon
 experiment with different buffer sizes and publish intervals.
 
 While the bufferSize can be set as low as 65537, it will guarantee a minimum size of 2 * CPU * 60KB, to
-ensure that there is always at least 1 chunk per shard. On a system with 1 CPU, this will be 122,880 bytes, 
+ensure that there is always at least 1 chunk per shard. On a system with 1 CPU, this will be 122,880 bytes,
 and on a system with 4 CPU, this will be 491,520 bytes.
 
 The LowLatencyBuffer reports metrics, which can be used to monitor buffer performance:

@@ -116,7 +116,7 @@ As a concrete example, suppose we have two metrics:
 Id poolSize = registry.createId("size")
   .withTag("class", "ThreadPool")
   .withTag("id", "server-requests");
-  
+
 Id poolSize = registry.createId("size")
   .withTag("class", "Database")
   .withTag("table", "users");
@@ -131,7 +131,7 @@ number of items in a database, which has no meaning.
 ```java
 Id poolSize = registry.createId("threadpool.size")
   .withTag("id", "server-requests");
-  
+
 Id poolSize = registry.createId("db.size")
   .withTag("table", "users");
 ```

@@ -1,33 +1,55 @@
 @@@ atlas-signature
-String
-TimeSeriesExpr
+paletteName: String
+expr: TimeSeriesExpr
 -->
 StyleExpr
 @@@
 
-Set the [palette](../../api/graph/color-palettes.md) to use for the results of an expression. This
-operator is allows for scoping a palette to a particular group by instead of to
-all lines that share the same axis. A common use-case is to have multiple stacked
-group by expressions using different palettes. For example, suppose I want to create
-a graph showing overall request per second hitting my services with successful requests
-shown in shades of [green](../../api/graph/color-palettes.md#greens) and errors in shades of
-[red](../../api/graph/color-palettes.md#reds). This can make it easy to visually see if a change is
-due to an increase in errors:
+Set the color palette to use for automatically assigning colors to multiple time series.
+This operator allows scoping a palette to a specific expression group rather than applying
+it to all lines on the same axis. This is particularly useful when combining multiple
+grouped expressions that should use different color themes.
 
+## Parameters
+
+* **expr**: The time series expression to apply the palette to
+* **paletteName**: Name of the color palette (see available palettes below)
+
+## Common Use Case
+
+A typical scenario is creating graphs that show successful requests in green shades and
+errors in red shades. This visual distinction makes it easy to identify whether changes
+are due to increased errors or increased successful traffic:
+
+**Spike in Errors:**
 ![Spike in Errors](../../images/palette-errors.png)
 
-Or a spike in successful requests:
-
+**Spike in Success:**
 ![Spike in Success](../../images/palette-success.png)
 
-Examples:
+## Examples
+
+Applying a red palette to a single time series:
 
 @@@ atlas-example { hilite=:palette }
 Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
 After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,reds,:palette
 @@@
 
+Applying a palette to grouped time series:
+
 @@@ atlas-example { hilite=:palette }
 Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by
 After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by,reds,:palette
 @@@
+
+## Related Operations
+
+* [:color](color.md) - Set specific colors for individual series
+* [:by](by.md) - Group data that benefits from palette application
+* [:stack](stack.md) - Stack areas with different palette colors
+* [:alpha](alpha.md) - Adjust transparency of palette colors
+
+## See Also
+
+* [Color Palettes](../../api/graph/color-palettes.md) - Complete list of available palettes

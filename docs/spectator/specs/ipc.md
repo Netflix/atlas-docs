@@ -6,7 +6,7 @@ IPC implementations.
 
 ## Dimensions Common to All Metrics
 
-Not all dimensions are applicable for all of the metrics, and later in the sections 
+Not all dimensions are applicable for all of the metrics, and later in the sections
 for each specific metric, the applicable dimensions are specified.
 
 Also note that not all dimensions have been implemented or are applicable for _all_
@@ -219,8 +219,8 @@ IPC messages from a client.
 !!! Note
     Distribution summaries are not suitable for use-cases trying to perform hierarchical accumulation across dimensions.
     Each measurement is recorded with a certain set of dimensions, as illustrated below with the inflight metric.
-    Therefore, when using the [:dist-max] operator to query over a set of filters, the response will represent the 
-    maximum inflight count for a given set of tag values within the group, **not** the accumulated value of measurements 
+    Therefore, when using the [:dist-max] operator to query over a set of filters, the response will represent the
+    maximum inflight count for a given set of tag values within the group, **not** the accumulated value of measurements
     across the entire group.
 
 **Unit:** inflight message count

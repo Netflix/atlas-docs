@@ -8,11 +8,11 @@ Counters are reported to the backend as a rate-per-second. This makes it much ea
 to reason about the measurement and allows for aggregating the counter across instances.
 
 In Atlas, the `:per-step` operator can be used to convert them back into a count-per-step on a
-graph. 
+graph.
 
 !!! Note
-    For high performance code, such as incrementing in a tight loop that lasts less than a 
-    reporting interval, increment a local variable and add the final value to the counter after 
+    For high performance code, such as incrementing in a tight loop that lasts less than a
+    reporting interval, increment a local variable and add the final value to the counter after
     the loop has completed.
 
 ## Languages

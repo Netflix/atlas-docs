@@ -35,7 +35,7 @@ Unicode escape sequences use the format `\uXXXX` where `XXXX` is the four-digit 
 code point. For example:
 
 - `,` (comma) can be escaped as `\u002C`
-- `:` (colon) can be escaped as `\u003A` 
+- `:` (colon) can be escaped as `\u003A`
 - `(` (left parenthesis) can be escaped as `\u0028`
 - `)` (right parenthesis) can be escaped as `\u0029`
 
@@ -115,7 +115,7 @@ All expressions generally have four parts:
 
 ### Choosing
 
-The "choosing" or predicate section is used to select a set of time series. The 
+The "choosing" or predicate section is used to select a set of time series. The
 primary predicate operators are
 [:eq](ref/eq.md) and [:and](ref/and.md).
 

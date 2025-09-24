@@ -1,13 +1,13 @@
 Atlas primarily supports visualizing data in line charts. As of 1.8, Atlas can also visualize
 via heatmaps using the [`:heatmap`](../../api/graph/line-styles.md#heatmap) line style.
-The graph area is broken up into a series of cells and a count for each cell is incremented when 
-a measurement falls within the cells boundaries. Colors or shades of colors then fill in cells 
+The graph area is broken up into a series of cells and a count for each cell is incremented when
+a measurement falls within the cells boundaries. Colors or shades of colors then fill in cells
 based on the final count.
 
 ## Percentiles
 
 Heatmaps are particularly useful on top of [percentile](../../spectator/patterns/percentile-timer.md)
-metrics to analyze the entire measurement range. 
+metrics to analyze the entire measurement range.
 
 **Note** Using the [log linear](axis-scale.md#log-linear) scale will help to highlight clustered regions of measurements
 via `&scale=log-linear`. The example also uses data not available in the demo Atlas instance.
@@ -20,7 +20,7 @@ via `&scale=log-linear`. The example also uses data not available in the demo At
 
 ## Bounds
 
-The `&heatmap_l=` and `&heatmap_u` parameters can be used to narrow the range of cells 
+The `&heatmap_l=` and `&heatmap_u` parameters can be used to narrow the range of cells
 displayed in a heatmap. Heatmap bounds act on the _count_ of measurements in a cell and the
 palette colors or shades chosen. Depending on the bound limits, some cells may appear empty.
 
@@ -32,7 +32,7 @@ With Bounds (`&heatmap_l=1.2&heatmap_u=1.3`): /api/v1/graph?e=2012-01-01T00:00&q
 ## Palette
 
 The palette used for filling heatmap cells can be changed via the `&heatmap_palette=` parameter.
-By default, a color is chosen from the global palette (based on whether the heatmap is the 
+By default, a color is chosen from the global palette (based on whether the heatmap is the
 first or a later expression). A gradient is then applied to that color with a lighter gradient
 representing smaller cell counts and darker representing larger counts.
 
@@ -58,7 +58,7 @@ For further information, see [Custom Color Palettes](color-palettes.md#custom).
 
 ### Order of Expressions
 
-When overlaying expressions with a heatmap and using the default palette, the order of 
+When overlaying expressions with a heatmap and using the default palette, the order of
 expressions determines the color gradient used for cells. For example, if the heatmap
 expression is second in the query, the second palette color will be used as the gradient:
 

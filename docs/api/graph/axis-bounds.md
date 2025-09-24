@@ -74,7 +74,7 @@ Note the `&l=0` and `&u=60e3` parameters.
 /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&l=0&u=60e3&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by
 @@@
 
-!!! Note 
+!!! Note
     It is possible to define the boundaries beyond the range of the data source
     so that a graph appears empty.
 

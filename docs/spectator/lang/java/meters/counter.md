@@ -37,7 +37,7 @@ Then call increment when an event occurs:
 ```
 
 Optionally, an amount can be passed in when calling increment. This is useful when a collection of
-events happen together. 
+events happen together.
 
 ```java
   public void insertAll(Collection<Object> objs) {

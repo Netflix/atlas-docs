@@ -5,7 +5,7 @@
 The most common use of Gauges is by registering a hook with Spectator, so that it will poll the
 values in the background. This is done by using the [PolledMeter] helper class.
 
-[PolledMeter]: https://static.javadoc.io/com.netflix.spectator/spectator-api/{{ spectator_api.java_latest }}/com/netflix/spectator/api/patterns/PolledMeter.html 
+[PolledMeter]: https://static.javadoc.io/com.netflix.spectator/spectator-api/{{ spectator_api.java_latest }}/com/netflix/spectator/api/patterns/PolledMeter.html
 
 A Polled Gauge is registered by passing in an id, a reference to the object, and a function to get
 or compute a numeric value based on the object. Note that a Gauge should only be registered once,
@@ -40,7 +40,7 @@ The Spectator [Registry](../registry/overview.md) will keep a weak reference to 
 the object is garbage collected, then it will automatically drop the registration. In the example
 above, the Registry will have a weak reference to `numConnections` and the server instance will
 have a strong reference to `numConnections`. If the server instance goes away, then the Gauge
-will as well. 
+will as well.
 
 When multiple Gauges are registered with the same id, the reported value will be the sum of the
 matches. For example, if multiple instances of the `HttpServer` class were created on different
