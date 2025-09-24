@@ -53,4 +53,4 @@ name,requestLatency,:eq,(,50,),:percentiles
 
 [spectator]: ../../spectator/index.md
 [PercentileTimer]: ../../spectator/patterns/percentile-timer.md
-[PercentileDistributionSummary]: ../../spectator/patterns/percentile-dist-summary.md
+[PercentileDistributionSummary]: ../../spectator/core/meters/dist-summary.md

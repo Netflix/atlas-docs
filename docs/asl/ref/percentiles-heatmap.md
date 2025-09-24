@@ -57,6 +57,6 @@ Default: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=nam
 
 [spectator]: ../../spectator/index.md
 [PercentileTimer]: ../../spectator/patterns/percentile-timer.md
-[PercentileDistributionSummary]: ../../spectator/patterns/percentile-dist-summary.md
+[PercentileDistributionSummary]: ../../spectator/core/meters/dist-summary.md
 
 Since: 1.8

@@ -35,7 +35,7 @@ The metrics must be instrumented using percentile timers or distribution summari
 collect histogram information:
 
 * **[PercentileTimer](../../spectator/patterns/percentile-timer.md)** - For timing measurements
-* **[PercentileDistributionSummary](../../spectator/patterns/percentile-dist-summary.md)** - For distribution measurements
+* **[PercentileDistributionSummary](../../spectator/core/meters/dist-summary.md)** - For distribution measurements
 
 ## Examples
 
@@ -61,4 +61,4 @@ name,requestLatency,:eq,1,10,:sample-count
 ## See Also
 
 * [Percentile Timer Pattern](../../spectator/patterns/percentile-timer.md) - Instrumentation for timing with histograms
-* [Percentile Distribution Summary Pattern](../../spectator/patterns/percentile-dist-summary.md) - Distribution measurement patterns
+* [Percentile Distribution Summary Pattern](../../spectator/core/meters/dist-summary.md) - Distribution measurement patterns

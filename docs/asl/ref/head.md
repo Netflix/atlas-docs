@@ -28,7 +28,6 @@ This takes all the series grouped by cluster and keeps only the first 2 series i
 ## Related Operations
 
 * [:limit](limit.md) - Equivalent operation (`:head` is an alias for `:limit`)
-* [:tail](tail.md) - Take the last N series instead of the first N
 * [:sort](sort.md) - Order series before limiting (often used together)
 * [:by](by.md) - Group series (commonly used before limiting)
-* [:top-k](top-k.md) - Select top N based on values rather than position
+* [:topk](topk.md) - Select top N based on values rather than position

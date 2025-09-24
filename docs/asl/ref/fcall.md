@@ -48,8 +48,8 @@ This example:
 Executing a stored function to square the top stack item:
 
 @@@ atlas-example { hilite=:fcall }
-Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=square,(,dup,:mul,),:set,name,sps,:eq,:sum
-After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=square,(,dup,:mul,),:set,name,sps,:eq,:sum,square,:fcall
+Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=square,(,:dup,:mul,),:set,name,sps,:eq,:sum
+After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=square,(,:dup,:mul,),:set,name,sps,:eq,:sum,square,:fcall
 @@@
 
 This stores the squaring program `(,:dup,:mul,)` in variable `square`, then calls it using
