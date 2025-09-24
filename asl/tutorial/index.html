@@ -1284,6 +1284,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Parts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#escaping-reserved-symbols" class="md-nav__link">
+    <span class="md-ellipsis">
+      Escaping Reserved Symbols
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Escaping Reserved Symbols">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preserving-whitespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preserving Whitespace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -8710,6 +8749,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Parts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#escaping-reserved-symbols" class="md-nav__link">
+    <span class="md-ellipsis">
+      Escaping Reserved Symbols
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Escaping Reserved Symbols">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preserving-whitespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preserving Whitespace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -8825,6 +8903,33 @@ push a list of tag keys to the stack and execute the command <code>:by</code> to
    passed to the <a href="../ref/call/">call</a> command. For example, <code>(,:dup,)</code> will push a list with a single
    string value of <code>":dup"</code> on to the stack.</li>
 </ol>
+<h3 id="escaping-reserved-symbols">Escaping Reserved Symbols<a class="headerlink" href="#escaping-reserved-symbols" title="Permanent link">&para;</a></h3>
+<p>When you need to include the reserved symbols <code>,:()</code> as literal characters within your data, you can
+escape them using Unicode escape sequences. This is useful when working with tag values or string
+literals that contain these special characters.</p>
+<p>Unicode escape sequences use the format <code>\uXXXX</code> where <code>XXXX</code> is the four-digit hexadecimal Unicode
+code point. For example:</p>
+<ul>
+<li><code>,</code> (comma) can be escaped as <code>\u002C</code></li>
+<li><code>:</code> (colon) can be escaped as <code>\u003A</code> </li>
+<li><code>(</code> (left parenthesis) can be escaped as <code>\u0028</code></li>
+<li><code>)</code> (right parenthesis) can be escaped as <code>\u0029</code></li>
+</ul>
+<h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
+<p>Consider a scenario where you want to match a tag value that contains a colon:</p>
+<div class="highlight"><pre><span></span><code>name,:foo,:eq          # Invalid - colon in :foo is interpreted as a command
+name,\u003Afoo,:eq     # Valid - colon is escaped and treated as literal text
+</code></pre></div>
+<p>In the first case, <code>:foo</code> would be interpreted as a command, which would cause an error. In the
+second case, <code>\u003Afoo</code> represents the literal string <code>:foo</code>.</p>
+<h4 id="preserving-whitespace">Preserving Whitespace<a class="headerlink" href="#preserving-whitespace" title="Permanent link">&para;</a></h4>
+<p>Unicode escaping can also be used to preserve whitespace at the beginning and end of tokens,
+which is normally trimmed during parsing. This is useful when exact spacing is important for your
+data:</p>
+<div class="highlight"><pre><span></span><code>tag,\u0020value\u0020,:eq    # Preserves leading and trailing spaces around &quot;value&quot;
+</code></pre></div>
+<p>Without escaping, leading and trailing whitespace would be automatically removed from tokens
+during parsing.</p>
 <h2 id="data-model">Data Model<a class="headerlink" href="#data-model" title="Permanent link">&para;</a></h2>
 <p>The stack language is primarily used for representing expressions over tagged time series
 data. A tag is a string key value pair used to describe a measurement. Atlas requires at least
