@@ -9156,7 +9156,7 @@ Look at the <code>-agentlib</code> param to java to see what agents are configur
 <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/jni/functions.html#getprimitivearraycritical-releaseprimitivearraycritical">critical region</a>.
 If GC is needed while a thread is in a critical region, then it will allow them to complete,
 i.e. call the corresponding release function. Other threads will not be permitted to enter a
-critical region. Once all threads are out of critical regions a GC event will be triggered. </p>
+critical region. Once all threads are out of critical regions a GC event will be triggered.</p>
 <h3 id="heap_inspection_initiated_gc">Heap_Inspection_Initiated_GC<a class="headerlink" href="#heap_inspection_initiated_gc" title="Permanent link">&para;</a></h3>
 <p>GC was initiated by an inspection operation on the heap. For example you can trigger this
 with <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/man/jmap.html">jmap</a>:</p>
@@ -9169,7 +9169,7 @@ with <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/man/jmap.html
 <a href="https://visualvm.github.io/">VisualVM</a>.</p>
 <h3 id="whitebox_initiated_young_gc">WhiteBox_Initiated_Young_GC<a class="headerlink" href="#whitebox_initiated_young_gc" title="Permanent link">&para;</a></h3>
 <p>Most likely you'll never see this value. Used for testing hotspot, it indicates something
-called <code>sun.hotspot.WhiteBox.youngGC()</code>. </p>
+called <code>sun.hotspot.WhiteBox.youngGC()</code>.</p>
 <h3 id="no_gc">No_GC<a class="headerlink" href="#no_gc" title="Permanent link">&para;</a></h3>
 <p>Used for CMS to indicate concurrent phases.</p>
 <h3 id="allocation_failure">Allocation_Failure<a class="headerlink" href="#allocation_failure" title="Permanent link">&para;</a></h3>
@@ -9219,7 +9219,7 @@ regions. For more details see <a href="https://blogs.oracle.com/poonam/entry/und
 a humongous allocation the jvm checks if it should do a routine
 <a href="#g1_evacuation_pause">evacuation pause</a> without regard to the actual allocation size, but if
 triggered due to this check the cause will be listed as humongous allocation. This cause is
-also used for any collections used to free up enough space for the allocation. </p>
+also used for any collections used to free up enough space for the allocation.</p>
 <h3 id="last_ditch_collection">Last_ditch_collection<a class="headerlink" href="#last_ditch_collection" title="Permanent link">&para;</a></h3>
 <p>For perm gen (java 7 or earlier) and metaspace (java 8+) a last ditch collection will be
 triggered if an allocation fails and the memory pool cannot be expanded.</p>

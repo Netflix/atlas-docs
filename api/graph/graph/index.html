@@ -8861,16 +8861,16 @@
   <h1>Introduction</h1>
 
 <p>The Graph API is the primary means to retrieve data from an Atlas store.</p>
-<p>The default response is a PNG image plotting data matching the 
-<a href="../../../asl/tutorial/">Atlas Stack Language</a> expression along with optional parameters 
-to control time ranges, size, style, labels, etc. For a quick overview by example see 
+<p>The default response is a PNG image plotting data matching the
+<a href="../../../asl/tutorial/">Atlas Stack Language</a> expression along with optional parameters
+to control time ranges, size, style, labels, etc. For a quick overview by example see
 the <a href="../examples/">examples</a> page.</p>
-<p>If graphs look familiar, that's because the design and language were inspired by 
+<p>If graphs look familiar, that's because the design and language were inspired by
 <a href="https://oss.oetiker.ch/rrdtool/">RRDtool</a>. RRD style graphs offer concise and highly
 customizable views of time series data. While a number of observability tools offer
 dynamic charts, a major benefit of these PNG graphs is the ability to snapshot data
-in time, particularly when that data may expire from a high throughput data store; 
-PNGs are forever. Additionally, the majority of email and on-call systems support 
+in time, particularly when that data may expire from a high throughput data store;
+PNGs are forever. Additionally, the majority of email and on-call systems support
 images out of the box without having to worry about porting a dynamic graphing
 library to various browsers and clients.</p>
 <p>The API only supports HTTP query strings at this time. This makes it easy to construct
@@ -8882,10 +8882,10 @@ queries with tooling and share the URIs with other users. No JSON request payloa
 <p><code>GET</code> - Only the GET method is allowed at this time.</p>
 <h2 id="query-parameters">Query Parameters<a class="headerlink" href="#query-parameters" title="Permanent link">&para;</a></h2>
 <h3 id="data">Data<a class="headerlink" href="#data" title="Permanent link">&para;</a></h3>
-<p>The only required query param is <code>q</code> which is the <a href="../../../asl/tutorial/">query expression</a> 
-used by the user to select and manipulate data. The simplest API query you can make is 
+<p>The only required query param is <code>q</code> which is the <a href="../../../asl/tutorial/">query expression</a>
+used by the user to select and manipulate data. The simplest API query you can make is
 <code>/api/v1/graph?q=42</code>. This will produce a graph from Atlas with a straight line having a
-value of <code>42</code> for 3 hours<a href="#defaults">*</a> with a legend including statistics for the query period. </p>
+value of <code>42</code> for 3 hours<a href="#defaults">*</a> with a legend including statistics for the query period.</p>
 <p>All query params related to fetching data:</p>
 <table>
 <thead>

@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -4782,6 +4787,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    each
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -4793,6 +4811,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8650,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8612,28 +8709,49 @@
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td>function(items[N-1])</td></tr><tr><td>...</td></tr><tr><td>function(items[0])</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Pops a list off the stack and executes it as a program. </p>
-<p>Example:</p>
+<p>Execute a function for each element in a list, processing elements in order from first to last.
+Unlike <a href="../map/">:map</a>, this operation executes the function for its side effects and places the
+results directly on the stack rather than collecting them into a new list.</p>
+<p>The function is applied to each element individually, and the results are pushed onto the stack
+with the results from the last element ending up on top.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>items</strong>: The input list containing elements to process</li>
+<li><strong>function</strong>: A list representing the function/program to execute for each element</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Apply the <code>:dup</code> operation to each element in a list:</p>
 <pre>(,a,b,),(,<a href="https://netflix.github.io/atlas-docs/asl/ref/dup/">:dup</a>,
 ),<a href="https://netflix.github.io/atlas-docs/asl/ref/each/">:each</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
 <td>0</td>
 <td>List(:dup)</td>
-<td>a</td>
+<td>b</td>
 </tr><tr>
 <td>1</td>
 <td>List(a, b)</td>
-<td>a</td>
+<td>b</td>
 </tr><tr>
 <td>2</td>
 <td></td>
-<td>b</td>
+<td>a</td>
 </tr><tr>
 <td>3</td>
 <td></td>
-<td>b</td>
+<td>a</td>
 </tr></tbody></table>
+
+<p>This takes the list <code>(a, b)</code> and applies <code>:dup</code> to each element:
+1. First processes <code>a</code>, duplicating it to get <code>a, a</code> (pushed to stack)
+2. Then processes <code>b</code>, duplicating it to get <code>b, b</code> (pushed on top)
+3. Final stack (top to bottom): <code>b, b, a, a</code></p>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../map/">:map</a> - Apply function to each element and collect results into a new list</li>
+<li><a href="../call/">:call</a> - Execute a single function/program</li>
+<li><a href="../list/">:list</a> - Create lists that can be processed with each</li>
+</ul>
 
 
 

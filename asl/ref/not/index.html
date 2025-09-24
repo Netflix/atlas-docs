@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1665,6 +1670,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    not
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1676,6 +1694,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8650,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,12 +8705,19 @@
   <h1>not</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>q: Query</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>query: Query</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
-<td><strong>Output Stack:</strong><table><tbody><tr><td>(!q): Query</td></tr></tbody></table></td>
+<td><strong>Output Stack:</strong><table><tbody><tr><td>(!query): Query</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Select time series that have a specified key. For example, consider the following
-query:</p>
+<p>Invert a query condition, selecting time series that do NOT match the specified query. This is
+the logical NOT operation for queries, allowing you to exclude time series that match certain
+criteria.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>query</strong>: The query condition to invert (result will include time series that DON'T match this query)</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Select time series that do NOT have a node identifier:</p>
 <pre>nf.node,<a href="https://netflix.github.io/atlas-docs/asl/ref/has/">:has</a>,
 <a href="https://netflix.github.io/atlas-docs/asl/ref/not/"><span class="atlas-hilite">:not</span></a>
 </pre>
@@ -8651,6 +8755,16 @@ included in the result set:</p>
   </tr>
   </tbody>
 </table>
+
+<p>Notice that only <code>numRequests</code> (which has no <code>nf.node</code> tag) is highlighted, while all the time
+series that have node identifiers are excluded.</p>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../and/">:and</a> - Logical AND operation (can be combined with NOT for complex conditions)</li>
+<li><a href="../or/">:or</a> - Logical OR operation (can be combined with NOT for complex conditions)</li>
+<li><a href="../has/">:has</a> - Check if a key exists (commonly used with NOT)</li>
+<li><a href="../eq/">:eq</a> - Basic equality comparison (can be inverted with NOT)</li>
+</ul>
 
 
 

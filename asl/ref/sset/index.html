@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -5104,6 +5109,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    sset
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -5115,6 +5133,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stack-order-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stack Order Difference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8659,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stack-order-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stack Order Difference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,12 +8723,19 @@
   <h1>sset</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>k</td></tr><tr><td>v</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>key: String</td></tr><tr><td>value: Any</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Shorthand equivalent to writing: <code>:swap,:set</code> </p>
-<p>Example:</p>
+<p>Set a variable by swapping the stack order first. This is equivalent to <code>:swap,:set</code> and
+is useful when you have the key and value in the wrong order on the stack.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>key</strong>: The variable name (string identifier) - expected on second position</li>
+<li><strong>value</strong>: The value to store (can be any type) - expected on top of stack</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Setting a variable with swapped stack order:</p>
 <pre>a,b,<a href="https://netflix.github.io/atlas-docs/asl/ref/sset/">:sset</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8625,6 +8747,19 @@
 <td>a</td>
 <td></td>
 </tr></tbody></table>
+
+<p>This is equivalent to: <code>a,b,:swap,:set</code> which stores value "a" under key "b".</p>
+<h2 id="stack-order-difference">Stack Order Difference<a class="headerlink" href="#stack-order-difference" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><code>:set</code></strong> expects: <code>key, value, :set</code> (key on bottom, value on top)</li>
+<li><strong><code>:sset</code></strong> expects: <code>value, key, :sset</code> (value on bottom, key on top)</li>
+</ul>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../set/">:set</a> - Set variables with standard stack order</li>
+<li><a href="../swap/">:swap</a> - Swap stack items (<code>:sset</code> includes this operation)</li>
+<li><a href="../get/">:get</a> - Retrieve stored variable values</li>
+</ul>
 
 
 

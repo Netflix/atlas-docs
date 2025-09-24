@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1573,6 +1578,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    has
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1584,6 +1602,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8650,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,13 +8705,20 @@
   <h1>has</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>k: String</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>key: String</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td>Query</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Select time series that have a specified key. For example, consider the following
-query:</p>
-<pre>nf.node,<a href="https://netflix.github.io/atlas-docs/asl/ref/has/">:has</a>
+<p>Select time series that have a specified tag key, regardless of the key's value. This is useful
+for filtering based on the presence of optional tags or finding time series that have been
+tagged with specific dimensions.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>key</strong>: The tag key name to check for existence (e.g., <code>nf.node</code>, <code>status</code>, <code>env</code>)</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Select all time series that have a node identifier:</p>
+<pre>nf.node,<a href="https://netflix.github.io/atlas-docs/asl/ref/has/"><span class="atlas-hilite">:has</span></a>
 </pre>
 <p>When matching against the sample data in the table below, the highlighted time series would be
 included in the result set:</p>
@@ -8650,6 +8754,16 @@ included in the result set:</p>
   </tr>
   </tbody>
 </table>
+
+<p>Notice that only time series with a value in the <code>nf.node</code> column are highlighted, while
+<code>numRequests</code> which has no <code>nf.node</code> tag is not selected.</p>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../eq/">:eq</a> - Check if a key has a specific value</li>
+<li><a href="../re/">:re</a> - Check if a key matches a regular expression pattern</li>
+<li><a href="../in/">:in</a> - Check if a key's value is in a list of options</li>
+<li><a href="../not/">:not</a> - Invert the query condition (e.g., select series that DON'T have a key)</li>
+</ul>
 
 
 

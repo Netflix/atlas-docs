@@ -9004,7 +9004,7 @@ via conan.</p>
 <span class="w">    </span><span class="n">threadGauge</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="n">GetNumThreads</span><span class="p">());</span>
 <span class="w">    </span><span class="n">queueGauge</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="n">GetQueueSize</span><span class="p">());</span>
 
-<span class="w">    </span><span class="cm">/* Metrics Sent: </span>
+<span class="w">    </span><span class="cm">/* Metrics Sent:</span>
 <span class="cm">        &quot;g:threads,platform=my-platform,process=my-process:5.000000\n&quot;</span>
 <span class="cm">        &quot;g:queue-size,my-tags=bar,platform=my-platform,process=my-process:10.000000\n&quot;</span>
 <span class="cm">    */</span>
@@ -9083,13 +9083,13 @@ buffer size parameter, enabling buffering for all writer types.</p>
 <div class="highlight"><pre><span></span><code><span class="cm">/* Default Writer Config Examples */</span>
 
 <span class="c1">// Write metrics to memory for testing</span>
-<span class="n">WriterConfig</span><span class="w"> </span><span class="nf">wConfig</span><span class="p">(</span><span class="n">WriterTypes</span><span class="o">::</span><span class="n">Memory</span><span class="p">);</span><span class="w"> </span>
+<span class="n">WriterConfig</span><span class="w"> </span><span class="nf">wConfig</span><span class="p">(</span><span class="n">WriterTypes</span><span class="o">::</span><span class="n">Memory</span><span class="p">);</span>
 
 <span class="c1">// Default UDP address for spectatord</span>
-<span class="n">WriterConfig</span><span class="w"> </span><span class="nf">wConfig</span><span class="p">(</span><span class="n">WriterTypes</span><span class="o">::</span><span class="n">UDP</span><span class="p">);</span><span class="w"> </span>
+<span class="n">WriterConfig</span><span class="w"> </span><span class="nf">wConfig</span><span class="p">(</span><span class="n">WriterTypes</span><span class="o">::</span><span class="n">UDP</span><span class="p">);</span>
 
 <span class="c1">// Default UDS address for spectatord with buffering</span>
-<span class="n">WriterConfig</span><span class="w"> </span><span class="nf">wConfig</span><span class="p">(</span><span class="n">WriterTypes</span><span class="o">::</span><span class="n">Unix</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">);</span><span class="w"> </span>
+<span class="n">WriterConfig</span><span class="w"> </span><span class="nf">wConfig</span><span class="p">(</span><span class="n">WriterTypes</span><span class="o">::</span><span class="n">Unix</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">);</span>
 
 <span class="cm">/* Custom Writer Config Location Examples */</span>
 

@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -4181,6 +4186,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    decode
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -4192,6 +4210,92 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decoding-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decoding Formats
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Decoding Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#none-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      none (Default)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hex-hex-decoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      hex (Hex Decoding)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8692,83 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decoding-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decoding Formats
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Decoding Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#none-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      none (Default)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hex-hex-decoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      hex (Hex Decoding)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,33 +8789,39 @@
   <h1>decode</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>String</td></tr><tr><td>TimeSeriesExpr</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>format: String</td></tr><tr><td>expr: TimeSeriesExpr</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td>StyleExpr</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
 </tr></tbody></table>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>It is recommended to avoid using special symbols or trying to
-encode structural information into tag values. This feature should be used
-sparingly and with great care to ensure it will not result in a combinatorial
-explosion.</p>
+<p>Decode encoded characters in legend text for improved presentation. This operator reverses
+the encoding that clients often apply to tag values when special characters need to be
+transmitted safely in URIs. It's primarily used for making legends more readable by
+converting encoded symbols back to their original form.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Use Sparingly</strong>: Avoid encoding structural information into tag values. This feature
+should be used carefully to prevent combinatorial explosion of tag combinations.</p>
 </div>
-<p>Perform decoding of the legend strings. Generally data going into Atlas
-is restricted to simple ascii characters that are easy to use as part of
-a URI. Most commonly the clients will convert unsupported characters to
-an <code>_</code>. In some case it is desirable to be able to reverse that for the
-purposes of presentation.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>none</code>: this is the default. It will not modify the legend string.</li>
-<li><code>hex</code>: perform a hex decoding of the legend string. This is similar to
-  <a href="https://en.wikipedia.org/wiki/Percent-encoding">url encoding</a> except
-  that the <code>_</code> character is used instead of <code>%</code> to indicate the start of
-  an encoded symbol. The decoding is lenient, if the characters following
-  the <code>_</code> are not valid hexadecimal digits then it will just copy those
-  characters without modification.</li>
+<li><strong>expr</strong>: The time series expression whose legend text will be decoded</li>
+<li><strong>format</strong>: The decoding format to apply (<code>none</code> or <code>hex</code>)</li>
 </ul>
-<p>Since: 1.5</p>
-<p>Example:</p>
+<h2 id="decoding-formats">Decoding Formats<a class="headerlink" href="#decoding-formats" title="Permanent link">&para;</a></h2>
+<h3 id="none-default"><code>none</code> (Default)<a class="headerlink" href="#none-default" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Behavior</strong>: No modification to legend strings</li>
+<li><strong>Use case</strong>: When no decoding is needed or to explicitly disable decoding</li>
+</ul>
+<h3 id="hex-hex-decoding"><code>hex</code> (Hex Decoding)<a class="headerlink" href="#hex-hex-decoding" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Behavior</strong>: Decodes hex-encoded characters using <code>_</code> as the escape prefix</li>
+<li><strong>Format</strong>: Similar to <a href="https://en.wikipedia.org/wiki/Percent-encoding">URL encoding</a> but uses <code>_</code> instead of <code>%</code></li>
+<li><strong>Lenient parsing</strong>: Invalid hex digits are copied without modification</li>
+<li><strong>Example</strong>: <code>_21</code> → <code>!</code>, <code>_25</code> → <code>%</code>, <code>_26</code> → <code>&amp;</code>, <code>_3F</code> → <code>?</code></li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Converting hex-encoded legend text to readable ASCII:</p>
 <table><tbody>
 <tr><td>Hex to ASCII</td></tr>
 <tr><td><img src="data:image/png;base64,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" width="286" height="258"/></td></tr>
@@ -8642,6 +8829,17 @@ purposes of presentation.</p>
 hex,<a href="https://netflix.github.io/atlas-docs/asl/ref/decode/"><span class="atlas-hilite">:decode</span></a>
 </pre></td></tr>
 </tbody></table>
+<p>This converts the legend <code>one_21_25_26_3F</code> to <code>one!%&amp;?</code> for better readability.</p>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../legend/">:legend</a> - Set custom legend text (often used before decoding)</li>
+<li><a href="../format/">:format</a> - Dynamic string formatting for legends</li>
+</ul>
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Percent-encoding">URL Encoding</a> - Standard percent-encoding reference</li>
+</ul>
+<p>Since: 1.5</p>
 
 
 

@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1921,6 +1926,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    cf-max
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1932,6 +1950,68 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-consolidation-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Consolidation Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8668,59 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-consolidation-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Consolidation Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,11 +8741,47 @@
   <h1>cf-max</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>AggregationFunction</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>aggr: AggregationFunction</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td>AggregationFunction</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Force the <a href="../../../concepts/consolidation/">consolidation function</a> to be max.</p>
+<p>Force the consolidation function to be maximum when aggregating data points within time intervals.
+This operator overrides the default consolidation behavior to ensure that when multiple data points
+fall within a single time step, the maximum value is selected rather than using other methods
+like averaging or summing.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Performance Impact</strong>: This operator can make queries significantly more expensive by preventing
+consolidation pushdown and is rarely needed or desirable.</p>
+</div>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>aggr</strong>: The aggregation function to apply maximum consolidation to</li>
+</ul>
+<h2 id="how-consolidation-works">How Consolidation Works<a class="headerlink" href="#how-consolidation-works" title="Permanent link">&para;</a></h2>
+<p>When the step size for a graph is larger than the reporting interval of the data, multiple
+data points may fall within a single graph interval. The consolidation function determines
+how these points are combined:</p>
+<ul>
+<li><strong>Default behavior</strong>: Most aggregation functions use their natural consolidation (e.g., <code>:sum</code> uses avg consolidation)</li>
+<li><strong>Override behavior</strong>: <code>:cf-max</code> forces maximum consolidation regardless of the aggregation function</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Force maximum consolidation for a sum aggregation:</p>
+<div class="highlight"><pre><span></span><code>name,requests,:eq,:sum,:cf-max
+</code></pre></div>
+<p>This ensures that when multiple sum values exist within a time interval, the maximum of those
+sums is displayed rather than averaging them.</p>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../cf-min/">:cf-min</a> - Force minimum consolidation</li>
+<li><a href="../cf-avg/">:cf-avg</a> - Force average consolidation</li>
+<li><a href="../cf-sum/">:cf-sum</a> - Force sum consolidation</li>
+</ul>
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../../concepts/consolidation/">Consolidation</a> - Detailed explanation of consolidation concepts</li>
+</ul>
 
 
 

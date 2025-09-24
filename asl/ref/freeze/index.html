@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -4828,6 +4833,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    freeze
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -4839,6 +4857,68 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#primary-use-case-overlays-on-dashboards" class="md-nav__link">
+    <span class="md-ellipsis">
+      Primary Use Case: Overlays on Dashboards
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8668,59 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#primary-use-case-overlays-on-dashboards" class="md-nav__link">
+    <span class="md-ellipsis">
+      Primary Use Case: Overlays on Dashboards
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8612,37 +8745,46 @@
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td><empty></td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Freeze removes all data from the stack and pushes it to a separate frozen stack
-that cannot be modified other than to push additional items using the freeze operation.
-The final stack at the end of the execution will include the frozen contents along with
-any thing that is on the normal stack.</p>
-<p>This operation is useful for isolating common parts of the stack while still allowing
-tooling to manipulate the main stack using concatenative rewrite operations. The most
-common example of this is the <a href="../cq/">:cq</a> operation used to apply a common query
-to graph expressions. For a concrete example, suppose you want to have an overlay
-expression showing network errors on a switch that you want to add in to graphs on
-a dashboard. The dashboard allows drilling into the graphs by selecting a particular
-cluster. To make this work the dashboard appends a query rewrite to the expression
-like:</p>
-<div class="highlight"><pre><span></span><code>,:list,(,nf.cluster,{{ selected_cluster }},:eq,:cq,),:each
-</code></pre></div>
-<p>This <a href="../list/">:list</a> operator will apply to everything on the stack. However, this
-is problematic because the cluster restriction will break the overlay query. Using
-the freeze operator the overlay expression can be isolated from the main stack. So
-the final expression would look something like:</p>
-<div class="highlight"><pre><span></span><code># Query that should be used as is and not modified further
+<p>Remove all items from the main stack and move them to a separate frozen stack that
+cannot be modified except by additional <code>:freeze</code> operations. At the end of execution,
+the final result includes both the frozen contents and any items remaining on the main stack.</p>
+<p>This operation is essential for protecting certain expressions from being modified by
+stack manipulation operations, particularly useful when building dashboard templates
+for overlay expressions.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>...</strong>: All items currently on the main stack (variable number of arguments)</li>
+</ul>
+<h2 id="key-behavior">Key Behavior<a class="headerlink" href="#key-behavior" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Isolation</strong>: Frozen items are protected from further stack manipulation</li>
+<li><strong>Preservation</strong>: Frozen items maintain their original order</li>
+<li><strong>Accumulation</strong>: Multiple <code>:freeze</code> operations add to the frozen stack</li>
+<li><strong>Final output</strong>: Frozen items appear in the final result alongside main stack items</li>
+</ol>
+<h2 id="primary-use-case-overlays-on-dashboards">Primary Use Case: Overlays on Dashboards<a class="headerlink" href="#primary-use-case-overlays-on-dashboards" title="Permanent link">&para;</a></h2>
+<p>The most common use case is protecting overlay expressions for graphs on a dashboard.
+Consider an overlay showing network errors that should appear on all graphs in a dashboard,
+regardless of filtering:</p>
+<p><strong>Problem</strong>: Dashboard filtering affects all expressions:
+<div class="highlight"><pre><span></span><code># This filtering would break the overlay
+,:list,(,nf.cluster,{{ selected_cluster }},:eq,:cq,),:each
+</code></pre></div></p>
+<p><strong>Solution</strong>: Freeze the overlay to protect it:
+<div class="highlight"><pre><span></span><code># Protected overlay expression - won&#39;t be affected by filtering
 name,networkErrors,:eq,:sum,50,:gt,:vspan,40,:alpha,
 :freeze,
 
-# Normal contents of the stack
+# Main dashboard content - will be filtered
 name,ssCpuUser,:eq,:avg,1,:axis,
 name,loadavg1,:eq,:avg,2,:axis,
 
-# Rewrite appended by tooling, only applies to main stack
+# Dashboard filtering - only applies to main stack
 :list,(,nf.cluster,{{ selected_cluster }},:eq,:cq,),:each
-</code></pre></div>
-<p>Since: 1.6</p>
-<p>Example:</p>
+</code></pre></div></p>
+<p><em>Since: 1.6</em></p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Basic freeze operation:</p>
 <pre>a,b,c,<a href="https://netflix.github.io/atlas-docs/asl/ref/freeze/">:freeze</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8658,6 +8800,15 @@ name,loadavg1,:eq,:avg,2,:axis,
 <td>a</td>
 <td>a</td>
 </tr></tbody></table>
+
+<p>This moves <code>a</code>, <code>b</code>, and <code>c</code> from the main stack to the frozen stack, where they
+cannot be modified by subsequent operations.</p>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../cq/">:cq</a> - Common query operation that freeze is often used to protect against</li>
+<li><a href="../list/">:list</a> - List operation that freeze prevents from affecting protected expressions</li>
+<li><a href="../each/">:each</a> - Iteration operation that operates only on the main stack</li>
+</ul>
 
 
 

@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -5012,6 +5017,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    pick
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -5023,6 +5041,68 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equivalences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Equivalences
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8668,59 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equivalences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Equivalences
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,13 +8741,27 @@
   <h1>pick</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>N</td></tr><tr><td>a0</td></tr><tr><td>...</td></tr><tr><td>aN</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>n: Int</td></tr><tr><td>...</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
-<td><strong>Output Stack:</strong><table><tbody><tr><td>aN-1</td></tr><tr><td>a0</td></tr><tr><td>...</td></tr><tr><td>aN</td></tr></tbody></table></td>
+<td><strong>Output Stack:</strong><table><tbody><tr><td>item: Any</td></tr><tr><td>...</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Pick an item in the stack and put a copy on the top.</p>
-<p>Since: 1.5.0</p>
-<p>Example:</p>
+<p>Copy an item from a specific position in the stack and place the copy on top. The original
+item remains in its position while a duplicate is added to the top of the stack. This allows
+non-destructive access to stack items at arbitrary depths.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>...</strong>: The current stack contents with at least (n+1) items</li>
+<li><strong>n</strong>: Zero-based index of the item to copy (0 = top item, 1 = second item, etc.)</li>
+</ul>
+<h2 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Non-destructive copying</strong>: Original stack items remain in their positions</li>
+<li><strong>Index-based access</strong>: Uses zero-based indexing (0 = top, 1 = second from top, etc.)</li>
+<li><strong>Stack growth</strong>: Adds one more item (the copied item) to the stack</li>
+<li><strong>Bounds checking</strong>: Index must be valid for current stack depth</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Picking the top item (index 0) - equivalent to <code>:dup</code>:</p>
 <pre>a,0,<a href="https://netflix.github.io/atlas-docs/asl/ref/pick/">:pick</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8627,6 +8774,7 @@
 <td>a</td>
 </tr></tbody></table>
 
+<p>Picking the top item from a two-item stack:</p>
 <pre>a,b,0,<a href="https://netflix.github.io/atlas-docs/asl/ref/pick/">:pick</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8643,6 +8791,7 @@
 <td>a</td>
 </tr></tbody></table>
 
+<p>Picking the second item (index 1) - equivalent to <code>:over</code>:</p>
 <pre>a,b,1,<a href="https://netflix.github.io/atlas-docs/asl/ref/pick/">:pick</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8658,6 +8807,21 @@
 <td>a</td>
 <td>a</td>
 </tr></tbody></table>
+
+<h2 id="equivalences">Equivalences<a class="headerlink" href="#equivalences" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>0,:pick</code> ≡ <code>:dup</code> (copy top item)</li>
+<li><code>1,:pick</code> ≡ <code>:over</code> (copy second item)</li>
+</ul>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../dup/">:dup</a> - Copy top item (equivalent to <code>0,:pick</code>)</li>
+<li><a href="../over/">:over</a> - Copy second item (equivalent to <code>1,:pick</code>)</li>
+<li><a href="../roll/">:roll</a> - Move (not copy) item to top of stack</li>
+<li><a href="../depth/">:depth</a> - Check stack size before picking</li>
+<li><a href="../swap/">:swap</a> - Exchange top two items</li>
+</ul>
+<p>Since: 1.5.0</p>
 
 
 

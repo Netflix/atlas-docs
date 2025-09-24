@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -4874,6 +4879,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    list
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -4885,6 +4903,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8650,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8612,8 +8709,14 @@
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td>List[?]</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Pop all items off the stack and push them as a list.</p>
-<p>Example:</p>
+<p>Pop all items currently on the stack and create a list containing them. The order in the
+list preserves the stack order, with the bottom stack item becoming the first list element.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>...</strong>: All items currently on the stack (variable number of arguments)</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Creating a list from two items:</p>
 <pre>a,b,<a href="https://netflix.github.io/atlas-docs/asl/ref/list/">:list</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8626,6 +8729,9 @@
 <td></td>
 </tr></tbody></table>
 
+<p>Note that <code>a</code> was added to the stack first and appears as the first element in the list,
+while <code>b</code> was added second and appears as the second element.</p>
+<p>Creating an empty list:</p>
 <pre>,<a href="https://netflix.github.io/atlas-docs/asl/ref/list/">:list</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8633,6 +8739,14 @@
 <td></td>
 <td>List()</td>
 </tr></tbody></table>
+
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../each/">:each</a> - Execute a function for each element in a list</li>
+<li><a href="../map/">:map</a> - Transform each element in a list</li>
+<li><a href="../format/">:format</a> - Use lists as arguments for string formatting</li>
+<li><a href="../by/">:by</a> - Use lists to specify grouping keys</li>
+</ul>
 
 
 

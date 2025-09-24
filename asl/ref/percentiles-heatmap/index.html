@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -4434,6 +4439,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    percentiles-heatmap
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -4445,6 +4463,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8677,68 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,16 +8759,36 @@
   <h1>percentiles-heatmap</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>TimeSeriesExpr</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>expr: TimeSeriesExpr</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td>StyleExpr</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Since 1.8.</p>
-<p>Group the metric by the <code>percentiles</code> tag and plot the data as a heatmap. Requires 
-that the metric to be recorded as a <a href="../../../spectator/patterns/percentile-timer/">percentile</a>.</p>
-<p>See <a href="../../../api/graph/heatmap/#percentiles">heatmap</a> for more information.</p>
-<p>Shorthand equivalent of writing <code>(,percentile,),:by,:heatmap</code></p>
-<p>Example:</p>
+<p>Create a heatmap visualization from percentile distribution data by grouping on the <code>percentile</code> tag.
+This provides an intuitive way to visualize the distribution of values over time, with color intensity
+representing the magnitude of values at different percentile levels.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>expr</strong>: Time series expression for percentile metrics (must contain <code>percentile</code> tag)</li>
+</ul>
+<h2 id="data-requirements">Data Requirements<a class="headerlink" href="#data-requirements" title="Permanent link">&para;</a></h2>
+<p>The metrics must be recorded as percentile timers or distribution summaries with the <code>percentile</code> tag.
+If using <a href="../../../spectator/">Spectator</a>, use these helper classes:</p>
+<ul>
+<li><strong><a href="../../../spectator/patterns/percentile-timer/">PercentileTimer</a></strong> - For timing measurements with percentile tracking</li>
+<li><strong><a href="../../../spectator/core/meters/dist-summary/">PercentileDistributionSummary</a></strong> - For distribution measurements</li>
+</ul>
+<h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<p>This operator is syntactic sugar that combines grouping and heatmap visualization:</p>
+<div class="highlight"><pre><span></span><code># These expressions are equivalent:
+name,requestLatency,:eq,:percentiles-heatmap
+name,requestLatency,:eq,(,percentile,),:by,:heatmap
+</code></pre></div>
+<p>The resulting heatmap shows:
+- <strong>X-axis</strong>: Time progression
+- <strong>Y-axis</strong>: Percentile levels (P50, P90, P95, P99, etc.)
+- <strong>Color intensity</strong>: Magnitude of values at each percentile/time combination</p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Creating a latency distribution heatmap:</p>
 <table><tbody>
 <tr><td>Default</td></tr>
 <tr><td><img src="data:image/png;base64,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" width="286" height="249"/></td></tr>
@@ -8625,6 +8796,19 @@ that the metric to be recorded as a <a href="../../../spectator/patterns/percent
 <a href="https://netflix.github.io/atlas-docs/asl/ref/percentiles-heatmap/"><span class="atlas-hilite">:percentiles-heatmap</span></a>
 </pre></td></tr>
 </tbody></table>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../heatmap/">:heatmap</a> - General heatmap visualization for any grouped data</li>
+<li><a href="../percentiles/">:percentiles</a> - Extract specific percentile values</li>
+<li><a href="../by/">:by</a> - Group data by tag keys (used internally)</li>
+</ul>
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../../api/graph/heatmap/#percentiles">Heatmap API Documentation</a> - Additional configuration options</li>
+<li><a href="../../../spectator/patterns/percentile-timer/">Percentile Timer Pattern</a> - How to instrument code for percentile tracking</li>
+<li><a href="../../../spectator/core/meters/dist-summary/">Percentile Distribution Summary Pattern</a> - Distribution measurement patterns</li>
+</ul>
+<p>Since: 1.8</p>
 
 
 

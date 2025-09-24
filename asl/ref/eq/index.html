@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1481,6 +1486,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    eq
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1492,6 +1510,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8650,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,12 +8705,20 @@
   <h1>eq</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>v: String</td></tr><tr><td>k: String</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>value: String</td></tr><tr><td>key: String</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
-<td><strong>Output Stack:</strong><table><tbody><tr><td>(k == v): Query</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
+<td><strong>Output Stack:</strong><table><tbody><tr><td>(key == value): Query</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Select time series that have a specified value for a key. For example, consider the following
-query:</p>
+<p>Select time series that have a specified value for a key. This is the most common operator for
+filtering time series data and forms the foundation of most queries. The comparison is case-sensitive
+and requires an exact string match.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>key</strong>: The tag key to match against (e.g., <code>name</code>, <code>nf.app</code>, <code>status</code>)</li>
+<li><strong>value</strong>: The exact value that the key must equal for a time series to be included</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Select all time series where the name tag equals "ssCpuUser":</p>
 <pre>name,ssCpuUser,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/"><span class="atlas-hilite">:eq</span></a>
 </pre>
 <p>When matching against the sample data in the table below, the highlighted time series would be
@@ -8650,6 +8755,15 @@ included in the result set:</p>
   </tr>
   </tbody>
 </table>
+
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../and/">:and</a> - Combine multiple query conditions</li>
+<li><a href="../or/">:or</a> - Match any of multiple query conditions</li>
+<li><a href="../re/">:re</a> - Match using regular expressions (case-sensitive)</li>
+<li><a href="../in/">:in</a> - Match against a list of possible values</li>
+<li><a href="../has/">:has</a> - Check if a tag key exists regardless of value</li>
+</ul>
 
 
 

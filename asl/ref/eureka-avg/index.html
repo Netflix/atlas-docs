@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -2798,6 +2803,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    eureka-avg
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2809,6 +2827,86 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to Use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparison-with-other-averages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparison with Other Averages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infrastructure-tag-scoping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infrastructure Tag Scoping
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8686,77 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to Use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparison-with-other-averages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparison with Other Averages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infrastructure-tag-scoping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infrastructure Tag Scoping
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,20 +8777,82 @@
   <h1>eureka-avg</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>Query</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>query: Query</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td>TimeSeriesExpr</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>A helper to compute an average using the number of instances in the <code>UP</code> state based on the
-<code>discovery.status</code> metric as the denominator. The common infrastructure tags will be used to
-restrict the scope for the denominator. This operator should be used if the numerator is based
-on incoming traffic that is routed via the Eureka service and goal is to compute an average
-per node receiving traffic.</p>
+<p>Compute an average based on the number of instances in the <code>UP</code> state according to Eureka service
+discovery. This operator uses the <code>discovery.status</code> metric to determine the active instance count
+as the denominator, making it ideal for metrics related to incoming traffic that is load-balanced
+through Eureka.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>query</strong>: Query for metrics to average, typically traffic-related metrics routed via Eureka</li>
+</ul>
+<h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Numerator</strong>: Uses the total from the provided query (typically aggregated metrics)</li>
+<li><strong>Denominator</strong>: Counts instances with <code>state=UP</code> for the same service</li>
+<li><strong>Scoping</strong>: Common infrastructure tags automatically restrict the denominator scope</li>
+<li><strong>Result</strong>: Average per active (traffic-receiving) instance</li>
+</ol>
+<h2 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">&para;</a></h2>
+<p>This operator is specifically designed for scenarios where:
+- Metrics represent incoming traffic routed through Eureka service discovery
+- You want average per active instance, not per total deployed instance
+- The goal is to measure per-node load for traffic-bearing services</p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Computing average requests per second per active instance:</p>
 <pre>name,sps,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
 nf.app,nccp,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
 <a href="https://netflix.github.io/atlas-docs/asl/ref/and/">:and</a>,
 <a href="https://netflix.github.io/atlas-docs/asl/ref/eureka-avg/"><span class="atlas-hilite">:eureka-avg</span></a>
 </pre>
+<h2 id="comparison-with-other-averages">Comparison with Other Averages<a class="headerlink" href="#comparison-with-other-averages" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Denominator</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:avg</code></td>
+<td>Number of reporting time series</td>
+<td>General averaging</td>
+</tr>
+<tr>
+<td><code>:node-avg</code></td>
+<td>Number of unique instances</td>
+<td>Per-instance average (all instances)</td>
+</tr>
+<tr>
+<td><code>:eureka-avg</code></td>
+<td>Number of UP instances in Eureka</td>
+<td>Per-active-instance average (Eureka-routed traffic)</td>
+</tr>
+<tr>
+<td><code>:dist-avg</code></td>
+<td>Recorded sample count</td>
+<td>Per-measurement average</td>
+</tr>
+</tbody>
+</table>
+<h2 id="infrastructure-tag-scoping">Infrastructure Tag Scoping<a class="headerlink" href="#infrastructure-tag-scoping" title="Permanent link">&para;</a></h2>
+<p>The operator automatically uses common tags to ensure the denominator matches the numerator scope:
+- <code>nf.app</code> - Application name
+- <code>nf.cluster</code> - Cluster identifier
+- <code>nf.region</code> - AWS region
+- Other standard Netflix infrastructure tags</p>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../avg/">:avg</a> - Standard average across time series</li>
+<li><a href="../node-avg/">:node-avg</a> - Average using total instance count (includes non-traffic instances)</li>
+<li><a href="../dist-avg/">:dist-avg</a> - Average using measurement sample counts</li>
+<li><a href="../sum/">:sum</a> - Total aggregation (numerator for manual average calculation)</li>
+</ul>
 
 
 

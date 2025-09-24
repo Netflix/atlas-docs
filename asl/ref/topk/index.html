@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -3925,6 +3930,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    topk
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -3936,6 +3954,68 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#others-aggregation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Others Aggregation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8668,59 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#others-aggregation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Others Aggregation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,13 +8741,28 @@
   <h1>topk</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>k: Int</td></tr><tr><td>stat: String</td></tr><tr><td>TimeSeriesExpr</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>k: Int</td></tr><tr><td>stat: String</td></tr><tr><td>expr: TimeSeriesExpr</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td>TimeSeriesExpr</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Since: 1.7</p>
-<p>Restrict the output for a grouped expression to the <code>k</code> time series with the largest value
-for the specified <a href="../stat/">summary statistic</a>. Example of usage:</p>
+<p>Select the top K time series based on a summary statistic. This operation keeps only the K
+time series with the largest values for the specified statistic, effectively filtering out
+all but the highest-performing series according to the chosen criteria.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>expr</strong>: The grouped time series expression to select from</li>
+<li><strong>stat</strong>: The <a href="../stat/">summary statistic</a> to rank by (<code>max</code>, <code>min</code>, <code>avg</code>, <code>count</code>, <code>total</code>, <code>last</code>)</li>
+<li><strong>k</strong>: Number of highest-ranking series to keep (positive integer)</li>
+</ul>
+<h2 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Statistical evaluation</strong>: Computes the specified statistic for each time series over the query window</li>
+<li><strong>Ranking</strong>: Sorts all series by the statistic values in descending order (largest first)</li>
+<li><strong>Selection</strong>: Keeps only the first K series (those with the largest statistic values)</li>
+<li><strong>Output</strong>: Returns the selected time series with their original data, not the statistic values</li>
+</ol>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Selecting the 2 clusters with the highest maximum values:</p>
 <table><tbody>
 <tr><td>Before</td><td>After</td></tr>
 <tr><td><img src="data:image/png;base64,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" width="286" height="153"/></td><td><img src="data:image/png;base64,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nnvuqTYkfkdO6tNacM99991X/Q0kj7W9FtdE4ZH+gPTLL7909957b+WRCg8qNk4sjv1Hrbp5fvbZZ+7XX3+tvtZS8an7ShsbJxbH/hoUm+sHH3zgbrvttupv/n788Ud38803u99++y3o3zROLI79NahprkeOHKnOYz9UbJxYHPujihWejz/+2D300EODY3qusGvXrsExFh76qvXEE08MjumWDatuimJ/QEpf++hDRg/ObrrpJnfDDTe4rVu3Bv2bxonFsf+oFZsnfa2grxjeR+tS9wAwNk4sjv01KDbX3bt3D74WkFauXFn7gDk2TiyO/TWoaa70uOP1118P+qFi48Ti2B9VrPDQn937h8X+gRP9/ZQ/j4WHbs3IT97ff/+9qppffPFFMG6TYn9Ayj3SHQ9+h42NE4vjPEat2DzpwaHf5f/888/qb9v2798/6HetrQMpNlf6rM2cObO6+yPdcsst1Xnfr09rQeco72gNaF2wX9trUazwkGiyNAm6y6CvXvwcFh4SPX+hAkV96DyOlyrpD0i5pMKD32HrxonFtSk2z48++qiK0TrzB/qka3EdSLG50g88/GeOfgzM+/RtLSj/6JsJ+kltr0XRwmMymUwpssJjMpmGLis8JpNp6LLCYzKZhi4rPCaTaeiywmMymYYuKzwmk2no+j+nkaURMgC8xwAAAABJRU5ErkJggg==" width="286" height="153"/></td></tr>
@@ -8625,15 +8773,23 @@ for the specified <a href="../stat/">summary statistic</a>. Example of usage:</p
 max,2,<a href="https://netflix.github.io/atlas-docs/asl/ref/topk/"><span class="atlas-hilite">:topk</span></a>
 </pre></td></tr>
 </tbody></table>
-<p>In some cases it can be useful to see an aggregate summary of the other time series that were not
-part of the top set. This can be accomplished using the <code>:topk-others-$(aggr)</code> operators.
-For more details see:</p>
+<h2 id="others-aggregation">Others Aggregation<a class="headerlink" href="#others-aggregation" title="Permanent link">&para;</a></h2>
+<p>For including aggregate summaries of the excluded series, use the <code>:topk-others-*</code> operators:</p>
 <ul>
-<li><a href="../topk-others-avg/">:topk-others-avg</a></li>
-<li><a href="../topk-others-max/">:topk-others-max</a></li>
-<li><a href="../topk-others-min/">:topk-others-min</a></li>
-<li><a href="../topk-others-sum/">:topk-others-sum</a></li>
+<li><a href="../topk-others-avg/">:topk-others-avg</a> - Include average of excluded series</li>
+<li><a href="../topk-others-max/">:topk-others-max</a> - Include maximum of excluded series</li>
+<li><a href="../topk-others-min/">:topk-others-min</a> - Include minimum of excluded series</li>
+<li><a href="../topk-others-sum/">:topk-others-sum</a> - Include sum of excluded series</li>
 </ul>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../bottomk/">:bottomk</a> - Select bottom K time series (smallest values)</li>
+<li><a href="../limit/">:limit</a> - Limit results after sorting (different ranking criteria)</li>
+<li><a href="../sort/">:sort</a> - Sort time series by statistics</li>
+<li><a href="../filter/">:filter</a> - Filter based on statistical criteria</li>
+<li><a href="../stat/">:stat</a> - Compute statistics used for ranking</li>
+</ul>
+<p>Since: 1.7</p>
 
 
 

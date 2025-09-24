@@ -8748,7 +8748,7 @@ meaningful unless compared with another sample to get a delta.</p>
 <p>If timing code is written to the Clock interface, then alternative implementations can be
 plugged-in. For test cases, it is common to use <a href="https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/ManualClock.html">ManualClock</a> so that tests can be reliable
 and fast without having to rely on hacks like sleep or assuming something will run in less
-than a certain amount of time. </p>
+than a certain amount of time.</p>
 <div class="highlight"><pre><span></span><code><span class="n">ManualClock</span><span class="w"> </span><span class="n">clock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ManualClock</span><span class="p">();</span>
 <span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DefaultRegistry</span><span class="p">(</span><span class="n">clock</span><span class="p">);</span>
 

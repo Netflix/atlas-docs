@@ -8810,7 +8810,7 @@ not on each update. Consider this example of a web server tracking the number of
 the object is garbage collected, then it will automatically drop the registration. In the example
 above, the Registry will have a weak reference to <code>numConnections</code> and the server instance will
 have a strong reference to <code>numConnections</code>. If the server instance goes away, then the Gauge
-will as well. </p>
+will as well.</p>
 <p>When multiple Gauges are registered with the same id, the reported value will be the sum of the
 matches. For example, if multiple instances of the <code>HttpServer</code> class were created on different
 ports, then the value <code>server.numConnections</code> would be the total number of connections across

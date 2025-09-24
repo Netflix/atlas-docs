@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -4966,6 +4971,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    nlist
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -4977,6 +4995,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8659,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,13 +8723,27 @@
   <h1>nlist</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>N</td></tr><tr><td>a0</td></tr><tr><td>...</td></tr><tr><td>aN</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>n: Int</td></tr><tr><td>...</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
-<td><strong>Output Stack:</strong><table><tbody><tr><td>List(aN-1, ..., a0)</td></tr><tr><td>aN</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
+<td><strong>Output Stack:</strong><table><tbody><tr><td>List[?]</td></tr><tr><td>...</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Create a list with the top N items on the stack.</p>
-<p>Since: 1.5.0</p>
-<p>Examples:</p>
+<p>Create a list from the top N items on the stack. Unlike <a href="../list/">:list</a> which consumes the
+entire stack, this operator only takes a specified number of items and leaves the rest of
+the stack intact. This is useful for selective list creation without affecting other stack items.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>...</strong>: The stack items to potentially include in the list (at least N items must be present)</li>
+<li><strong>n</strong>: Number of items to take from the top of the stack (non-negative integer)</li>
+</ul>
+<h2 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Item selection</strong>: Takes the top N items from the stack (N = 0 creates an empty list)</li>
+<li><strong>List creation</strong>: Creates a list preserving stack order (top item becomes last list element)</li>
+<li><strong>Stack preservation</strong>: Items below the top N remain unchanged on the stack</li>
+<li><strong>Boundary handling</strong>: If N exceeds available items, takes all available items</li>
+</ol>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Creating an empty list (N = 0):</p>
 <pre>a,0,<a href="https://netflix.github.io/atlas-docs/asl/ref/nlist/">:nlist</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8627,6 +8756,7 @@
 <td>a</td>
 </tr></tbody></table>
 
+<p>Taking 2 items from the stack:</p>
 <pre>a,b,c,2,<a href="https://netflix.github.io/atlas-docs/asl/ref/nlist/">:nlist</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8647,6 +8777,7 @@
 <td></td>
 </tr></tbody></table>
 
+<p>Requesting more items than available (takes all 3 available):</p>
 <pre>a,b,c,4,<a href="https://netflix.github.io/atlas-docs/asl/ref/nlist/">:nlist</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8666,6 +8797,15 @@
 <td>a</td>
 <td></td>
 </tr></tbody></table>
+
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../list/">:list</a> - Create list from entire stack (consumes all items)</li>
+<li><a href="../ndrop/">:ndrop</a> - Remove N items from stack (opposite operation)</li>
+<li><a href="../each/">:each</a> - Process lists created with :nlist</li>
+<li><a href="../map/">:map</a> - Transform lists created with :nlist</li>
+</ul>
+<p>Since: 1.5.0</p>
 
 
 

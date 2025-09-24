@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1596,6 +1601,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    in
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1607,6 +1625,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8650,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,12 +8705,20 @@
   <h1>in</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>vs: List[String]</td></tr><tr><td>k: String</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>values: List[String]</td></tr><tr><td>key: String</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
-<td><strong>Output Stack:</strong><table><tbody><tr><td>(k in vs): Query</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
+<td><strong>Output Stack:</strong><table><tbody><tr><td>(key in values): Query</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Select time series where the value for a key is in the specified set. For example, consider
-the following query:</p>
+<p>Select time series where the value for a key matches any value in the specified list. This is
+more efficient than using multiple <code>:eq</code> conditions combined with <code>:or</code> when you need to match
+against several possible values for the same key.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>key</strong>: The tag key to check (e.g., <code>name</code>, <code>nf.app</code>, <code>status</code>)</li>
+<li><strong>values</strong>: A list of possible values to match against</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Select time series where the name is either "ssCpuUser" or "ssCpuSystem":</p>
 <pre>name,(,ssCpuUser,ssCpuSystem,),<a href="https://netflix.github.io/atlas-docs/asl/ref/in/"><span class="atlas-hilite">:in</span></a>
 </pre>
 <p>When matching against the sample data in the table below, the highlighted time series would be
@@ -8650,6 +8755,16 @@ included in the result set:</p>
   </tr>
   </tbody>
 </table>
+
+<p>This is equivalent to but more efficient than:
+<code>name,ssCpuUser,:eq,name,ssCpuSystem,:eq,:or</code></p>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../eq/">:eq</a> - Check for a single specific value</li>
+<li><a href="../re/">:re</a> - Match using regular expressions</li>
+<li><a href="../has/">:has</a> - Check if a key exists regardless of value</li>
+<li><a href="../or/">:or</a> - Logical OR operation</li>
+</ul>
 
 
 

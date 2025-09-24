@@ -9133,7 +9133,7 @@ sends metrics to <a href="https://github.com/Netflix-Skunkworks/spectatord">spec
 <li><code>unix:///path/to/socket</code> - Write to a custom Unix domain socket (e.g. <code>unix:///tmp/some.socket</code>).</li>
 </ul>
 <p>Location can also be set through the environment variable <code>SPECTATOR_OUTPUT_LOCATION</code>. If both are set,
-the environment variable takes precedence over the passed config. </p>
+the environment variable takes precedence over the passed config.</p>
 <p>The environment variable <code>SPECTATOR_OUTPUT_LOCATION</code> can be set to <code>none</code> to disable metrics collection.</p>
 <h2 id="buffers">Buffers<a class="headerlink" href="#buffers" title="Permanent link">&para;</a></h2>
 <p>Three modes of operation are available, for applications that operate at different scales:</p>
@@ -9188,7 +9188,7 @@ buffer shard will have 85 chunks, each of which is protected by a separate mutex
 writes to spectatord. Note that the spectatord publish interval is every 5 seconds, so you have some room to
 experiment with different buffer sizes and publish intervals.</p>
 <p>While the bufferSize can be set as low as 65537, it will guarantee a minimum size of 2 * CPU * 60KB, to
-ensure that there is always at least 1 chunk per shard. On a system with 1 CPU, this will be 122,880 bytes, 
+ensure that there is always at least 1 chunk per shard. On a system with 1 CPU, this will be 122,880 bytes,
 and on a system with 4 CPU, this will be 491,520 bytes.</p>
 <p>The LowLatencyBuffer reports metrics, which can be used to monitor buffer performance:</p>
 <ul>

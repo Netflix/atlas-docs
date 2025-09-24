@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -3166,6 +3171,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    node-avg
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -3177,6 +3195,68 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Purpose
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8668,59 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Purpose
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,19 +8741,45 @@
   <h1>node-avg</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>Query</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>query: Query</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td>TimeSeriesExpr</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>A helper to compute an average using the <code>poller.asg.instance</code> metric as the denominator.
-The common infrastructure tags will be used to restrict the scope for the denominator. This
-operator should be used instead of <a href="../avg/">:avg</a> if the goal is to compute an average per
-node.</p>
+<p>Compute an average per node by using the <code>poller.asg.instance</code> metric as the denominator.
+This specialized aggregation function accounts for the actual number of active instances
+rather than just averaging using the number of time series. It automatically restricts the
+scope using common infrastructure tags to ensure proper normalization.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>query</strong>: The query to compute the per-node average for</li>
+</ul>
+<h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
+<p>This operator should be used instead of <a href="../avg/">:avg</a> when you need a true per-node average
+that accounts for the actual instance count. Regular <code>:avg</code> computes the mean across all
+matching time series, but <code>:node-avg</code> divides by the actual number of reporting instances.</p>
+<p>The key difference: if you have 3 instances but each reports metrics with multiple dimensions
+(creating more time series), <code>:avg</code> would divide by the total number of time series while
+<code>:node-avg</code> divides by 3 (the actual instance count).</p>
+<h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Executes the provided query to get the numerator values</li>
+<li>Finds the corresponding <code>poller.asg.instance</code> metrics using infrastructure tags</li>
+<li>Divides the query results by the instance count to get per-node averages</li>
+<li>Uses common tags (like <code>nf.app</code>, <code>nf.cluster</code>) to properly scope the calculation</li>
+</ol>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Computing average requests per second per node:</p>
 <pre>name,sps,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
 nf.app,nccp,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
 <a href="https://netflix.github.io/atlas-docs/asl/ref/and/">:and</a>,
 <a href="https://netflix.github.io/atlas-docs/asl/ref/node-avg/"><span class="atlas-hilite">:node-avg</span></a>
 </pre>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../avg/">:avg</a> - Standard average aggregation (doesn't normalize by node count)</li>
+<li><a href="../eureka-avg/">:eureka-avg</a> - Average using nodes UP in Eureka for the denominator</li>
+<li><a href="../dist-avg/">:dist-avg</a> - Average over the number of recorded samples</li>
+</ul>
 
 
 

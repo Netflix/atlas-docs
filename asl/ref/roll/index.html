@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -5035,6 +5040,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    roll
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -5046,6 +5064,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#difference-from-pick" class="md-nav__link">
+    <span class="md-ellipsis">
+      Difference from Pick
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8659,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#difference-from-pick" class="md-nav__link">
+    <span class="md-ellipsis">
+      Difference from Pick
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,13 +8723,20 @@
   <h1>roll</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>N</td></tr><tr><td>a0</td></tr><tr><td>...</td></tr><tr><td>aN</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>n: Int</td></tr><tr><td>...</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
-<td><strong>Output Stack:</strong><table><tbody><tr><td>aN-1</td></tr><tr><td>a0</td></tr><tr><td>...</td></tr><tr><td>aN-2</td></tr><tr><td>aN</td></tr></tbody></table></td>
+<td><strong>Output Stack:</strong><table><tbody><tr><td>item: Any</td></tr><tr><td>...</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Rotate an item in the stack and put it on the top.</p>
-<p>Since: 1.5.0 </p>
-<p>Example:</p>
+<p>Move an item from a specific position in the stack to the top. Unlike <a href="../pick/">:pick</a> which
+copies an item, <code>:roll</code> removes the item from its original position and places it on top.
+This is useful for reorganizing the stack when you need to bring buried items to the surface.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>...</strong>: The current stack contents with at least (n+1) items</li>
+<li><strong>n</strong>: Zero-based index of the item to move (0 = top item, 1 = second item, etc.)</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Rolling the top item (index 0) - effectively a no-op:</p>
 <pre>a,0,<a href="https://netflix.github.io/atlas-docs/asl/ref/roll/">:roll</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8627,6 +8749,7 @@
 <td></td>
 </tr></tbody></table>
 
+<p>Rolling the top item from a two-item stack:</p>
 <pre>a,b,0,<a href="https://netflix.github.io/atlas-docs/asl/ref/roll/">:roll</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8643,6 +8766,7 @@
 <td></td>
 </tr></tbody></table>
 
+<p>Rolling the second item (index 1) to the top:</p>
 <pre>a,b,1,<a href="https://netflix.github.io/atlas-docs/asl/ref/roll/">:roll</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8658,6 +8782,38 @@
 <td>a</td>
 <td></td>
 </tr></tbody></table>
+
+<h2 id="difference-from-pick">Difference from Pick<a class="headerlink" href="#difference-from-pick" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Effect</th>
+<th>Stack Size Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:pick</code></td>
+<td><strong>Copy</strong> item to top</td>
+<td>+1 (grows)</td>
+</tr>
+<tr>
+<td><code>:roll</code></td>
+<td><strong>Move</strong> item to top</td>
+<td>0 (unchanged)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../pick/">:pick</a> - Copy (not move) item to top of stack</li>
+<li><a href="../rot/">:rot</a> / <a href="../-rot/">:-rot</a> - Rotate top three items</li>
+<li><a href="../swap/">:swap</a> - Exchange top two items (equivalent to <code>1,:roll</code>)</li>
+<li><a href="../depth/">:depth</a> - Check stack size before rolling</li>
+<li><a href="../over/">:over</a> - Copy second item (non-destructive alternative)</li>
+</ul>
+<p>Since: 1.5.0</p>
 
 
 

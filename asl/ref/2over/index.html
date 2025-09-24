@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -4644,6 +4649,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    2over
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -4655,6 +4673,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equivalent-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Equivalent Sequence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8659,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equivalent-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Equivalent Sequence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,12 +8723,20 @@
   <h1>2over</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>b</td></tr><tr><td>a</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>top: Any</td></tr><tr><td>second: Any</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
-<td><strong>Output Stack:</strong><table><tbody><tr><td>b</td></tr><tr><td>a</td></tr><tr><td>b</td></tr><tr><td>a</td></tr></tbody></table></td>
+<td><strong>Output Stack:</strong><table><tbody><tr><td>top: Any</td></tr><tr><td>second: Any</td></tr><tr><td>top: Any</td></tr><tr><td>second: Any</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Shorthand equivalent to writing: <code>:over,:over</code></p>
-<p>Example:</p>
+<p>Copy both items from the stack and place copies on top. This operator provides a convenient
+way to duplicate both items on a two-item stack. It's equivalent to the sequence <code>:over,:over</code>
+but more clearly expresses the intent to copy both items.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>top</strong>: The item on top of the stack (will be copied)</li>
+<li><strong>second</strong>: The second item from the top (will be copied)</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Copying two items from deeper stack positions:</p>
 <pre>a,b,<a href="https://netflix.github.io/atlas-docs/asl/ref/2over/">:2over</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8633,6 +8756,21 @@
 <td></td>
 <td>a</td>
 </tr></tbody></table>
+
+<h2 id="equivalent-sequence">Equivalent Sequence<a class="headerlink" href="#equivalent-sequence" title="Permanent link">&para;</a></h2>
+<p>The <code>:2over</code> operation is exactly equivalent to:</p>
+<div class="highlight"><pre><span></span><code>:over,:over
+</code></pre></div>
+<p>Both sequences produce the same result, but <code>:2over</code> is more concise and clearly indicates
+the intent to copy two items from deeper positions.</p>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../over/">:over</a> - Copy single item from second position (component operation)</li>
+<li><a href="../pick/">:pick</a> - Copy item from arbitrary position (more general)</li>
+<li><a href="../dup/">:dup</a> - Copy top item only</li>
+<li><a href="../nip/">:nip</a> - Remove second item (opposite of adding)</li>
+<li><a href="../tuck/">:tuck</a> - Copy top item to third position</li>
+</ul>
 
 
 

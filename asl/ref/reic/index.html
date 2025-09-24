@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1734,6 +1739,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    reic
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1745,6 +1763,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8650,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,18 +8705,27 @@
   <h1>reic</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>v: String</td></tr><tr><td>k: String</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>value: String</td></tr><tr><td>key: String</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
-<td><strong>Output Stack:</strong><table><tbody><tr><td>(k=~/^v/i): Query</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
+<td><strong>Output Stack:</strong><table><tbody><tr><td>(key=~/^value/i): Query</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
 </tr></tbody></table>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Ignoring the case will always result if a full scan for the key. This should be used
-sparingly and only for tag queries. If a case-insensitive match is not required, use
-<a href="../re/">:re</a> intead.</p>
+<p>Case-insensitive matching requires a full scan of all time series for the specified key,
+which can be significantly slower than exact matches. Use this operator sparingly and only
+when case-insensitive matching is genuinely required. For case-sensitive regex matching,
+use <a href="../re/">:re</a> instead.</p>
 </div>
 <p>Select time series where the value for a key matches the specified regular expression with
-case insensitive matching. For example, consider the following query:</p>
+case insensitive matching. The regular expression value will be automatically anchored at the start.
+For more information on supported patterns, see the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html">Java regular expressions</a> documentation.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>key</strong>: The tag key to match against (e.g., <code>name</code>, <code>nf.app</code>)</li>
+<li><strong>value</strong>: A regular expression pattern to match against the key's value (case-insensitive)</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Case-insensitive matching where query casing doesn't match the data:</p>
 <pre>name,ssCPU,<a href="https://netflix.github.io/atlas-docs/asl/ref/reic/"><span class="atlas-hilite">:reic</span></a>
 </pre>
 <p>When matching against the sample data in the table below, the highlighted time series would be
@@ -8657,9 +8763,15 @@ included in the result set:</p>
   </tbody>
 </table>
 
-<p>Notice that the casing for the query does not match the data. The regular expression value will
-be automatically anchored at the start. For more information on supported patterns, see the
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html">Java regular expressions</a> documentation.</p>
+<p>Notice that the casing for the query (<code>ssCPU</code>) does not match the data (<code>ssCpu</code>), but the
+case-insensitive matching still finds the correct time series.</p>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../re/">:re</a> - Case-sensitive regular expression matching (much faster)</li>
+<li><a href="../eq/">:eq</a> - Exact string matching (fastest option)</li>
+<li><a href="../in/">:in</a> - Match against multiple exact values</li>
+<li><a href="../has/">:has</a> - Check if a tag key exists</li>
+</ul>
 
 
 

@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -4897,6 +4902,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    map
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -4908,6 +4926,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8650,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8610,10 +8707,18 @@
 <table><tbody><tr>
 <td><strong>Input Stack:</strong><table><tbody><tr><td>function: List</td></tr><tr><td>items: List</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
-<td><strong>Output Stack:</strong><table><tbody><tr><td>List(function(items[0], ..., items[N-1])</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
+<td><strong>Output Stack:</strong><table><tbody><tr><td>List(function(items[0]), ..., function(items[N-1]))</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Create a new list by applying a function to all elements of a list. </p>
-<p>Example:</p>
+<p>Create a new list by applying a function to each element of the input list. The function is applied
+to each element individually, and the results are collected into a new list. This is a functional
+programming concept similar to map operations in other languages.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>items</strong>: The input list containing elements to be transformed</li>
+<li><strong>function</strong>: A list representing the function to apply to each element</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Apply a format function to transform each string in a list:</p>
 <pre>(,a%s,b%s,),(,(,.netflix.com,),<a href="https://netflix.github.io/atlas-docs/asl/ref/format/">:format</a>,
 ),<a href="https://netflix.github.io/atlas-docs/asl/ref/map/">:map</a>
 </pre>
@@ -8626,6 +8731,15 @@
 <td>List(a%s, b%s)</td>
 <td></td>
 </tr></tbody></table>
+
+<p>This example takes the list <code>(a%s, b%s)</code> and applies the function <code>(, .netflix.com, ), :format</code> to each
+element, resulting in <code>a.netflix.com</code> and <code>b.netflix.com</code>.</p>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../each/">:each</a> - Execute a function for each element but don't collect results</li>
+<li><a href="../format/">:format</a> - String formatting function commonly used with map</li>
+<li><a href="../list/">:list</a> - Create lists that can be transformed with map</li>
+</ul>
 
 
 

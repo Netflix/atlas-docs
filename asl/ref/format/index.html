@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -5222,6 +5227,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    format
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -5233,6 +5251,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#format-specifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Format Specifiers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8659,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#format-specifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Format Specifiers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8612,8 +8727,23 @@
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td>str: String</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Format a string using a printf <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Formatter.html">style pattern</a>.</p>
-<p>Example:</p>
+<p>Format a string using printf-style formatting patterns. This allows for dynamic string
+construction by substituting values from a list into placeholders in a format string.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>pattern</strong>: A string containing format specifiers (e.g., <code>%s</code>, <code>%d</code>, <code>%f</code>)</li>
+<li><strong>args</strong>: A list of values to substitute into the format placeholders</li>
+</ul>
+<h2 id="format-specifiers">Format Specifiers<a class="headerlink" href="#format-specifiers" title="Permanent link">&para;</a></h2>
+<p>Common format specifiers supported:
+* <code>%s</code> - String representation of any object
+* <code>%d</code> - Decimal integer
+* <code>%f</code> - Floating point number
+* <code>%x</code> - Hexadecimal representation
+* <code>%%</code> - Literal percent sign</p>
+<p>For complete formatting options, see the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Formatter.html">Java Formatter</a> documentation.</p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Basic string substitution:</p>
 <pre>foo%s,(,bar,),<a href="https://netflix.github.io/atlas-docs/asl/ref/format/">:format</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8625,6 +8755,16 @@
 <td>foo%s</td>
 <td></td>
 </tr></tbody></table>
+
+<p>This substitutes the string "bar" from the list into the <code>%s</code> placeholder in "foo%s",
+resulting in "foobar".</p>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../list/">:list</a> - Create lists of arguments for formatting</li>
+<li><a href="../legend/">:legend</a> - Custom legend formatting (often uses formatted strings)</li>
+<li><a href="../get/">:get</a> - Retrieve values that can be used in format arguments</li>
+<li><a href="../map/">:map</a> - Apply formatting to multiple items</li>
+</ul>
 
 
 

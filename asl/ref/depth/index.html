@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -4713,6 +4718,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    depth
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -4724,6 +4742,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8659,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8610,11 +8725,24 @@
 <table><tbody><tr>
 <td><strong>Input Stack:</strong><table><tbody><tr><td>...</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
-<td><strong>Output Stack:</strong><table><tbody><tr><td>Int</td></tr><tr><td>...</td></tr></tbody></table></td>
+<td><strong>Output Stack:</strong><table><tbody><tr><td>count: Int</td></tr><tr><td>...</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Push the depth of the stack.</p>
-<p>Since: 1.5.0 </p>
-<p>Examples:</p>
+<p>Push the current stack depth (number of items) onto the stack. This introspection operator
+allows you to inspect the stack state and make decisions based on how many items are present.
+The original stack contents remain unchanged.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>...</strong>: The current stack contents (any number of items)</li>
+</ul>
+<h2 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Non-destructive</strong>: Original stack items remain in their positions</li>
+<li><strong>Count calculation</strong>: Counts all items currently on the stack</li>
+<li><strong>Stack growth</strong>: Adds one more item (the count) to the stack</li>
+<li><strong>Zero handling</strong>: Empty stack returns depth of 0</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Empty stack depth:</p>
 <pre>,<a href="https://netflix.github.io/atlas-docs/asl/ref/depth/">:depth</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8623,6 +8751,7 @@
 <td>0</td>
 </tr></tbody></table>
 
+<p>Single item stack depth:</p>
 <pre>a,<a href="https://netflix.github.io/atlas-docs/asl/ref/depth/">:depth</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8635,6 +8764,7 @@
 <td>a</td>
 </tr></tbody></table>
 
+<p>Multiple items stack depth:</p>
 <pre>a,b,<a href="https://netflix.github.io/atlas-docs/asl/ref/depth/">:depth</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8650,6 +8780,16 @@
 <td></td>
 <td>a</td>
 </tr></tbody></table>
+
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../clear/">:clear</a> - Remove all items (sets depth to 0)</li>
+<li><a href="../drop/">:drop</a> - Remove single item (decreases depth by 1)</li>
+<li><a href="../ndrop/">:ndrop</a> - Remove N items (decreases depth by N)</li>
+<li><a href="../dup/">:dup</a> - Duplicate item (increases depth by 1)</li>
+<li><a href="../nlist/">:nlist</a> - Create list from N items (requires depth &gt;= N)</li>
+</ul>
+<p>Since: 1.5.0</p>
 
 
 

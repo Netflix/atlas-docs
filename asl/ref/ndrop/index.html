@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -4920,6 +4925,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    ndrop
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -4931,6 +4949,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -8588,6 +8659,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Operations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -8608,12 +8723,27 @@
   <h1>ndrop</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>N</td></tr><tr><td>a0</td></tr><tr><td>...</td></tr><tr><td>aN</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>n: Int</td></tr><tr><td>...</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
-<td><strong>Output Stack:</strong><table><tbody><tr><td>aN</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
+<td><strong>Output Stack:</strong><table><tbody><tr><td>...</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
 </tr></tbody></table>
-<p>Remove the top N items on the stack.</p>
-<p>Example:</p>
+<p>Remove the top N items from the stack. Unlike <a href="../drop/">:drop</a> which removes only one item,
+this operator can remove multiple items at once. This is useful for stack cleanup operations
+and discarding intermediate results during complex expression building.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>...</strong>: The stack items to potentially remove (at least N items should be present)</li>
+<li><strong>n</strong>: Number of items to remove from the top of the stack (non-negative integer)</li>
+</ul>
+<h2 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Item removal</strong>: Removes the top N items from the stack (N = 0 removes nothing)</li>
+<li><strong>Stack preservation</strong>: Items below the top N remain unchanged on the stack</li>
+<li><strong>Boundary handling</strong>: If N exceeds available items, removes all available items</li>
+<li><strong>Error handling</strong>: Throws exception if N parameter is missing</li>
+</ol>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Removing no items (N = 0):</p>
 <pre>a,0,<a href="https://netflix.github.io/atlas-docs/asl/ref/ndrop/">:ndrop</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8626,6 +8756,7 @@
 <td></td>
 </tr></tbody></table>
 
+<p>Removing 2 items from the stack:</p>
 <pre>a,b,c,2,<a href="https://netflix.github.io/atlas-docs/asl/ref/ndrop/">:ndrop</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8646,6 +8777,7 @@
 <td></td>
 </tr></tbody></table>
 
+<p>Requesting to remove more items than available (removes all 3 available):</p>
 <pre>a,b,c,4,<a href="https://netflix.github.io/atlas-docs/asl/ref/ndrop/">:ndrop</a>
 </pre>
 <table><thead><th>Pos</th><th>Input</th><th>Output</th></thead><tbody><tr>
@@ -8666,12 +8798,20 @@
 <td></td>
 </tr></tbody></table>
 
+<p>Error case (missing N parameter):</p>
 <pre>,<a href="https://netflix.github.io/atlas-docs/asl/ref/ndrop/">:ndrop</a>
 </pre>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Throws an exception due to missing the <code>N</code> param.</p>
+<p>Throws an exception due to missing the <code>N</code> parameter.</p>
 </div>
+<h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../drop/">:drop</a> - Remove single item from stack (N = 1 equivalent)</li>
+<li><a href="../nlist/">:nlist</a> - Create list from N items (complementary operation)</li>
+<li><a href="../list/">:list</a> - Remove all items to create list</li>
+<li><a href="../swap/">:swap</a> / <a href="../over/">:over</a> - Reorder items instead of removing them</li>
+</ul>
 
 
 

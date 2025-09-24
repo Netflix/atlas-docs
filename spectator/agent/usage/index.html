@@ -8900,7 +8900,7 @@ consolidates the logic required to apply common tagging to all metrics received,
 metric lifetimes, and route metrics to the correct backend.</p>
 <p>The preferred method of using <code>spectatord</code> is to use one of the thin-client implementations,
 however, the text-based protocol was designed to make it easy for community-supported clients
-to be developed. It is also easy to use in shell scripts with common command line tools.  </p>
+to be developed. It is also easy to use in shell scripts with common command line tools.</p>
 <h2 id="command-line-configuration-flags">Command Line Configuration Flags<a class="headerlink" href="#command-line-configuration-flags" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>spectatord<span class="w"> </span>--help
 spectatord:<span class="w"> </span>A<span class="w"> </span>daemon<span class="w"> </span>that<span class="w"> </span>listens<span class="w"> </span><span class="k">for</span><span class="w"> </span>metrics<span class="w"> </span>and<span class="w"> </span>reports<span class="w"> </span>them<span class="w"> </span>to<span class="w"> </span>Atlas.
@@ -9103,7 +9103,7 @@ but this can be modified with the <code>--admin_port</code> flag. The endpoints 
 only be accessed from localhost.</p>
 <ul>
 <li><code>GET /</code><ul>
-<li>Returns a service description and list of available endpoints. </li>
+<li>Returns a service description and list of available endpoints.</li>
 </ul>
 </li>
 <li><code>GET /config</code><ul>
@@ -9141,7 +9141,7 @@ by type.</li>
 </ul>
 </li>
 <li><code>DELETE /metrics/A</code><ul>
-<li>Delete all AgeGauge metrics from the Registry. </li>
+<li>Delete all AgeGauge metrics from the Registry.</li>
 </ul>
 </li>
 <li><code>DELETE /metrics/A/{id}</code><ul>
@@ -9154,7 +9154,7 @@ http://localhost:1234/metrics/A/fooIsTheName,some.tag=val1,some.otherTag=val2
 </ul>
 </li>
 <li><code>DELETE /metrics/g</code><ul>
-<li>Delete all Gauge metrics from the Registry. </li>
+<li>Delete all Gauge metrics from the Registry.</li>
 </ul>
 </li>
 <li><code>DELETE /metrics/g/{id}</code><ul>
@@ -9181,7 +9181,7 @@ Unix Dgram         1             22.98s (435k rps)  20.58s (486k rps)
 Unix Dgram         8             11.46s (873k rps)   9.89s (1011k rps)
 Unix Dgram         32            10.38s (963k rps)   8.49s (1178k rps)
 </code></pre></div>
-<p>The UDP transport is particularly sensitive the max receive buffer size (16MB on our systems). </p>
+<p>The UDP transport is particularly sensitive the max receive buffer size (16MB on our systems).</p>
 <p>Our tests indicate that sending 430K rps to the UDP port did not drop packets, but if there is a
 need for higher throughput, then tweaking <code>/proc/sys/net/unix/max_dgram_qlen</code> is recommended.</p>
 
