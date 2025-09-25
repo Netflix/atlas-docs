@@ -18,6 +18,7 @@ when dealing with large result sets.
 ## Selection Behavior
 
 The limit operation selects the first N series based on the current ordering:
+
 - If no sort is specified, series are ordered by legend text (alphabetical)
 - If [:sort](sort.md) is used, series are ordered by the specified statistic
 - The [:order](order.md) operation controls ascending vs. descending sort direction

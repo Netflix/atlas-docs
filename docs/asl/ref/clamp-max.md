@@ -24,6 +24,7 @@ and handling occasional data spikes.
 ## Problem and Solution
 
 The axis parameters for controlling [axis bounds](../../api/graph/axis-bounds.md) have limitations:
+
 - They apply to everything on the axis and cannot target specific lines
 - For data with occasional spikes, they can hide important details in the rest of the data
 

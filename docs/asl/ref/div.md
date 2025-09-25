@@ -9,6 +9,7 @@ Compute a new time series where each interval has the value `(a / b)` where `a`
 and `b` are the corresponding intervals in the input time series.
 
 Special handling for division by zero:
+
 - If both `a` and `b` are 0, the result is 0 (instead of NaN)
 - If only `b` (divisor) is 0, the result is NaN
 

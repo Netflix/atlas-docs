@@ -15,6 +15,7 @@ stability than the standard [:des-simple](des-simple.md) operator.
 ## Default Configuration
 
 This operator is equivalent to calling `:sdes` with these default parameters:
+
 - **Training**: 10 data points
 - **Alpha**: 0.1 (level smoothing factor)
 - **Beta**: 0.5 (trend smoothing factor)

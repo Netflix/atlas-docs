@@ -48,6 +48,7 @@ Absolute: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=2014-02-2
 ## Signal Output
 
 The operator produces a signal time series where:
+
 - **Value 1**: Time falls within the specified range [startTime, endTime]
 - **Value 0**: Time falls outside the specified range
 - This creates a boolean-like signal suitable for logical operations
