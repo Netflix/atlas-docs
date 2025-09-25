@@ -8797,10 +8797,12 @@ through Eureka.</p>
 <li><strong>Result</strong>: Average per active (traffic-receiving) instance</li>
 </ol>
 <h2 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">&para;</a></h2>
-<p>This operator is specifically designed for scenarios where:
-- Metrics represent incoming traffic routed through Eureka service discovery
-- You want average per active instance, not per total deployed instance
-- The goal is to measure per-node load for traffic-bearing services</p>
+<p>This operator is specifically designed for scenarios where:</p>
+<ul>
+<li>Metrics represent incoming traffic routed through Eureka service discovery</li>
+<li>You want average per active instance, not per total deployed instance</li>
+<li>The goal is to measure per-node load for traffic-bearing services</li>
+</ul>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <p>Computing average requests per second per active instance:</p>
 <pre>name,sps,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
@@ -8841,11 +8843,13 @@ nf.app,nccp,<a href="https://netflix.github.io/atlas-docs/asl/ref/eq/">:eq</a>,
 </tbody>
 </table>
 <h2 id="infrastructure-tag-scoping">Infrastructure Tag Scoping<a class="headerlink" href="#infrastructure-tag-scoping" title="Permanent link">&para;</a></h2>
-<p>The operator automatically uses common tags to ensure the denominator matches the numerator scope:
-- <code>nf.app</code> - Application name
-- <code>nf.cluster</code> - Cluster identifier
-- <code>nf.region</code> - AWS region
-- Other standard Netflix infrastructure tags</p>
+<p>The operator automatically uses common tags to ensure the denominator matches the numerator scope:</p>
+<ul>
+<li><code>nf.app</code> - Application name</li>
+<li><code>nf.cluster</code> - Cluster identifier</li>
+<li><code>nf.region</code> - AWS region</li>
+<li>Other standard Netflix infrastructure tags</li>
+</ul>
 <h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../avg/">:avg</a> - Standard average across time series</li>

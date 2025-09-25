@@ -8753,10 +8753,12 @@ converting cumulative values back to rates or identifying trends in the data.</p
 <li><strong>expr</strong>: The time series expression to compute the derivative of</li>
 </ul>
 <h2 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">&para;</a></h2>
-<p>Each output value represents the difference between consecutive datapoints:
-- <code>derivative[i] = input[i] - input[i-1]</code>
-- The first datapoint will typically be NaN since there's no previous value
-- Missing values (NaN) are handled as 0 for the calculation</p>
+<p>Each output value represents the difference between consecutive datapoints:</p>
+<ul>
+<li><code>derivative[i] = input[i] - input[i-1]</code></li>
+<li>The first datapoint will typically be NaN since there's no previous value</li>
+<li>Missing values (NaN) are handled as 0 for the calculation</li>
+</ul>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <p>Comparing integral and derivative operations:</p>
 <table><tbody>
@@ -8769,14 +8771,18 @@ converting cumulative values back to rates or identifying trends in the data.</p
 </pre></td></tr>
 </tbody></table>
 <h2 id="relationship-with-integral">Relationship with Integral<a class="headerlink" href="#relationship-with-integral" title="Permanent link">&para;</a></h2>
-<p><code>:derivative</code> and <code>:integral</code> have an asymmetric relationship:
-- Applying <code>:integral</code> then <code>:derivative</code> approximates the original signal
-- Applying <code>:derivative</code> then <code>:integral</code> does NOT restore the original signal</p>
+<p><code>:derivative</code> and <code>:integral</code> have an asymmetric relationship:</p>
+<ul>
+<li>Applying <code>:integral</code> then <code>:derivative</code> approximates the original signal</li>
+<li>Applying <code>:derivative</code> then <code>:integral</code> does NOT restore the original signal</li>
+</ul>
 <p>The derivative operation loses information that cannot be recovered with integral. For example,
-with a constant input like <code>1</code>:
-- <code>1,:derivative</code> produces <code>0</code> (derivative of constant is zero)
-- <code>0,:integral</code> produces <code>0</code> (integral of zero stays zero)
-- The original constant value <code>1</code> is permanently lost</p>
+with a constant input like <code>1</code>:</p>
+<ul>
+<li><code>1,:derivative</code> produces <code>0</code> (derivative of constant is zero)</li>
+<li><code>0,:integral</code> produces <code>0</code> (integral of zero stays zero)</li>
+<li>The original constant value <code>1</code> is permanently lost</li>
+</ul>
 <h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../integral/">:integral</a> - Cumulative sum (inverse operation)</li>

@@ -8782,10 +8782,12 @@ each group, useful for understanding data spread and identifying outliers.</p>
 from the different time series in the group using the computational formula:</p>
 <div class="highlight"><pre><span></span><code>σ = √((N * sum(x²) - sum(x)²) / N²)
 </code></pre></div>
-<p>Where:
-- <code>N</code> = number of non-NaN values at that timestamp
-- <code>sum(x)</code> = sum of all time series values at that timestamp
-- <code>sum(x²)</code> = sum of squared time series values at that timestamp</p>
+<p>Where:</p>
+<ul>
+<li><code>N</code> = number of non-NaN values at that timestamp</li>
+<li><code>sum(x)</code> = sum of all time series values at that timestamp</li>
+<li><code>sum(x²)</code> = sum of squared time series values at that timestamp</li>
+</ul>
 <p>This formula is mathematically equivalent to the standard definition but is computed
 using aggregated statistics rather than storing individual samples.</p>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>

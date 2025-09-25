@@ -8779,9 +8779,11 @@ and handling occasional data spikes.</p>
 <li><strong>Missing data</strong>: NaN values are preserved as NaN</li>
 </ul>
 <h2 id="problem-and-solution">Problem and Solution<a class="headerlink" href="#problem-and-solution" title="Permanent link">&para;</a></h2>
-<p>The axis parameters for controlling <a href="../../../api/graph/axis-bounds/">axis bounds</a> have limitations:
-- They apply to everything on the axis and cannot target specific lines
-- For data with occasional spikes, they can hide important details in the rest of the data</p>
+<p>The axis parameters for controlling <a href="../../../api/graph/axis-bounds/">axis bounds</a> have limitations:</p>
+<ul>
+<li>They apply to everything on the axis and cannot target specific lines</li>
+<li>For data with occasional spikes, they can hide important details in the rest of the data</li>
+</ul>
 <p>Consider this graph with a data spike:</p>
 <p><img alt="Original Data" src="../../../images/clamp-max-spike.png" /></p>
 <p>The spike makes it difficult to see details at other times. While alternate <a href="../../../api/graph/axis-scale/">axis scales</a>
