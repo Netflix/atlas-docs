@@ -37,6 +37,7 @@ Result:
 ```
 
 Where:
+
 - **A**: Both functions wait for training window boundary
 - **T1/T2**: Training phases for each function
 - **P1/P2**: Prediction phases alternating between functions

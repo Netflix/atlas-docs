@@ -20,6 +20,7 @@ the default values may not be optimal for all use cases.
 ## Default Configuration
 
 This operator is equivalent to calling `:des` with these default parameters:
+
 - **Training**: 10 data points
 - **Alpha**: 0.1 (level smoothing factor)
 - **Beta**: 0.5 (trend smoothing factor)

@@ -26,6 +26,7 @@ Apply a common application filter to an expression with multiple queries:
 @@@
 
 This transforms:
+
 - `name,ssCpuUser,:eq` becomes `name,ssCpuUser,:eq,nf.app,alerttest,:eq,:and`
 - `name,DiscoveryStatus_UP,:eq` becomes `name,DiscoveryStatus_UP,:eq,nf.app,alerttest,:eq,:and`
 

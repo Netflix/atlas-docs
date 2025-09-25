@@ -23,6 +23,7 @@ through Eureka.
 ## When to Use
 
 This operator is specifically designed for scenarios where:
+
 - Metrics represent incoming traffic routed through Eureka service discovery
 - You want average per active instance, not per total deployed instance
 - The goal is to measure per-node load for traffic-bearing services
@@ -47,6 +48,7 @@ Computing average requests per second per active instance:
 ## Infrastructure Tag Scoping
 
 The operator automatically uses common tags to ensure the denominator matches the numerator scope:
+
 - `nf.app` - Application name
 - `nf.cluster` - Cluster identifier
 - `nf.region` - AWS region

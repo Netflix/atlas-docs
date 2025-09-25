@@ -29,6 +29,7 @@ from the different time series in the group using the computational formula:
 ```
 
 Where:
+
 - `N` = number of non-NaN values at that timestamp
 - `sum(x)` = sum of all time series values at that timestamp
 - `sum(x²)` = sum of squared time series values at that timestamp

@@ -31,6 +31,7 @@ name,requestLatency,:eq,(,percentile,),:by,:heatmap
 ```
 
 The resulting heatmap shows:
+
 - **X-axis**: Time progression
 - **Y-axis**: Percentile levels (P50, P90, P95, P99, etc.)
 - **Color intensity**: Magnitude of values at each percentile/time combination
