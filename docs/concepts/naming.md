@@ -32,6 +32,7 @@ or `jvm.gc.pause`. The prefix should generally have no more than 2 levels to kee
 This is not a package hierarchy like in Java - it's simply a way to group related metrics.
 
 Examples of good prefixes:
+
 * `ipc.*` for inter-process communication metrics
 * `jvm.*` for Java Virtual Machine metrics
 * `db.*` for database metrics
@@ -79,10 +80,12 @@ and each combination consumes storage and processing resources. Tag combinations
 over time to avoid constantly creating new time series.
 
 Consider the cardinality impact:
+
 * A metric with 3 tag keys, each with 10 possible values = 1,000 potential time series
 * A metric with 5 tag keys, each with 10 possible values = 100,000 potential time series
 
 Guidelines for managing cardinality:
+
 * **Limit high-cardinality dimensions.** Avoid tags with unbounded or very large value sets
 * **Use stable identifiers.** Tag values should remain consistent over time
 
@@ -93,11 +96,13 @@ be queried simply and allow users to incrementally drill into the data. This imp
 performance and user experience.
 
 Good query patterns:
+
 * `name,threadpool.size,:eq` - exact match on name
 * `name,threadpool.size,:eq,id,server-requests,:eq,:and` - add exact tag filter
 * `name,threadpool.*,:re` - simple prefix pattern (use sparingly)
 
 Avoid patterns that require expensive operations:
+
 * Complex regex patterns that must scan many metric names
 * Queries that require examining all tag combinations to find matches
 * Dynamic name construction that makes direct queries impossible
@@ -142,6 +147,7 @@ see the total number of threads in all pools. You can then group by or select an
 filter the data to a subset in which you have an interest.
 
 This approach also supports simple queries without regex patterns:
+
 * `name,threadpool.size,:eq` gives you all thread pool sizes
 * `name,db.size,:eq` gives you all database sizes
 * `name,threadpool.size,:eq,id,server-requests,:eq,:and` drills down to a specific pool
