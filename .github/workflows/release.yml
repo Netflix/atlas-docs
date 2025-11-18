@@ -22,6 +22,9 @@ jobs:
         with:
           python-version: '3'
 
+       - name: Install system dependencies for Pillow
+         run: sudo apt-get update && sudo apt-get install -y libjpeg-dev zlib1g-dev
+
       - run: pip install -r requirements.txt
 
       - run: git fetch origin gh-pages:gh-pages
