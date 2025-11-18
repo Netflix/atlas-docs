@@ -9809,10 +9809,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#debug-metrics-delivery-to-spectatord" class="md-nav__link">
+  <a href="#design-considerations-high-volume-metrics" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Debug Metrics Delivery to spectatord
+        Design Considerations: High Volume Metrics
       
     </span>
   </a>
@@ -9820,10 +9820,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#design-considerations-reporting-intervals" class="md-nav__link">
+  <a href="#caveats-multiprocessing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Design Considerations - Reporting Intervals
+        Caveats: multiprocessing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug-metrics-delivery-to-spectatord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug Metrics Delivery to spectatord
       
     </span>
   </a>
@@ -10919,10 +10930,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#debug-metrics-delivery-to-spectatord" class="md-nav__link">
+  <a href="#design-considerations-high-volume-metrics" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Debug Metrics Delivery to spectatord
+        Design Considerations: High Volume Metrics
       
     </span>
   </a>
@@ -10930,10 +10941,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#design-considerations-reporting-intervals" class="md-nav__link">
+  <a href="#caveats-multiprocessing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Design Considerations - Reporting Intervals
+        Caveats: multiprocessing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug-metrics-delivery-to-spectatord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug Metrics Delivery to spectatord
       
     </span>
   </a>
@@ -11250,6 +11272,30 @@ time for <code>spectatord</code> to publish metrics to the Atlas backend; it pub
 your job does not run this long, or you find you are missing metrics that were reported at the end
 of your job run, then add a five-second sleep before exiting: <code>time.sleep(5)</code>. This will allow time
 for the metrics to be sent.</p>
+<h2 id="design-considerations-high-volume-metrics">Design Considerations: High Volume Metrics<a class="headerlink" href="#design-considerations-high-volume-metrics" title="Permanent link">&para;</a></h2>
+<p>This client is stateless, and sends a UDP packet (or unixgram) to <code>spectatord</code> each time a meter is
+updated. If you are performing high-volume operations, on the order of tens-of-thousands or millions
+of operations per second, then you should pre-aggregate your metrics and report them at a cadence
+closer to the <code>spectatord</code> publish interval of 5 seconds. This will keep the CPU usage related to
+<code>spectator-py</code> and <code>spectatord</code> low (around 1% or less), as compared to up to 40% for high-volume
+scenarios.</p>
+<h2 id="caveats-multiprocessing">Caveats: multiprocessing<a class="headerlink" href="#caveats-multiprocessing" title="Permanent link">&para;</a></h2>
+<p>This library makes use of <code>threading.Lock()</code> to provide lazy acquisition of the socket that communicates
+with <code>spectatord</code>, and creates a background thread for flushing metrics periodically, if the Line Buffer
+is enabled. Therefore, if you want to use this library with <code>multiprocessing</code>, you have to make a design
+choice about how to use <code>spectator-py</code>, to ensure that you do not encounter deadlocks in your code.</p>
+<ul>
+<li>If you use a start method of <code>fork</code> or <code>forkserver</code> (Linux default), then you need to ensure that a new
+<code>Registry</code> is created after a process is started, which requires a few extra lines of code.</li>
+<li>If you use the <code>spawn</code> start method (macOS and Windows default), then your code can use a "shared" instance
+of the <code>Registry</code> as written.</li>
+</ul>
+<p>In both cases, the overhead cost will be maintaining a separate socket for communicating with <code>spectatord</code>, plus
+the memory associated with processing metrics for delivery.</p>
+<p>See <a href="https://docs.python.org/3/library/multiprocessing.html#contexts-and-start-methods">multiprocessing - Contexts and start methods</a>
+for more details from the official Python documentation.</p>
+<p>See <a href="https://github.com/thatch/fork-is-problematic">fork-is-problematic</a> for a detailed explanation of the
+challenges associated with forking.</p>
 <h2 id="debug-metrics-delivery-to-spectatord">Debug Metrics Delivery to <code>spectatord</code><a class="headerlink" href="#debug-metrics-delivery-to-spectatord" title="Permanent link">&para;</a></h2>
 <p>In order to see debug log messages from <code>spectatord</code>, create an <code>/etc/default/spectatord</code> file with
 the following contents:</p>
@@ -11257,13 +11303,6 @@ the following contents:</p>
 </code></pre></div>
 <p>This will report all metrics that are sent to the Atlas backend in the <code>spectatord</code> logs, which will
 provide an opportunity to correlate metrics publishing events from your client code.</p>
-<h2 id="design-considerations-reporting-intervals">Design Considerations - Reporting Intervals<a class="headerlink" href="#design-considerations-reporting-intervals" title="Permanent link">&para;</a></h2>
-<p>This client is stateless, and sends a UDP packet (or unixgram) to <code>spectatord</code> each time a meter is
-updated. If you are performing high-volume operations, on the order of tens-of-thousands or millions
-of operations per second, then you should pre-aggregate your metrics and report them at a cadence
-closer to the <code>spectatord</code> publish interval of 5 seconds. This will keep the CPU usage related to
-<code>spectator-py</code> and <code>spectatord</code> low (around 1% or less), as compared to up to 40% for high-volume
-scenarios.</p>
 <h2 id="writing-tests">Writing Tests<a class="headerlink" href="#writing-tests" title="Permanent link">&para;</a></h2>
 <p>To write tests against this library, instantiate an instance of the <code>Registry</code> and provide a <code>Config</code>
 that selects the <a href="https://github.com/Netflix/spectator-py/blob/main/spectator/writer/memory_writer.py">MemoryWriter</a>.
