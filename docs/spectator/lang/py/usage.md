@@ -315,6 +315,36 @@ your job does not run this long, or you find you are missing metrics that were r
 of your job run, then add a five-second sleep before exiting: `time.sleep(5)`. This will allow time
 for the metrics to be sent.
 
+## Design Considerations: High Volume Metrics
+
+This client is stateless, and sends a UDP packet (or unixgram) to `spectatord` each time a meter is
+updated. If you are performing high-volume operations, on the order of tens-of-thousands or millions
+of operations per second, then you should pre-aggregate your metrics and report them at a cadence
+closer to the `spectatord` publish interval of 5 seconds. This will keep the CPU usage related to
+`spectator-py` and `spectatord` low (around 1% or less), as compared to up to 40% for high-volume
+scenarios.
+
+## Caveats: multiprocessing
+
+This library makes use of `threading.Lock()` to provide lazy acquisition of the socket that communicates
+with `spectatord`, and creates a background thread for flushing metrics periodically, if the Line Buffer
+is enabled. Therefore, if you want to use this library with `multiprocessing`, you have to make a design
+choice about how to use `spectator-py`, to ensure that you do not encounter deadlocks in your code.
+
+* If you use a start method of `fork` or `forkserver` (Linux default), then you need to ensure that a new
+`Registry` is created after a process is started, which requires a few extra lines of code.
+* If you use the `spawn` start method (macOS and Windows default), then your code can use a "shared" instance
+of the `Registry` as written.
+
+In both cases, the overhead cost will be maintaining a separate socket for communicating with `spectatord`, plus
+the memory associated with processing metrics for delivery.
+
+See [multiprocessing - Contexts and start methods](https://docs.python.org/3/library/multiprocessing.html#contexts-and-start-methods)
+for more details from the official Python documentation.
+
+See [fork-is-problematic](https://github.com/thatch/fork-is-problematic) for a detailed explanation of the
+challenges associated with forking.
+
 ## Debug Metrics Delivery to `spectatord`
 
 In order to see debug log messages from `spectatord`, create an `/etc/default/spectatord` file with
@@ -326,15 +356,6 @@ SPECTATORD_OPTIONS="--verbose"
 
 This will report all metrics that are sent to the Atlas backend in the `spectatord` logs, which will
 provide an opportunity to correlate metrics publishing events from your client code.
-
-## Design Considerations - Reporting Intervals
-
-This client is stateless, and sends a UDP packet (or unixgram) to `spectatord` each time a meter is
-updated. If you are performing high-volume operations, on the order of tens-of-thousands or millions
-of operations per second, then you should pre-aggregate your metrics and report them at a cadence
-closer to the `spectatord` publish interval of 5 seconds. This will keep the CPU usage related to
-`spectator-py` and `spectatord` low (around 1% or less), as compared to up to 40% for high-volume
-scenarios.
 
 ## Writing Tests
 
