@@ -10804,8 +10804,11 @@ which was not used or their capabilities are replicated in the currently availab
    to be used, so you are most likely not affected by this change.</li>
 <li>If you want to collect runtime metrics, then add the <a href="https://github.com/Netflix-Skunkworks/spectator-js-nodejsmetrics">spectator-js-nodejsmetrics</a>
    library, and follow the instructions in the README.</li>
-<li>If you use meters such as <code>PercentileDistributionSummary</code> or <code>PercentileTimer</code>, then you need to update your code
-   to use the respective functions provided by the <code>Registry</code> to initialize these meters.</li>
+<li>If you use meters such as <code>PercentileDistributionSummary</code>, <code>PercentileTimer</code>, or <code>DistributionSummary</code> then you need to 
+   update your code to use the respective functions provided by the <code>Registry</code> to initialize these meters. The new functions use
+   underscores: <code>pct_distribution_summary</code>, <code>pct_timer</code>, and <code>distribution_summary</code>, respectively.</li>
+<li>The default <code>Registry</code> provided functions no longer accept an <code>id</code> as an input. If you previously called <code>counter</code>, <code>timer</code> 
+   or any other meter with an <code>id</code>, you must change the input to be a metric <code>name</code>, or change the call to use <code>counter_with_id</code>, <code>timer_with_id</code>, etc.</li>
 <li>Remove the dependency on the <code>spectator-js</code> internal configuration library - it is no longer required.</li>
 <li>There is no longer an option to <code>start()</code> or <code>stop()</code> the <code>Registry</code> at runtime. If you need to configure a <code>Registry</code>
    that doesn't emit metrics, for testing purposes, you can set the <code>Config</code> object <code>location</code> parameter to <code>none</code> to
