@@ -109,9 +109,9 @@ which was not used or their capabilities are replicated in the currently availab
 5. If you use meters such as `PercentileDistributionSummary`, `PercentileTimer`, or `DistributionSummary` then you need to 
    update your code to use the respective functions provided by the `Registry` to initialize these meters. The new functions use
    underscores: `pct_distribution_summary`, `pct_timer`, and `distribution_summary`, respectively.
-7. The default `Registry` provided functions no longer accept an `id` as an input. If you previously called `counter`, `timer` 
+6. The default `Registry` provided functions no longer accept an `id` as an input. If you previously called `counter`, `timer` 
    or any other meter with an `id`, you must change the input to be a metric `name`, or change the call to use `counter_with_id`, `timer_with_id`, etc.
-8. Remove the dependency on the `spectator-js` internal configuration library - it is no longer required.
-9. There is no longer an option to `start()` or `stop()` the `Registry` at runtime. If you need to configure a `Registry`
+7. Remove the dependency on the `spectator-js` internal configuration library - it is no longer required.
+8. There is no longer an option to `start()` or `stop()` the `Registry` at runtime. If you need to configure a `Registry`
    that doesn't emit metrics, for testing purposes, you can set the `Config` object `location` parameter to `none` to
    configure a no-op writer.
