@@ -10782,8 +10782,9 @@ value of <code>42</code> for 3 hours<a href="#defaults">*</a> with a legend incl
 </table>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>In most cases users should not set <code>step</code> directly. The <code>step</code> parameter
-is deprecated.</p>
+<p>In most cases users should not set <code>step</code> directly. Steps smaller than the minimum stored interval
+are ignored and a default is used, based on the stored interval and query range. Steps that are not 
+a multiple of the stored interval, or larger than the query range are also ignored and the default is used.</p>
 </div>
 <h3 id="time">Time<a class="headerlink" href="#time" title="Permanent link">&para;</a></h3>
 <p>There are three parameters to control the time range used for a graph:</p>
