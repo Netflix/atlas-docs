@@ -44,8 +44,9 @@ All query params related to fetching data:
 | `step` | Step size for data    | auto                       | [duration](../time-parameters.md#durations) |
 
 !!! Warning
-    In most cases users should not set `step` directly. The `step` parameter
-    is deprecated.
+    In most cases users should not set `step` directly. Steps smaller than the minimum stored interval
+    are ignored and a default is used, based on the stored interval and query range. Steps that are not 
+    a multiple of the stored interval, or larger than the query range are also ignored and the default is used.
 
 ### Time
 
