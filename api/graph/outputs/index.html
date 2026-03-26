@@ -14,7 +14,7 @@
         <link rel="prev" href="../multi-y/">
       
       
-        <link rel="next" href="../theme/">
+        <link rel="next" href="../v2-json/">
       
       
         
@@ -1283,10 +1283,49 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#v2json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v2.json
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../v2-json/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v2.json Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -10585,6 +10624,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#v2json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v2.json
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -10615,6 +10665,7 @@
 <li><a href="#json">json</a></li>
 <li><a href="#stdjson">std.json</a></li>
 <li><a href="#statsjson">stats.json</a></li>
+<li><a href="#v2json">v2.json</a></li>
 </ul>
 <h2 id="png">png<a class="headerlink" href="#png" title="Permanent link">&para;</a></h2>
 <p>This is the default and creates a PNG image for the graph. The mime type is <code>image/png</code>.</p>
@@ -10784,6 +10835,42 @@ values like <code>NaN</code> will not get quoted.</p>
   &quot;notices&quot; : [ ]
 }
 </code></pre></div>
+<h2 id="v2json">v2.json<a class="headerlink" href="#v2json" title="Permanent link">&para;</a></h2>
+<p>A structured JSON format that includes full graph metadata alongside the data. Unlike the
+other JSON formats which use a flat structure, v2.json uses a typed array of objects that
+can represent the complete graph definition including axis configuration, line styles, colors,
+annotations, and heatmaps. The mime type is <code>application/json</code>.</p>
+<pre>/api/v1/graph?
+  e=2012-01-01T09:00
+  &<span class="atlas-hilite">format=v2.json</span>
+  &q=
+    hourOfDay,<a href="https://netflix.github.io/atlas-docs/asl/ref/time/">:time</a>,
+    minuteOfHour,<a href="https://netflix.github.io/atlas-docs/asl/ref/time/">:time</a>,
+    NaN
+  &s=e-5m
+  &tz=UTC
+</pre>
+<p>Key characteristics:</p>
+<ul>
+<li><strong>Standard JSON</strong> — Non-numeric values like <code>NaN</code> and <code>Infinity</code> are properly quoted as
+  strings, so the output is parseable with any standard JSON parser.</li>
+<li><strong>Complete metadata</strong> — Includes all metadata needed to precisely recreate the rendered
+  image, useful for debugging and dynamic rendering.</li>
+<li><strong>Incremental output</strong> — Designed so that metadata can be emitted first and data can follow
+  as it becomes available, supporting streaming use cases.</li>
+<li><strong>Typed objects</strong> — Each element in the top-level array has a <code>type</code> field that indicates
+  the kind of object (e.g., <code>graph-metadata</code>, <code>plot-metadata</code>, <code>timeseries</code>).</li>
+</ul>
+<p>The top-level structure is an array of objects written in order:</p>
+<ol>
+<li><code>graph-image</code> — Optional pre-rendered PNG as a data URI.</li>
+<li><code>graph-metadata</code> — Time range, step, dimensions, and other graph-level settings.</li>
+<li><code>plot-metadata</code> — One per plot (Y-axis), describing scale, bounds, and labels.</li>
+<li><code>heatmap</code> — Heatmap definitions, if applicable.</li>
+<li>Data entries — <code>timeseries</code>, <code>hspan</code>, <code>vspan</code>, and <code>message</code> objects.</li>
+</ol>
+<p>For a full description of every object type and field, see the
+<a href="../v2-json/">v2.json Reference</a>.</p>
 
 
 
