@@ -6,6 +6,7 @@ The following output formats are supported by default for [graphing](./graph.md)
 * [json](#json)
 * [std.json](#stdjson)
 * [stats.json](#statsjson)
+* [v2.json](#v2json)
 
 ## png
 
@@ -165,3 +166,36 @@ Provides the summary stats for each line, but not all of the data points. The mi
   "notices" : [ ]
 }
 ```
+
+## v2.json
+
+A structured JSON format that includes full graph metadata alongside the data. Unlike the
+other JSON formats which use a flat structure, v2.json uses a typed array of objects that
+can represent the complete graph definition including axis configuration, line styles, colors,
+annotations, and heatmaps. The mime type is `application/json`.
+
+@@@ atlas-uri { hilite=format%3Dv2.json }
+/api/v1/graph?e=2012-01-01T09:00&format=v2.json&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-5m&tz=UTC
+@@@
+
+Key characteristics:
+
+* **Standard JSON** — Non-numeric values like `NaN` and `Infinity` are properly quoted as
+  strings, so the output is parseable with any standard JSON parser.
+* **Complete metadata** — Includes all metadata needed to precisely recreate the rendered
+  image, useful for debugging and dynamic rendering.
+* **Incremental output** — Designed so that metadata can be emitted first and data can follow
+  as it becomes available, supporting streaming use cases.
+* **Typed objects** — Each element in the top-level array has a `type` field that indicates
+  the kind of object (e.g., `graph-metadata`, `plot-metadata`, `timeseries`).
+
+The top-level structure is an array of objects written in order:
+
+1. `graph-image` — Optional pre-rendered PNG as a data URI.
+2. `graph-metadata` — Time range, step, dimensions, and other graph-level settings.
+3. `plot-metadata` — One per plot (Y-axis), describing scale, bounds, and labels.
+4. `heatmap` — Heatmap definitions, if applicable.
+5. Data entries — `timeseries`, `hspan`, `vspan`, and `message` objects.
+
+For a full description of every object type and field, see the
+[v2.json Reference](v2-json.md).
