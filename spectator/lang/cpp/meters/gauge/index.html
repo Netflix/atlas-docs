@@ -75,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#include" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -7397,6 +7402,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -10436,6 +10443,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -10455,8 +10464,6 @@
   
 
 
-  <h1>Gauges</h1>
-
 <p>A gauge is a value that is sampled at some point in time. Typical examples for gauges would be
 the size of a queue or number of threads in a running state. Since gauges are not updated inline
 when a state change occurs, there is no information about what might have occurred between samples.</p>
@@ -10464,41 +10471,43 @@ when a state change occurs, there is no information about what might have occurr
 then a gauge for the size will show the size when it was sampled. The size may have been much
 higher or lower at some point during interval, but that is not known.</p>
 <p>Call <code>Set()</code> with a value:</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;registry.h&gt;</span>
+<p>```cpp</p>
+<h1 id="include">include <registry.h><a class="headerlink" href="#include" title="Permanent link">&para;</a></h1>
+<p>int main()
+{
+    auto config = Config(WriterConfig(WriterTypes::UDP));
+    auto r = Registry(config);</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Option 1: Directly create a Gauge</span>
+<span class="n">auto</span><span class="w"> </span><span class="n">serverQueueSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateGauge</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">);</span>
+<span class="n">serverQueueSize</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Config</span><span class="p">(</span><span class="n">WriterConfig</span><span class="p">(</span><span class="n">WriterTypes</span><span class="o">::</span><span class="n">UDP</span><span class="p">));</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Registry</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Option 1: Directly create a Gauge</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">serverQueueSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateGauge</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">serverQueueSize</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Option 2: Create a Gauge from a MeterID</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">serverQueueMeter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateNewId</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">r</span><span class="p">.</span><span class="n">CreateGauge</span><span class="p">(</span><span class="n">serverQueueMeter</span><span class="p">).</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="c1">// Option 2: Create a Gauge from a MeterID</span>
+<span class="n">auto</span><span class="w"> </span><span class="n">serverQueueMeter</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateNewId</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">);</span>
+<span class="n">r</span><span class="p">.</span><span class="n">CreateGauge</span><span class="p">(</span><span class="n">serverQueueMeter</span><span class="p">).</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
 </code></pre></div>
+
+<p>}
+```</p>
 <p>Gauges will report the last set value for 15 minutes. This done so that updates to the values do
 not need to be collected on a tight 1-minute schedule to ensure that Atlas shows unbroken lines in
 graphs. A custom TTL may be configured for gauges. SpectatorD enforces a minimum TTL of 5 seconds.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;registry.h&gt;</span>
+<p>```cpp</p>
+<h1 id="include_1">include <registry.h><a class="headerlink" href="#include_1" title="Permanent link">&para;</a></h1>
+<p>int main()
+{
+    auto config = Config(WriterConfig(WriterTypes::UDP));
+    auto r = Registry(config);</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Option 1: Directly create a Gauge</span>
+<span class="n">auto</span><span class="w"> </span><span class="n">serverQueueSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateGauge</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{},</span><span class="w"> </span><span class="mi">120</span><span class="p">);</span>
+<span class="n">serverQueueSize</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Config</span><span class="p">(</span><span class="n">WriterConfig</span><span class="p">(</span><span class="n">WriterTypes</span><span class="o">::</span><span class="n">UDP</span><span class="p">));</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Registry</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Option 1: Directly create a Gauge</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">serverQueueSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateGauge</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{},</span><span class="w"> </span><span class="mi">120</span><span class="p">);</span>
-<span class="w">    </span><span class="n">serverQueueSize</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Option 2: Create a Gauge from a MeterID</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">serverQueueMeter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateNewId</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">r</span><span class="p">.</span><span class="n">CreateGauge</span><span class="p">(</span><span class="n">serverQueueMeter</span><span class="p">,</span><span class="w"> </span><span class="mi">120</span><span class="p">).</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="c1">// Option 2: Create a Gauge from a MeterID</span>
+<span class="n">auto</span><span class="w"> </span><span class="n">serverQueueMeter</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateNewId</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">);</span>
+<span class="n">r</span><span class="p">.</span><span class="n">CreateGauge</span><span class="p">(</span><span class="n">serverQueueMeter</span><span class="p">,</span><span class="w"> </span><span class="mi">120</span><span class="p">).</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
 </code></pre></div>
+
+<p>}
+```</p>
 
 
 

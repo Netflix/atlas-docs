@@ -10660,29 +10660,26 @@ values in the background. This is done by using the <a href="https://static.java
 <p>A Polled Gauge is registered by passing in an id, a reference to the object, and a function to get
 or compute a numeric value based on the object. Note that a Gauge should only be registered once,
 not on each update. Consider this example of a web server tracking the number of connections:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nc">HttpServer</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Tracks the number of current connections to the server</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="w"> </span><span class="n">numConnections</span><span class="p">;</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">HttpServer</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">numConnections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;server.numConnections&quot;</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="na">monitorValue</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onConnectionCreated</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">numConnections</span><span class="p">.</span><span class="na">incrementAndGet</span><span class="p">();</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onConnectionClosed</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">numConnections</span><span class="p">.</span><span class="na">decrementAndGet</span><span class="p">();</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="p">...</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+class HttpServer {
+  // Tracks the number of current connections to the server
+  private AtomicInteger numConnections;</p>
+<p>public HttpServer(Registry registry) {
+    numConnections = PolledMeter.using(registry)
+      .withName("server.numConnections")
+      .monitorValue(new AtomicInteger(0));
+  }</p>
+<p>public void onConnectionCreated() {
+    numConnections.incrementAndGet();
+    ...
+  }</p>
+<p>public void onConnectionClosed() {
+    numConnections.decrementAndGet();
+    ...
+  }</p>
+<p>...
+}
+```</p>
 <p>The Spectator <a href="../../registry/overview/">Registry</a> will keep a weak reference to the object. If
 the object is garbage collected, then it will automatically drop the registration. In the example
 above, the Registry will have a weak reference to <code>numConnections</code> and the server instance will
@@ -10697,103 +10694,98 @@ multiple registrations.</p>
 <h3 id="using-number">Using Number<a class="headerlink" href="#using-number" title="Permanent link">&para;</a></h3>
 <p>A Gauge can also be created based on an implementation of Number. Note the Number implementation
 should be thread-safe. For example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">AtomicInteger</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="p">();</span>
-<span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;queue.size&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">monitorValue</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
-</code></pre></div>
+<p><code>java
+AtomicInteger size = new AtomicInteger();
+PolledMeter.using(registry)
+  .withName("queue.size")
+  .monitorValue(size);</code></p>
 <p>The call will return the Number so the registration can be inline on the assignment:</p>
-<div class="highlight"><pre><span></span><code><span class="n">AtomicInteger</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;queue.size&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">monitorValue</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="p">());</span>
-</code></pre></div>
+<p><code>java
+AtomicInteger size = PolledMeter.using(registry)
+  .withName("queue.size")
+  .monitorValue(new AtomicInteger());</code></p>
 <p>Updates to the value are performed by updating the Number instance directly.</p>
 <h3 id="using-lambda">Using Lambda<a class="headerlink" href="#using-lambda" title="Permanent link">&para;</a></h3>
 <p>Specify a lambda that takes the object as parameter.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Queue</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Queue</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;queue.size&quot;</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="na">monitorValue</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">Queue</span><span class="p">::</span><span class="n">size</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="p">...</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Queue {</p>
+<p>@Inject
+  public Queue(Registry registry) {
+    PolledMeter.using(registry)
+      .withName("queue.size")
+      .monitorValue(this, Queue::size);
+  }</p>
+<p>...
+}
+```</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Be careful to avoid creating a reference to the object in the lambda. It will prevent garbage
 collection and can lead to a memory leak in the application. For example, by calling size
 without using the passed in object there will be a reference to <code>this</code>:</p>
-<div class="highlight"><pre><span></span><code>PolledMeter.using(registry)
-  .withName(&quot;queue.size&quot;)
-  .monitorValue(this, obj -&gt; size());
-</code></pre></div>
+<p><code>PolledMeter.using(registry)
+  .withName("queue.size")
+  .monitorValue(this, obj -&gt; size());</code></p>
 </div>
 <h3 id="collection-sizes">Collection Sizes<a class="headerlink" href="#collection-sizes" title="Permanent link">&para;</a></h3>
 <p>For classes that implement <code>Collection</code> or <code>Map</code>, there are helpers:</p>
-<div class="highlight"><pre><span></span><code><span class="n">Queue</span><span class="w"> </span><span class="n">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedBlockingQueue</span><span class="p">();</span>
-<span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;queue.size&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">monitorSize</span><span class="p">(</span><span class="n">queue</span><span class="p">);</span>
-
-<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConcurrentMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-<span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;cache.size&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">monitorSize</span><span class="p">(</span><span class="n">cache</span><span class="p">);</span>
-</code></pre></div>
+<p>```java
+Queue queue = new LinkedBlockingQueue();
+PolledMeter.using(registry)
+  .withName("queue.size")
+  .monitorSize(queue);</p>
+<p>Map<String, String> cache = new ConcurrentMap&lt;&gt;();
+PolledMeter.using(registry)
+  .withName("cache.size")
+  .monitorSize(cache);
+```</p>
 <h3 id="monotonic-counters">Monotonic Counters<a class="headerlink" href="#monotonic-counters" title="Permanent link">&para;</a></h3>
 <p>A common technique used by some libraries is to expose a monotonically increasing counter that
 represents the number of events since the system was initialized. An example of that in the JDK
 is <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ThreadPoolExecutor.html#getCompletedTaskCount()">ThreadPoolExecutor.getCompletedTaskCount</a>, which returns the number of completed tasks on
 the thread pool.</p>
 <p>For sources like this, the <code>monitorMonotonicCounter</code> method can be used:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// For an implementation of Number</span>
-<span class="n">LongAdder</span><span class="w"> </span><span class="n">tasks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LongAdder</span><span class="p">();</span>
-<span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;pool.completedTasks&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">monitorMonotonicCounter</span><span class="p">(</span><span class="n">tasks</span><span class="p">);</span>
-
-<span class="c1">// Or using a lambda</span>
-<span class="n">ThreadPoolExecutor</span><span class="w"> </span><span class="n">executor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span>
-<span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;pool.completedTasks&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">monitorMonotonicCounter</span><span class="p">(</span><span class="n">executor</span><span class="p">,</span><span class="w"> </span><span class="n">ThreadPoolExecutor</span><span class="p">::</span><span class="n">getCompletedTaskCount</span><span class="p">);</span>
-</code></pre></div>
+<p>```java
+// For an implementation of Number
+LongAdder tasks = new LongAdder();
+PolledMeter.using(registry)
+  .withName("pool.completedTasks")
+  .monitorMonotonicCounter(tasks);</p>
+<p>// Or using a lambda
+ThreadPoolExecutor executor = ...
+PolledMeter.using(registry)
+  .withName("pool.completedTasks")
+  .monitorMonotonicCounter(executor, ThreadPoolExecutor::getCompletedTaskCount);
+```</p>
 <p>For thread pools specifically, there are better options for getting standard metrics. See the docs
 for the <a href="../../ext/thread-pools/">Thread Pools extension</a> for more information.</p>
 <h2 id="active-gauges">Active Gauges<a class="headerlink" href="#active-gauges" title="Permanent link">&para;</a></h2>
 <p>Gauges can also be set directly by the user. In this mode, the user is responsible for regularly
 updating the value of the Gauge by calling <code>set</code>. Looking at the HttpServer example, with an active
 gauge, it would look like:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nc">HttpServer</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Tracks the number of current connections to the server</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="w"> </span><span class="n">numConnections</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">Gauge</span><span class="w"> </span><span class="n">gauge</span><span class="p">;</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">HttpServer</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">numConnections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="p">();</span>
-<span class="w">    </span><span class="n">gauge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">gauge</span><span class="p">(</span><span class="s">&quot;server.numConnections&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">gauge</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">numConnections</span><span class="p">.</span><span class="na">get</span><span class="p">());</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onConnectionCreated</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">numConnections</span><span class="p">.</span><span class="na">incrementAndGet</span><span class="p">();</span>
-<span class="w">    </span><span class="n">gauge</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">numConnections</span><span class="p">.</span><span class="na">get</span><span class="p">());</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onConnectionClosed</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">numConnections</span><span class="p">.</span><span class="na">decrementAndGet</span><span class="p">();</span>
-<span class="w">    </span><span class="n">gauge</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">numConnections</span><span class="p">.</span><span class="na">get</span><span class="p">());</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="p">...</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+class HttpServer {
+  // Tracks the number of current connections to the server
+  private AtomicInteger numConnections;
+  private Gauge gauge;</p>
+<p>public HttpServer(Registry registry) {
+    numConnections = new AtomicInteger();
+    gauge = registry.gauge("server.numConnections");
+    gauge.set(numConnections.get());
+  }</p>
+<p>public void onConnectionCreated() {
+    numConnections.incrementAndGet();
+    gauge.set(numConnections.get());
+    ...
+  }</p>
+<p>public void onConnectionClosed() {
+    numConnections.decrementAndGet();
+    gauge.set(numConnections.get());
+    ...
+  }</p>
+<p>...
+}
+```</p>
 
 
 

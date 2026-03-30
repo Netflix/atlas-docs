@@ -5990,6 +5990,51 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#this-filtering-would-break-the-overlay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        This filtering would break the overlay
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protected-overlay-expression-wont-be-affected-by-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protected overlay expression - won't be affected by filtering
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-dashboard-content-will-be-filtered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main dashboard content - will be filtered
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dashboard-filtering-only-applies-to-main-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard filtering - only applies to main stack
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dashboard filtering - only applies to main stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5999,8 +6044,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#related-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6008,6 +6053,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -10570,6 +10620,51 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#this-filtering-would-break-the-overlay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        This filtering would break the overlay
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protected-overlay-expression-wont-be-affected-by-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protected overlay expression - won't be affected by filtering
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-dashboard-content-will-be-filtered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main dashboard content - will be filtered
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dashboard-filtering-only-applies-to-main-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard filtering - only applies to main stack
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dashboard filtering - only applies to main stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10579,8 +10674,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#related-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10588,6 +10683,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -10610,8 +10710,6 @@
   
   
 
-
-  <h1>freeze</h1>
 
 <table><tbody><tr>
 <td><strong>Input Stack:</strong><table><tbody><tr><td>...</td></tr></tbody></table></td>
@@ -10640,21 +10738,21 @@ for overlay expressions.</p>
 Consider an overlay showing network errors that should appear on all graphs in a dashboard,
 regardless of filtering:</p>
 <p><strong>Problem</strong>: Dashboard filtering affects all expressions:
-<div class="highlight"><pre><span></span><code># This filtering would break the overlay
-,:list,(,nf.cluster,{{ selected_cluster }},:eq,:cq,),:each
-</code></pre></div></p>
+```</p>
+<h1 id="this-filtering-would-break-the-overlay">This filtering would break the overlay<a class="headerlink" href="#this-filtering-would-break-the-overlay" title="Permanent link">&para;</a></h1>
+<p>,:list,(,nf.cluster,{{ selected_cluster }},:eq,:cq,),:each
+```</p>
 <p><strong>Solution</strong>: Freeze the overlay to protect it:
-<div class="highlight"><pre><span></span><code># Protected overlay expression - won&#39;t be affected by filtering
-name,networkErrors,:eq,:sum,50,:gt,:vspan,40,:alpha,
-:freeze,
-
-# Main dashboard content - will be filtered
-name,ssCpuUser,:eq,:avg,1,:axis,
-name,loadavg1,:eq,:avg,2,:axis,
-
-# Dashboard filtering - only applies to main stack
-:list,(,nf.cluster,{{ selected_cluster }},:eq,:cq,),:each
-</code></pre></div></p>
+```</p>
+<h1 id="protected-overlay-expression-wont-be-affected-by-filtering">Protected overlay expression - won't be affected by filtering<a class="headerlink" href="#protected-overlay-expression-wont-be-affected-by-filtering" title="Permanent link">&para;</a></h1>
+<p>name,networkErrors,:eq,:sum,50,:gt,:vspan,40,:alpha,
+:freeze,</p>
+<h1 id="main-dashboard-content-will-be-filtered">Main dashboard content - will be filtered<a class="headerlink" href="#main-dashboard-content-will-be-filtered" title="Permanent link">&para;</a></h1>
+<p>name,ssCpuUser,:eq,:avg,1,:axis,
+name,loadavg1,:eq,:avg,2,:axis,</p>
+<h1 id="dashboard-filtering-only-applies-to-main-stack">Dashboard filtering - only applies to main stack<a class="headerlink" href="#dashboard-filtering-only-applies-to-main-stack" title="Permanent link">&para;</a></h1>
+<p>:list,(,nf.cluster,{{ selected_cluster }},:eq,:cq,),:each
+```</p>
 <p><em>Since: 1.6</em></p>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <p>Basic freeze operation:</p>

@@ -10462,24 +10462,22 @@ a Counter could be used to measure the rate at which it is being accessed.</p>
 <p>Counters are reported to the backend as a rate-per-second. In Atlas, the <code>:per-step</code> operator can
 be used to convert them back into a value-per-step on a graph.</p>
 <p>Call <code>increment()</code> when an event occurs:</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">).</span><span class="nx">increment</span><span class="p">();</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">num_requests</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">);</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter_with_id</span><span class="p">(</span><span class="nx">num_requests</span><span class="p">).</span><span class="nx">increment</span><span class="p">();</span>
-</code></pre></div>
+<p>```javascript
+import {Registry} from "nflx-spectator";</p>
+<p>const registry = new Registry();
+void registry.counter("server.numRequests").increment();</p>
+<p>const num_requests = registry.new_id("server.numRequests");
+void registry.counter_with_id(num_requests).increment();
+```</p>
 <p>You can also pass a value to <code>increment()</code>. This is useful when a collection of events happens
 together:</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter</span><span class="p">(</span><span class="s2">&quot;queue.itemsAdded&quot;</span><span class="p">).</span><span class="nx">increment</span><span class="p">(</span><span class="mf">10</span><span class="p">);</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">num_requests</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">);</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter_with_id</span><span class="p">(</span><span class="nx">num_requests</span><span class="p">).</span><span class="nx">increment</span><span class="p">(</span><span class="mf">10</span><span class="p">);</span>
-</code></pre></div>
+<p>```javascript
+import {Registry} from "nflx-spectator";</p>
+<p>const registry = new Registry();
+void registry.counter("queue.itemsAdded").increment(10);</p>
+<p>const num_requests = registry.new_id("server.numRequests");
+void registry.counter_with_id(num_requests).increment(10);
+```</p>
 
 
 

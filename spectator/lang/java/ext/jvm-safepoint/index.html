@@ -10617,10 +10617,10 @@
 <p>To get information about compilation in Spectator, just setup registration of standard MXBeans.
 Note, if you are building an app at Netflix, then this should happen automatically via the normal
 platform initialization.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.spectator.jvm.Jmx</span><span class="p">;</span>
-
-<span class="n">Jmx</span><span class="p">.</span><span class="na">registerStandardMXBeans</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
-</code></pre></div>
+<p>```java
+import com.netflix.spectator.jvm.Jmx;</p>
+<p>Jmx.registerStandardMXBeans(registry);
+```</p>
 <h2 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h2>
 <h3 id="jvmhotspotsafepointtime">jvm.hotspot.safepointTime<a class="headerlink" href="#jvmhotspotsafepointtime" title="Permanent link">&para;</a></h3>
 <p>Timer reporting the amount of time the application has been stopped for safepoint operations.</p>

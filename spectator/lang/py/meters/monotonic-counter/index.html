@@ -10463,14 +10463,13 @@ calculate a delta value and report it to the backend as a rate-per-second. A var
 metrics may be reported monotonically, and this metric type provides a convenient means of recording
 these values, at the expense of a slower time-to-first metric.</p>
 <p>Call <code>set()</code> when an event occurs:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">spectator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registry</span>
-
-<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
-<span class="n">registry</span><span class="o">.</span><span class="n">monotonic_counter</span><span class="p">(</span><span class="s2">&quot;iface.bytes&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">iface_bytes</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">new_id</span><span class="p">(</span><span class="s2">&quot;iface.bytes&quot;</span><span class="p">)</span>
-<span class="n">registry</span><span class="o">.</span><span class="n">monotonic_counter_with_id</span><span class="p">(</span><span class="n">iface_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></div>
+<p>```python
+from spectator import Registry</p>
+<p>registry = Registry()
+registry.monotonic_counter("iface.bytes").set(10)</p>
+<p>iface_bytes = registry.new_id("iface.bytes")
+registry.monotonic_counter_with_id(iface_bytes).set(10)
+```</p>
 
 
 

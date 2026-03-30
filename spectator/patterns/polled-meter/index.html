@@ -10464,17 +10464,16 @@
 <p>Helper for configuring a meter that will receive a value by regularly polling the source in the
 background.</p>
 <p>Example usage:</p>
-<div class="highlight"><pre><span></span><code><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span>
-<span class="n">AtomicLong</span><span class="w"> </span><span class="n">connections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;server.currentConnections&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">monitorValue</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AtomicLong</span><span class="p">());</span>
-
-<span class="c1">// When a connection is added</span>
-<span class="n">connections</span><span class="p">.</span><span class="na">incrementAndGet</span><span class="p">();</span>
-
-<span class="c1">// When a connection is removed</span>
-<span class="n">connections</span><span class="p">.</span><span class="na">decrementAndGet</span><span class="p">();</span>
-</code></pre></div>
+<p>```java
+Registry registry = ...
+AtomicLong connections = PolledMeter.using(registry)
+  .withName("server.currentConnections")
+  .monitorValue(new AtomicLong());</p>
+<p>// When a connection is added
+connections.incrementAndGet();</p>
+<p>// When a connection is removed
+connections.decrementAndGet();
+```</p>
 <p>Polling frequency will depend on the underlying Registry implementation, but users should
 assume it will be frequently checked and that the provided function is cheap. Users should
 keep in mind that polling will not capture all activity, just sample it at some frequency.

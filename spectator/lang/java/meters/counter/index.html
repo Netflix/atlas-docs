@@ -10467,42 +10467,41 @@
 <h1 id="java-counters">Java Counters<a class="headerlink" href="#java-counters" title="Permanent link">&para;</a></h1>
 <p>Counters are created using the <a href="../../registry/overview/">Registry</a>, which is be setup as part of
 application initialization. For example:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Queue</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="n">insertCounter</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="n">removeCounter</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">QueueImpl</span><span class="w"> </span><span class="n">impl</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Queue</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">insertCounter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="s">&quot;queue.insert&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">removeCounter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="s">&quot;queue.remove&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">impl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">QueueImpl</span><span class="p">();</span>
-<span class="w">  </span><span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Queue {</p>
+<p>private final Counter insertCounter;
+  private final Counter removeCounter;
+  private final QueueImpl impl;</p>
+<p>@Inject
+  public Queue(Registry registry) {
+    insertCounter = registry.counter("queue.insert");
+    removeCounter = registry.counter("queue.remove");
+    impl = new QueueImpl();
+  }
+```</p>
 <p>Then call increment when an event occurs:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">insert</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">insertCounter</span><span class="p">.</span><span class="na">increment</span><span class="p">();</span>
-<span class="w">    </span><span class="n">impl</span><span class="p">.</span><span class="na">insert</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">remove</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">impl</span><span class="p">.</span><span class="na">nonEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">removeCounter</span><span class="p">.</span><span class="na">increment</span><span class="p">();</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">impl</span><span class="p">.</span><span class="na">remove</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-</code></pre></div>
+<p>```java
+  public void insert(Object obj) {
+    insertCounter.increment();
+    impl.insert(obj);
+  }</p>
+<p>public Object remove() {
+    if (impl.nonEmpty()) {
+      removeCounter.increment();
+      return impl.remove();
+    } else {
+      return null;
+    }
+  }
+```</p>
 <p>Optionally, an amount can be passed in when calling increment. This is useful when a collection of
 events happen together.</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">insertAll</span><span class="p">(</span><span class="n">Collection</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">objs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">insertCounter</span><span class="p">.</span><span class="na">increment</span><span class="p">(</span><span class="n">objs</span><span class="p">.</span><span class="na">size</span><span class="p">());</span>
-<span class="w">    </span><span class="n">impl</span><span class="p">.</span><span class="na">insertAll</span><span class="p">(</span><span class="n">objs</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><code>java
+  public void insertAll(Collection&lt;Object&gt; objs) {
+    insertCounter.increment(objs.size());
+    impl.insertAll(objs);
+  }
+}</code></p>
 
 
 

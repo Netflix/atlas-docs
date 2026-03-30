@@ -11059,215 +11059,197 @@
 <p>This library currently targets Node.js &gt;= 18. Supports both <code>commonjs</code> and <code>module</code> formats.</p>
 <h2 id="installing">Installing<a class="headerlink" href="#installing" title="Permanent link">&para;</a></h2>
 <p>Install this library and the runtime metrics library for your project as follows:</p>
-<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>nflx-spectator<span class="w"> </span>--save
-npm<span class="w"> </span>install<span class="w"> </span>nflx-spectator-nodejsmetrics<span class="w"> </span>--save
-</code></pre></div>
+<p><code>shell
+npm install nflx-spectator --save
+npm install nflx-spectator-nodejsmetrics --save</code></p>
 <h2 id="instrumenting-code">Instrumenting Code<a class="headerlink" href="#instrumenting-code" title="Permanent link">&para;</a></h2>
 <h3 id="simple-example">Simple Example<a class="headerlink" href="#simple-example" title="Permanent link">&para;</a></h3>
 <h4 id="commonjs">CommonJS<a class="headerlink" href="#commonjs" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;express&quot;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3000</span><span class="p">;</span>
+<p>```javascript
+const express = require("express");
+const app = express();
+const port = 3000;</p>
+<p>const spectator = require("nflx-spectator");
+const registry = new spectator.Registry();</p>
+<p>app.get("/", (req, res) =&gt; {
+    res.send("Usage: /api/v1/play?country=foo&amp;title=bar")
+});</p>
+<p>app.get("/api/v1/play", (req, res) =&gt; {
+    const country = req.query.country || "unknown";
+    const title = req.query.title || "unknown";</p>
+<div class="codehilite"><pre><span></span><code><span class="n">let</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">country</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span>
+<span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">invalid</span><span class="w"> </span><span class="n">play</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">country</span><span class="o">=$</span><span class="p">{</span><span class="n">country</span><span class="p">}</span><span class="w"> </span><span class="n">title</span><span class="o">=$</span><span class="p">{</span><span class="n">title</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+<span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">requested</span><span class="w"> </span><span class="n">play</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">country</span><span class="o">=$</span><span class="p">{</span><span class="n">country</span><span class="p">}</span><span class="w"> </span><span class="n">title</span><span class="o">=$</span><span class="p">{</span><span class="n">title</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">spectator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Registry</span><span class="p">();</span>
+<span class="k">const</span><span class="w"> </span><span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v1_play&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;country&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">status</span><span class="o">.</span><span class="n">toString</span><span class="p">()};</span>
+<span class="nb nb-Type">void</span><span class="w"> </span><span class="n">registry</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="s2">&quot;server.requestCount&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">tags</span><span class="p">)</span><span class="o">.</span><span class="n">increment</span><span class="p">();</span>
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&quot;Usage: /api/v1/play?country=foo&amp;title=bar&quot;</span><span class="p">)</span>
-<span class="p">});</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;/api/v1/play&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">country</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&quot;unknown&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">title</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&quot;unknown&quot;</span><span class="p">;</span>
-
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">status</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="p">;</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">country</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">title</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">404</span><span class="p">;</span>
-<span class="w">        </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`invalid play request for country=</span><span class="si">${</span><span class="nx">country</span><span class="si">}</span><span class="sb"> title=</span><span class="si">${</span><span class="nx">title</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">200</span><span class="p">;</span>
-<span class="w">        </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`requested play for country=</span><span class="si">${</span><span class="nx">country</span><span class="si">}</span><span class="sb"> title=</span><span class="si">${</span><span class="nx">title</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;v1_play&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;country&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">country</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;title&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">title</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;status&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">status</span><span class="p">.</span><span class="nx">toString</span><span class="p">()};</span>
-<span class="w">    </span><span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter</span><span class="p">(</span><span class="s2">&quot;server.requestCount&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">tags</span><span class="p">).</span><span class="nx">increment</span><span class="p">();</span>
-
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="nx">status</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
-<span class="p">});</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`server listening on </span><span class="si">${</span><span class="nx">port</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
-<span class="p">});</span>
+<span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
 </code></pre></div>
+
+<p>});</p>
+<p>app.listen(port, () =&gt; {
+    console.log(<code>server listening on ${port}</code>)
+});
+```</p>
 <p>Save this snippet as <code>app.js</code>, then <code>node app.js</code>.</p>
 <h4 id="module">Module<a class="headerlink" href="#module" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;express&quot;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
+<p>```javascript
+import express from "express";
+import {Registry} from "nflx-spectator";</p>
+<p>const app = express();
+const port = 3000;</p>
+<p>const registry = new Registry();</p>
+<p>app.get("/", (req, res) =&gt; {
+    res.send("Usage: /api/v1/play?country=foo&amp;title=bar")
+});</p>
+<p>app.get("/api/v1/play", (req, res) =&gt; {
+    const country = req.query.country || "unknown";
+    const title = req.query.title || "unknown";</p>
+<div class="codehilite"><pre><span></span><code><span class="n">let</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">country</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span>
+<span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">invalid</span><span class="w"> </span><span class="n">play</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">country</span><span class="o">=$</span><span class="p">{</span><span class="n">country</span><span class="p">}</span><span class="w"> </span><span class="n">title</span><span class="o">=$</span><span class="p">{</span><span class="n">title</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+<span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">requested</span><span class="w"> </span><span class="n">play</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">country</span><span class="o">=$</span><span class="p">{</span><span class="n">country</span><span class="p">}</span><span class="w"> </span><span class="n">title</span><span class="o">=$</span><span class="p">{</span><span class="n">title</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3000</span><span class="p">;</span>
+<span class="k">const</span><span class="w"> </span><span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v1_play&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;country&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">status</span><span class="o">.</span><span class="n">toString</span><span class="p">()};</span>
+<span class="nb nb-Type">void</span><span class="w"> </span><span class="n">registry</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="s2">&quot;server.requestCount&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">tags</span><span class="p">)</span><span class="o">.</span><span class="n">increment</span><span class="p">();</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&quot;Usage: /api/v1/play?country=foo&amp;title=bar&quot;</span><span class="p">)</span>
-<span class="p">});</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;/api/v1/play&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">country</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&quot;unknown&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">title</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&quot;unknown&quot;</span><span class="p">;</span>
-
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">status</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="p">;</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">country</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">title</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">404</span><span class="p">;</span>
-<span class="w">        </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`invalid play request for country=</span><span class="si">${</span><span class="nx">country</span><span class="si">}</span><span class="sb"> title=</span><span class="si">${</span><span class="nx">title</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">200</span><span class="p">;</span>
-<span class="w">        </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`requested play for country=</span><span class="si">${</span><span class="nx">country</span><span class="si">}</span><span class="sb"> title=</span><span class="si">${</span><span class="nx">title</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;v1_play&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;country&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">country</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;title&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">title</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;status&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">status</span><span class="p">.</span><span class="nx">toString</span><span class="p">()};</span>
-<span class="w">    </span><span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter</span><span class="p">(</span><span class="s2">&quot;server.requestCount&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">tags</span><span class="p">).</span><span class="nx">increment</span><span class="p">();</span>
-
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="nx">status</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
-<span class="p">});</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`server listening on </span><span class="si">${</span><span class="nx">port</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
-<span class="p">});</span>
+<span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
 </code></pre></div>
+
+<p>});</p>
+<p>app.listen(port, () =&gt; {
+    console.log(<code>server listening on ${port}</code>)
+});
+```</p>
 <p>Save this snippet as <code>app.js</code>, then <code>node app.js</code>.</p>
 <h3 id="complex-example">Complex Example<a class="headerlink" href="#complex-example" title="Permanent link">&para;</a></h3>
 <h4 id="commonjs_1">CommonJS<a class="headerlink" href="#commonjs_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;express&quot;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3000</span><span class="p">;</span>
+<p>```javascript
+const express = require("express");
+const app = express();
+const port = 3000;</p>
+<p>const spectator = require("nflx-spectator");
+const config = new spectator.Config("udp", {"platform": "express-demo"});
+const registry = new spectator.Registry(config);</p>
+<p>const nodejsMetrics = require("nflx-spectator-nodejsmetrics");
+const runtimeMetrics = new nodejsMetrics.RuntimeMetrics(registry);
+runtimeMetrics.start();</p>
+<p>const requestCountId = registry.new_id("server.requestCountId", {"path": "v1_play"});
+const requestLatency = registry.timer("server.requestLatency", {"path": "v1_play"});
+const responseSize = registry.distribution_summary("server.responseSize", {"path": "v1_play"});</p>
+<p>app.get("/", (req, res) =&gt; {
+    res.send("Usage: /api/v1/play?country=foo&amp;title=bar")
+});</p>
+<p>app.get("/api/v1/play", (req, res) =&gt; {
+    const start = process.hrtime();
+    const country = req.query.country || "unknown";
+    const title = req.query.title || "unknown";</p>
+<div class="codehilite"><pre><span></span><code><span class="n">let</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">country</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span>
+<span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">invalid</span><span class="w"> </span><span class="n">play</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">country</span><span class="o">=$</span><span class="p">{</span><span class="n">country</span><span class="p">}</span><span class="w"> </span><span class="n">title</span><span class="o">=$</span><span class="p">{</span><span class="n">title</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+<span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">requested</span><span class="w"> </span><span class="n">play</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">country</span><span class="o">=$</span><span class="p">{</span><span class="n">country</span><span class="p">}</span><span class="w"> </span><span class="n">title</span><span class="o">=$</span><span class="p">{</span><span class="n">title</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">spectator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Config</span><span class="p">(</span><span class="s2">&quot;udp&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;platform&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;express-demo&quot;</span><span class="p">});</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Registry</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+<span class="k">const</span><span class="w"> </span><span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;country&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">status</span><span class="o">.</span><span class="n">toString</span><span class="p">()};</span>
+<span class="k">const</span><span class="w"> </span><span class="n">requestCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="o">.</span><span class="n">counter_with_id</span><span class="p">(</span><span class="n">requestCountId</span><span class="o">.</span><span class="n">with_tags</span><span class="p">(</span><span class="n">tags</span><span class="p">));</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">nodejsMetrics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;nflx-spectator-nodejsmetrics&quot;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">runtimeMetrics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">nodejsMetrics</span><span class="p">.</span><span class="nx">RuntimeMetrics</span><span class="p">(</span><span class="nx">registry</span><span class="p">);</span>
-<span class="nx">runtimeMetrics</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+<span class="nb nb-Type">void</span><span class="w"> </span><span class="n">requestCount</span><span class="o">.</span><span class="n">increment</span><span class="p">();</span>
+<span class="nb nb-Type">void</span><span class="w"> </span><span class="n">responseSize</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">length</span><span class="p">);</span>
+<span class="nb nb-Type">void</span><span class="w"> </span><span class="n">requestLatency</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">hrtime</span><span class="p">(</span><span class="n">start</span><span class="p">));</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">requestCountId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;server.requestCountId&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;v1_play&quot;</span><span class="p">});</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">requestLatency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">timer</span><span class="p">(</span><span class="s2">&quot;server.requestLatency&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;v1_play&quot;</span><span class="p">});</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">responseSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">distribution_summary</span><span class="p">(</span><span class="s2">&quot;server.responseSize&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;v1_play&quot;</span><span class="p">});</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&quot;Usage: /api/v1/play?country=foo&amp;title=bar&quot;</span><span class="p">)</span>
-<span class="p">});</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;/api/v1/play&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">hrtime</span><span class="p">();</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">country</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&quot;unknown&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">title</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&quot;unknown&quot;</span><span class="p">;</span>
-
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">status</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="p">;</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">country</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">title</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">404</span><span class="p">;</span>
-<span class="w">        </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`invalid play request for country=</span><span class="si">${</span><span class="nx">country</span><span class="si">}</span><span class="sb"> title=</span><span class="si">${</span><span class="nx">title</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">200</span><span class="p">;</span>
-<span class="w">        </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`requested play for country=</span><span class="si">${</span><span class="nx">country</span><span class="si">}</span><span class="sb"> title=</span><span class="si">${</span><span class="nx">title</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;country&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">country</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;title&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">title</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;status&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">status</span><span class="p">.</span><span class="nx">toString</span><span class="p">()};</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">requestCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter_with_id</span><span class="p">(</span><span class="nx">requestCountId</span><span class="p">.</span><span class="nx">with_tags</span><span class="p">(</span><span class="nx">tags</span><span class="p">));</span>
-
-<span class="w">    </span><span class="ow">void</span><span class="w"> </span><span class="nx">requestCount</span><span class="p">.</span><span class="nx">increment</span><span class="p">();</span>
-<span class="w">    </span><span class="ow">void</span><span class="w"> </span><span class="nx">responseSize</span><span class="p">.</span><span class="nx">record</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
-<span class="w">    </span><span class="ow">void</span><span class="w"> </span><span class="nx">requestLatency</span><span class="p">.</span><span class="nx">record</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">hrtime</span><span class="p">(</span><span class="nx">start</span><span class="p">));</span>
-
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="nx">status</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
-<span class="p">});</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`server listening on </span><span class="si">${</span><span class="nx">port</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
-<span class="p">});</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">shutdown</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;server shutdown&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">server</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">runtimeMetrics</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
-<span class="p">};</span>
-
-<span class="nx">process</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;SIGINT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">shutdown</span><span class="p">);</span>
-<span class="nx">process</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;SIGTERM&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">shutdown</span><span class="p">);</span>
+<span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
 </code></pre></div>
+
+<p>});</p>
+<p>const server = app.listen(port, () =&gt; {
+    console.log(<code>server listening on ${port}</code>)
+});</p>
+<p>const shutdown = function () {
+    console.log("server shutdown");
+    server.close();
+    runtimeMetrics.stop();
+    process.exit(0);
+};</p>
+<p>process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);
+```</p>
 <p>Save this snippet as <code>app.js</code>, then <code>node app.js</code>.</p>
 <h4 id="module_1">Module<a class="headerlink" href="#module_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;express&quot;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Config</span><span class="p">,</span><span class="w"> </span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">RuntimeMetrics</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator-nodejsmetrics&quot;</span><span class="p">;</span>
+<p>```javascript
+import express from "express";
+import {Config, Registry} from "nflx-spectator";
+import {RuntimeMetrics} from "nflx-spectator-nodejsmetrics";</p>
+<p>const app = express();
+const port = 3000;</p>
+<p>const config = new Config("udp", {"platform": "express-demo"});
+const registry = new Registry(config);
+const runtimeMetrics = new RuntimeMetrics(registry);</p>
+<p>runtimeMetrics.start();</p>
+<p>const requestCountId = registry.new_id("server.requestCountId", {"path": "v1_play"});
+const requestLatency = registry.timer("server.requestLatency", {"path": "v1_play"});
+const responseSize = registry.distribution_summary("server.responseSize", {"path": "v1_play"});</p>
+<p>app.get("/", (req, res) =&gt; {
+    res.send("Usage: /api/v1/play?country=foo&amp;title=bar")
+});</p>
+<p>app.get("/api/v1/play", (req, res) =&gt; {
+    const start = process.hrtime();
+    const country = req.query.country || "unknown";
+    const title = req.query.title || "unknown";</p>
+<div class="codehilite"><pre><span></span><code><span class="n">let</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">country</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span>
+<span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">invalid</span><span class="w"> </span><span class="n">play</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">country</span><span class="o">=$</span><span class="p">{</span><span class="n">country</span><span class="p">}</span><span class="w"> </span><span class="n">title</span><span class="o">=$</span><span class="p">{</span><span class="n">title</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+<span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">requested</span><span class="w"> </span><span class="n">play</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">country</span><span class="o">=$</span><span class="p">{</span><span class="n">country</span><span class="p">}</span><span class="w"> </span><span class="n">title</span><span class="o">=$</span><span class="p">{</span><span class="n">title</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3000</span><span class="p">;</span>
+<span class="k">const</span><span class="w"> </span><span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;country&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">status</span><span class="o">.</span><span class="n">toString</span><span class="p">()};</span>
+<span class="k">const</span><span class="w"> </span><span class="n">requestCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="o">.</span><span class="n">counter_with_id</span><span class="p">(</span><span class="n">requestCountId</span><span class="o">.</span><span class="n">with_tags</span><span class="p">(</span><span class="n">tags</span><span class="p">));</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Config</span><span class="p">(</span><span class="s2">&quot;udp&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;platform&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;express-demo&quot;</span><span class="p">});</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">runtimeMetrics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">RuntimeMetrics</span><span class="p">(</span><span class="nx">registry</span><span class="p">);</span>
+<span class="nb nb-Type">void</span><span class="w"> </span><span class="n">requestCount</span><span class="o">.</span><span class="n">increment</span><span class="p">();</span>
+<span class="nb nb-Type">void</span><span class="w"> </span><span class="n">responseSize</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">length</span><span class="p">);</span>
+<span class="nb nb-Type">void</span><span class="w"> </span><span class="n">requestLatency</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">hrtime</span><span class="p">(</span><span class="n">start</span><span class="p">));</span>
 
-<span class="nx">runtimeMetrics</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">requestCountId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;server.requestCountId&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;v1_play&quot;</span><span class="p">});</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">requestLatency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">timer</span><span class="p">(</span><span class="s2">&quot;server.requestLatency&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;v1_play&quot;</span><span class="p">});</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">responseSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">distribution_summary</span><span class="p">(</span><span class="s2">&quot;server.responseSize&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;v1_play&quot;</span><span class="p">});</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&quot;Usage: /api/v1/play?country=foo&amp;title=bar&quot;</span><span class="p">)</span>
-<span class="p">});</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;/api/v1/play&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">hrtime</span><span class="p">();</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">country</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&quot;unknown&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">title</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&quot;unknown&quot;</span><span class="p">;</span>
-
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">status</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="p">;</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">country</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">title</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">404</span><span class="p">;</span>
-<span class="w">        </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`invalid play request for country=</span><span class="si">${</span><span class="nx">country</span><span class="si">}</span><span class="sb"> title=</span><span class="si">${</span><span class="nx">title</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">200</span><span class="p">;</span>
-<span class="w">        </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`requested play for country=</span><span class="si">${</span><span class="nx">country</span><span class="si">}</span><span class="sb"> title=</span><span class="si">${</span><span class="nx">title</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;country&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">country</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;title&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">title</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;status&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">status</span><span class="p">.</span><span class="nx">toString</span><span class="p">()};</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">requestCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter_with_id</span><span class="p">(</span><span class="nx">requestCountId</span><span class="p">.</span><span class="nx">with_tags</span><span class="p">(</span><span class="nx">tags</span><span class="p">));</span>
-
-<span class="w">    </span><span class="ow">void</span><span class="w"> </span><span class="nx">requestCount</span><span class="p">.</span><span class="nx">increment</span><span class="p">();</span>
-<span class="w">    </span><span class="ow">void</span><span class="w"> </span><span class="nx">responseSize</span><span class="p">.</span><span class="nx">record</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
-<span class="w">    </span><span class="ow">void</span><span class="w"> </span><span class="nx">requestLatency</span><span class="p">.</span><span class="nx">record</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">hrtime</span><span class="p">(</span><span class="nx">start</span><span class="p">));</span>
-
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="nx">status</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
-<span class="p">});</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`server listening on </span><span class="si">${</span><span class="nx">port</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
-<span class="p">});</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">shutdown</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;server shutdown&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">server</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">runtimeMetrics</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
-<span class="p">};</span>
-
-<span class="nx">process</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;SIGINT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">shutdown</span><span class="p">);</span>
-<span class="nx">process</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;SIGTERM&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">shutdown</span><span class="p">);</span>
+<span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
 </code></pre></div>
+
+<p>});</p>
+<p>const server = app.listen(port, () =&gt; {
+    console.log(<code>server listening on ${port}</code>)
+});</p>
+<p>const shutdown = function () {
+    console.log("server shutdown");
+    server.close();
+    runtimeMetrics.stop();
+    process.exit(0);
+};</p>
+<p>process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);
+```</p>
 <p>Save this snippet as <code>app.js</code>, then <code>node app.js</code>.</p>
 <h2 id="override-logger">Override Logger<a class="headerlink" href="#override-logger" title="Permanent link">&para;</a></h2>
 <p>You can override the logger used by the Spectator registry by setting the logger parameter in the
 <code>Config</code> object. The specified logger should provide <code>debug</code>, <code>info</code>, and <code>error</code> methods. By
 default, <code>spectator-js</code> logs to stdout.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;pino&#39;</span><span class="p">)();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">spectator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Config</span><span class="p">(</span><span class="s2">&quot;udp&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{},</span><span class="w"> </span><span class="nx">logger</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Registry</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-</code></pre></div>
+<p><code>javascript
+const logger = require('pino')();
+const spectator = require("nflx-spectator");
+const config = new spectator.Config("udp", {}, logger);
+const registry = new spectator.Registry(config);</code></p>
 <h2 id="runtime-metrics">Runtime Metrics<a class="headerlink" href="#runtime-metrics" title="Permanent link">&para;</a></h2>
 <p>Use <a href="https://github.com/Netflix-Skunkworks/spectator-js-nodejsmetrics">spectator-js-nodejsmetrics</a>.</p>
 <p>The <a href="#complex-example">Instrumenting Code</a> examples show how to use this library.</p>
@@ -11282,14 +11264,13 @@ used concurrently. Manipulating the tags with the provided methods will create n
 <p>Note that <strong>all tag keys and values must be strings.</strong> For example, if you want to keep track of
 the number of successful requests, then you must cast integers to strings. The <code>Id</code> class will
 validate these values, dropping or changing any that are not valid, and reporting a warning log.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;statusCode&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">str</span><span class="p">(</span><span class="mf">200</span><span class="p">)}).</span><span class="nx">increment</span><span class="p">();</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">num_requests_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;statusCode&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">str</span><span class="p">(</span><span class="mf">200</span><span class="p">)});</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter_with_id</span><span class="p">(</span><span class="nx">num_requests_id</span><span class="p">).</span><span class="nx">increment</span><span class="p">();</span>
-</code></pre></div>
+<p>```javascript
+import {Registry} from "nflx-spectator";</p>
+<p>const registry = new Registry();
+void registry.counter("server.numRequests", {"statusCode": str(200)}).increment();</p>
+<p>const num_requests_id = registry.new_id("server.numRequests", {"statusCode": str(200)});
+void registry.counter_with_id(num_requests_id).increment();
+```</p>
 <p>Atlas metrics will be consumed by users many times after the data has been reported, so they should
 be chosen thoughtfully, while considering how they will be used. See the <a href="../../../../concepts/naming/">naming conventions</a> page
 for general guidelines on metrics naming and restrictions.</p>
@@ -11318,17 +11299,17 @@ following methods:</p>
 <li>
 <p>Configure the following environment variable, which will override the default location <code>Config</code>
 in the <code>Registry</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SPECTATOR_OUTPUT_LOCATION</span><span class="o">=</span><span class="s2">&quot;udp://[::1]:1234&quot;</span>
-</code></pre></div>
+<p><code>shell
+export SPECTATOR_OUTPUT_LOCATION="udp://[::1]:1234"</code></p>
 </li>
 <li>
 <p>Provide a custom <code>Config</code> for the <code>Registry</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Config</span><span class="p">,</span><span class="w"> </span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Config</span><span class="p">(</span><span class="s2">&quot;udp://[::1]:1234&quot;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">).</span><span class="nx">increment</span><span class="p">();</span>
-</code></pre></div>
+<p>```javascript
+import {Config, Registry} from "nflx-spectator";</p>
+<p>const config = new Config("udp://[::1]:1234");
+const registry = new Registry(config);
+void registry.counter("server.numRequests").increment();
+```</p>
 </li>
 </ul>
 <h2 id="output-location">Output Location<a class="headerlink" href="#output-location" title="Permanent link">&para;</a></h2>
@@ -11346,8 +11327,8 @@ in the <code>Registry</code>:</p>
 <p>The <code>SPECTATOR_OUTPUT_LOCATION</code> environment variable accepts the same values, and can be used to
 override the value provided to the <code>Config</code> class, which may be useful in CI/CD contexts. For
 example, if you want to disable metrics publishing from the <code>Registry</code>, then you can set:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SPECTATOR_OUTPUT_LOCATION</span><span class="o">=</span>none
-</code></pre></div>
+<p><code>shell
+export SPECTATOR_OUTPUT_LOCATION=none</code></p>
 <h3 id="unix-domain-sockets">Unix Domain Sockets<a class="headerlink" href="#unix-domain-sockets" title="Permanent link">&para;</a></h3>
 <p>Unix Domain Sockets are not supported in this library, because Node.js removed the <code>unix_dgram</code>
 package from the standard library in 2011, as a part of portability concerns for Windows (<a href="https://github.com/nodejs/node/issues/29339">#29339</a>).</p>
@@ -11367,8 +11348,8 @@ to be sent.</p>
 <h2 id="debug-metrics-delivery-to-spectatord">Debug Metrics Delivery to <code>spectatord</code><a class="headerlink" href="#debug-metrics-delivery-to-spectatord" title="Permanent link">&para;</a></h2>
 <p>In order to see debug log messages from <code>spectatord</code>, create an <code>/etc/default/spectatord</code> file with
 the following contents:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">SPECTATORD_OPTIONS</span><span class="o">=</span><span class="s2">&quot;--verbose&quot;</span>
-</code></pre></div>
+<p><code>shell
+SPECTATORD_OPTIONS="--verbose"</code></p>
 <p>This will report all metrics that are sent to the Atlas backend in the <code>spectatord</code> logs, which will
 provide an opportunity to correlate metrics publishing events from your client code.</p>
 <h2 id="design-considerations-reporting-intervals">Design Considerations - Reporting Intervals<a class="headerlink" href="#design-considerations-reporting-intervals" title="Permanent link">&para;</a></h2>
@@ -11384,41 +11365,42 @@ that selects the <a href="https://github.com/Netflix/spectator-js/blob/main/src/
 This <code>Writer</code> stores all updates in a <code>string[]</code>. Use the <code>writer()</code> method on the <code>Registry</code> to
 access the writer, then inspect the <code>last_line()</code> or <code>get()</code> all messages to verify your metrics
 updates.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">assert</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;chai&quot;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Counter</span><span class="p">,</span><span class="w"> </span><span class="nx">Id</span><span class="p">,</span><span class="w"> </span><span class="nx">MemoryWriter</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;../../src/index.js&quot;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">describe</span><span class="p">,</span><span class="w"> </span><span class="nx">it</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;node:test&quot;</span><span class="p">;</span>
+<p>```typescript
+import {assert} from "chai";
+import {Counter, Id, MemoryWriter} from "../../src/index.js";
+import {describe, it} from "node:test";</p>
+<p>describe("Metrics Test", (): void =&gt; {</p>
+<div class="codehilite"><pre><span></span><code><span class="n">it</span><span class="p">(</span><span class="s2">&quot;increment&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">():</span><span class="w"> </span><span class="nb nb-Type">void</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">Registry</span><span class="p">(</span><span class="n">new</span><span class="w"> </span><span class="n">Config</span><span class="p">(</span><span class="s2">&quot;memory&quot;</span><span class="p">));</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="o">.</span><span class="n">writer</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">MemoryWriter</span><span class="p">;</span>
 
-<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;Metrics Test&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">c</span><span class="p">:</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="s2">&quot;counter&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nb">assert</span><span class="o">.</span><span class="n">isTrue</span><span class="p">(</span><span class="n">writer</span><span class="o">.</span><span class="n">is_empty</span><span class="p">());</span>
 
-<span class="w">    </span><span class="nx">it</span><span class="p">(</span><span class="s2">&quot;increment&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Config</span><span class="p">(</span><span class="s2">&quot;memory&quot;</span><span class="p">));</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">writer</span><span class="p">()</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">MemoryWriter</span><span class="p">;</span>
-
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">c</span><span class="o">:</span><span class="w"> </span><span class="kt">Counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">counter</span><span class="p">(</span><span class="s2">&quot;counter&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="nx">assert</span><span class="p">.</span><span class="nx">isTrue</span><span class="p">(</span><span class="nx">writer</span><span class="p">.</span><span class="nx">is_empty</span><span class="p">());</span>
-
-<span class="w">        </span><span class="ow">void</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">increment</span><span class="p">();</span>
-<span class="w">        </span><span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s2">&quot;c:counter:1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">writer</span><span class="p">.</span><span class="nx">last_line</span><span class="p">());</span>
-<span class="w">    </span><span class="p">});</span>
+<span class="w">    </span><span class="nb nb-Type">void</span><span class="w"> </span><span class="n">c</span><span class="o">.</span><span class="n">increment</span><span class="p">();</span>
+<span class="w">    </span><span class="nb">assert</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="s2">&quot;c:counter:1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">writer</span><span class="o">.</span><span class="n">last_line</span><span class="p">());</span>
 <span class="p">});</span>
 </code></pre></div>
+
+<p>});
+```</p>
 <h3 id="protocol-parser">Protocol Parser<a class="headerlink" href="#protocol-parser" title="Permanent link">&para;</a></h3>
 <p>A <a href="../../../agent/usage/">SpectatorD</a> line protocol parser is available, which ca be used for validating the results
 captured by a <code>MemoryWriter</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">assert</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;chai&quot;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Id</span><span class="p">,</span><span class="w"> </span><span class="nx">parse_protocol_line</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;../src/index.js&quot;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">describe</span><span class="p">,</span><span class="w"> </span><span class="nx">it</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;node:test&quot;</span><span class="p">;</span>
-
-<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;Protocol Parser Tests&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">it</span><span class="p">(</span><span class="s2">&quot;parse counter with multiple tags&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">symbol</span><span class="p">,</span><span class="w"> </span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parse_protocol_line</span><span class="p">(</span><span class="s2">&quot;c:counter,foo=bar,baz=quux:1&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">symbol</span><span class="p">);</span>
-<span class="w">        </span><span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s2">&quot;counter&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">id</span><span class="p">.</span><span class="nx">name</span><span class="p">());</span>
-<span class="w">        </span><span class="nx">assert</span><span class="p">.</span><span class="nx">deepEqual</span><span class="p">({</span><span class="s2">&quot;foo&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;bar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;baz&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;quux&quot;</span><span class="p">},</span><span class="w"> </span><span class="nx">id</span><span class="p">.</span><span class="nx">tags</span><span class="p">());</span>
-<span class="w">        </span><span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
+<p>```typescript
+import {assert} from "chai";
+import {Id, parse_protocol_line} from "../src/index.js";
+import {describe, it} from "node:test";</p>
+<p>describe("Protocol Parser Tests", (): void =&gt; {
+    it("parse counter with multiple tags", (): void =&gt; {
+        const [symbol, id, value] = parse_protocol_line("c:counter,foo=bar,baz=quux:1");
+        assert.equal("c", symbol);
+        assert.equal("counter", id.name());
+        assert.deepEqual({"foo": "bar", "baz": "quux"}, id.tags());
+        assert.equal("1", value);
+    });
+});
+```</p>
 <h2 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h2>
 <p>On an <code>m5d.2xlarge</code> EC2 instance, with <code>Node.js v22.16.0</code> and <code>nflx-spectator: ^3.0.5</code>, we have
 observed the following single-threaded performance numbers across a two-minute test window:</p>

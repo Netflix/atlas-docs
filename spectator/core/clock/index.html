@@ -10584,29 +10584,29 @@ if someone sets the time. On many systems, <a href="https://en.wikipedia.org/wik
 the time synced up with an authoritative source.</p>
 <p>With Spectator, the Clock is typically accessed via the <a href="../../lang/java/registry/overview/">Registry</a>.</p>
 <p>Java usage example:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Current time in milliseconds since the epoch</span>
-<span class="kt">long</span><span class="w"> </span><span class="n">currentTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">wallTime</span><span class="p">();</span>
-</code></pre></div>
+<p><code>java
+// Current time in milliseconds since the epoch
+long currentTime = registry.clock().wallTime();</code></p>
 <h2 id="monotonic-time">Monotonic Time<a class="headerlink" href="#monotonic-time" title="Permanent link">&para;</a></h2>
 <p>While it is good in general for the wall clock to show the correct time, the unpredictable
 changes mean it is not a good choice for measuring how long an operation took. Consider a
 simple example of measuring request latency on a server:</p>
-<div class="highlight"><pre><span></span><code><span class="kt">long</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">wallTime</span><span class="p">();</span>
-<span class="n">handleRequest</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span>
-<span class="kt">long</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">wallTime</span><span class="p">();</span>
-<span class="n">reqLatencyTimer</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">);</span>
-</code></pre></div>
+<p><code>java
+long start = registry.clock().wallTime();
+handleRequest(request, response);
+long end = registry.clock().wallTime();
+reqLatencyTimer.record(end - start, TimeUnit.MILLISECONDS);</code></p>
 <p>If ntp fixes the server time between <code>start</code> and <code>end</code>, then the recorded latency will be
 wrong. Spectator will protect against obviously wrong measurements like negative latencies
 by dropping those values when they are recorded. However, the change could incorrectly
 shorten or lengthen the measured latency.</p>
 <p>The clock interface also provides access to a monotonic source that is only useful for
 measuring elapsed time, for example:</p>
-<div class="highlight"><pre><span></span><code><span class="kt">long</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">monotonicTime</span><span class="p">();</span>
-<span class="n">handleRequest</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span>
-<span class="kt">long</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">monotonicTime</span><span class="p">();</span>
-<span class="n">reqLatencyTimer</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">NANOSECONDS</span><span class="p">);</span>
-</code></pre></div>
+<p><code>java
+long start = registry.clock().monotonicTime();
+handleRequest(request, response);
+long end = registry.clock().monotonicTime();
+reqLatencyTimer.record(end - start, TimeUnit.NANOSECONDS);</code></p>
 <p>In most cases this will map to <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#nanoTime()">System.nanoTime()</a>. Note the actual value returned is not
 meaningful unless compared with another sample to get a delta.</p>
 <h2 id="manual-clock">Manual Clock<a class="headerlink" href="#manual-clock" title="Permanent link">&para;</a></h2>
@@ -10614,17 +10614,16 @@ meaningful unless compared with another sample to get a delta.</p>
 plugged-in. For test cases, it is common to use <a href="https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/ManualClock.html">ManualClock</a> so that tests can be reliable
 and fast without having to rely on hacks like sleep or assuming something will run in less
 than a certain amount of time.</p>
-<div class="highlight"><pre><span></span><code><span class="n">ManualClock</span><span class="w"> </span><span class="n">clock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ManualClock</span><span class="p">();</span>
-<span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DefaultRegistry</span><span class="p">(</span><span class="n">clock</span><span class="p">);</span>
-
-<span class="n">Timer</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">timer</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">);</span>
-<span class="n">timer</span><span class="p">.</span><span class="na">record</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">doSomething</span><span class="p">();</span>
-<span class="w">  </span><span class="n">clock</span><span class="p">.</span><span class="na">setMonotonicTime</span><span class="p">(</span><span class="mi">42L</span><span class="p">);</span>
-<span class="p">});</span>
-
-<span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">timer</span><span class="p">.</span><span class="na">totalTime</span><span class="p">(),</span><span class="w"> </span><span class="mi">42L</span><span class="p">);</span>
-</code></pre></div>
+<p>```java
+ManualClock clock = new ManualClock();
+Registry registry = new DefaultRegistry(clock);</p>
+<p>Timer timer = registry.timer("test");
+timer.record(() -&gt; {
+  doSomething();
+  clock.setMonotonicTime(42L);
+});</p>
+<p>Assert.assertEquals(timer.totalTime(), 42L);
+```</p>
 
 
 

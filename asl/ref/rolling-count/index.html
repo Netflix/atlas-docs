@@ -4194,6 +4194,29 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#check-if-average-cpu-usage-80" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check if average CPU usage &gt; 80%
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#only-alert-if-condition-is-true-for-3-of-the-last-5-datapoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Only alert if condition is true for 3+ of the last 5 datapoints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Only alert if condition is true for 3+ of the last 5 datapoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#data-processing-example" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4203,8 +4226,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4214,8 +4237,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#related-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4225,8 +4248,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4234,6 +4257,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -10592,6 +10620,29 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#check-if-average-cpu-usage-80" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check if average CPU usage &gt; 80%
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#only-alert-if-condition-is-true-for-3-of-the-last-5-datapoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Only alert if condition is true for 3+ of the last 5 datapoints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Only alert if condition is true for 3+ of the last 5 datapoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#data-processing-example" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10601,8 +10652,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10612,8 +10663,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#related-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10623,8 +10674,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10632,6 +10683,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -10655,8 +10711,6 @@
   
 
 
-  <h1>rolling-count</h1>
-
 <table><tbody><tr>
 <td><strong>Input Stack:</strong><table><tbody><tr><td>n: Int</td></tr><tr><td>expr: TimeSeriesExpr</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
@@ -10679,12 +10733,12 @@ multiple datapoints before triggering alerts.</p>
 </ul>
 <h2 id="alerting-pattern">Alerting Pattern<a class="headerlink" href="#alerting-pattern" title="Permanent link">&para;</a></h2>
 <p>A common alerting pattern using rolling count:</p>
-<div class="highlight"><pre><span></span><code># Check if average CPU usage &gt; 80%
-name,cpuUser,:eq,:avg,80,:gt,
-
-# Only alert if condition is true for 3+ of the last 5 datapoints
-5,:rolling-count,3,:gt
-</code></pre></div>
+<p>```</p>
+<h1 id="check-if-average-cpu-usage-80">Check if average CPU usage &gt; 80%<a class="headerlink" href="#check-if-average-cpu-usage-80" title="Permanent link">&para;</a></h1>
+<p>name,cpuUser,:eq,:avg,80,:gt,</p>
+<h1 id="only-alert-if-condition-is-true-for-3-of-the-last-5-datapoints">Only alert if condition is true for 3+ of the last 5 datapoints<a class="headerlink" href="#only-alert-if-condition-is-true-for-3-of-the-last-5-datapoints" title="Permanent link">&para;</a></h1>
+<p>5,:rolling-count,3,:gt
+```</p>
 <h2 id="data-processing-example">Data Processing Example<a class="headerlink" href="#data-processing-example" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

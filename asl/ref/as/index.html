@@ -2833,6 +2833,40 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#server-side-requests-per-second-grouped-by-nfapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Server-side requests per second (grouped by nf.app):
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#client-side-requests-per-second-grouped-by-ipcserverapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client-side requests per second (grouped by ipc.server.app):
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#now-both-can-be-combined-since-they-share-the-same-tag-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Now both can be combined since they share the same tag key:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Now both can be combined since they share the same tag key:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#related-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2842,8 +2876,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2851,6 +2885,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -10648,6 +10687,40 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#server-side-requests-per-second-grouped-by-nfapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Server-side requests per second (grouped by nf.app):
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#client-side-requests-per-second-grouped-by-ipcserverapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client-side requests per second (grouped by ipc.server.app):
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#now-both-can-be-combined-since-they-share-the-same-tag-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Now both can be combined since they share the same tag key:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Now both can be combined since they share the same tag key:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#related-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10657,8 +10730,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10666,6 +10739,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -10688,8 +10766,6 @@
   
   
 
-
-  <h1>as</h1>
 
 <table><tbody><tr>
 <td><strong>Input Stack:</strong><table><tbody><tr><td>replacement: String</td></tr><tr><td>original: String</td></tr><tr><td>expr: TimeSeriesExpr</td></tr></tbody></table></td>
@@ -10733,17 +10809,16 @@ $c,<a href="https://netflix.github.io/atlas-docs/asl/ref/legend/">:legend</a>
 </pre></td></tr>
 </tbody></table>
 <h2 id="mathematical-operation-alignment">Mathematical Operation Alignment<a class="headerlink" href="#mathematical-operation-alignment" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code># Server-side requests per second (grouped by nf.app):
-name,server.requests,:eq,(,nf.app,),:by
-
-# Client-side requests per second (grouped by ipc.server.app):
-name,client.requests,:eq,(,ipc.server.app,),:by,ipc.server.app,nf.app,:as
-
-# Now both can be combined since they share the same tag key:
-name,server.requests,:eq,(,nf.app,),:by,
+<p>```</p>
+<h1 id="server-side-requests-per-second-grouped-by-nfapp">Server-side requests per second (grouped by nf.app):<a class="headerlink" href="#server-side-requests-per-second-grouped-by-nfapp" title="Permanent link">&para;</a></h1>
+<p>name,server.requests,:eq,(,nf.app,),:by</p>
+<h1 id="client-side-requests-per-second-grouped-by-ipcserverapp">Client-side requests per second (grouped by ipc.server.app):<a class="headerlink" href="#client-side-requests-per-second-grouped-by-ipcserverapp" title="Permanent link">&para;</a></h1>
+<p>name,client.requests,:eq,(,ipc.server.app,),:by,ipc.server.app,nf.app,:as</p>
+<h1 id="now-both-can-be-combined-since-they-share-the-same-tag-key">Now both can be combined since they share the same tag key:<a class="headerlink" href="#now-both-can-be-combined-since-they-share-the-same-tag-key" title="Permanent link">&para;</a></h1>
+<p>name,server.requests,:eq,(,nf.app,),:by,
 name,client.requests,:eq,(,ipc.server.app,),:by,ipc.server.app,nf.app,:as,
 :sub
-</code></pre></div>
+```</p>
 <h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../legend/">:legend</a> - Custom legend text with variable substitution</li>

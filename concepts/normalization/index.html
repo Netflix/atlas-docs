@@ -10584,7 +10584,7 @@ data.</p>
 <h2 id="gauge">Gauge<a class="headerlink" href="#gauge" title="Permanent link">&para;</a></h2>
 <p>A value that is sampled from some source and the value is used as is. The last value received will
 be the value used for the interval. For example:</p>
-<div class="highlight"><pre><span></span><code>                ┌─────────┐                                    ┌─────────┐
+<p><code>┌─────────┐                                    ┌─────────┐
                 │    8    │                                    │    8    │
                 │         ├───────                             │         │
                 │         │    6                               │         │
@@ -10593,12 +10593,11 @@ be the value used for the interval. For example:</p>
       ├─────────┤         │           to   │         ├─────────┤         │
       │    2    │         │                │         │    2    │         │
  ├─────────┼─────────┼─────────┤           ├─────────┼─────────┼─────────┤
-1:00      1:01      1:02      1:03        1:00      1:01      1:02      1:03
-</code></pre></div>
+1:00      1:01      1:02      1:03        1:00      1:01      1:02      1:03</code></p>
 <h2 id="rate">Rate<a class="headerlink" href="#rate" title="Permanent link">&para;</a></h2>
 <p>A rate is a value representing the rate per second since the last reported value. Rate values
 are normalized using a weighted average. For example:</p>
-<div class="highlight"><pre><span></span><code>                ┌─────────┐
+<p><code>┌─────────┐
                 │    8    │                                    ┌─────────┐
                 │         ├───────                             │    7    │
                 │         │    6                     ┌─────────┤         │
@@ -10607,8 +10606,7 @@ are normalized using a weighted average. For example:</p>
       ├─────────┤         │           to   │    3    │         │         │
       │    2    │         │                │         │         │         │
  ├─────────┼─────────┼─────────┤           ├─────────┼─────────┼─────────┤
-1:00      1:01      1:02      1:03        1:00      1:01      1:02      1:03
-</code></pre></div>
+1:00      1:01      1:02      1:03        1:00      1:01      1:02      1:03</code></p>
 <p>Here, the data is reported at exactly 30s after the minute boundary. So each value represents the
 average rate per second for 50% of the minute.</p>
 <table>
@@ -10638,7 +10636,7 @@ fraction of the interval they represent. When no previous sample exists, the val
 as the average rate per second over the previous step. This behavior is important to avoid
 under-counting the contribution from a previous interval. The example below shows what happens
 if there is no previous or next sample:</p>
-<div class="highlight"><pre><span></span><code>                ┌─────────┐
+<p><code>┌─────────┐
                 │    8    │
                 │         │
                 │         │                          ┌─────────┐
@@ -10647,8 +10645,7 @@ if there is no previous or next sample:</p>
       ┌─────────┤         │           to        1    │         │         │
       │    2    │         │                ┌─────────┤         │         │
  ├─────────┼─────────┼─────────┤           ├─────────┼─────────┼─────────┤
-1:00      1:01      1:02      1:03        1:00      1:01      1:02      1:03
-</code></pre></div>
+1:00      1:01      1:02      1:03        1:00      1:01      1:02      1:03</code></p>
 <p>Why perform weighted averaging for rates instead of the simpler last value approach used with
 gauges? Because it gives us a better summary of what we actually know from the measurements
 received. In practical terms:</p>

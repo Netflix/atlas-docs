@@ -6727,6 +6727,29 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#old-deprecated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Old (deprecated):
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#new-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New (recommended):
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="New (recommended):">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#related-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6736,8 +6759,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6745,6 +6768,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -10636,6 +10664,29 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#old-deprecated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Old (deprecated):
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#new-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New (recommended):
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="New (recommended):">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#related-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10645,8 +10696,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10654,6 +10705,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -10676,8 +10732,6 @@
   
   
 
-
-  <h1>trend</h1>
 
 <table><tbody><tr>
 <td><strong>Input Stack:</strong><table><tbody><tr><td>window: Duration</td></tr><tr><td>expr: TimeSeriesExpr</td></tr></tbody></table></td>
@@ -10817,12 +10871,12 @@ PT5M,<a href="https://netflix.github.io/atlas-docs/asl/ref/trend/"><span class="
 </table>
 <h2 id="migration-guide">Migration Guide<a class="headerlink" href="#migration-guide" title="Permanent link">&para;</a></h2>
 <p>Replace <code>:trend</code> with <code>:rolling-mean</code> for similar functionality:</p>
-<div class="highlight"><pre><span></span><code># Old (deprecated):
-name,cpu,:eq,:sum,5m,:trend
-
-# New (recommended):
-name,cpu,:eq,:sum,5,:rolling-mean
-</code></pre></div>
+<p>```</p>
+<h1 id="old-deprecated">Old (deprecated):<a class="headerlink" href="#old-deprecated" title="Permanent link">&para;</a></h1>
+<p>name,cpu,:eq,:sum,5m,:trend</p>
+<h1 id="new-recommended">New (recommended):<a class="headerlink" href="#new-recommended" title="Permanent link">&para;</a></h1>
+<p>name,cpu,:eq,:sum,5,:rolling-mean
+```</p>
 <h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../rolling-mean/">:rolling-mean</a> - Recommended replacement (uses datapoint count instead of time)</li>

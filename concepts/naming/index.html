@@ -10924,24 +10924,24 @@ to narrow down to the specific data they need.</p>
 <li>The number of rows in a database table.</li>
 </ol>
 <h4 id="discouraged-approach">Discouraged Approach<a class="headerlink" href="#discouraged-approach" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">Id</span><span class="w"> </span><span class="n">poolSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;size&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;class&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ThreadPool&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;server-requests&quot;</span><span class="p">);</span>
-
-<span class="n">Id</span><span class="w"> </span><span class="n">poolSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;size&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;class&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Database&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;table&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;users&quot;</span><span class="p">);</span>
-</code></pre></div>
+<p>```java
+Id poolSize = registry.createId("size")
+  .withTag("class", "ThreadPool")
+  .withTag("id", "server-requests");</p>
+<p>Id poolSize = registry.createId("size")
+  .withTag("class", "Database")
+  .withTag("table", "users");
+```</p>
 <p>In this approach, if you select the name <code>size</code>, then it will match both the <code>ThreadPool</code> and
 <code>Database</code> classes. This results in a value that is an aggregate of the number of threads and the
 number of items in a database, which has no meaning.</p>
 <h4 id="recommended-approach">Recommended Approach<a class="headerlink" href="#recommended-approach" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">Id</span><span class="w"> </span><span class="n">poolSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;threadpool.size&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;server-requests&quot;</span><span class="p">);</span>
-
-<span class="n">Id</span><span class="w"> </span><span class="n">poolSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;db.size&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;table&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;users&quot;</span><span class="p">);</span>
-</code></pre></div>
+<p>```java
+Id poolSize = registry.createId("threadpool.size")
+  .withTag("id", "server-requests");</p>
+<p>Id poolSize = registry.createId("db.size")
+  .withTag("table", "users");
+```</p>
 <p>This variation provides enough context in the name so that the meaning is more apparent and you can
 successfully reason about the values. For example, if you select <code>threadpool.size</code>, then you can
 see the total number of threads in all pools. You can then group by or select an <code>id</code> to further

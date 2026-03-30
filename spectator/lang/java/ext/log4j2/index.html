@@ -10614,33 +10614,33 @@
 log messages reported.</p>
 <h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
 <p>To use it simply add a dependency:</p>
-<div class="highlight"><pre><span></span><code>com.netflix.spectator:spectator-ext-log4j2:0.101.0
-</code></pre></div>
+<p><code>com.netflix.spectator:spectator-ext-log4j2:0.101.0</code></p>
 <p>Then in your application initialization:</p>
-<div class="highlight"><pre><span></span><code><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span>
-<span class="n">SpectatorAppender</span><span class="p">.</span><span class="na">addToRootLogger</span><span class="p">(</span>
-<span class="w">    </span><span class="n">registry</span><span class="p">,</span><span class="w">             </span><span class="c1">// Registry to use</span>
-<span class="w">    </span><span class="s">&quot;spectator&quot;</span><span class="p">,</span><span class="w">          </span><span class="c1">// Name for the appender</span>
-<span class="w">    </span><span class="kc">false</span><span class="p">);</span><span class="w">               </span><span class="c1">// Should stack traces be ignored?</span>
-</code></pre></div>
+<p><code>java
+Registry registry = ...
+SpectatorAppender.addToRootLogger(
+    registry,             // Registry to use
+    "spectator",          // Name for the appender
+    false);               // Should stack traces be ignored?</code></p>
 <p>This will add the appender to the root logger and register a listener so it will get
 re-added if the configuration changes. You can also use the appender by specifying it
 in the log4j2 configuration, but this will cause some of the loggers in Spectator to get
 created before log4j is properly initialized and result in some lost log messages. With
 that caveat in mind, if you need the additional flexibility of using the configuration then
 specify the <code>Spectator</code> appender:</p>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;Configuration</span><span class="w"> </span><span class="na">monitorInterval=</span><span class="s">&quot;5&quot;</span><span class="w"> </span><span class="na">status=</span><span class="s">&quot;warn&quot;</span><span class="nt">&gt;</span>
-<span class="w">  </span><span class="nt">&lt;Appenders&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Spectator</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;root&quot;</span><span class="nt">/&gt;</span>
-<span class="w">  </span><span class="nt">&lt;/Appenders&gt;</span>
-<span class="w">  </span><span class="nt">&lt;Loggers&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Root</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;debug&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;AppenderRef</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;root&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/Root&gt;</span>
-<span class="w">  </span><span class="nt">&lt;/Loggers&gt;</span>
-<span class="nt">&lt;/Configuration&gt;</span>
-</code></pre></div>
+<p>```xml</p>
+<?xml version="1.0" encoding="UTF-8"?>
+<p><Configuration monitorInterval="5" status="warn">
+  <Appenders>
+    <Spectator name="root"/>
+  </Appenders>
+  <Loggers>
+    <Root level="debug">
+      <AppenderRef ref="root"/>
+    </Root>
+  </Loggers>
+</Configuration>
+```</p>
 <h2 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h2>
 <h3 id="log4jnummessages">log4j.numMessages<a class="headerlink" href="#log4jnummessages" title="Permanent link">&para;</a></h3>
 <p>Counters showing the number of messages that have been passed to the appender.</p>

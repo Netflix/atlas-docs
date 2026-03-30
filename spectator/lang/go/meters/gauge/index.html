@@ -10464,38 +10464,40 @@ when a state change occurs, there is no information about what might have occurr
 then a gauge for the size will show the size when it was sampled. The size may have been much
 higher or lower at some point during interval, but that is not known.</p>
 <p>Call <code>Set()</code> with a value:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator&quot;</span>
-<span class="p">)</span>
+<p>```golang
+import (
+    "github.com/Netflix/spectator-go/v2/spectator"
+)</p>
+<p>func main() {
+    config, _ := spectator.NewConfig("udp", nil, nil)
+    registry, _ := spectator.NewRegistry(config)</p>
+<div class="codehilite"><pre><span></span><code><span class="n">registry</span><span class="o">.</span><span class="n">Gauge</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">config</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewConfig</span><span class="p">(</span><span class="s">&quot;udp&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">registry</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
-
-<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Gauge</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">).</span><span class="nx">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="w">    </span><span class="nx">queueSize</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">NewId</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">GaugeWithId</span><span class="p">(</span><span class="nx">queueSize</span><span class="p">).</span><span class="nx">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="p">}</span>
+<span class="n">queueSize</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">registry</span><span class="o">.</span><span class="n">NewId</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">GaugeWithId</span><span class="p">(</span><span class="n">queueSize</span><span class="p">)</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </code></pre></div>
+
+<p>}
+```</p>
 <p>Gauges will report the last set value for 15 minutes. This done so that updates to the values do
 not need to be collected on a tight 1-minute schedule to ensure that Atlas shows unbroken lines in
 graphs. A custom TTL may be configured for gauges. SpectatorD enforces a minimum TTL of 5 seconds.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator&quot;</span>
-<span class="w">    </span><span class="s">&quot;time&quot;</span>
-<span class="p">)</span>
+<p>```golang
+import (
+    "github.com/Netflix/spectator-go/v2/spectator"
+    "time"
+)</p>
+<p>func main() {
+    config, _ := spectator.NewConfig("udp", nil, nil)
+    registry, _ := spectator.NewRegistry(config)</p>
+<div class="codehilite"><pre><span></span><code><span class="n">registry</span><span class="o">.</span><span class="n">GaugeWithTTL</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">nil</span><span class="o">,</span><span class="w"> </span><span class="mi">120</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">config</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewConfig</span><span class="p">(</span><span class="s">&quot;udp&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">registry</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
-
-<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">GaugeWithTTL</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="mi">120</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">).</span><span class="nx">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="w">    </span><span class="nx">queueSize</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">NewId</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">GaugeWithIdWithTTL</span><span class="p">(</span><span class="nx">queueSize</span><span class="p">,</span><span class="w"> </span><span class="mi">120</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">).</span><span class="nx">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="p">}</span>
+<span class="n">queueSize</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">registry</span><span class="o">.</span><span class="n">NewId</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">GaugeWithIdWithTTL</span><span class="p">(</span><span class="n">queueSize</span><span class="o">,</span><span class="w"> </span><span class="mi">120</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </code></pre></div>
+
+<p>}
+```</p>
 
 
 

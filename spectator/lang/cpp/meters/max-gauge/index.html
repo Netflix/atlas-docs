@@ -75,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#include" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -7425,6 +7430,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -10436,6 +10443,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -10455,29 +10464,28 @@
   
 
 
-  <h1>Max Gauge</h1>
-
 <p>The value is a number that is sampled at a point in time, but it is reported as a maximum Gauge
 value to the backend. This ensures that only the maximum value observed during a reporting interval
 is sent to the backend, thus over-riding the last-write-wins semantics of standard Gauges. Unlike
 standard Gauges, Max Gauges do not continue to report to the backend, and there is no TTL.</p>
 <p>Call <code>Set()</code> with a value:</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;registry.h&gt;</span>
+<p>```cpp</p>
+<h1 id="include">include <registry.h><a class="headerlink" href="#include" title="Permanent link">&para;</a></h1>
+<p>int main()
+{
+    auto config = Config(WriterConfig(WriterTypes::UDP));
+    auto r = Registry(config);</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Option 1: Directly create a Max Gauge</span>
+<span class="n">auto</span><span class="w"> </span><span class="n">serverQueueSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateMaxGauge</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">);</span>
+<span class="n">serverQueueSize</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Config</span><span class="p">(</span><span class="n">WriterConfig</span><span class="p">(</span><span class="n">WriterTypes</span><span class="o">::</span><span class="n">UDP</span><span class="p">));</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Registry</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Option 1: Directly create a Max Gauge</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">serverQueueSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateMaxGauge</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">serverQueueSize</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Option 2: Create a Gauge from a MeterID</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">serverQueueMeter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateNewId</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">r</span><span class="p">.</span><span class="n">CreateMaxGauge</span><span class="p">(</span><span class="n">serverQueueMeter</span><span class="p">).</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="c1">// Option 2: Create a Gauge from a MeterID</span>
+<span class="n">auto</span><span class="w"> </span><span class="n">serverQueueMeter</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateNewId</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">);</span>
+<span class="n">r</span><span class="p">.</span><span class="n">CreateMaxGauge</span><span class="p">(</span><span class="n">serverQueueMeter</span><span class="p">).</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
 </code></pre></div>
+
+<p>}
+```</p>
 
 
 

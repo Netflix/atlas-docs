@@ -10042,17 +10042,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#results" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Results
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -10520,17 +10509,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#results" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Results
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -10554,40 +10532,33 @@
 <h1 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h1>
 <h2 id="test-script">Test Script<a class="headerlink" href="#test-script" title="Permanent link">&para;</a></h2>
 <p>Test maximum single-threaded throughput for two minutes.</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
-    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
-    <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(thread)d</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
-<span class="p">)</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">spectator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span><span class="p">,</span> <span class="n">Registry</span>
-
-<span class="n">location</span> <span class="o">=</span> <span class="s2">&quot;udp&quot;</span>
-<span class="c1"># location = &quot;unix&quot;</span>
-<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">(</span><span class="n">Config</span><span class="p">(</span><span class="n">location</span><span class="p">))</span>
-<span class="c1"># add tags with some length, to simulate more real-world conditions</span>
-<span class="n">tags</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="n">location</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;correct-horse-battery-staple&quot;</span><span class="p">}</span>
-
-<span class="n">max_duration</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">60</span>
-<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">elapsed</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;start spectator-py </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2"> benchmark&quot;</span><span class="p">)</span>
-<span class="n">iteration</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="k">while</span> <span class="n">elapsed</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">max_duration</span><span class="p">:</span>
-    <span class="n">registry</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="s2">&quot;spectator-py.publish&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span><span class="o">.</span><span class="n">increment</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">iteration</span> <span class="o">%</span> <span class="mi">500000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iterations=</span><span class="si">{</span><span class="n">iteration</span><span class="si">}</span><span class="s2"> elapsed=</span><span class="si">{</span><span class="n">elapsed</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">iteration</span> <span class="o">+=</span> <span class="mi">1</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iterations=</span><span class="si">{</span><span class="n">iteration</span><span class="si">}</span><span class="s2"> elapsed=</span><span class="si">{</span><span class="n">elapsed</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> rate/sec=</span><span class="si">{</span><span class="n">iteration</span><span class="o">/</span><span class="n">elapsed</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
+<p>```python</p>
+<h1 id="usrbinenv-python3">!/usr/bin/env python3<a class="headerlink" href="#usrbinenv-python3" title="Permanent link">&para;</a></h1>
+<p>import logging
+import time</p>
+<p>logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(thread)d - %(message)s'
+)</p>
+<p>from spectator import Config, Registry</p>
+<p>location = "udp"</p>
+<h1 id="location-unix">location = "unix"<a class="headerlink" href="#location-unix" title="Permanent link">&para;</a></h1>
+<p>registry = Registry(Config(location))</p>
+<h1 id="add-tags-with-some-length-to-simulate-more-real-world-conditions">add tags with some length, to simulate more real-world conditions<a class="headerlink" href="#add-tags-with-some-length-to-simulate-more-real-world-conditions" title="Permanent link">&para;</a></h1>
+<p>tags = {"location": location, "version": "correct-horse-battery-staple"}</p>
+<p>max_duration = 2 * 60
+start = time.perf_counter()</p>
+<p>def elapsed():
+    return time.perf_counter() - start</p>
+<p>print(f"start spectator-py {location} benchmark")
+iteration = 1
+while elapsed() &lt; max_duration:
+    registry.counter("spectator-py.publish", tags).increment()
+    if iteration % 500000 == 0:
+        print(f"iterations={iteration} elapsed={elapsed():.2f}")
+    iteration += 1</p>
+<p>print(f"iterations={iteration} elapsed={elapsed():.2f} rate/sec={iteration/elapsed():.2f}")
+```</p>
 <h2 id="results">Results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h2>
 <p>See <a href="../usage/#performance">Usage &gt; Performance</a>.</p>
 

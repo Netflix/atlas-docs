@@ -9562,17 +9562,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#results" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Results
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -10520,17 +10509,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#results" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Results
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -10554,44 +10532,37 @@
 <h1 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h1>
 <h2 id="test-script">Test Script<a class="headerlink" href="#test-script" title="Permanent link">&para;</a></h2>
 <p>Test maximum single-threaded throughput for two minutes.</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env node</span>
-
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
-
-<span class="c1">// default is udp</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;udp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;version&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;correct-horse-battery-staple&quot;</span><span class="p">};</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">max_duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">60</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">performance</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
-
-<span class="kd">function</span><span class="w"> </span><span class="nx">elapsed</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">((</span><span class="nx">performance</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">start</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1000</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kd">function</span><span class="w"> </span><span class="nx">rate</span><span class="p">(</span><span class="nx">iterations</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="nx">iterations</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">elapsed</span><span class="p">()).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;start spectator-js udp benchmark&quot;</span><span class="p">);</span>
-<span class="kd">let</span><span class="w"> </span><span class="nx">iteration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
-<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// without await, a heap limit allocation fail error will occur</span>
-<span class="w">    </span><span class="c1">// around 5.5M iterations (34 sec)</span>
-<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter</span><span class="p">(</span><span class="s2">&quot;spectator-js.publish&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">tags</span><span class="p">).</span><span class="nx">increment</span><span class="p">();</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">iteration</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mf">500000</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;iterations&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">iteration</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;elapsed&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">elapsed</span><span class="p">());</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">elapsed</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">max_duration</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">break</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="nx">iteration</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;iterations&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">iteration</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rate/sec&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">rate</span><span class="p">(</span><span class="nx">iteration</span><span class="p">));</span>
-
-<span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">();</span>
-</code></pre></div>
+<p>```javascript</p>
+<h1 id="usrbinenv-node">!/usr/bin/env node<a class="headerlink" href="#usrbinenv-node" title="Permanent link">&para;</a></h1>
+<p>import {Registry} from "nflx-spectator";</p>
+<p>// default is udp
+const registry = new Registry();
+const tags = {"location": "udp", "version": "correct-horse-battery-staple"};</p>
+<p>const max_duration = 2 * 60;
+const start = performance.now();</p>
+<p>function elapsed() {
+    return ((performance.now() - start) / 1000).toFixed(2);
+}</p>
+<p>function rate(iterations) {
+    return (iterations / elapsed()).toFixed(2);
+}</p>
+<p>console.log("start spectator-js udp benchmark");
+let iteration = 1;
+while (true) {
+    // without await, a heap limit allocation fail error will occur
+    // around 5.5M iterations (34 sec)
+    await registry.counter("spectator-js.publish", tags).increment();
+    if (iteration % 500000 === 0) {
+        console.log("iterations", iteration, "elapsed", elapsed());
+        if (elapsed() &gt; max_duration) {
+            break;
+        }
+    }
+    iteration += 1;
+}</p>
+<p>console.log("iterations", iteration, "rate/sec", rate(iteration));</p>
+<p>process.exit();
+```</p>
 <h2 id="results">Results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h2>
 <p>See <a href="../usage/#performance">Usage &gt; Performance</a>.</p>
 

@@ -10659,10 +10659,10 @@
 <li>
 <p>Depend on the API library, which is available in <a href="https://search.maven.org/artifact/com.netflix.spectator/spectator-api/0.101.0/jar">Maven Central</a>. The only transitive dependency
 is <code>slf4j</code>. For Gradle, the dependency is specified as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">compile</span><span class="w"> </span><span class="s2">&quot;com.netflix.spectator:spectator-api:0.101.0&quot;</span>
-<span class="o">}</span>
-</code></pre></div>
+<p><code>groovy
+dependencies {
+    compile "com.netflix.spectator:spectator-api:0.101.0"
+}</code></p>
 </li>
 <li>
 <p>Pick a <a href="../registry/overview/">Registry</a> to bind, when initializing the application.</p>
@@ -10681,73 +10681,72 @@ is <code>slf4j</code>. For Gradle, the dependency is specified as follows:</p>
 <li>Current number of active connections on the server.</li>
 </ul>
 <p>Here is some sample code that does that:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// In the application initialization setup a registry</span>
-<span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DefaultRegistry</span><span class="p">();</span>
-<span class="n">Server</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Server</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+<p>```java
+// In the application initialization setup a registry
+Registry registry = new DefaultRegistry();
+Server s = new Server(registry);</p>
+<p>public class Server {
+  private final Registry registry;
+  private final Id requestCountId;
+  private final Timer requestLatency;
+  private final DistributionSummary responseSizes;</p>
+<p>@Inject
+  public Server(Registry registry) {
+    this.registry = registry;</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Create a base id for the request count. The id will get refined with</span>
+<span class="c1">// additional dimensions when we receive a request.</span>
+<span class="nx">requestCountId</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">createId</span><span class="p">(</span><span class="s">&quot;server.requestCount&quot;</span><span class="p">);</span>
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="n">requestCountId</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Timer</span><span class="w"> </span><span class="n">requestLatency</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">DistributionSummary</span><span class="w"> </span><span class="n">responseSizes</span><span class="p">;</span>
+<span class="c1">// Create a timer for tracking the latency. The reference can be held onto</span>
+<span class="c1">// to avoid additional lookup cost in critical paths.</span>
+<span class="nx">requestLatency</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">timer</span><span class="p">(</span><span class="s">&quot;server.requestLatency&quot;</span><span class="p">);</span>
 
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Server</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
+<span class="c1">// Create a distribution summary meter for tracking the response sizes.</span>
+<span class="nx">responseSizes</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">distributionSummary</span><span class="p">(</span><span class="s">&quot;server.responseSizes&quot;</span><span class="p">);</span>
 
-<span class="w">    </span><span class="c1">// Create a base id for the request count. The id will get refined with</span>
-<span class="w">    </span><span class="c1">// additional dimensions when we receive a request.</span>
-<span class="w">    </span><span class="n">requestCountId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;server.requestCount&quot;</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Create a timer for tracking the latency. The reference can be held onto</span>
-<span class="w">    </span><span class="c1">// to avoid additional lookup cost in critical paths.</span>
-<span class="w">    </span><span class="n">requestLatency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">timer</span><span class="p">(</span><span class="s">&quot;server.requestLatency&quot;</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Create a distribution summary meter for tracking the response sizes.</span>
-<span class="w">    </span><span class="n">responseSizes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">distributionSummary</span><span class="p">(</span><span class="s">&quot;server.responseSizes&quot;</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Gauge type that can be sampled. In this case it will invoke the</span>
-<span class="w">    </span><span class="c1">// specified method via reflection to get the value. The registry will</span>
-<span class="w">    </span><span class="c1">// keep a weak reference to the object passed in so that registration will</span>
-<span class="w">    </span><span class="c1">// not prevent garbage collection of the server object.</span>
-<span class="w">    </span><span class="n">registry</span><span class="p">.</span><span class="na">methodValue</span><span class="p">(</span><span class="s">&quot;server.numConnections&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;getNumConnections&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Response</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Request</span><span class="w"> </span><span class="n">req</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">();</span>
-<span class="w">    </span><span class="n">requestLatency</span><span class="p">.</span><span class="na">record</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">Response</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">doSomething</span><span class="p">(</span><span class="n">req</span><span class="p">);</span>
-
-<span class="w">        </span><span class="c1">// Update the counter id with dimensions based on the request. The</span>
-<span class="w">        </span><span class="c1">// counter will then be looked up in the registry which should be</span>
-<span class="w">        </span><span class="c1">// fairly cheap, such as lookup of id object in a ConcurrentHashMap.</span>
-<span class="w">        </span><span class="c1">// However, it is more expensive than having a local variable seti</span>
-<span class="w">        </span><span class="c1">// to the counter.</span>
-<span class="w">        </span><span class="kd">final</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="n">cntId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">requestCountId</span>
-<span class="w">          </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;country&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="na">country</span><span class="p">())</span>
-<span class="w">          </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="p">.</span><span class="na">status</span><span class="p">());</span>
-<span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="n">cntId</span><span class="p">).</span><span class="na">increment</span><span class="p">();</span>
-
-<span class="w">        </span><span class="n">responseSizes</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="na">body</span><span class="p">().</span><span class="na">size</span><span class="p">());</span>
-
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">res</span><span class="p">;</span>
-<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">final</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="n">cntId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">requestCountId</span>
-<span class="w">          </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;country&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="na">country</span><span class="p">())</span>
-<span class="w">          </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;exception&quot;</span><span class="p">)</span>
-<span class="w">          </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getSimpleName</span><span class="p">());</span>
-<span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="n">cntId</span><span class="p">).</span><span class="na">increment</span><span class="p">();</span>
-<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">e</span><span class="p">;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getNumConnections</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// however we determine the current number of connections on the server</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<span class="c1">// Gauge type that can be sampled. In this case it will invoke the</span>
+<span class="c1">// specified method via reflection to get the value. The registry will</span>
+<span class="c1">// keep a weak reference to the object passed in so that registration will</span>
+<span class="c1">// not prevent garbage collection of the server object.</span>
+<span class="nx">registry</span><span class="p">.</span><span class="nx">methodValue</span><span class="p">(</span><span class="s">&quot;server.numConnections&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">this</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;getNumConnections&quot;</span><span class="p">);</span>
 </code></pre></div>
+
+<p>}</p>
+<p>public Response handle(Request req) {
+    final long s = System.nanoTime();
+    requestLatency.record(() -&gt; {
+      try {
+        Response res = doSomething(req);</p>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">Update</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">dimensions</span><span class="w"> </span><span class="n">based</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">request</span><span class="o">.</span><span class="w"> </span><span class="n">The</span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">looked</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">be</span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">fairly</span><span class="w"> </span><span class="n">cheap</span><span class="p">,</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">lookup</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">ConcurrentHashMap</span><span class="o">.</span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">However</span><span class="p">,</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">more</span><span class="w"> </span><span class="n">expensive</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="n">having</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">local</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">seti</span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">counter</span><span class="o">.</span>
+<span class="w">    </span><span class="n">final</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="n">cntId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">requestCountId</span>
+<span class="w">      </span><span class="o">.</span><span class="n">withTag</span><span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="o">.</span><span class="n">country</span><span class="p">())</span>
+<span class="w">      </span><span class="o">.</span><span class="n">withTag</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">());</span>
+<span class="w">    </span><span class="n">registry</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="n">cntId</span><span class="p">)</span><span class="o">.</span><span class="n">increment</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">responseSizes</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">body</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">());</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">res</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="n">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">final</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="n">cntId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">requestCountId</span>
+<span class="w">      </span><span class="o">.</span><span class="n">withTag</span><span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="o">.</span><span class="n">country</span><span class="p">())</span>
+<span class="w">      </span><span class="o">.</span><span class="n">withTag</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;exception&quot;</span><span class="p">)</span>
+<span class="w">      </span><span class="o">.</span><span class="n">withTag</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="o">.</span><span class="n">getClass</span><span class="p">()</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">());</span>
+<span class="w">    </span><span class="n">registry</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="n">cntId</span><span class="p">)</span><span class="o">.</span><span class="n">increment</span><span class="p">();</span>
+<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">e</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>}</p>
+<p>public int getNumConnections() {
+    // however we determine the current number of connections on the server
+  }
+}
+```</p>
 <h2 id="netflix-integration">Netflix Integration<a class="headerlink" href="#netflix-integration" title="Permanent link">&para;</a></h2>
 <p>When running at Netflix, use the <code>atlas-client</code> library to enable transferring the
 instrumented data to <a href="../../../../">Atlas</a>. See the appropriate
@@ -10758,34 +10757,33 @@ section for the type of project you are working on:</p>
 </ul>
 <h3 id="libraries">Libraries<a class="headerlink" href="#libraries" title="Permanent link">&para;</a></h3>
 <p>For libraries, the only dependency that should be needed is:</p>
-<div class="highlight"><pre><span></span><code>com.netflix.spectator:spectator-api:0.101.0
-</code></pre></div>
+<p><code>com.netflix.spectator:spectator-api:0.101.0</code></p>
 <p>The bindings to integrate internally should be included with the application. In your code,
 just inject a <a href="../registry/overview/">Registry</a>, e.g.:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="p">...</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><code>java
+public class Foo {
+  @Inject
+  public Foo(Registry registry) {
+    ...
+  }
+  ...
+}</code></p>
 <p>See the <a href="../testing/">testing docs</a> for more information about creating a binding to use with tests.
 Libraries should not install a particular registry. The bindings to use for the <a href="../registry/overview/">Registry</a> should be
 determined by the <a href="#sbn-applications">application</a> that is using the library. Think of it as being like
 slf4j where <a href="https://www.slf4j.org/faq.html#configure_logging">logging configuration</a> is up to the end-user, not the library owner.</p>
 <p>You may want to avoid binding errors if the end-user has not provided a binding for the Spectator
 registry. For Spring, this can be done by using optional injections, for example:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Sample library class</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyLib</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyLib</span><span class="p">(</span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">Registry</span><span class="o">&gt;</span><span class="w"> </span><span class="n">registryOpt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registryOpt</span><span class="p">.</span><span class="na">orElseGet</span><span class="p">(</span><span class="n">NoopRegistry</span><span class="p">::</span><span class="k">new</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+// Sample library class
+public class MyLib {
+  Registry registry;</p>
+<p>@Inject
+  public MyLib(Optional<Registry> registryOpt) {
+    this.registry = registryOpt.orElseGet(NoopRegistry::new);
+  }
+}
+```</p>
 <h3 id="sbn-applications">SBN Applications<a class="headerlink" href="#sbn-applications" title="Permanent link">&para;</a></h3>
 <p>Applications should include <code>spring-boot-netflix-starter-metrics</code> which will configure the
 registry bindings for internal use.</p>

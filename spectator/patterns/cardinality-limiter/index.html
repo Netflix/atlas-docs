@@ -10466,33 +10466,31 @@ cannot guarantee that the tag values being used are strictly bounded. There is s
 different modes: (1) selecting the first N values that are seen, or (2) selecting the most
 frequent N values that are seen.</p>
 <p>Example usage:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nc">WebServer</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="c1">// Limiter instance, should be shared for all uses of that tag value</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="w"> </span><span class="n">pathLimiter</span><span class="w"> </span><span class="o">=</span>
-<span class="w">    </span><span class="n">CardinalityLimiters</span><span class="p">.</span><span class="na">mostFrequent</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="n">baseId</span><span class="p">;</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">WebServer</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">baseId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;server.requestCount&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Response</span><span class="w"> </span><span class="nf">handleRequest</span><span class="p">(</span><span class="n">Request</span><span class="w"> </span><span class="n">req</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Response</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">doSomething</span><span class="p">(</span><span class="n">req</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Update metrics, use limiter to restrict the set of values for the</span>
-<span class="w">    </span><span class="c1">// path and avoid an explosion</span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">pathValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pathLimiter</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">req</span><span class="p">.</span><span class="na">getPath</span><span class="p">());</span>
-<span class="w">    </span><span class="n">Id</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">baseId</span>
-<span class="w">      </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;path&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pathValue</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="p">.</span><span class="na">getStatus</span><span class="p">());</span>
-<span class="w">    </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="n">id</span><span class="p">).</span><span class="na">increment</span><span class="p">();</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<p>```java
+class WebServer {</p>
+<p>// Limiter instance, should be shared for all uses of that tag value
+  private final Function&lt;String, String&gt; pathLimiter =
+    CardinalityLimiters.mostFrequent(10);</p>
+<p>private final Registry registry;
+  private final Id baseId;</p>
+<p>public WebServer(Registry registry) {
+    this.registry = registry;
+    this.baseId = registry.createId("server.requestCount");
+  }</p>
+<p>public Response handleRequest(Request req) {
+    Response res = doSomething(req);</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Update metrics, use limiter to restrict the set of values for the</span>
+<span class="c1">// path and avoid an explosion</span>
+<span class="n">String</span><span class="w"> </span><span class="n">pathValue</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">pathLimiter</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">req</span><span class="p">.</span><span class="n">getPath</span><span class="p">());</span>
+<span class="n">Id</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">baseId</span>
+<span class="w">  </span><span class="p">.</span><span class="n">withTag</span><span class="p">(</span><span class="s">&quot;path&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pathValue</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">withTag</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="p">.</span><span class="n">getStatus</span><span class="p">());</span>
+<span class="n">registry</span><span class="p">.</span><span class="n">counter</span><span class="p">(</span><span class="n">id</span><span class="p">).</span><span class="n">increment</span><span class="p">();</span>
 </code></pre></div>
+
+<p>}
+}
+```</p>
 
 
 

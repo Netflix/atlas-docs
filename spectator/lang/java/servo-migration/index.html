@@ -11177,27 +11177,24 @@ is still supported and if it works for your use-case, then feel free to continue
 <h3 id="registration">Registration<a class="headerlink" href="#registration" title="Permanent link">&para;</a></h3>
 <p>First read through the <a href="https://github.com/Netflix/servo/wiki/Getting-Started#registration-of-metrics">Servo docs on registration</a>. With Servo, say you have a class like the
 following:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="w"> </span><span class="n">gauge</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="n">counter</span><span class="p">;</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">gauge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="p">();</span>
-<span class="w">    </span><span class="n">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BasicCounter</span><span class="p">(</span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;counter&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">());</span>
-<span class="w">    </span><span class="n">Monitors</span><span class="p">.</span><span class="na">registerObject</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="nd">@Monitor</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gauge&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSourceType</span><span class="p">.</span><span class="na">GAUGE</span><span class="p">)</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">gauge</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">gauge</span><span class="p">.</span><span class="na">get</span><span class="p">();</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {</p>
+<p>private AtomicInteger gauge;
+  private Counter counter;</p>
+<p>public Foo(String id) {
+    gauge = new AtomicInteger();
+    counter = new BasicCounter(MonitorConfig.builder("counter").build());
+    Monitors.registerObject(id, this);
+  }</p>
+<p>@Monitor(name = "gauge", type = DataSourceType.GAUGE)
+  private int gauge() {
+    return gauge.get();
+  }</p>
+<p>public void doSomething() {
+    ...
+  }
+}
+```</p>
 <p>The state of the class is in the member variables of an instance of <code>Foo</code>. If multiple instances
 of class <code>Foo</code> are created with the same value for <code>id</code>, then the last one will overwrite the
 others for the registration. So the values getting reported will only be from the last instance
@@ -11209,58 +11206,53 @@ dimensions is not known up front.</p>
 <p>Gauges need to sample the state of something, so they need to have a reference to an object that
 contains the state. So the user would need to ensure that only a single copy was registered leading
 to patterns like:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
+<p>```java
+class Foo {</p>
+<p>private static class FooStats {</p>
+<div class="codehilite"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="nx">AtomicInteger</span><span class="w"> </span><span class="nx">gauge</span><span class="p">;</span>
+<span class="k">private</span><span class="w"> </span><span class="nx">Counter</span><span class="w"> </span><span class="nx">counter</span><span class="p">;</span>
 
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FooStats</span><span class="w"> </span><span class="p">{</span>
+<span class="nx">public</span><span class="w"> </span><span class="nx">FooStats</span><span class="p">(</span><span class="nx">String</span><span class="w"> </span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">gauge</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">new</span><span class="w"> </span><span class="nx">AtomicInteger</span><span class="p">();</span>
+<span class="w">  </span><span class="nx">counter</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">new</span><span class="w"> </span><span class="nx">BasicCounter</span><span class="p">(</span><span class="nx">MonitorConfig</span><span class="p">.</span><span class="nx">builder</span><span class="p">(</span><span class="s">&quot;counter&quot;</span><span class="p">).</span><span class="nx">build</span><span class="p">());</span>
+<span class="w">  </span><span class="nx">Monitors</span><span class="p">.</span><span class="nx">registerObject</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">this</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="w"> </span><span class="n">gauge</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="n">counter</span><span class="p">;</span>
-
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">FooStats</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">gauge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="p">();</span>
-<span class="w">      </span><span class="n">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BasicCounter</span><span class="p">(</span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;counter&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">());</span>
-<span class="w">      </span><span class="n">Monitors</span><span class="p">.</span><span class="na">registerObject</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@Monitor</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gauge&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSourceType</span><span class="p">.</span><span class="na">GAUGE</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">gauge</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">gauge</span><span class="p">.</span><span class="na">get</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">ConcurrentHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">FooStats</span><span class="o">&gt;</span><span class="w"> </span><span class="n">STATS</span><span class="w"> </span><span class="o">=</span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">ConcurrentHashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">FooStats</span><span class="w"> </span><span class="n">stats</span><span class="p">;</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">stats</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">STATS</span><span class="p">.</span><span class="na">computeIfAbsent</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FooStats</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">    </span><span class="n">stats</span><span class="p">.</span><span class="na">update</span><span class="p">();</span>
-<span class="w">  </span><span class="p">}</span>
+<span class="err">@</span><span class="nx">Monitor</span><span class="p">(</span><span class="nx">name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;gauge&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">DataSourceType</span><span class="p">.</span><span class="nx">GAUGE</span><span class="p">)</span>
+<span class="k">private</span><span class="w"> </span><span class="nx">int</span><span class="w"> </span><span class="nx">gauge</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">gauge</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div>
+
+<p>}</p>
+<p>private static ConcurrentHashMap<String, FooStats> STATS =
+    new ConcurrentHashMap&lt;&gt;();</p>
+<p>private final FooStats stats;</p>
+<p>public Foo(String id) {
+    stats = STATS.computeIfAbsent(id, (i) -&gt; new FooStats(i));
+  }</p>
+<p>public void doSomething() {
+    ...
+    stats.update();
+  }
+}
+```</p>
 <p>This ensures that there is a single copy for a given id. In spectator this
 example would look like:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="w"> </span><span class="n">gauge</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="n">counter</span><span class="p">;</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Id</span><span class="w"> </span><span class="n">gaugeId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;gauge&quot;</span><span class="p">).</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">    </span><span class="n">gauge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">gauge</span><span class="p">(</span><span class="n">gaugeId</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="p">());</span>
-<span class="w">    </span><span class="n">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="s">&quot;counter&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {</p>
+<p>private AtomicInteger gauge;
+  private Counter counter;</p>
+<p>public Foo(Registry registry, String id) {
+    Id gaugeId = registry.createId("gauge").withTag("id", id);
+    gauge = registry.gauge(gaugeId, new AtomicInteger());
+    counter = registry.counter("counter", "id", id);
+  }</p>
+<p>public void doSomething() {
+    ...
+  }
+}
+```</p>
 <p>Everything using the same Registry will get the same Counter instance, if the same id is used. For
 the Gauge, the Registry will keep a weak reference and will sum the values if multiple instances
 are present. Since it is a weak reference, nothing will prevent an instance of <code>Foo</code> from getting
@@ -11293,196 +11285,188 @@ garbage collected.</p>
 <p>See the general overview of <a href="#registration">registration differences</a> and summary of
 <a href="../../../core/meters/counter/">Counter usage</a>.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">BasicCounter</span><span class="p">(</span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">());</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Monitors</span><span class="p">.</span><span class="na">registerObject</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">c</span><span class="p">.</span><span class="na">increment</span><span class="p">();</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final Counter c =
+    new BasicCounter(MonitorConfig.builder("name").build());</p>
+<p>public Foo(String id) {
+    Monitors.registerObject(id, this);
+  }</p>
+<p>public void doSomething() {
+    c.increment();
+  }
+}
+```</p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">c</span><span class="p">.</span><span class="na">increment</span><span class="p">();</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final Counter c;</p>
+<p>@Inject
+  public Foo(Registry registry, String id) {
+    c = registry.counter("name", "id", id);
+  }</p>
+<p>public void doSomething() {
+    c.increment();
+  }
+}
+```</p>
 <h3 id="basicgauge">BasicGauge<a class="headerlink" href="#basicgauge" title="Permanent link">&para;</a></h3>
 <p>See the general overview of <a href="#registration">registration differences</a> and summary of
 <a href="../../../core/meters/gauge/">Gauge usage</a>.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">BasicGauge</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BasicGauge</span><span class="p">(</span>
-<span class="w">    </span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">(),</span>
-<span class="w">    </span><span class="k">this</span><span class="p">::</span><span class="n">getCurrentValue</span><span class="p">);</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Monitors</span><span class="p">.</span><span class="na">registerObject</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final BasicGauge g = new BasicGauge(
+    MonitorConfig.builder("name").build(),
+    this::getCurrentValue);</p>
+<p>public Foo(String id) {
+    Monitors.registerObject(id, this);
+  }
+}
+```</p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Id</span><span class="w"> </span><span class="n">gaugeId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">    </span><span class="n">registry</span><span class="p">.</span><span class="na">gauge</span><span class="p">(</span><span class="n">gaugeId</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">Foo</span><span class="p">::</span><span class="n">getCurrentValue</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><code>java
+public class Foo {
+  @Inject
+  public Foo(Registry registry, String id) {
+    Id gaugeId = registry.createId("name").withTag("id", id);
+    registry.gauge(gaugeId, this, Foo::getCurrentValue);
+  }
+}</code></p>
 <h3 id="basictimer">BasicTimer<a class="headerlink" href="#basictimer" title="Permanent link">&para;</a></h3>
 <p>See the general overview of <a href="#registration">registration differences</a> and summary of
 <a href="../../../core/meters/timer/">Timer usage</a>. In Spectator, the reported unit for Timers is always seconds
 and cannot be changed. Seconds is the base unit and other units should only be used as a
 presentation detail. Servo allows the unit to be customized and defaults to milliseconds.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Timer</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BasicTimer</span><span class="p">(</span>
-<span class="w">    </span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">(),</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">);</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Monitors</span><span class="p">.</span><span class="na">registerObject</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Stopwatch</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="p">...</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">s</span><span class="p">.</span><span class="na">stop</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final Timer t = new BasicTimer(
+    MonitorConfig.builder("name").build(), TimeUnit.SECONDS);</p>
+<p>public Foo(String id) {
+    Monitors.registerObject(id, this);
+  }</p>
+<p>public void doSomething() {
+    Stopwatch s = t.start();
+    try {
+      ...
+    } finally {
+      s.stop();
+    }
+  }
+}
+```</p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Timer</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">timer</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">t</span><span class="p">.</span><span class="na">record</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="p">...</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final Timer t;</p>
+<p>@Inject
+  public Foo(Registry registry, String id) {
+    t = registry.timer("name", "id", id);
+  }</p>
+<p>public void doSomething() {
+    t.record(() -&gt; {
+      ...
+    });
+  }
+}
+```</p>
 <h3 id="basicdistributionsummary">BasicDistributionSummary<a class="headerlink" href="#basicdistributionsummary" title="Permanent link">&para;</a></h3>
 <p>See the general overview of <a href="#registration">registration differences</a> and summary of
 <a href="../../../core/meters/dist-summary/">Distribution Summary usage</a>.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">BasicDistributionSummary</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BasicDistributionSummary</span><span class="p">(</span>
-<span class="w">    </span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">());</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Monitors</span><span class="p">.</span><span class="na">registerObject</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">    </span><span class="n">s</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">getValue</span><span class="p">());</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final BasicDistributionSummary s = new BasicDistributionSummary(
+    MonitorConfig.builder("name").build());</p>
+<p>public Foo(String id) {
+    Monitors.registerObject(id, this);
+  }</p>
+<p>public void doSomething() {
+    ...
+    s.record(getValue());
+  }
+}
+```</p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">DistributionSummary</span><span class="w"> </span><span class="n">s</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">distributionSummary</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">    </span><span class="n">s</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">getValue</span><span class="p">());</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final DistributionSummary s;</p>
+<p>@Inject
+  public Foo(Registry registry, String id) {
+    s = registry.distributionSummary("name", "id", id);
+  }</p>
+<p>public void doSomething() {
+    ...
+    s.record(getValue());
+  }
+}
+```</p>
 <h3 id="basicinformational">BasicInformational<a class="headerlink" href="#basicinformational" title="Permanent link">&para;</a></h3>
 <p>Not supported, see the <a href="#differences">overview of differences</a>.</p>
 <h3 id="basicstopwatch">BasicStopwatch<a class="headerlink" href="#basicstopwatch" title="Permanent link">&para;</a></h3>
 <p>There isn't an explicit stopwatch class in Spectator. Use a timing call directly.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Stopwatch</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timer</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="p">...</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">s</span><span class="p">.</span><span class="na">stop</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-</code></pre></div>
+<p><code>java
+  public void doSomething() {
+    Stopwatch s = timer.start();
+    try {
+      ...
+    } finally {
+      s.stop();
+    }
+  }</code></p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">();</span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="p">...</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">timer</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">NANOSECONDS</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-</code></pre></div>
+<p><code>java
+  public void doSomething() {
+    final long s = System.nanoTime();
+    try {
+      ...
+    } finally {
+      timer.record(System.nanoTime() - s, TimeUnit.NANOSECONDS);
+    }
+  }</code></p>
 <h3 id="buckettimer">BucketTimer<a class="headerlink" href="#buckettimer" title="Permanent link">&para;</a></h3>
 <p>See the general overview of <a href="#registration">registration differences</a>.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Timer</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BucketTimer</span><span class="p">(</span>
-<span class="w">    </span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">(),</span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">BucketConfig</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
-<span class="w">      </span><span class="p">.</span><span class="na">withTimeUnit</span><span class="p">(</span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="na">withBuckets</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">long</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mi">2500</span><span class="p">,</span><span class="w"> </span><span class="mi">5000</span><span class="p">,</span><span class="w"> </span><span class="mi">10000</span><span class="w"> </span><span class="p">})</span>
-<span class="w">      </span><span class="p">.</span><span class="na">build</span><span class="p">());</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Monitors</span><span class="p">.</span><span class="na">registerObject</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Stopwatch</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="p">...</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">s</span><span class="p">.</span><span class="na">stop</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final Timer t = new BucketTimer(
+    MonitorConfig.builder("name").build(),
+    new BucketConfig.Builder()
+      .withTimeUnit(TimeUnit.MILLISECONDS)
+      .withBuckets(new long[] { 500, 2500, 5000, 10000 })
+      .build());</p>
+<p>public Foo(String id) {
+    Monitors.registerObject(id, this);
+  }</p>
+<p>public void doSomething() {
+    Stopwatch s = t.start();
+    try {
+      ...
+    } finally {
+      s.stop();
+    }
+  }
+}
+```</p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Timer</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Id</span><span class="w"> </span><span class="n">timerId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">    </span><span class="n">BucketFunction</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BucketFunctions</span><span class="p">.</span><span class="na">latency</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">);</span>
-<span class="w">    </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BucketTimer</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">timerId</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">t</span><span class="p">.</span><span class="na">record</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="p">...</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final Timer t;</p>
+<p>@Inject
+  public Foo(Registry registry, String id) {
+    Id timerId = registry.createId("name", "id", id);
+    BucketFunction f = BucketFunctions.latency(10, TimeUnit.SECONDS);
+    t = BucketTimer.get(registry, timerId, f);
+  }</p>
+<p>public void doSomething() {
+    t.record(() -&gt; {
+      ...
+    });
+  }
+}
+```</p>
 <h3 id="contextualcounter">ContextualCounter<a class="headerlink" href="#contextualcounter" title="Permanent link">&para;</a></h3>
 <p>Not supported. A fixed tag list for the context is too rigid and this class was never used much
 at Netflix. Future work being looked at in <a href="https://github.com/Netflix/spectator/issues/180">issue-180</a>.</p>
@@ -11493,199 +11477,194 @@ at Netflix. Future work being looked at in <a href="https://github.com/Netflix/s
 <p>See the general overview of <a href="#registration">registration differences</a> and summary of
 <a href="../../../core/meters/gauge/">Gauge usage</a>.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">DoubleGauge</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DoubleGauge</span><span class="p">(</span>
-<span class="w">    </span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">());</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Monitors</span><span class="p">.</span><span class="na">registerObject</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final DoubleGauge g = new DoubleGauge(
+    MonitorConfig.builder("name").build());</p>
+<p>public Foo(String id) {
+    Monitors.registerObject(id, this);
+  }
+}
+```</p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.google.common.util.concurrent.AtomicDouble</span><span class="p">;</span>
-
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">AtomicDouble</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Id</span><span class="w"> </span><span class="n">gaugeId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">    </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">gauge</span><span class="p">(</span><span class="n">gaugeId</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicDouble</span><span class="p">());</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+import com.google.common.util.concurrent.AtomicDouble;</p>
+<p>public class Foo {
+  private final AtomicDouble v;</p>
+<p>@Inject
+  public Foo(Registry registry, String id) {
+    Id gaugeId = registry.createId("name").withTag("id", id);
+    v = registry.gauge(gaugeId, new AtomicDouble());
+  }
+}
+```</p>
 <h3 id="durationtimer">DurationTimer<a class="headerlink" href="#durationtimer" title="Permanent link">&para;</a></h3>
 <p>See the general overview of <a href="#registration">registration differences</a>, the summary of
 <a href="../../../core/meters/timer/">Timer usage</a>, and
 <a href="../../../patterns/long-task-timer/">Long Task Timer usage</a>.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">DurationTimer</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DurationTimer</span><span class="p">(</span>
-<span class="w">    </span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">());</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Monitors</span><span class="p">.</span><span class="na">registerObject</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final DurationTimer t = new DurationTimer(
+    MonitorConfig.builder("name").build());</p>
+<p>public Foo(String id) {
+    Monitors.registerObject(id, this);
+  }
+}
+```</p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">LongTaskTimer</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">longTaskTimer</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final LongTaskTimer t;</p>
+<p>@Inject
+  public Foo(Registry registry, String id) {
+    t = registry.longTaskTimer("name", "id", id);
+  }
+}
+```</p>
 <h3 id="dynamiccounter">DynamicCounter<a class="headerlink" href="#dynamiccounter" title="Permanent link">&para;</a></h3>
 <p>See the general overview of <a href="#registration">registration differences</a> and summary of
 <a href="../../../core/meters/counter/">Counter usage</a>.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">(</span><span class="n">Context</span><span class="w"> </span><span class="n">ctxt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">DynamicCounter</span><span class="p">.</span><span class="na">increment</span><span class="p">(</span><span class="s">&quot;staticId&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">    </span><span class="n">DynamicCounter</span><span class="p">.</span><span class="na">increment</span><span class="p">(</span><span class="s">&quot;dynamicId&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ctxt</span><span class="p">.</span><span class="na">getFoo</span><span class="p">());</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {</p>
+<p>private final String id;</p>
+<p>public Foo(String id) {
+    this.id = id;
+  }</p>
+<p>public void doSomething(Context ctxt) {
+    DynamicCounter.increment("staticId", "id", id);
+    DynamicCounter.increment("dynamicId", "id", id, "foo", ctxt.getFoo());
+  }
+}
+```</p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="n">staticCounter</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="n">dynamicId</span><span class="p">;</span>
+<p>```java
+public class Foo {
+  private final Registry registry;
+  private final String id;
+  private final Counter staticCounter;
+  private final Id dynamicId;</p>
+<p>@Inject
+  public Foo(Registry registry, String id) {
+    this.registry = registry;
+    this.id = id;
+    staticCounter = registry.counter("staticId", "id", id);
+    dynamicId = registry.createId("dynamicId", "id", id);
+  }</p>
+<p>public void doSomething(Context ctxt) {
+    // Keeping the reference to the counter avoids additional allocations
+    // to create the id object and the lookup cost
+    staticCounter.increment();</p>
+<div class="codehilite"><pre><span></span><code><span class="o">//</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">dynamic</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">looked</span><span class="w"> </span><span class="n">up</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="s2">&quot;dynamicId&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ctxt</span><span class="o">.</span><span class="n">getFoo</span><span class="p">())</span><span class="o">.</span><span class="n">increment</span><span class="p">();</span>
 
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">    </span><span class="n">staticCounter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="s">&quot;staticId&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">    </span><span class="n">dynamicId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;dynamicId&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">(</span><span class="n">Context</span><span class="w"> </span><span class="n">ctxt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Keeping the reference to the counter avoids additional allocations</span>
-<span class="w">    </span><span class="c1">// to create the id object and the lookup cost</span>
-<span class="w">    </span><span class="n">staticCounter</span><span class="p">.</span><span class="na">increment</span><span class="p">();</span>
-
-<span class="w">    </span><span class="c1">// If the id is dynamic it must be looked up</span>
-<span class="w">    </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="s">&quot;dynamicId&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ctxt</span><span class="p">.</span><span class="na">getFoo</span><span class="p">()).</span><span class="na">increment</span><span class="p">();</span>
-
-<span class="w">    </span><span class="c1">// This will update the same counter as the line above, but the base part</span>
-<span class="w">    </span><span class="c1">// of the id is precomputed to make it cheaper to construct the id.</span>
-<span class="w">    </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="n">dynamicId</span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ctxt</span><span class="p">.</span><span class="na">getFoo</span><span class="p">())).</span><span class="na">increment</span><span class="p">();</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<span class="o">//</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">update</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="n">above</span><span class="p">,</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="n">part</span>
+<span class="o">//</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">precomputed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">cheaper</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">construct</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">id</span><span class="o">.</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="n">dynamicId</span><span class="o">.</span><span class="n">withTag</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ctxt</span><span class="o">.</span><span class="n">getFoo</span><span class="p">()))</span><span class="o">.</span><span class="n">increment</span><span class="p">();</span>
 </code></pre></div>
+
+<p>}
+}
+```</p>
 <h3 id="dynamictimer">DynamicTimer<a class="headerlink" href="#dynamictimer" title="Permanent link">&para;</a></h3>
 <p>See the general overview of <a href="#registration">registration differences</a> and summary of
 <a href="../../../core/meters/timer/">Timer usage</a>.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">MonitorConfig</span><span class="w"> </span><span class="n">staticId</span><span class="p">;</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">    </span><span class="n">staticId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;staticId&quot;</span><span class="p">).</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">(</span><span class="n">Context</span><span class="w"> </span><span class="n">ctxt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctxt</span><span class="p">.</span><span class="na">getDurationMillis</span><span class="p">();</span>
-<span class="w">    </span><span class="n">DynamicTimer</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">staticId</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">);</span>
-
-<span class="w">    </span><span class="n">MonitorConfig</span><span class="w"> </span><span class="n">dynamicId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;dynamicId&quot;</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ctxt</span><span class="p">.</span><span class="na">getFoo</span><span class="p">())</span>
-<span class="w">      </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<span class="w">    </span><span class="n">DynamicTimer</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">dynamicId</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<p>```java
+public class Foo {</p>
+<p>private final String id;
+  private final MonitorConfig staticId;</p>
+<p>public Foo(String id) {
+    this.id = id;
+    staticId = MonitorConfig.builder("staticId").withTag("id", id).build();
+  }</p>
+<p>public void doSomething(Context ctxt) {
+    final long d = ctxt.getDurationMillis();
+    DynamicTimer.record(staticId, TimeUnit.SECONDS, d, TimeUnit.MILLISECONDS);</p>
+<div class="codehilite"><pre><span></span><code>MonitorConfig dynamicId = MonitorConfig.builder(&quot;dynamicId&quot;)
+  .withTag(&quot;id&quot;, id)
+  .withTag(&quot;foo&quot;, ctxt.getFoo())
+  .build();
+DynamicTimer.record(dynamicId, TimeUnit.SECONDS, d, TimeUnit.MILLISECONDS);
 </code></pre></div>
+
+<p>}
+}
+```</p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Timer</span><span class="w"> </span><span class="n">staticTimer</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="n">dynamicId</span><span class="p">;</span>
+<p>```java
+public class Foo {
+  private final Registry registry;
+  private final String id;
+  private final Timer staticTimer;
+  private final Id dynamicId;</p>
+<p>@Inject
+  public Foo(Registry registry, String id) {
+    this.registry = registry;
+    this.id = id;
+    staticTimer = registry.timer("staticId", "id", id);
+    dynamicId = registry.createId("dynamicId", "id", id);
+  }</p>
+<p>public void doSomething(Context ctxt) {
+    final long d = ctxt.getDurationMillis();</p>
+<div class="codehilite"><pre><span></span><code><span class="o">//</span><span class="w"> </span><span class="n">Keeping</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="n">avoids</span><span class="w"> </span><span class="n">additional</span><span class="w"> </span><span class="n">allocations</span>
+<span class="o">//</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">lookup</span><span class="w"> </span><span class="n">cost</span>
+<span class="n">staticTimer</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">.</span><span class="n">MILLISECONDS</span><span class="p">);</span>
 
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">    </span><span class="n">staticTimer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">timer</span><span class="p">(</span><span class="s">&quot;staticId&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">    </span><span class="n">dynamicId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;dynamicId&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
+<span class="o">//</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">dynamic</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">looked</span><span class="w"> </span><span class="n">up</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="s2">&quot;dynamicId&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ctxt</span><span class="o">.</span><span class="n">getFoo</span><span class="p">())</span>
+<span class="w">  </span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">.</span><span class="n">MILLISECONDS</span><span class="p">);</span>
 
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">(</span><span class="n">Context</span><span class="w"> </span><span class="n">ctxt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctxt</span><span class="p">.</span><span class="na">getDurationMillis</span><span class="p">();</span>
-
-<span class="w">    </span><span class="c1">// Keeping the reference to the timer avoids additional allocations</span>
-<span class="w">    </span><span class="c1">// to create the id object and the lookup cost</span>
-<span class="w">    </span><span class="n">staticTimer</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// If the id is dynamic it must be looked up</span>
-<span class="w">    </span><span class="n">registry</span><span class="p">.</span><span class="na">timer</span><span class="p">(</span><span class="s">&quot;dynamicId&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ctxt</span><span class="p">.</span><span class="na">getFoo</span><span class="p">())</span>
-<span class="w">      </span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// This will update the same timer as the line above, but the base part</span>
-<span class="w">    </span><span class="c1">// of the id is precomputed to make it cheaper to construct the id.</span>
-<span class="w">    </span><span class="n">registry</span><span class="p">.</span><span class="na">timer</span><span class="p">(</span><span class="n">dynamicId</span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ctxt</span><span class="p">.</span><span class="na">getFoo</span><span class="p">()))</span>
-<span class="w">      </span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<span class="o">//</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">update</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="n">above</span><span class="p">,</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="n">part</span>
+<span class="o">//</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">precomputed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">cheaper</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">construct</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">id</span><span class="o">.</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="n">dynamicId</span><span class="o">.</span><span class="n">withTag</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ctxt</span><span class="o">.</span><span class="n">getFoo</span><span class="p">()))</span>
+<span class="w">  </span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">.</span><span class="n">MILLISECONDS</span><span class="p">);</span>
 </code></pre></div>
+
+<p>}
+}
+```</p>
 <h3 id="longgauge">LongGauge<a class="headerlink" href="#longgauge" title="Permanent link">&para;</a></h3>
 <p>See the general overview of <a href="#registration">registration differences</a> and summary of
 <a href="../../../core/meters/gauge/">Gauge usage</a>.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">LongGauge</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LongGauge</span><span class="p">(</span>
-<span class="w">    </span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">());</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Monitors</span><span class="p">.</span><span class="na">registerObject</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final LongGauge g = new LongGauge(
+    MonitorConfig.builder("name").build());</p>
+<p>public Foo(String id) {
+    Monitors.registerObject(id, this);
+  }
+}
+```</p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">AtomicLong</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Id</span><span class="w"> </span><span class="n">gaugeId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">    </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">gauge</span><span class="p">(</span><span class="n">gaugeId</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicLong</span><span class="p">());</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final AtomicLong v;</p>
+<p>@Inject
+  public Foo(Registry registry, String id) {
+    Id gaugeId = registry.createId("name").withTag("id", id);
+    v = registry.gauge(gaugeId, new AtomicLong());
+  }
+}
+```</p>
 <h3 id="monitorconfig">MonitorConfig<a class="headerlink" href="#monitorconfig" title="Permanent link">&para;</a></h3>
 <p>See the documentation on <a href="../../../../concepts/naming/">naming</a>.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="n">MonitorConfig</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;country&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;US&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;device&quot;</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;xbox&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-</code></pre></div>
+<p><code>java
+MonitorConfig id = MonitorConfig.builder("name")
+  .withTag("country", "US")
+  .withTag("device",  "xbox")
+  .build();</code></p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="n">Id</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;country&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;US&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;device&quot;</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;xbox&quot;</span><span class="p">);</span>
-
-<span class="c1">// or</span>
-
-<span class="n">Id</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;country&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;US&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;device&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;xbox&quot;</span><span class="p">);</span>
-</code></pre></div>
+<p>```java
+Id id = registry.createId("name")
+  .withTag("country", "US")
+  .withTag("device",  "xbox");</p>
+<p>// or</p>
+<p>Id id = registry.createId("name", "country", "US", "device", "xbox");
+```</p>
 <h3 id="monitoredcache">MonitoredCache<a class="headerlink" href="#monitoredcache" title="Permanent link">&para;</a></h3>
 <p>Not supported because Spectator does not have a direct dependency on Guava. If there is enough
 demand, an extension can be created.</p>
@@ -11693,59 +11672,57 @@ demand, an extension can be created.</p>
 <p>See the general overview of <a href="#registration">registration differences</a> and
 summary of <a href="../../../core/meters/gauge/">gauge usage</a>.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">NumberGauge</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NumberGauge</span><span class="p">(</span>
-<span class="w">    </span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">(),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicLong</span><span class="p">());</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Monitors</span><span class="p">.</span><span class="na">registerObject</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final NumberGauge g = new NumberGauge(
+    MonitorConfig.builder("name").build(), new AtomicLong());</p>
+<p>public Foo(String id) {
+    Monitors.registerObject(id, this);
+  }
+}
+```</p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">AtomicLong</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Id</span><span class="w"> </span><span class="n">gaugeId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">    </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">gauge</span><span class="p">(</span><span class="n">gaugeId</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicLong</span><span class="p">());</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final AtomicLong v;</p>
+<p>@Inject
+  public Foo(Registry registry, String id) {
+    Id gaugeId = registry.createId("name").withTag("id", id);
+    v = registry.gauge(gaugeId, new AtomicLong());
+  }
+}
+```</p>
 <h3 id="statstimer">StatsTimer<a class="headerlink" href="#statstimer" title="Permanent link">&para;</a></h3>
 <p>Not supported, see <a href="#differences">overview of differences</a>.</p>
 <h3 id="stepcounter">StepCounter<a class="headerlink" href="#stepcounter" title="Permanent link">&para;</a></h3>
 <p>See the general overview of <a href="#registration">registration differences</a> and summary of
 <a href="../../../core/meters/counter/">Counter usage</a>.</p>
 <p>Servo:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">StepCounter</span><span class="p">(</span><span class="n">MonitorConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">());</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Monitors</span><span class="p">.</span><span class="na">registerObject</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">c</span><span class="p">.</span><span class="na">increment</span><span class="p">();</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final Counter c =
+    new StepCounter(MonitorConfig.builder("name").build());</p>
+<p>public Foo(String id) {
+    Monitors.registerObject(id, this);
+  }</p>
+<p>public void doSomething() {
+    c.increment();
+  }
+}
+```</p>
 <p>Spectator:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Foo</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">c</span><span class="p">.</span><span class="na">increment</span><span class="p">();</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Foo {
+  private final Counter c;</p>
+<p>@Inject
+  public Foo(Registry registry, String id) {
+    c = registry.counter("name", "id", id);
+  }</p>
+<p>public void doSomething() {
+    c.increment();
+  }
+}
+```</p>
 
 
 

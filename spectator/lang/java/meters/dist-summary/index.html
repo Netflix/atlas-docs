@@ -10467,21 +10467,20 @@
 <h1 id="java-distribution-summaries">Java Distribution Summaries<a class="headerlink" href="#java-distribution-summaries" title="Permanent link">&para;</a></h1>
 <p>Distribution Summaries are created using the <a href="../../registry/overview/">Registry</a>, which will be
 setup as part of application initialization. For example:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Server</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">DistributionSummary</span><span class="w"> </span><span class="n">requestSize</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Server</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">requestSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">distributionSummary</span><span class="p">(</span><span class="s">&quot;server.requestSize&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Server {</p>
+<p>private final DistributionSummary requestSize;</p>
+<p>@Inject
+  public Server(Registry registry) {
+    requestSize = registry.distributionSummary("server.requestSize");
+  }
+```</p>
 <p>Then call record when an event occurs:</p>
-<p><div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Response</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">requestSize</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">sizeInBytes</span><span class="p">());</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><code>java
+  public Response handle(Request request) {
+    requestSize.record(request.sizeInBytes());
+  }
+}</code>
 <strong>Note:</strong> If the amount recorded is less than 0 the value will be dropped.</p>
 
 

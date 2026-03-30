@@ -10171,6 +10171,50 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#before" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        before
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        after
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        before
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        after
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -10825,6 +10869,50 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#before" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        before
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        after
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        before
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        after
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -10844,8 +10932,6 @@
   
   
 
-
-  <h1>Migrations</h1>
 
 <h2 id="migrating-to-1x">Migrating to 1.X<a class="headerlink" href="#migrating-to-1x" title="Permanent link">&para;</a></h2>
 <p>Version 1.X consists of a major rewrite that cleans up and simplifies the <code>spectator-py</code> thin client
@@ -10923,24 +11009,22 @@ uses of this class across the organization.</li>
 <li>The <code>Clock</code> class continues to exist, in order to support testing the <code>StopWatch</code> deterministically.</li>
 </ul>
 <p>Before:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spectator</span><span class="w"> </span><span class="kn">import</span> <span class="n">GlobalRegistry</span>
-
-<span class="n">server_latency</span> <span class="o">=</span> <span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">pct_timer</span><span class="p">(</span><span class="s2">&quot;serverLatency&quot;</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">server_latency</span><span class="o">.</span><span class="n">stopwatch</span><span class="p">():</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</code></pre></div>
+<p>```python
+import time
+from spectator import GlobalRegistry</p>
+<p>server_latency = GlobalRegistry.pct_timer("serverLatency")</p>
+<p>with server_latency.stopwatch():
+    time.sleep(5)
+```</p>
 <p>After:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spectator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registry</span><span class="p">,</span> <span class="n">StopWatch</span>
-
-<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
-<span class="n">server_latency</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">pct_timer</span><span class="p">(</span><span class="s2">&quot;serverLatency&quot;</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">StopWatch</span><span class="p">(</span><span class="n">server_latency</span><span class="p">):</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</code></pre></div>
+<p>```python
+import time
+from spectator import Registry, StopWatch</p>
+<p>registry = Registry()
+server_latency = registry.pct_timer("serverLatency")</p>
+<p>with StopWatch(server_latency):
+    time.sleep(5)
+```</p>
 <h4 id="writers">Writers<a class="headerlink" href="#writers" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Separate classes for each <code>Writer</code> type. Relocated to a new module, <code>spectator.writer</code>, and exposed
@@ -10962,15 +11046,14 @@ through top-level imports, for convenience.</li>
 <li>Use <code>time.perf_counter()</code> as a replacement for <code>clock().monotonic_time()</code>.</li>
 <li>
 <p>Use the <code>StopWatch</code> Context Manager.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spectator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registry</span><span class="p">,</span> <span class="n">StopWatch</span>
-
-<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
-<span class="n">thread_sleep</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="s2">&quot;thread.sleep&quot;</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">StopWatch</span><span class="p">(</span><span class="n">thread_sleep</span><span class="p">):</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</code></pre></div>
+<p>```python
+import time
+from spectator import Registry, StopWatch</p>
+<p>registry = Registry()
+thread_sleep = registry.timer("thread.sleep")</p>
+<p>with StopWatch(thread_sleep):
+    time.sleep(5)
+```</p>
 </li>
 </ul>
 </li>
@@ -10995,16 +11078,16 @@ when adopting the thin-client version of the library. Replace with direct use of
 <li>There are no plans to remove the <code>GlobalRegistry</code>, until we know that all uses have been removed.</li>
 </ul>
 <p>Before:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">spectator</span><span class="w"> </span><span class="kn">import</span> <span class="n">GlobalRegistry</span>
-
-<span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;server.queueSize&quot;</span><span class="p">,</span> <span class="n">ttl_seconds</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></div>
+<p>```python
+from spectator import GlobalRegistry</p>
+<p>GlobalRegistry.gauge("server.queueSize", ttl_seconds=120).set(10)
+```</p>
 <p>After:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">spectator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registry</span>
-
-<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
-<span class="n">registry</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s2">&quot;server.queueSize&quot;</span><span class="p">,</span> <span class="n">ttl_seconds</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></div>
+<p>```python
+from spectator import Registry</p>
+<p>registry = Registry()
+registry.gauge("server.queueSize", ttl_seconds=120).set(10)
+```</p>
 <h3 id="migration-steps">Migration Steps<a class="headerlink" href="#migration-steps" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Make sure you're not relying on any of the <a href="#removed">removed functionality</a>.</li>
@@ -11035,33 +11118,33 @@ to SpectatorD.</li>
 <li>
 <p>Replace uses of <code>PercentileDistributionSummary</code> with direct use of the Registry
 <code>pct_distribution_summary</code> method.</p>
-<div class="highlight"><pre><span></span><code># before
-from spectator import GlobalRegistry
-from spectator.histogram import PercentileDistributionSummary
-
-d = PercentileDistributionSummary(GlobalRegistry, &quot;server.requestSize&quot;)
+<p>```</p>
+<h1 id="before">before<a class="headerlink" href="#before" title="Permanent link">&para;</a></h1>
+<p>from spectator import GlobalRegistry
+from spectator.histogram import PercentileDistributionSummary</p>
+<p>d = PercentileDistributionSummary(GlobalRegistry, "server.requestSize")
 d.record(10)
-</code></pre></div>
-<div class="highlight"><pre><span></span><code># after
-from spectator import GlobalRegistry
-
-GlobalRegistry.pct_distribution_summary(&quot;server.requestSize&quot;).record(10)
-</code></pre></div>
+```</p>
+<p>```</p>
+<h1 id="after">after<a class="headerlink" href="#after" title="Permanent link">&para;</a></h1>
+<p>from spectator import GlobalRegistry</p>
+<p>GlobalRegistry.pct_distribution_summary("server.requestSize").record(10)
+```</p>
 </li>
 <li>
 <p>Replace uses of <code>PercentileTimer</code> with direct use of the Registry <code>pct_timer</code> method.</p>
-<div class="highlight"><pre><span></span><code># before
-from spectator import GlobalRegistry
-from spectator.histogram import PercentileTimer
-
-t = PercentileTimer(GlobalRegistry, &quot;server.requestSize&quot;)
+<p>```</p>
+<h1 id="before_1">before<a class="headerlink" href="#before_1" title="Permanent link">&para;</a></h1>
+<p>from spectator import GlobalRegistry
+from spectator.histogram import PercentileTimer</p>
+<p>t = PercentileTimer(GlobalRegistry, "server.requestSize")
 t.record(0.01)
-</code></pre></div>
-<div class="highlight"><pre><span></span><code># after
-from spectator import GlobalRegistry
-
-GlobalRegistry.pct_timer(&quot;server.requestSize&quot;).record(0.1)
-</code></pre></div>
+```</p>
+<p>```</p>
+<h1 id="after_1">after<a class="headerlink" href="#after_1" title="Permanent link">&para;</a></h1>
+<p>from spectator import GlobalRegistry</p>
+<p>GlobalRegistry.pct_timer("server.requestSize").record(0.1)
+```</p>
 </li>
 <li>
 <p>Implemented new meter types supported by <a href="../../../agent/usage/">SpectatorD</a>: <code>age_gauge</code>, <code>max_gauge</code> and

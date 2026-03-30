@@ -10463,14 +10463,13 @@ calculate a delta value and report it to the backend as a rate-per-second. A var
 metrics may be reported monotonically, and this metric type provides a convenient means of recording
 these values, at the expense of a slower time-to-first metric.</p>
 <p>Call <code>set()</code> when an event occurs:</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">monotonic_counter</span><span class="p">(</span><span class="s2">&quot;iface.bytes&quot;</span><span class="p">).</span><span class="nx">set</span><span class="p">(</span><span class="mf">10</span><span class="p">);</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">iface_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;iface.bytes&quot;</span><span class="p">);</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">monotonic_counter_with_id</span><span class="p">(</span><span class="nx">iface_bytes</span><span class="p">).</span><span class="nx">set</span><span class="p">(</span><span class="mf">10</span><span class="p">)</span>
-</code></pre></div>
+<p>```javascript
+import {Registry} from "nflx-spectator";</p>
+<p>const registry = new Registry();
+void registry.monotonic_counter("iface.bytes").set(10);</p>
+<p>const iface_bytes = registry.new_id("iface.bytes");
+void registry.monotonic_counter_with_id(iface_bytes).set(10)
+```</p>
 
 
 

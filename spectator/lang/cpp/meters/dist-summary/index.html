@@ -75,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#include" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -7369,6 +7374,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -10436,6 +10443,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -10455,8 +10464,6 @@
   
 
 
-  <h1>Distribution Summary</h1>
-
 <p>A Distribution Summary is used to track the distribution of events. It is similar to a Timer, but
 more general, in that the size does not have to be a period of time. For example, a Distribution
 Summary could be used to measure the payload sizes of requests hitting a server. Note that the C++
@@ -10466,22 +10473,23 @@ other thin clients do not allow.</p>
 are readable. If you are measuring payload size, then use bytes, not kilobytes (or some other unit).
 This means that a <code>4K</code> tick label will represent 4 kilobytes, rather than 4 kilo-kilobytes.</p>
 <p>Call <code>Record()</code> with a value:</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;registry.h&gt;</span>
+<p>```cpp</p>
+<h1 id="include">include <registry.h><a class="headerlink" href="#include" title="Permanent link">&para;</a></h1>
+<p>int main()
+{
+    auto config = Config(WriterConfig(WriterTypes::UDP));
+    auto r = Registry(config);</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Option 1: Directly create a Distribution Summary</span>
+<span class="n">auto</span><span class="w"> </span><span class="n">serverRequestSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateDistributionSummary</span><span class="p">(</span><span class="s">&quot;server.requestSize&quot;</span><span class="p">);</span>
+<span class="n">serverRequestSize</span><span class="p">.</span><span class="n">Record</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Config</span><span class="p">(</span><span class="n">WriterConfig</span><span class="p">(</span><span class="n">WriterTypes</span><span class="o">::</span><span class="n">UDP</span><span class="p">));</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Registry</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Option 1: Directly create a Distribution Summary</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">serverRequestSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateDistributionSummary</span><span class="p">(</span><span class="s">&quot;server.requestSize&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">serverRequestSize</span><span class="p">.</span><span class="n">Record</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Option 2: Create a Distribution Summary from a MeterID</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">serverRequestMeter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateNewId</span><span class="p">(</span><span class="s">&quot;server.requestSize&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">r</span><span class="p">.</span><span class="n">CreateDistributionSummary</span><span class="p">(</span><span class="n">serverRequestMeter</span><span class="p">).</span><span class="n">Record</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="c1">// Option 2: Create a Distribution Summary from a MeterID</span>
+<span class="n">auto</span><span class="w"> </span><span class="n">serverRequestMeter</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateNewId</span><span class="p">(</span><span class="s">&quot;server.requestSize&quot;</span><span class="p">);</span>
+<span class="n">r</span><span class="p">.</span><span class="n">CreateDistributionSummary</span><span class="p">(</span><span class="n">serverRequestMeter</span><span class="p">).</span><span class="n">Record</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
 </code></pre></div>
+
+<p>}
+```</p>
 
 
 

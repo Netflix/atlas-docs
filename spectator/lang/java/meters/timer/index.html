@@ -10578,34 +10578,33 @@
 <h1 id="java-timers">Java Timers<a class="headerlink" href="#java-timers" title="Permanent link">&para;</a></h1>
 <h2 id="timer">Timer<a class="headerlink" href="#timer" title="Permanent link">&para;</a></h2>
 <p>To get started, create an instance using the <a href="../../registry/overview/">Registry</a>:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Server</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Timer</span><span class="w"> </span><span class="n">requestLatency</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Server</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
-<span class="w">    </span><span class="n">requestLatency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">timer</span><span class="p">(</span><span class="s">&quot;server.requestLatency&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-</code></pre></div>
+<p>```java
+public class Server {</p>
+<p>private final Registry registry;
+  private final Timer requestLatency;</p>
+<p>@Inject
+  public Server(Registry registry) {
+    this.registry = registry;
+    requestLatency = registry.timer("server.requestLatency");
+  }
+```</p>
 <p>Then wrap the call you need to measure, preferably using a lambda:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Response</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">requestLatency</span><span class="p">.</span><span class="na">recordRunnable</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">handleImpl</span><span class="p">(</span><span class="n">request</span><span class="p">));</span>
-<span class="w">  </span><span class="p">}</span>
-</code></pre></div>
+<p><code>java
+  public Response handle(Request request) {
+    return requestLatency.recordRunnable(() -&gt; handleImpl(request));
+  }</code></p>
 <p>The lambda variants will handle exceptions for you and ensure the record happens as part of a
 finally block using the monotonic time. It could also have been done more explicitly like:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Response</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">monotonicTime</span><span class="p">();</span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">handleImpl</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">monotonicTime</span><span class="p">();</span>
-<span class="w">      </span><span class="n">requestLatency</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">NANOSECONDS</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-</code></pre></div>
+<p><code>java
+  public Response handle(Request request) {
+    final long start = registry.clock().monotonicTime();
+    try {
+      return handleImpl(request);
+    } finally {
+      final long end = registry.clock().monotonicTime();
+      requestLatency.record(end - start, TimeUnit.NANOSECONDS);
+    }
+  }</code></p>
 <p>This example uses the Clock from the Registry, which can be useful for testing, if you need
 to control the timing. In actual usage, it will typically get mapped to the system clock. It
 is recommended to use a monotonically increasing source for measuring the times, to avoid
@@ -10614,28 +10613,25 @@ occasionally having bogus measurements due to time adjustments. For more informa
 <p><strong>Note:</strong> If the amount recorded is less than 0 the value will be dropped.</p>
 <h2 id="longtasktimer">LongTaskTimer<a class="headerlink" href="#longtasktimer" title="Permanent link">&para;</a></h2>
 <p>To get started, create an instance using the <a href="../../registry/overview/">Registry</a>:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.spectator.api.patterns.LongTaskTimer</span><span class="p">;</span>
-
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MetadataService</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">LongTaskTimer</span><span class="w"> </span><span class="n">metadataRefresh</span><span class="p">;</span>
-
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">MetadataService</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">metadataRefresh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LongTaskTimer</span><span class="p">.</span><span class="na">get</span><span class="p">(</span>
-<span class="w">        </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;metadata.refreshDuration&quot;</span><span class="p">));</span>
-<span class="w">    </span><span class="c1">// setup background thread to call refresh()</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">refresh</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metadataRefresh</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">refreshImpl</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">metadataRefresh</span><span class="p">.</span><span class="na">stop</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-</code></pre></div>
+<p>```java
+import com.netflix.spectator.api.patterns.LongTaskTimer;</p>
+<p>public class MetadataService {</p>
+<p>private final LongTaskTimer metadataRefresh;</p>
+<p>@Inject
+  public MetadataService(Registry registry) {
+    metadataRefresh = LongTaskTimer.get(
+        registry, registry.createId("metadata.refreshDuration"));
+    // setup background thread to call refresh()
+  }</p>
+<p>private void refresh() {
+    final int id = metadataRefresh.start();
+    try {
+      refreshImpl();
+    } finally {
+      metadataRefresh.stop(id);
+    }
+  }
+```</p>
 <p>The id value returned by the <code>start</code> method is used to keep track of a particular task being
 measured by the LongTaskTimer. It must be stopped using the provided id. Note that unlike a
 regular Timer that does not do anything until the final duration is recorded, a LongTaskTimer

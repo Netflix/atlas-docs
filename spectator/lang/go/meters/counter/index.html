@@ -10462,36 +10462,38 @@ a Counter could be used to measure the rate at which it is being accessed.</p>
 <p>Counters are reported to the backend as a rate-per-second. In Atlas, the <code>:per-step</code> operator can
 be used to convert them back into a value-per-step on a graph.</p>
 <p>Call <code>Increment()</code> when an event occurs:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator&quot;</span>
-<span class="p">)</span>
+<p>```golang
+import (
+    "github.com/Netflix/spectator-go/v2/spectator"
+)</p>
+<p>func main() {
+    config, _ := spectator.NewConfig("udp", nil, nil)
+    registry, _ := spectator.NewRegistry(config)</p>
+<div class="codehilite"><pre><span></span><code><span class="n">registry</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="s">&quot;server.numRequests&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span><span class="o">.</span><span class="n">Increment</span><span class="p">()</span>
 
-<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">config</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewConfig</span><span class="p">(</span><span class="s">&quot;udp&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">registry</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
-
-<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Counter</span><span class="p">(</span><span class="s">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">).</span><span class="nx">Increment</span><span class="p">()</span>
-
-<span class="w">    </span><span class="nx">numRequests</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">NewId</span><span class="p">(</span><span class="s">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">CounterWithId</span><span class="p">(</span><span class="nx">numRequests</span><span class="p">).</span><span class="nx">Increment</span><span class="p">()</span>
-<span class="p">}</span>
+<span class="n">numRequests</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">registry</span><span class="o">.</span><span class="n">NewId</span><span class="p">(</span><span class="s">&quot;server.numRequests&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">CounterWithId</span><span class="p">(</span><span class="n">numRequests</span><span class="p">)</span><span class="o">.</span><span class="n">Increment</span><span class="p">()</span>
 </code></pre></div>
+
+<p>}
+```</p>
 <p>You can also pass a value to <code>Add(int64)</code>, or <code>AddFloat(float64)</code>. This is useful when a collection
 of events happens together:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator&quot;</span>
-<span class="p">)</span>
+<p>```golang
+import (
+    "github.com/Netflix/spectator-go/v2/spectator"
+)</p>
+<p>func main() {
+    config, _ := spectator.NewConfig("udp", nil, nil)
+    registry, _ := spectator.NewRegistry(config)</p>
+<div class="codehilite"><pre><span></span><code><span class="n">registry</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="s">&quot;queue.itemsAdded&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">config</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewConfig</span><span class="p">(</span><span class="s">&quot;udp&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">registry</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
-
-<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Counter</span><span class="p">(</span><span class="s">&quot;queue.itemsAdded&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">).</span><span class="nx">Add</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="w">    </span><span class="nx">numRequests</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">NewId</span><span class="p">(</span><span class="s">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">CounterWithId</span><span class="p">(</span><span class="nx">numRequests</span><span class="p">).</span><span class="nx">Add</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="p">}</span>
+<span class="n">numRequests</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">registry</span><span class="o">.</span><span class="n">NewId</span><span class="p">(</span><span class="s">&quot;server.numRequests&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">CounterWithId</span><span class="p">(</span><span class="n">numRequests</span><span class="p">)</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </code></pre></div>
+
+<p>}
+```</p>
 
 
 

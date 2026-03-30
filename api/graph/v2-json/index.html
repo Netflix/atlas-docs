@@ -10972,8 +10972,7 @@
 <p>The <code>v2.json</code> output format returns a JSON array of typed objects that fully describe a graph.
 Each object has a <code>type</code> field used to determine how it should be interpreted. The overall
 structure is:</p>
-<div class="highlight"><pre><span></span><code>[graph-image?, graph-metadata, plot-metadata*, heatmap*, data*]
-</code></pre></div>
+<p><code>[graph-image?, graph-metadata, plot-metadata*, heatmap*, data*]</code></p>
 <p>Metadata objects are emitted first so a consumer can set up rendering before data arrives.
 Data entries (<code>timeseries</code>, <code>hspan</code>, <code>vspan</code>, <code>message</code>) reference a plot by its index. This
 design allows data to be streamed incrementally as it becomes available.</p>
@@ -11008,11 +11007,11 @@ is set.</p>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;graph-image&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;data:image/png;base64,iVBORw0KGgo...&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><code>json
+{
+  "type": "graph-image",
+  "data": "data:image/png;base64,iVBORw0KGgo..."
+}</code></p>
 <h2 id="graph-metadata">graph-metadata<a class="headerlink" href="#graph-metadata" title="Permanent link">&para;</a></h2>
 <p>Top-level metadata describing the time range, dimensions, and display settings of the graph.
 Exactly one <code>graph-metadata</code> object is present in the output.</p>
@@ -11113,22 +11112,22 @@ Exactly one <code>graph-metadata</code> object is present in the output.</p>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;graph-metadata&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;startTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1325408160000</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;endTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1325408460000</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;timezones&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;UTC&quot;</span><span class="p">],</span>
-<span class="w">  </span><span class="nt">&quot;step&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">60000</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;width&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">700</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;height&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;layout&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CANVAS&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;zoom&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;legendType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LABELS_WITH_STATS&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;onlyGraph&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;theme&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;light&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;warnings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><code>json
+{
+  "type": "graph-metadata",
+  "startTime": 1325408160000,
+  "endTime": 1325408460000,
+  "timezones": ["UTC"],
+  "step": 60000,
+  "width": 700,
+  "height": 300,
+  "layout": "CANVAS",
+  "zoom": 1.0,
+  "legendType": "LABELS_WITH_STATS",
+  "onlyGraph": false,
+  "theme": "light",
+  "warnings": []
+}</code></p>
 <h3 id="stats-object">Stats object<a class="headerlink" href="#stats-object" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -11266,15 +11265,15 @@ Exactly one <code>graph-metadata</code> object is present in the output.</p>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plot-metadata&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;scale&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LINEAR&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;upper&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto-style&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;lower&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto-style&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;tickLabelMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DECIMAL&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><code>json
+{
+  "type": "plot-metadata",
+  "id": 0,
+  "scale": "LINEAR",
+  "upper": "auto-style",
+  "lower": "auto-style",
+  "tickLabelMode": "DECIMAL"
+}</code></p>
 <h3 id="scale-values">Scale values<a class="headerlink" href="#scale-values" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -11426,22 +11425,22 @@ Exactly one <code>graph-metadata</code> object is present in the output.</p>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;timeseries&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;plot&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hourOfDay&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;f4232700&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;lineStyle&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LINE&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;lineWidth&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hourOfDay&quot;</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;values&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">8.0</span><span class="p">,</span><span class="w"> </span><span class="mf">8.0</span><span class="p">,</span><span class="w"> </span><span class="mf">8.0</span><span class="p">,</span><span class="w"> </span><span class="mf">8.0</span><span class="p">,</span><span class="w"> </span><span class="mf">9.0</span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><code>json
+{
+  "type": "timeseries",
+  "plot": 0,
+  "label": "hourOfDay",
+  "color": "f4232700",
+  "lineStyle": "LINE",
+  "lineWidth": 1.0,
+  "tags": {
+    "name": "hourOfDay"
+  },
+  "data": {
+    "type": "array",
+    "values": [8.0, 8.0, 8.0, 8.0, 9.0]
+  }
+}</code></p>
 <h3 id="linestyle-values">LineStyle values<a class="headerlink" href="#linestyle-values" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -11540,14 +11539,14 @@ Y-axis values.</p>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hspan&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;plot&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;e7298a1a&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;v1&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">30.0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;v2&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">60.0</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><code>json
+{
+  "type": "hspan",
+  "plot": 0,
+  "color": "e7298a1a",
+  "v1": 30.0,
+  "v2": 60.0
+}</code></p>
 <h2 id="vspan">vspan<a class="headerlink" href="#vspan" title="Permanent link">&para;</a></h2>
 <p>A vertical span annotation — a shaded vertical band across the graph between two
 points in time.</p>
@@ -11593,14 +11592,14 @@ points in time.</p>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vspan&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;plot&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;e7298a1a&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;t1&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1325408200000</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;t2&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1325408300000</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><code>json
+{
+  "type": "vspan",
+  "plot": 0,
+  "color": "e7298a1a",
+  "t1": 1325408200000,
+  "t2": 1325408300000
+}</code></p>
 <h2 id="message">message<a class="headerlink" href="#message" title="Permanent link">&para;</a></h2>
 <p>A text message associated with a plot, typically used for warnings or informational
 annotations.</p>
@@ -11636,13 +11635,13 @@ annotations.</p>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;message&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;plot&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NO DATA&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ff000000&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><code>json
+{
+  "type": "message",
+  "plot": 0,
+  "label": "NO DATA",
+  "color": "ff000000"
+}</code></p>
 <h2 id="heatmap">heatmap<a class="headerlink" href="#heatmap" title="Permanent link">&para;</a></h2>
 <p><a href="../heatmap/">Heatmap</a> data for a plot. Contains bucket definitions, a color palette mapping,
 and the cell counts.</p>

@@ -10726,10 +10726,10 @@
 the health, performance, and configuration of the pool.</p>
 <h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
 <p>To report thread pool metrics, one can attach a <a href="https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/patterns/ThreadPoolMonitor.html">ThreadPoolMonitor</a> in the following manner:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.spectator.api.patterns.ThreadPoolMonitor</span><span class="p">;</span>
-
-<span class="n">ThreadPoolMonitor</span><span class="p">.</span><span class="na">attach</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">myThreadPoolExecutor</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;my-thread-pool&quot;</span><span class="p">);</span>
-</code></pre></div>
+<p>```java
+import com.netflix.spectator.api.patterns.ThreadPoolMonitor;</p>
+<p>ThreadPoolMonitor.attach(registry, myThreadPoolExecutor, "my-thread-pool");
+```</p>
 <p>The thread pool's properties will be polled regularly in the background and will report metrics to the provided
 registry. The third parameter will be added to each metric as an <code>id</code> dimension, if provided. However, if the value is
 <code>null</code> or an empty string, then a default will be used as the <code>id</code>.</p>

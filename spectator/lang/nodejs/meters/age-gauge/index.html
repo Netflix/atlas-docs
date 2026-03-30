@@ -10463,23 +10463,21 @@ reporting the number of seconds since the last time recorded, for as long as the
 process runs. The purpose of this metric type is to enable users to more easily implement the
 Time Since Last Success alerting pattern.</p>
 <p>To set a specific time as the last success:</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">age_gauge</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">).</span><span class="nx">set</span><span class="p">(</span><span class="mf">1611081000</span><span class="p">);</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">last_success</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">);</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">age_gauge_with_id</span><span class="p">(</span><span class="nx">last_success</span><span class="p">).</span><span class="nx">set</span><span class="p">(</span><span class="mf">1611081000</span><span class="p">);</span>
-</code></pre></div>
+<p>```javascript
+import {Registry} from "nflx-spectator";</p>
+<p>const registry = new Registry();
+void registry.age_gauge("time.sinceLastSuccess").set(1611081000);</p>
+<p>const last_success = registry.new_id("time.sinceLastSuccess");
+void registry.age_gauge_with_id(last_success).set(1611081000);
+```</p>
 <p>To set <code>now()</code> as the last success:</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">age_gauge</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">).</span><span class="nx">now</span><span class="p">();</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">last_success</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">);</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">age_gauge_with_id</span><span class="p">(</span><span class="nx">last_success</span><span class="p">).</span><span class="nx">now</span><span class="p">();</span>
-</code></pre></div>
+<p>```javascript
+import {Registry} from "nflx-spectator";</p>
+<p>const registry = new Registry();
+void registry.age_gauge("time.sinceLastSuccess").now();</p>
+<p>const last_success = registry.new_id("time.sinceLastSuccess");
+void registry.age_gauge_with_id(last_success).now();
+```</p>
 <p>By default, a maximum of <code>1000</code> Age Gauges are allowed per <code>spectatord</code> process, because there is no
 mechanism for cleaning them up. This value may be tuned with the <code>--age_gauge_limit</code> flag on the
 <code>spectatord</code> binary.</p>
@@ -10487,12 +10485,10 @@ mechanism for cleaning them up. This value may be tuned with the <code>--age_gau
 you need to delete and re-create them for any reason, then you can use the <a href="../../../../agent/usage/#admin-server">SpectatorD admin server</a>
 to accomplish this task. You can delete all Age Gauges or a single Age Gauge.</p>
 <p><strong>Example:</strong></p>
-<div class="highlight"><pre><span></span><code>curl -X DELETE \
-http://localhost:1234/metrics/A
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>curl -X DELETE \
-http://localhost:1234/metrics/A/fooIsTheName,some.tag=val1,some.otherTag=val2
-</code></pre></div>
+<p><code>curl -X DELETE \
+http://localhost:1234/metrics/A</code></p>
+<p><code>curl -X DELETE \
+http://localhost:1234/metrics/A/fooIsTheName,some.tag=val1,some.otherTag=val2</code></p>
 
 
 
