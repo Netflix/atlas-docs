@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10692,14 +10692,13 @@
   &s=e-5m
   &tz=UTC
 </pre>
-<p>```
-"timestamp","hourOfDay","minuteOfHour","NaN"
+<div class="highlight"><pre><span></span><code>&quot;timestamp&quot;,&quot;hourOfDay&quot;,&quot;minuteOfHour&quot;,&quot;NaN&quot;
 2012-01-01T08:56:00Z,8.000000,56.000000,NaN
 2012-01-01T08:57:00Z,8.000000,57.000000,NaN
 2012-01-01T08:58:00Z,8.000000,58.000000,NaN
 2012-01-01T08:59:00Z,8.000000,59.000000,NaN
-2012-01-01T09:00:00Z,9.000000,0.000000,NaN</p>
-<p>```</p>
+2012-01-01T09:00:00Z,9.000000,0.000000,NaN
+</code></pre></div>
 <h2 id="txt">txt<a class="headerlink" href="#txt" title="Permanent link">&para;</a></h2>
 <p>Same as <a href="#csv">csv</a> except that the separator is a tab character instead of a comma. The mime
 type will be <code>text/plain</code> so it is more likely to render directly in the browser rather than
@@ -10714,14 +10713,13 @@ trigger a download.</p>
   &s=e-5m
   &tz=UTC
 </pre>
-<p>```
-"timestamp" "hourOfDay" "minuteOfHour"  "NaN"
+<div class="highlight"><pre><span></span><code>&quot;timestamp&quot; &quot;hourOfDay&quot; &quot;minuteOfHour&quot;  &quot;NaN&quot;
 2012-01-01T08:56:00Z    8.000000    56.000000   NaN
 2012-01-01T08:57:00Z    8.000000    57.000000   NaN
 2012-01-01T08:58:00Z    8.000000    58.000000   NaN
 2012-01-01T08:59:00Z    8.000000    59.000000   NaN
-2012-01-01T09:00:00Z    9.000000    0.000000    NaN</p>
-<p>```</p>
+2012-01-01T09:00:00Z    9.000000    0.000000    NaN
+</code></pre></div>
 <h2 id="json">json<a class="headerlink" href="#json" title="Permanent link">&para;</a></h2>
 <p>JSON output representing the data. Note that it is not <a href="http://json.org">standard json</a> as numeric
 values like <code>NaN</code> will not get quoted.</p>
@@ -10735,23 +10733,24 @@ values like <code>NaN</code> will not get quoted.</p>
   &s=e-5m
   &tz=UTC
 </pre>
-<p><code>{
-  "start" : 1325408160000,
-  "step" : 60000,
-  "legend" : [ "hourOfDay", "minuteOfHour", "NaN" ],
-  "metrics" : [ {
-    "atlas.offset" : "0w",
-    "name" : "hourOfDay"
+<div class="highlight"><pre><span></span><code>{
+  &quot;start&quot; : 1325408160000,
+  &quot;step&quot; : 60000,
+  &quot;legend&quot; : [ &quot;hourOfDay&quot;, &quot;minuteOfHour&quot;, &quot;NaN&quot; ],
+  &quot;metrics&quot; : [ {
+    &quot;atlas.offset&quot; : &quot;0w&quot;,
+    &quot;name&quot; : &quot;hourOfDay&quot;
   }, {
-    "atlas.offset" : "0w",
-    "name" : "minuteOfHour"
+    &quot;atlas.offset&quot; : &quot;0w&quot;,
+    &quot;name&quot; : &quot;minuteOfHour&quot;
   }, {
-    "atlas.offset" : "0w",
-    "name" : "NaN"
+    &quot;atlas.offset&quot; : &quot;0w&quot;,
+    &quot;name&quot; : &quot;NaN&quot;
   } ],
-  "values" : [ [ 8.0, 56.0, NaN ], [ 8.0, 57.0, NaN ], [ 8.0, 58.0, NaN ], [ 8.0, 59.0, NaN ], [ 9.0, 0.0, NaN ] ],
-  "notices" : [ ]
-}</code></p>
+  &quot;values&quot; : [ [ 8.0, 56.0, NaN ], [ 8.0, 57.0, NaN ], [ 8.0, 58.0, NaN ], [ 8.0, 59.0, NaN ], [ 9.0, 0.0, NaN ] ],
+  &quot;notices&quot; : [ ]
+}
+</code></pre></div>
 <h2 id="stdjson">std.json<a class="headerlink" href="#stdjson" title="Permanent link">&para;</a></h2>
 <p>Same as <a href="#json">json</a> except that numeric values which are not recognized by
 <a href="http://json.org">standard json</a> will be quoted. The mime type is <code>application/json</code>.</p>
@@ -10765,23 +10764,24 @@ values like <code>NaN</code> will not get quoted.</p>
   &s=e-5m
   &tz=UTC
 </pre>
-<p><code>{
-  "start" : 1325408160000,
-  "step" : 60000,
-  "legend" : [ "hourOfDay", "minuteOfHour", "NaN" ],
-  "metrics" : [ {
-    "atlas.offset" : "0w",
-    "name" : "hourOfDay"
+<div class="highlight"><pre><span></span><code>{
+  &quot;start&quot; : 1325408160000,
+  &quot;step&quot; : 60000,
+  &quot;legend&quot; : [ &quot;hourOfDay&quot;, &quot;minuteOfHour&quot;, &quot;NaN&quot; ],
+  &quot;metrics&quot; : [ {
+    &quot;atlas.offset&quot; : &quot;0w&quot;,
+    &quot;name&quot; : &quot;hourOfDay&quot;
   }, {
-    "atlas.offset" : "0w",
-    "name" : "minuteOfHour"
+    &quot;atlas.offset&quot; : &quot;0w&quot;,
+    &quot;name&quot; : &quot;minuteOfHour&quot;
   }, {
-    "atlas.offset" : "0w",
-    "name" : "NaN"
+    &quot;atlas.offset&quot; : &quot;0w&quot;,
+    &quot;name&quot; : &quot;NaN&quot;
   } ],
-  "values" : [ [ 8.0, 56.0, "NaN" ], [ 8.0, 57.0, "NaN" ], [ 8.0, 58.0, "NaN" ], [ 8.0, 59.0, "NaN" ], [ 9.0, 0.0, "NaN" ] ],
-  "notices" : [ ]
-}</code></p>
+  &quot;values&quot; : [ [ 8.0, 56.0, &quot;NaN&quot; ], [ 8.0, 57.0, &quot;NaN&quot; ], [ 8.0, 58.0, &quot;NaN&quot; ], [ 8.0, 59.0, &quot;NaN&quot; ], [ 9.0, 0.0, &quot;NaN&quot; ] ],
+  &quot;notices&quot; : [ ]
+}
+</code></pre></div>
 <h2 id="statsjson">stats.json<a class="headerlink" href="#statsjson" title="Permanent link">&para;</a></h2>
 <p>Provides the summary stats for each line, but not all of the data points. The mime type is
 <code>application/json</code>.</p>
@@ -10795,45 +10795,46 @@ values like <code>NaN</code> will not get quoted.</p>
   &s=e-5m
   &tz=UTC
 </pre>
-<p><code>{
-  "start" : 1325408160000,
-  "end" : 1325408460000,
-  "step" : 60000,
-  "legend" : [ "hourOfDay", "minuteOfHour", "NaN" ],
-  "metrics" : [ {
-    "atlas.offset" : "0w",
-    "name" : "hourOfDay"
+<div class="highlight"><pre><span></span><code>{
+  &quot;start&quot; : 1325408160000,
+  &quot;end&quot; : 1325408460000,
+  &quot;step&quot; : 60000,
+  &quot;legend&quot; : [ &quot;hourOfDay&quot;, &quot;minuteOfHour&quot;, &quot;NaN&quot; ],
+  &quot;metrics&quot; : [ {
+    &quot;atlas.offset&quot; : &quot;0w&quot;,
+    &quot;name&quot; : &quot;hourOfDay&quot;
   }, {
-    "atlas.offset" : "0w",
-    "name" : "minuteOfHour"
+    &quot;atlas.offset&quot; : &quot;0w&quot;,
+    &quot;name&quot; : &quot;minuteOfHour&quot;
   }, {
-    "atlas.offset" : "0w",
-    "name" : "NaN"
+    &quot;atlas.offset&quot; : &quot;0w&quot;,
+    &quot;name&quot; : &quot;NaN&quot;
   } ],
-  "stats" : [ {
-    "count" : 5,
-    "avg" : 8.2,
-    "total" : 41.0,
-    "max" : 9.0,
-    "min" : 8.0,
-    "last" : 9.0
+  &quot;stats&quot; : [ {
+    &quot;count&quot; : 5,
+    &quot;avg&quot; : 8.2,
+    &quot;total&quot; : 41.0,
+    &quot;max&quot; : 9.0,
+    &quot;min&quot; : 8.0,
+    &quot;last&quot; : 9.0
   }, {
-    "count" : 5,
-    "avg" : 46.0,
-    "total" : 230.0,
-    "max" : 59.0,
-    "min" : 0.0,
-    "last" : 0.0
+    &quot;count&quot; : 5,
+    &quot;avg&quot; : 46.0,
+    &quot;total&quot; : 230.0,
+    &quot;max&quot; : 59.0,
+    &quot;min&quot; : 0.0,
+    &quot;last&quot; : 0.0
   }, {
-    "count" : 0,
-    "avg" : NaN,
-    "total" : NaN,
-    "max" : NaN,
-    "min" : NaN,
-    "last" : NaN
+    &quot;count&quot; : 0,
+    &quot;avg&quot; : NaN,
+    &quot;total&quot; : NaN,
+    &quot;max&quot; : NaN,
+    &quot;min&quot; : NaN,
+    &quot;last&quot; : NaN
   } ],
-  "notices" : [ ]
-}</code></p>
+  &quot;notices&quot; : [ ]
+}
+</code></pre></div>
 <h2 id="v2json">v2.json<a class="headerlink" href="#v2json" title="Permanent link">&para;</a></h2>
 <p>A structured JSON format that includes full graph metadata alongside the data. Unlike the
 other JSON formats which use a flat structure, v2.json uses a typed array of objects that
@@ -10919,10 +10920,10 @@ annotations, and heatmaps. The mime type is <code>application/json</code>.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

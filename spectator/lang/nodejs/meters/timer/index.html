@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10552,16 +10552,18 @@
 <h2 id="timer">Timer<a class="headerlink" href="#timer" title="Permanent link">&para;</a></h2>
 <p>A Timer is used to measure how long (in seconds) some event is taking.</p>
 <p>Call <code>record()</code> with a value:</p>
-<p>```javascript
-import {Registry} from "nflx-spectator";</p>
-<p>const registry = new Registry();
-void registry.timer("server.requestLatency").record(0.01);</p>
-<p>const request_latency = registry.new_id("server.requestLatency");
-void registry.timer_with_id(request_latency).record(0.01);</p>
-<p>const start = process.hrtime();
-// do work
-void registry.timer("server.requestLatency").record(process.hrtime(start));
-```</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
+<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">timer</span><span class="p">(</span><span class="s2">&quot;server.requestLatency&quot;</span><span class="p">).</span><span class="nx">record</span><span class="p">(</span><span class="mf">0.01</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">request_latency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;server.requestLatency&quot;</span><span class="p">);</span>
+<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">timer_with_id</span><span class="p">(</span><span class="nx">request_latency</span><span class="p">).</span><span class="nx">record</span><span class="p">(</span><span class="mf">0.01</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">hrtime</span><span class="p">();</span>
+<span class="c1">// do work</span>
+<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">timer</span><span class="p">(</span><span class="s2">&quot;server.requestLatency&quot;</span><span class="p">).</span><span class="nx">record</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">hrtime</span><span class="p">(</span><span class="nx">start</span><span class="p">));</span>
+</code></pre></div>
 <p>The <code>record()</code> method accepts <code>number[]</code> output from <code>hrtime</code> and converts it to seconds, as a
 convenience for recording latencies.</p>
 <h2 id="units">Units<a class="headerlink" href="#units" title="Permanent link">&para;</a></h2>
@@ -10618,10 +10620,10 @@ seconds (see <a href="../../../../../concepts/naming/#use-base-units">Use Base U
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

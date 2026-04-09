@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10584,7 +10584,7 @@ data.</p>
 <h2 id="gauge">Gauge<a class="headerlink" href="#gauge" title="Permanent link">&para;</a></h2>
 <p>A value that is sampled from some source and the value is used as is. The last value received will
 be the value used for the interval. For example:</p>
-<p><code>┌─────────┐                                    ┌─────────┐
+<div class="highlight"><pre><span></span><code>                ┌─────────┐                                    ┌─────────┐
                 │    8    │                                    │    8    │
                 │         ├───────                             │         │
                 │         │    6                               │         │
@@ -10593,11 +10593,12 @@ be the value used for the interval. For example:</p>
       ├─────────┤         │           to   │         ├─────────┤         │
       │    2    │         │                │         │    2    │         │
  ├─────────┼─────────┼─────────┤           ├─────────┼─────────┼─────────┤
-1:00      1:01      1:02      1:03        1:00      1:01      1:02      1:03</code></p>
+1:00      1:01      1:02      1:03        1:00      1:01      1:02      1:03
+</code></pre></div>
 <h2 id="rate">Rate<a class="headerlink" href="#rate" title="Permanent link">&para;</a></h2>
 <p>A rate is a value representing the rate per second since the last reported value. Rate values
 are normalized using a weighted average. For example:</p>
-<p><code>┌─────────┐
+<div class="highlight"><pre><span></span><code>                ┌─────────┐
                 │    8    │                                    ┌─────────┐
                 │         ├───────                             │    7    │
                 │         │    6                     ┌─────────┤         │
@@ -10606,7 +10607,8 @@ are normalized using a weighted average. For example:</p>
       ├─────────┤         │           to   │    3    │         │         │
       │    2    │         │                │         │         │         │
  ├─────────┼─────────┼─────────┤           ├─────────┼─────────┼─────────┤
-1:00      1:01      1:02      1:03        1:00      1:01      1:02      1:03</code></p>
+1:00      1:01      1:02      1:03        1:00      1:01      1:02      1:03
+</code></pre></div>
 <p>Here, the data is reported at exactly 30s after the minute boundary. So each value represents the
 average rate per second for 50% of the minute.</p>
 <table>
@@ -10636,7 +10638,7 @@ fraction of the interval they represent. When no previous sample exists, the val
 as the average rate per second over the previous step. This behavior is important to avoid
 under-counting the contribution from a previous interval. The example below shows what happens
 if there is no previous or next sample:</p>
-<p><code>┌─────────┐
+<div class="highlight"><pre><span></span><code>                ┌─────────┐
                 │    8    │
                 │         │
                 │         │                          ┌─────────┐
@@ -10645,7 +10647,8 @@ if there is no previous or next sample:</p>
       ┌─────────┤         │           to        1    │         │         │
       │    2    │         │                ┌─────────┤         │         │
  ├─────────┼─────────┼─────────┤           ├─────────┼─────────┼─────────┤
-1:00      1:01      1:02      1:03        1:00      1:01      1:02      1:03</code></p>
+1:00      1:01      1:02      1:03        1:00      1:01      1:02      1:03
+</code></pre></div>
 <p>Why perform weighted averaging for rates instead of the simpler last value approach used with
 gauges? Because it gives us a better summary of what we actually know from the measurements
 received. In practical terms:</p>
@@ -10726,10 +10729,10 @@ on counter type will be delayed by one interval.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

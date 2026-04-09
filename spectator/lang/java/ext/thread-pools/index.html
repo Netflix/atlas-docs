@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10726,10 +10726,10 @@
 the health, performance, and configuration of the pool.</p>
 <h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
 <p>To report thread pool metrics, one can attach a <a href="https://www.javadoc.io/doc/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/patterns/ThreadPoolMonitor.html">ThreadPoolMonitor</a> in the following manner:</p>
-<p>```java
-import com.netflix.spectator.api.patterns.ThreadPoolMonitor;</p>
-<p>ThreadPoolMonitor.attach(registry, myThreadPoolExecutor, "my-thread-pool");
-```</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.spectator.api.patterns.ThreadPoolMonitor</span><span class="p">;</span>
+
+<span class="n">ThreadPoolMonitor</span><span class="p">.</span><span class="na">attach</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">myThreadPoolExecutor</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;my-thread-pool&quot;</span><span class="p">);</span>
+</code></pre></div>
 <p>The thread pool's properties will be polled regularly in the background and will report metrics to the provided
 registry. The third parameter will be added to each metric as an <code>id</code> dimension, if provided. However, if the value is
 <code>null</code> or an empty string, then a default will be used as the <code>id</code>.</p>
@@ -10811,10 +10811,10 @@ registry. The third parameter will be added to each metric as an <code>id</code>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

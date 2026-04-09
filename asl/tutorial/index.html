@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10814,34 +10814,36 @@ code point. For example:</p>
 </ul>
 <h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
 <p>Consider a scenario where you want to match a tag value that contains a colon:</p>
-<p><code>name,:foo,:eq          # Invalid - colon in :foo is interpreted as a command
-name,\u003Afoo,:eq     # Valid - colon is escaped and treated as literal text</code></p>
+<div class="highlight"><pre><span></span><code>name,:foo,:eq          # Invalid - colon in :foo is interpreted as a command
+name,\u003Afoo,:eq     # Valid - colon is escaped and treated as literal text
+</code></pre></div>
 <p>In the first case, <code>:foo</code> would be interpreted as a command, which would cause an error. In the
 second case, <code>\u003Afoo</code> represents the literal string <code>:foo</code>.</p>
 <h4 id="preserving-whitespace">Preserving Whitespace<a class="headerlink" href="#preserving-whitespace" title="Permanent link">&para;</a></h4>
 <p>Unicode escaping can also be used to preserve whitespace at the beginning and end of tokens,
 which is normally trimmed during parsing. This is useful when exact spacing is important for your
 data:</p>
-<p><code>tag,\u0020value\u0020,:eq    # Preserves leading and trailing spaces around "value"</code></p>
+<div class="highlight"><pre><span></span><code>tag,\u0020value\u0020,:eq    # Preserves leading and trailing spaces around &quot;value&quot;
+</code></pre></div>
 <p>Without escaping, leading and trailing whitespace would be automatically removed from tokens
 during parsing.</p>
 <h2 id="data-model">Data Model<a class="headerlink" href="#data-model" title="Permanent link">&para;</a></h2>
 <p>The stack language is primarily used for representing expressions over tagged time series
 data. A tag is a string key value pair used to describe a measurement. Atlas requires at least
 one tag with a key of <code>name</code>. Example tags represented as a JSON map:</p>
-<p><code>json
-{
-  "name":       "jvm.gc.pause",
-  "cause":      "Allocation_Failure",
-  "statistic":  "count",
-  "nf.app":     "www",
-  "nf.cluster": "www-main",
-  "nf.asg":     "www-main-v001",
-  "nf.stack":   "main",
-  "nf.node":    "i-01",
-  "nf.region":  "us-east-1",
-  "nf.zone":    "us-east-1a"
-}</code></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w">       </span><span class="s2">&quot;jvm.gc.pause&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;cause&quot;</span><span class="p">:</span><span class="w">      </span><span class="s2">&quot;Allocation_Failure&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;statistic&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;count&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nf.app&quot;</span><span class="p">:</span><span class="w">     </span><span class="s2">&quot;www&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nf.cluster&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;www-main&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nf.asg&quot;</span><span class="p">:</span><span class="w">     </span><span class="s2">&quot;www-main-v001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nf.stack&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;main&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nf.node&quot;</span><span class="p">:</span><span class="w">    </span><span class="s2">&quot;i-01&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nf.region&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;us-east-1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nf.zone&quot;</span><span class="p">:</span><span class="w">    </span><span class="s2">&quot;us-east-1a&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>Typically, tags should be dimensions that allow you to use the name as a pivot and other tags
 to drill down into the data. The tag keys are similar to columns in a traditional table, however,
 it is important to note that not all time series will have the same set of tag keys.</p>
@@ -10913,7 +10915,8 @@ primary predicate operators are
 </pre>
 <p>If you are familiar with SQL and assume that tag keys are column names, then this would be
 equivalent to:</p>
-<p><code>select * from time_series where node = 'i-01';</code></p>
+<div class="highlight"><pre><span></span><code>select * from time_series where node = &#39;i-01&#39;;
+</code></pre></div>
 <p>Using the <a href="#data-model">example data set</a> this query would return the following subset:</p>
 <table>
 <thead>
@@ -11151,10 +11154,10 @@ $(app),<a href="https://netflix.github.io/atlas-docs/asl/ref/legend/">:legend</a
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10554,42 +10554,43 @@
 <h1 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h1>
 <h2 id="test-script">Test Script<a class="headerlink" href="#test-script" title="Permanent link">&para;</a></h2>
 <p>Test maximum single-threaded throughput for two minutes.</p>
-<p>```go
-package main</p>
-<p>import (
-    "fmt"
-    "github.com/Netflix/spectator-go/v2/spectator"
-    "time"
-)</p>
-<p>func elapsed(start time.Time) float64 {
-    return time.Now().Sub(start).Seconds()
-}</p>
-<p>func main() {
-    location := "udp"
-    // location := "unix"
-    config, _ := spectator.NewConfig(location, nil, nil)
-    registry, _ := spectator.NewRegistry(config)
-    defer registry.Close()
-    // add tags with some length, to simulate more real-world conditions
-    tags := map[string]string{"location": location, "version": "correct-horse-battery-staple"}</p>
-<div class="codehilite"><pre><span></span><code><span class="n">maxDuration</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">float64</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">60</span><span class="p">)</span>
-<span class="n">start</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
-<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">&quot;start spectator-go %s benchmark\n&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">location</span><span class="p">)</span>
-<span class="n">iteration</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">1</span>
-<span class="k">for</span><span class="w"> </span><span class="n">elapsed</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">maxDuration</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">registry</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="s">&quot;spectator-go.publish&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">tags</span><span class="p">)</span><span class="o">.</span><span class="n">Increment</span><span class="p">()</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">iteration</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">500000</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">&quot;iterations=%v elapsed=%v\n&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">iteration</span><span class="o">,</span><span class="w"> </span><span class="n">elapsed</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="n">iteration</span><span class="o">++</span>
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator&quot;</span>
+<span class="w">    </span><span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">elapsed</span><span class="p">(</span><span class="nx">start</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="p">)</span><span class="w"> </span><span class="kt">float64</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">().</span><span class="nx">Sub</span><span class="p">(</span><span class="nx">start</span><span class="p">).</span><span class="nx">Seconds</span><span class="p">()</span>
 <span class="p">}</span>
 
-<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">&quot;iterations=%v rate/sec=%v\n&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">iteration</span><span class="o">,</span><span class="w"> </span><span class="n">float64</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">elapsed</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
-</code></pre></div>
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">location</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;udp&quot;</span>
+<span class="w">    </span><span class="c1">// location := &quot;unix&quot;</span>
+<span class="w">    </span><span class="nx">config</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewConfig</span><span class="p">(</span><span class="nx">location</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">registry</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<span class="w">    </span><span class="c1">// add tags with some length, to simulate more real-world conditions</span>
+<span class="w">    </span><span class="nx">tags</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="nx">location</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;correct-horse-battery-staple&quot;</span><span class="p">}</span>
 
-<p>}
-```</p>
+<span class="w">    </span><span class="nx">maxDuration</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">float64</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">60</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">start</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">()</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;start spectator-go %s benchmark\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">location</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">iteration</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">elapsed</span><span class="p">(</span><span class="nx">start</span><span class="p">)</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="nx">maxDuration</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Counter</span><span class="p">(</span><span class="s">&quot;spectator-go.publish&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">tags</span><span class="p">).</span><span class="nx">Increment</span><span class="p">()</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">iteration</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">500000</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;iterations=%v elapsed=%v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">iteration</span><span class="p">,</span><span class="w"> </span><span class="nx">elapsed</span><span class="p">(</span><span class="nx">start</span><span class="p">))</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="nx">iteration</span><span class="o">++</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;iterations=%v rate/sec=%v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">iteration</span><span class="p">,</span><span class="w"> </span><span class="nb">float64</span><span class="p">(</span><span class="nx">iteration</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">elapsed</span><span class="p">(</span><span class="nx">start</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div>
 <h2 id="results">Results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h2>
 <p>See <a href="../usage/#performance">Usage &gt; Performance</a>.</p>
 
@@ -10641,10 +10642,10 @@ package main</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

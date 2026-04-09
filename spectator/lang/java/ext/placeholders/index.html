@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10564,83 +10564,84 @@ are to support:</p>
 </ol>
 <h2 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h2>
 <p>To use the placeholders support add a dependency on:</p>
-<p><code>com.netflix.spectator:spectator-ext-placeholders:0.101.0</code></p>
+<div class="highlight"><pre><span></span><code>com.netflix.spectator:spectator-ext-placeholders:0.101.0
+</code></pre></div>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <p>Placeholder support is available for activity based types including
 <a href="../../../../core/meters/counter/">counters</a>, <a href="../../../../core/meters/timer/">timers</a>, and
 <a href="../../../../core/meters/dist-summary/">distribution summaries</a>. To get started create a
 <code>PlaceholderFactory</code> from the registry:</p>
-<p><code>java
-PlaceholderFactory factory = PlaceholderFactory.from(registry);</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">PlaceholderFactory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PlaceholderFactory</span><span class="p">.</span><span class="na">from</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+</code></pre></div>
 <p>Then use the factory to create an identifier using a <code>TagFactory</code> to dynamically fetch
 the value for a given dimension when some activity occurs. Suppose we want to use a
 dynamic configuration library such as <a href="https://github.com/Netflix/archaius/tree/2.x">Archaius</a>
 to conditionally enable a dimension with high cardinality:</p>
-<p>```java
-public class Server {</p>
-<p>private final Context context;
-  private final Counter rps;</p>
-<p>public Server(Context context, PropertyFactory props, Registry registry) {
-    this.context = context;</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Property that can be dynamically updated to indicate whether or not</span>
-<span class="c1">// detailed dimensions should be added to metrics.</span>
-<span class="n">Property</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span><span class="w"> </span><span class="n">enabled</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">props</span>
-<span class="w">  </span><span class="p">.</span><span class="n">getProperty</span><span class="p">(</span><span class="s">&quot;server.detailedMetricsEnabled&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="n">asBoolean</span><span class="p">(</span><span class="n">false</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Server</span><span class="w"> </span><span class="p">{</span>
 
-<span class="c1">// Factory for creating instances of the counter using placeholders</span>
-<span class="n">PlaceholderFactory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PlaceholderFactory</span><span class="p">.</span><span class="n">from</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Context</span><span class="w"> </span><span class="n">context</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="n">rps</span><span class="p">;</span>
 
-<span class="c1">// Create the underlying id with 4 possible dimensions:</span>
-<span class="c1">// *  method and status - low cardinality and always added if available</span>
-<span class="c1">//    in the context.</span>
-<span class="c1">// *  geo and device - high cardinality and only available if the property</span>
-<span class="c1">//    to enable detailed metrics is set to true.</span>
-<span class="n">PlaceholderId</span><span class="w"> </span><span class="n">rpsId</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="n">createId</span><span class="p">(</span><span class="s">&quot;server.requests&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="n">withTagFactory</span><span class="p">(</span><span class="n">TagFactory</span><span class="p">.</span><span class="n">from</span><span class="p">(</span><span class="s">&quot;method&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">::</span><span class="n">getMethod</span><span class="p">))</span>
-<span class="w">  </span><span class="p">.</span><span class="n">withTagFactory</span><span class="p">(</span><span class="n">TagFactory</span><span class="p">.</span><span class="n">from</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">::</span><span class="n">getStatus</span><span class="p">))</span>
-<span class="w">  </span><span class="p">.</span><span class="n">withTagFactory</span><span class="p">(</span><span class="n">new</span><span class="w"> </span><span class="n">DetailedDimension</span><span class="p">(</span><span class="s">&quot;geo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">enabled</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">::</span><span class="n">getGeo</span><span class="p">))</span>
-<span class="w">  </span><span class="p">.</span><span class="n">withTagFactory</span><span class="p">(</span><span class="n">new</span><span class="w"> </span><span class="n">DetailedDimension</span><span class="p">(</span><span class="s">&quot;device&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">enabled</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">::</span><span class="n">getDevice</span><span class="p">));</span>
-<span class="n">rps</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="n">counter</span><span class="p">(</span><span class="n">rpsId</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Server</span><span class="p">(</span><span class="n">Context</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">PropertyFactory</span><span class="w"> </span><span class="n">props</span><span class="p">,</span><span class="w"> </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Property that can be dynamically updated to indicate whether or not</span>
+<span class="w">    </span><span class="c1">// detailed dimensions should be added to metrics.</span>
+<span class="w">    </span><span class="n">Property</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span><span class="w"> </span><span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">props</span>
+<span class="w">      </span><span class="p">.</span><span class="na">getProperty</span><span class="p">(</span><span class="s">&quot;server.detailedMetricsEnabled&quot;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="na">asBoolean</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Factory for creating instances of the counter using placeholders</span>
+<span class="w">    </span><span class="n">PlaceholderFactory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PlaceholderFactory</span><span class="p">.</span><span class="na">from</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Create the underlying id with 4 possible dimensions:</span>
+<span class="w">    </span><span class="c1">// *  method and status - low cardinality and always added if available</span>
+<span class="w">    </span><span class="c1">//    in the context.</span>
+<span class="w">    </span><span class="c1">// *  geo and device - high cardinality and only available if the property</span>
+<span class="w">    </span><span class="c1">//    to enable detailed metrics is set to true.</span>
+<span class="w">    </span><span class="n">PlaceholderId</span><span class="w"> </span><span class="n">rpsId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;server.requests&quot;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="na">withTagFactory</span><span class="p">(</span><span class="n">TagFactory</span><span class="p">.</span><span class="na">from</span><span class="p">(</span><span class="s">&quot;method&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">::</span><span class="n">getMethod</span><span class="p">))</span>
+<span class="w">      </span><span class="p">.</span><span class="na">withTagFactory</span><span class="p">(</span><span class="n">TagFactory</span><span class="p">.</span><span class="na">from</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">::</span><span class="n">getStatus</span><span class="p">))</span>
+<span class="w">      </span><span class="p">.</span><span class="na">withTagFactory</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">DetailedDimension</span><span class="p">(</span><span class="s">&quot;geo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">enabled</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">::</span><span class="n">getGeo</span><span class="p">))</span>
+<span class="w">      </span><span class="p">.</span><span class="na">withTagFactory</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">DetailedDimension</span><span class="p">(</span><span class="s">&quot;device&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">enabled</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">::</span><span class="n">getDevice</span><span class="p">));</span>
+<span class="w">    </span><span class="n">rps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="n">rpsId</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Response</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">fillInContext</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Response</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+<span class="w">    </span><span class="n">fillInContext</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Update the counter, the placeholders will be resolved when the activity, in</span>
+<span class="w">    </span><span class="c1">// this case the increment is called.</span>
+<span class="w">    </span><span class="n">rps</span><span class="p">.</span><span class="na">increment</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">response</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="c1">// Tag factory that can be controlled with an enabled property.</span>
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DetailedDimension</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">TagFactory</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">valueFunc</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">DetailedDimension</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">Property</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span><span class="w"> </span><span class="n">enabled</span><span class="p">,</span><span class="w"> </span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">valueFunc</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="na">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">enabled</span><span class="p">;</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="na">valueFunc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">valueFunc</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">name</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">Tag</span><span class="w"> </span><span class="nf">createTag</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">enabled</span><span class="p">.</span><span class="na">get</span><span class="p">()</span>
+<span class="w">          </span><span class="o">?</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BasicTag</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">valueFunc</span><span class="p">.</span><span class="na">get</span><span class="p">())</span>
+<span class="w">          </span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
-
-<p>}</p>
-<p>public Response handle(Request request) {
-    fillInContext(request);
-    Response response = process(request);
-    fillInContext(response);</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Update the counter, the placeholders will be resolved when the activity, in</span>
-<span class="c1">// this case the increment is called.</span>
-<span class="n">rps</span><span class="p">.</span><span class="n">increment</span><span class="p">();</span>
-<span class="k">return</span><span class="w"> </span><span class="n">response</span><span class="p">;</span>
-</code></pre></div>
-
-<p>}</p>
-<p>// Tag factory that can be controlled with an enabled property.
-  private static class DetailedDimension implements TagFactory {</p>
-<div class="codehilite"><pre><span></span><code><span class="n">private</span><span class="w"> </span><span class="n">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
-<span class="n">private</span><span class="w"> </span><span class="n">final</span><span class="w"> </span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">valueFunc</span><span class="p">;</span>
-
-<span class="n">DetailedDimension</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">Property</span><span class="o">&lt;</span><span class="k">Boolean</span><span class="o">&gt;</span><span class="w"> </span><span class="n">enabled</span><span class="p">,</span><span class="w"> </span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">valueFunc</span><span class="p">)</span><span class="w"> </span><span class="err">{</span>
-<span class="w">  </span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
-<span class="w">  </span><span class="n">this</span><span class="p">.</span><span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">enabled</span><span class="p">;</span>
-<span class="w">  </span><span class="n">this</span><span class="p">.</span><span class="n">valueFunc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">valueFunc</span><span class="p">;</span>
-<span class="err">}</span>
-
-<span class="nv">@Override</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">()</span><span class="w"> </span><span class="err">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
-<span class="err">}</span>
-
-<span class="nv">@Override</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">Tag</span><span class="w"> </span><span class="n">createTag</span><span class="p">()</span><span class="w"> </span><span class="err">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">enabled</span><span class="p">.</span><span class="k">get</span><span class="p">()</span>
-<span class="w">      </span><span class="vm">?</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BasicTag</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">valueFunc</span><span class="p">.</span><span class="k">get</span><span class="p">())</span>
-<span class="w">      </span><span class="err">:</span><span class="w"> </span><span class="k">null</span><span class="p">;</span>
-<span class="err">}</span>
-</code></pre></div>
-
-<p>}
-}
-```</p>
 
 
 
@@ -10690,10 +10691,10 @@ public class Server {</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

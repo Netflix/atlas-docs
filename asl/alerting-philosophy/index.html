@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10793,18 +10793,21 @@ doesn't fire, then it should be easy to check and see what happened. The more
 complicated an alert condition becomes, the harder it is to understand and debug.</p>
 <p>It is recommended to keep alert rules as a simple expression with a threshold and
 number of occurrences. An example of this is the following rule:</p>
-<p><code>CPU Usage &gt; 80% for at least 5 minutes</code></p>
+<div class="highlight"><pre><span></span><code>CPU Usage &gt; 80% for at least 5 minutes
+</code></pre></div>
 <p>Multiple signals should only be combined if it improves the effectiveness of the
 alert. For example, what is an appropriate threshold for the number of requests
 that have error responses? What happens to that threshold if your cluster auto-scales?
 It is more effective to define the threshold as a percentage of total requests:</p>
-<p><code>(Num Errors / Num Total) &gt; 0.01 for at least 5 minutes</code></p>
+<div class="highlight"><pre><span></span><code>(Num Errors / Num Total) &gt; 0.01 for at least 5 minutes
+</code></pre></div>
 <p>In some cases, a low volume can make the percentages less meaningful and result
 in false positives. For example, if your daily traffic pattern follows a sine curve,
 then the troughs may not represent a meaningful error percentage. Another example
 might be during failover exercises, if traffic has been failed over to another
 cluster. One way to compensate for this is to check the failure rate and overall volume:</p>
-<p><code>Percentage of Failures &gt; X AND Volume &gt; Y</code></p>
+<div class="highlight"><pre><span></span><code>Percentage of Failures &gt; X AND Volume &gt; Y
+</code></pre></div>
 <p>As a general rule, bias towards simplicity. If you are creating more complex
 expressions, then stop and think about why that complexity is needed. Are there
 other signals available that are easier to use? Can the application be changed
@@ -10892,7 +10895,8 @@ service which will not trigger for the STARTING state used during application
 initialization.</p>
 <p>For the second condition, you would need to check for a disparity between the
 published discovery state and the healthcheck state:</p>
-<p><code>(DiscoveryStatus is UP) AND (Healthcheck != 200) for N minutes</code></p>
+<div class="highlight"><pre><span></span><code>(DiscoveryStatus is UP) AND (Healthcheck != 200) for N minutes
+</code></pre></div>
 <p>Note, unless you really need to do this it is probably better to just look at
 the healthcheck and have the num occurrences set to be longer than the typical
 startup time.</p>
@@ -10931,7 +10935,8 @@ there is no activity within an ASG, then it will not impact the signal.</p>
 <p>Metrics libraries like Spectator send both a totalTime and count measurement
 separately to the backend. This allows the average to be computed using a simple
 sum aggregate with division:</p>
-<p><code>Sum(totalTime per instance in cluster) / Sum(count per instance in cluster)</code></p>
+<div class="highlight"><pre><span></span><code>Sum(totalTime per instance in cluster) / Sum(count per instance in cluster)
+</code></pre></div>
 <p>This calculation demonstrates how instances that are not receiving traffic will
 not contribute anything to the sums.</p>
 <h2 id="think-about-failure">Think About Failure<a class="headerlink" href="#think-about-failure" title="Permanent link">&para;</a></h2>
@@ -11051,10 +11056,10 @@ The advantages of doing this are:</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10693,16 +10693,16 @@ a set of measurements about your application.</p>
 <p>It is recommended for libraries to write code against the <a href="https://static.javadoc.io/com.netflix.spectator/spectator-api/0.101.0/com/netflix/spectator/api/Registry.html">Registry</a> interface and allow the
 implementation to get injected by the user of the library. The simplest way is to accept the
 Registry via the constructor, for example:</p>
-<p><code>java
-public class HttpServer {
-  public HttpServer(Registry registry) {
-    // use registry to collect measurements
-  }
-}</code></p>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HttpServer</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">HttpServer</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// use registry to collect measurements</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>The user of the class can then provide the implementation:</p>
-<p><code>java
-Registry registry = new DefaultRegistry();
-HttpServer server = new HttpServer(registry);</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DefaultRegistry</span><span class="p">();</span>
+<span class="n">HttpServer</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpServer</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+</code></pre></div>
 <p>More complete examples can be found on the <a href="../../testing/">testing page</a> or in the
 <a href="https://github.com/brharrington/spectator-examples">spectator-examples repo</a>.</p>
 <h2 id="working-with-ids">Working with Ids<a class="headerlink" href="#working-with-ids" title="Permanent link">&para;</a></h2>
@@ -10712,41 +10712,43 @@ consist of a name and set of tags. Ids will be consumed many times by users afte
 been reported, so they should be chosen with some care and thought about how they will get used.
 See the <a href="../../../../../concepts/naming/">conventions page</a> for some general guidelines.</p>
 <p>Ids are created via the Registry, for example:</p>
-<p><code>java
-Id id = registry.createId("server.requestCount");</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">Id</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;server.requestCount&quot;</span><span class="p">);</span>
+</code></pre></div>
 <p>The ids are immutable, so they can be freely passed around and used in a concurrent context.
 Tags can be added when an id is created:</p>
-<p><code>java
-Id id = registry.createId(
-    "server.requestCount",
-    "status", "2xx",
-    "method", "GET"
-);</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">Id</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;server.requestCount&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2xx&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;method&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GET&quot;</span>
+<span class="p">);</span>
+</code></pre></div>
 <p>Or by using <code>withTag</code> and <code>withTags</code> on an existing id:</p>
-<p>```java
-public class HttpServer {
-  private final Id baseId;</p>
-<p>public HttpServer(Registry registry) {
-    baseId = registry.createId("server.requestCount");
-  }</p>
-<p>private void handleRequestComplete(HttpRequest req, HttpResponse res) {
-    // Remember Id is immutable, withTags will return a copy with the
-    // the additional metadata
-    Id reqId = baseId.withTags(
-      "status", res.getStatus(),
-      "method", req.getMethod().name());
-    registry.counter(reqId).increment();
-  }</p>
-<p>private void handleRequestError(HttpRequest req, Throwable t) {
-    // Can also be added individually using <code>withTag</code>. However, it is better
-    // for performance to batch modifications using <code>withTags</code>.
-    Id reqId = baseId
-      .withTag("error",  t.getClass().getSimpleName())
-      .withTag("method", req.getMethod().name());
-    registry.counter(reqId).increment();
-  }
-}
-```</p>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HttpServer</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="n">baseId</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">HttpServer</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">baseId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;server.requestCount&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">handleRequestComplete</span><span class="p">(</span><span class="n">HttpRequest</span><span class="w"> </span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">HttpResponse</span><span class="w"> </span><span class="n">res</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Remember Id is immutable, withTags will return a copy with the</span>
+<span class="w">    </span><span class="c1">// the additional metadata</span>
+<span class="w">    </span><span class="n">Id</span><span class="w"> </span><span class="n">reqId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">baseId</span><span class="p">.</span><span class="na">withTags</span><span class="p">(</span>
+<span class="w">      </span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="p">.</span><span class="na">getStatus</span><span class="p">(),</span>
+<span class="w">      </span><span class="s">&quot;method&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="na">getMethod</span><span class="p">().</span><span class="na">name</span><span class="p">());</span>
+<span class="w">    </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="n">reqId</span><span class="p">).</span><span class="na">increment</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">handleRequestError</span><span class="p">(</span><span class="n">HttpRequest</span><span class="w"> </span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Can also be added individually using `withTag`. However, it is better</span>
+<span class="w">    </span><span class="c1">// for performance to batch modifications using `withTags`.</span>
+<span class="w">    </span><span class="n">Id</span><span class="w"> </span><span class="n">reqId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">baseId</span>
+<span class="w">      </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">,</span><span class="w">  </span><span class="n">t</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getSimpleName</span><span class="p">())</span>
+<span class="w">      </span><span class="p">.</span><span class="na">withTag</span><span class="p">(</span><span class="s">&quot;method&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="na">getMethod</span><span class="p">().</span><span class="na">name</span><span class="p">());</span>
+<span class="w">    </span><span class="n">registry</span><span class="p">.</span><span class="na">counter</span><span class="p">(</span><span class="n">reqId</span><span class="p">).</span><span class="na">increment</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <h2 id="collecting-measurements">Collecting Measurements<a class="headerlink" href="#collecting-measurements" title="Permanent link">&para;</a></h2>
 <p>Once you have an id, the <a href="https://static.javadoc.io/com.netflix.spectator/spectator-api/0.101.0/com/netflix/spectator/api/Registry.html">Registry</a> can be used to get an instance of a <a href="https://static.javadoc.io/com.netflix.spectator/spectator-api/0.101.0/com/netflix/spectator/api/Meter.html">Meter</a> to record a
 measurement. Meters can roughly be categorized in two groups:</p>
@@ -10775,18 +10777,18 @@ when that the appender is being used. By using the Global Registry, the logging 
 can proceed before the Spectator initialization in the application. Though any measurements
 taken before a Registry instance has been added will be lost.</p>
 <p>The Global Registry is accessed using:</p>
-<p><code>java
-Registry registry = Spectator.globalRegistry();</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Spectator</span><span class="p">.</span><span class="na">globalRegistry</span><span class="p">();</span>
+</code></pre></div>
 <p>By default, it will not record anything. For a specific registry instance you can choose to
 configure it to work with the Global Registry by calling <code>add</code>:</p>
-<p>```java
-public void init() {
-  Registry registry = // Choose an appropriate implementation</p>
-<p>// Add it to the global registry so it will receive
-  // any activity on the global registry
-  Spectator.globalRegistry().add(registry);
-}
-```</p>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">init</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="c1">// Choose an appropriate implementation</span>
+
+<span class="w">  </span><span class="c1">// Add it to the global registry so it will receive</span>
+<span class="w">  </span><span class="c1">// any activity on the global registry</span>
+<span class="w">  </span><span class="n">Spectator</span><span class="p">.</span><span class="na">globalRegistry</span><span class="p">().</span><span class="na">add</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>Any measurements taken while no Registries are added to the global instance will be lost. If
 multiple Registries are added, all will receive updates made to the Global Registry.</p>
 
@@ -10838,10 +10840,10 @@ multiple Registries are added, all will receive updates made to the Global Regis
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

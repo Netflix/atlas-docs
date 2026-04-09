@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10558,23 +10558,25 @@ allowing for arbitrary slicing and dicing based on dimensions.</p>
 up to 300X that of a standard Timer. Be diligent about any additional dimensions added to Percentile
 Timers and ensure that they have a small bounded cardinality.</p>
 <p>Call <code>record()</code> with a value:</p>
-<p>```python
-from spectator import Registry</p>
-<p>registry = Registry()
-registry.pct_timer("server.requestLatency").record(0.01)</p>
-<p>request_latency = registry.new_id("server.requestLatency")
-registry.pct_timer_with_id(request_latency).record(0.01)
-```</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">spectator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registry</span>
+
+<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">pct_timer</span><span class="p">(</span><span class="s2">&quot;server.requestLatency&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="n">request_latency</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">new_id</span><span class="p">(</span><span class="s2">&quot;server.requestLatency&quot;</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">pct_timer_with_id</span><span class="p">(</span><span class="n">request_latency</span><span class="p">)</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+</code></pre></div>
 <p>A <code>StopWatch</code> class is available, which may be used as a <a href="https://docs.python.org/3/reference/datamodel.html#context-managers">Context Manager</a> to automatically record
 the number of seconds that have elapsed while executing a block of code:</p>
-<p>```python
-import time
-from spectator import Registry, StopWatch</p>
-<p>registry = Registry()
-thread_sleep = registry.pct_timer("thread.sleep")</p>
-<p>with StopWatch(thread_sleep):
-    time.sleep(5)
-```</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spectator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registry</span><span class="p">,</span> <span class="n">StopWatch</span>
+
+<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
+<span class="n">thread_sleep</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">pct_timer</span><span class="p">(</span><span class="s2">&quot;thread.sleep&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">StopWatch</span><span class="p">(</span><span class="n">thread_sleep</span><span class="p">):</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
 <h2 id="units">Units<a class="headerlink" href="#units" title="Permanent link">&para;</a></h2>
 <p>See <a href="../timer/#units">Timer Units</a> for an explanation.</p>
 
@@ -10626,10 +10628,10 @@ thread_sleep = registry.pct_timer("thread.sleep")</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10463,21 +10463,23 @@ reporting the number of seconds since the last time recorded, for as long as the
 process runs. The purpose of this metric type is to enable users to more easily implement the
 Time Since Last Success alerting pattern.</p>
 <p>To set a specific time as the last success:</p>
-<p>```python
-from spectator import Registry</p>
-<p>registry = Registry()
-registry.age_gauge("time.sinceLastSuccess").set(1611081000)</p>
-<p>last_success = registry.new_id("time.sinceLastSuccess")
-registry.age_gauge_with_id(last_success).set(1611081000)
-```</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">spectator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registry</span>
+
+<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">age_gauge</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1611081000</span><span class="p">)</span>
+
+<span class="n">last_success</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">new_id</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">age_gauge_with_id</span><span class="p">(</span><span class="n">last_success</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1611081000</span><span class="p">)</span>
+</code></pre></div>
 <p>To set <code>now()</code> as the last success:</p>
-<p>```python
-from spectator import Registry</p>
-<p>registry = Registry()
-registry.age_gauge("time.sinceLastSuccess").now()</p>
-<p>last_success = registry.new_id("time.sinceLastSuccess")
-registry.age_gauge_with_id(last_success).now()
-```</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">spectator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registry</span>
+
+<span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">age_gauge</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="n">last_success</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">new_id</span><span class="p">(</span><span class="s2">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">age_gauge_with_id</span><span class="p">(</span><span class="n">last_success</span><span class="p">)</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</code></pre></div>
 <p>By default, a maximum of <code>1000</code> Age Gauges are allowed per <code>spectatord</code> process, because there is no
 mechanism for cleaning them up. This value may be tuned with the <code>--age_gauge_limit</code> flag on the
 <code>spectatord</code> binary.</p>
@@ -10485,10 +10487,12 @@ mechanism for cleaning them up. This value may be tuned with the <code>--age_gau
 you need to delete and re-create them for any reason, then you can use the <a href="../../../../agent/usage/#admin-server">SpectatorD admin server</a>
 to accomplish this task. You can delete all Age Gauges or a single Age Gauge.</p>
 <p><strong>Example:</strong></p>
-<p><code>curl -X DELETE \
-http://localhost:1234/metrics/A</code></p>
-<p><code>curl -X DELETE \
-http://localhost:1234/metrics/A/fooIsTheName,some.tag=val1,some.otherTag=val2</code></p>
+<div class="highlight"><pre><span></span><code>curl -X DELETE \
+http://localhost:1234/metrics/A
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>curl -X DELETE \
+http://localhost:1234/metrics/A/fooIsTheName,some.tag=val1,some.otherTag=val2
+</code></pre></div>
 
 
 
@@ -10538,10 +10542,10 @@ http://localhost:1234/metrics/A/fooIsTheName,some.tag=val1,some.otherTag=val2</c
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

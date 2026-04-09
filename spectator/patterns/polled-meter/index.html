@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10464,16 +10464,17 @@
 <p>Helper for configuring a meter that will receive a value by regularly polling the source in the
 background.</p>
 <p>Example usage:</p>
-<p>```java
-Registry registry = ...
-AtomicLong connections = PolledMeter.using(registry)
-  .withName("server.currentConnections")
-  .monitorValue(new AtomicLong());</p>
-<p>// When a connection is added
-connections.incrementAndGet();</p>
-<p>// When a connection is removed
-connections.decrementAndGet();
-```</p>
+<div class="highlight"><pre><span></span><code><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span>
+<span class="n">AtomicLong</span><span class="w"> </span><span class="n">connections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;server.currentConnections&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">monitorValue</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AtomicLong</span><span class="p">());</span>
+
+<span class="c1">// When a connection is added</span>
+<span class="n">connections</span><span class="p">.</span><span class="na">incrementAndGet</span><span class="p">();</span>
+
+<span class="c1">// When a connection is removed</span>
+<span class="n">connections</span><span class="p">.</span><span class="na">decrementAndGet</span><span class="p">();</span>
+</code></pre></div>
 <p>Polling frequency will depend on the underlying Registry implementation, but users should
 assume it will be frequently checked and that the provided function is cheap. Users should
 keep in mind that polling will not capture all activity, just sample it at some frequency.
@@ -10539,10 +10540,10 @@ threads. For other behaviors, manage it on the user side and avoid multiple regi
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

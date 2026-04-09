@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10600,18 +10600,18 @@ group the data.</p>
 <p>A set of key value pairs associated with a <a href="#time-series">time series</a>. Each time series must have
 at least one tag with a key of <code>name</code>. To make it more concrete, here is an example of a tag set
 represented as a JSON object:</p>
-<p><code>json
-{
-  "name":       "server.requestCount",
-  "status":     "200",
-  "endpoint":   "api",
-  "nf.app":     "fooserver",
-  "nf.cluster": "fooserver-main",
-  "nf.stack":   "main",
-  "nf.region":  "us-east-1",
-  "nf.zone":    "us-east-1c",
-  "nf.node":    "i-12345678"
-}</code></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w">       </span><span class="s2">&quot;server.requestCount&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w">     </span><span class="s2">&quot;200&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;endpoint&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;api&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nf.app&quot;</span><span class="p">:</span><span class="w">     </span><span class="s2">&quot;fooserver&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nf.cluster&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fooserver-main&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nf.stack&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;main&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nf.region&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;us-east-1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nf.zone&quot;</span><span class="p">:</span><span class="w">    </span><span class="s2">&quot;us-east-1c&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nf.node&quot;</span><span class="p">:</span><span class="w">    </span><span class="s2">&quot;i-12345678&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>Usage of tags typically falls into two categories:</p>
 <ol>
 <li><strong>Namespace.</strong> These are tags necessary to qualify a name, so that it can be meaningfully
@@ -10643,8 +10643,9 @@ received the counter is incremented. There is not one data point per increment, 
 represents the behavior over a span of time called the <a href="#step-size">step size</a>. The client library
 will sample the counter once for each interval and report a single value.</p>
 <p>Suppose that each circle in the diagram below represents a request:</p>
-<p><code>1:00       1:01       1:02       1:03
- ├─●────●●●─┼──────────┼──●───────┤</code></p>
+<div class="highlight"><pre><span></span><code>1:00       1:01       1:02       1:03
+ ├─●────●●●─┼──────────┼──●───────┤
+</code></pre></div>
 <p>There are 5 requests shown, 4 from 1:00 to 1:01, and 1 from 1:02 to 1:03. Assuming all requests
 incremented the same time series, i.e. all other dimensions such as status code are the same, then
 this would result in three data points. For counters values are always a rate per second, so for
@@ -10725,10 +10726,10 @@ boundaries, it will get <a href="../normalization/">normalized</a> to the bounda
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

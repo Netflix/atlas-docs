@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10803,52 +10803,51 @@ metric lifetimes, and route metrics to the correct backend.</p>
 however, the text-based protocol was designed to make it easy for community-supported clients
 to be developed. It is also easy to use in shell scripts with common command line tools.</p>
 <h2 id="command-line-configuration-flags">Command Line Configuration Flags<a class="headerlink" href="#command-line-configuration-flags" title="Permanent link">&para;</a></h2>
-<p>```shell
-spectatord --help
-spectatord: A daemon that listens for metrics and reports them to Atlas.</p>
-<div class="codehilite"><pre><span></span><code><span class="o">--</span><span class="n">admin_port</span><span class="w"> </span><span class="p">(</span><span class="n">Port</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">admin</span><span class="w"> </span><span class="n">server</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="mh">1234</span><span class="p">;</span>
-<span class="o">--</span><span class="n">age_gauge_limit</span><span class="w"> </span><span class="p">(</span><span class="n">The</span><span class="w"> </span><span class="n">maximum</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="n">gauges</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">reported</span><span class="w"> </span><span class="n">by</span>
-<span class="w">  </span><span class="n">this</span><span class="w"> </span><span class="n">process</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="mh">1000</span><span class="p">;</span>
-<span class="o">--</span><span class="n">common_tags</span><span class="w"> </span><span class="p">(</span><span class="n">Common</span><span class="w"> </span><span class="nl">tags:</span><span class="w"> </span><span class="n">nf</span><span class="p">.</span><span class="n">app</span><span class="o">=</span><span class="n">app</span><span class="p">,</span><span class="n">nf</span><span class="p">.</span><span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">.</span><span class="w"> </span><span class="n">Override</span><span class="w"> </span><span class="n">the</span>
-<span class="w">  </span><span class="k">default</span><span class="w"> </span><span class="n">common</span><span class="w"> </span><span class="n">tags</span><span class="p">.</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">empty</span><span class="p">,</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">spectatord</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">set</span><span class="p">.</span>
-<span class="w">  </span><span class="n">This</span><span class="w"> </span><span class="n">flag</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">only</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">experts</span><span class="w"> </span><span class="n">who</span><span class="w"> </span><span class="n">understand</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">risks</span><span class="p">.);</span>
-<span class="w">  </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
-<span class="o">--</span><span class="n">debug</span><span class="w"> </span><span class="p">(</span><span class="n">Debug</span><span class="w"> </span><span class="n">spectatord</span><span class="p">.</span><span class="w"> </span><span class="n">All</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">sent</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">dev</span><span class="w"> </span><span class="n">aggregator</span><span class="w"> </span><span class="k">and</span>
-<span class="w">  </span><span class="n">dropped</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
-<span class="o">--</span><span class="n">enable_external</span><span class="w"> </span><span class="p">(</span><span class="n">Enable</span><span class="w"> </span><span class="n">external</span><span class="w"> </span><span class="n">publishing</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
-<span class="o">--</span><span class="n">enable_socket</span><span class="w"> </span><span class="p">(</span><span class="n">Enable</span><span class="w"> </span><span class="n">UNIX</span><span class="w"> </span><span class="n">domain</span><span class="w"> </span><span class="n">socket</span><span class="w"> </span><span class="n">support</span><span class="p">.</span><span class="w"> </span><span class="n">Default</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">true</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">Linux</span>
-<span class="w">  </span><span class="k">and</span><span class="w"> </span><span class="n">false</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">MacOS</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">Windows</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
-<span class="o">--</span><span class="n">enable_statsd</span><span class="w"> </span><span class="p">(</span><span class="n">Enable</span><span class="w"> </span><span class="n">statsd</span><span class="w"> </span><span class="n">support</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
-<span class="o">--</span><span class="n">ipv4_only</span><span class="w"> </span><span class="p">(</span><span class="n">Enable</span><span class="w"> </span><span class="n">IPv4</span><span class="o">-</span><span class="n">only</span><span class="w"> </span><span class="n">UDP</span><span class="w"> </span><span class="n">listeners</span><span class="p">.</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">option</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">only</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">used</span>
-<span class="w">  </span><span class="n">in</span><span class="w"> </span><span class="n">environments</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">impossible</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">IPv6</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
-<span class="o">--</span><span class="n">metatron_dir</span><span class="w"> </span><span class="p">(</span><span class="n">Path</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Metatron</span><span class="w"> </span><span class="n">certificates</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="k">for</span>
-<span class="w">  </span><span class="n">external</span><span class="w"> </span><span class="n">publishing</span><span class="p">.</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">well</span><span class="o">-</span><span class="n">known</span><span class="w"> </span><span class="n">directories</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">searched</span><span class="w"> </span><span class="n">by</span>
-<span class="w">  </span><span class="k">default</span><span class="p">.</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">option</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">only</span><span class="w"> </span><span class="n">necessary</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">certificates</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">an</span>
-<span class="w">  </span><span class="n">unusual</span><span class="w"> </span><span class="n">location</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
-<span class="o">--</span><span class="n">meter_ttl</span><span class="w"> </span><span class="p">(</span><span class="n">Meter</span><span class="w"> </span><span class="nl">TTL:</span><span class="w"> </span><span class="n">expire</span><span class="w"> </span><span class="n">meters</span><span class="w"> </span><span class="n">after</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">period</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">inactivity</span><span class="p">.);</span>
-<span class="w">  </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="mh">15</span><span class="n">m</span><span class="p">;</span>
-<span class="o">--</span><span class="n">no_common_tags</span><span class="w"> </span><span class="p">(</span><span class="n">No</span><span class="w"> </span><span class="n">common</span><span class="w"> </span><span class="n">tags</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">provided</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">metrics</span><span class="p">.</span><span class="w"> </span><span class="n">Since</span><span class="w"> </span><span class="n">no</span>
-<span class="w">  </span><span class="n">common</span><span class="w"> </span><span class="n">tags</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">available</span><span class="p">,</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">internal</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="n">metrics</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">recorded</span><span class="p">.</span>
-<span class="w">  </span><span class="n">Only</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">feature</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">special</span><span class="w"> </span><span class="n">cases</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">absolutely</span><span class="w"> </span><span class="n">necessary</span>
-<span class="w">  </span><span class="n">to</span><span class="w"> </span><span class="n">override</span><span class="w"> </span><span class="n">common</span><span class="w"> </span><span class="n">tags</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">nf</span><span class="p">.</span><span class="n">app</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">only</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">secondary</span>
-<span class="w">  </span><span class="n">spectatord</span><span class="w"> </span><span class="n">process</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
-<span class="o">--</span><span class="n">port</span><span class="w"> </span><span class="p">(</span><span class="n">Port</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">UDP</span><span class="w"> </span><span class="n">socket</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="mh">1234</span><span class="p">;</span>
-<span class="o">--</span><span class="n">process_name</span><span class="w"> </span><span class="p">(</span><span class="n">The</span><span class="w"> </span><span class="n">nf</span><span class="p">.</span><span class="n">process</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">added</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">internal</span>
-<span class="w">  </span><span class="n">status</span><span class="w"> </span><span class="n">metrics</span><span class="p">.</span><span class="w"> </span><span class="n">We</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">corresponding</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">because</span>
-<span class="w">  </span><span class="n">only</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">internal</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="n">metrics</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">other</span>
-<span class="w">  </span><span class="n">metrics</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">exempt</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;spectatord&quot;</span><span class="p">;</span>
-<span class="o">--</span><span class="n">socket_path</span><span class="w"> </span><span class="p">(</span><span class="n">Path</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">UNIX</span><span class="w"> </span><span class="n">domain</span><span class="w"> </span><span class="n">socket</span><span class="p">.);</span>
-<span class="w">  </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;/run/spectatord/spectatord.unix&quot;</span><span class="p">;</span>
-<span class="o">--</span><span class="n">statsd_port</span><span class="w"> </span><span class="p">(</span><span class="n">Port</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">statsd</span><span class="w"> </span><span class="n">socket</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="mh">8125</span><span class="p">;</span>
-<span class="o">--</span><span class="n">uri</span><span class="w"> </span><span class="p">(</span><span class="n">Optional</span><span class="w"> </span><span class="n">override</span><span class="w"> </span><span class="n">URI</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">aggregator</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
-<span class="o">--</span><span class="n">verbose</span><span class="w"> </span><span class="p">(</span><span class="n">Use</span><span class="w"> </span><span class="n">verbose</span><span class="w"> </span><span class="n">logging</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
-<span class="o">--</span><span class="n">verbose_http</span><span class="w"> </span><span class="p">(</span><span class="n">Output</span><span class="w"> </span><span class="n">debug</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">HTTP</span><span class="w"> </span><span class="n">requests</span><span class="p">.);</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code>spectatord<span class="w"> </span>--help
+spectatord:<span class="w"> </span>A<span class="w"> </span>daemon<span class="w"> </span>that<span class="w"> </span>listens<span class="w"> </span><span class="k">for</span><span class="w"> </span>metrics<span class="w"> </span>and<span class="w"> </span>reports<span class="w"> </span>them<span class="w"> </span>to<span class="w"> </span>Atlas.
 
-<p>Try --helpfull to get a list of all flags or --help=substring shows help for
-flags which include specified substring in either in the name, or description or
+<span class="w">    </span>--admin_port<span class="w"> </span><span class="o">(</span>Port<span class="w"> </span>number<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>admin<span class="w"> </span>server.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span><span class="m">1234</span><span class="p">;</span>
+<span class="w">    </span>--age_gauge_limit<span class="w"> </span><span class="o">(</span>The<span class="w"> </span>maximum<span class="w"> </span>number<span class="w"> </span>of<span class="w"> </span>age<span class="w"> </span>gauges<span class="w"> </span>that<span class="w"> </span>may<span class="w"> </span>be<span class="w"> </span>reported<span class="w"> </span>by
+<span class="w">      </span>this<span class="w"> </span>process.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span><span class="m">1000</span><span class="p">;</span>
+<span class="w">    </span>--common_tags<span class="w"> </span><span class="o">(</span>Common<span class="w"> </span>tags:<span class="w"> </span>nf.app<span class="o">=</span>app,nf.cluster<span class="o">=</span>cluster.<span class="w"> </span>Override<span class="w"> </span>the
+<span class="w">      </span>default<span class="w"> </span>common<span class="w"> </span>tags.<span class="w"> </span>If<span class="w"> </span>empty,<span class="w"> </span><span class="k">then</span><span class="w"> </span>spectatord<span class="w"> </span>will<span class="w"> </span>use<span class="w"> </span>the<span class="w"> </span>default<span class="w"> </span>set.
+<span class="w">      </span>This<span class="w"> </span>flag<span class="w"> </span>should<span class="w"> </span>only<span class="w"> </span>be<span class="w"> </span>used<span class="w"> </span>by<span class="w"> </span>experts<span class="w"> </span>who<span class="w"> </span>understand<span class="w"> </span>the<span class="w"> </span>risks.<span class="o">)</span><span class="p">;</span>
+<span class="w">      </span>default:<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+<span class="w">    </span>--debug<span class="w"> </span><span class="o">(</span>Debug<span class="w"> </span>spectatord.<span class="w"> </span>All<span class="w"> </span>values<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>sent<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>dev<span class="w"> </span>aggregator<span class="w"> </span>and
+<span class="w">      </span>dropped.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+<span class="w">    </span>--enable_external<span class="w"> </span><span class="o">(</span>Enable<span class="w"> </span>external<span class="w"> </span>publishing.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+<span class="w">    </span>--enable_socket<span class="w"> </span><span class="o">(</span>Enable<span class="w"> </span>UNIX<span class="w"> </span>domain<span class="w"> </span>socket<span class="w"> </span>support.<span class="w"> </span>Default<span class="w"> </span>is<span class="w"> </span><span class="nb">true</span><span class="w"> </span>on<span class="w"> </span>Linux
+<span class="w">      </span>and<span class="w"> </span><span class="nb">false</span><span class="w"> </span>on<span class="w"> </span>MacOS<span class="w"> </span>and<span class="w"> </span>Windows.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+<span class="w">    </span>--enable_statsd<span class="w"> </span><span class="o">(</span>Enable<span class="w"> </span>statsd<span class="w"> </span>support.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+<span class="w">    </span>--ipv4_only<span class="w"> </span><span class="o">(</span>Enable<span class="w"> </span>IPv4-only<span class="w"> </span>UDP<span class="w"> </span>listeners.<span class="w"> </span>This<span class="w"> </span>option<span class="w"> </span>should<span class="w"> </span>only<span class="w"> </span>be<span class="w"> </span>used
+<span class="w">      </span><span class="k">in</span><span class="w"> </span>environments<span class="w"> </span>where<span class="w"> </span>it<span class="w"> </span>is<span class="w"> </span>impossible<span class="w"> </span>to<span class="w"> </span>run<span class="w"> </span>IPv6.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+<span class="w">    </span>--metatron_dir<span class="w"> </span><span class="o">(</span>Path<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>Metatron<span class="w"> </span>certificates,<span class="w"> </span>which<span class="w"> </span>are<span class="w"> </span>used<span class="w"> </span><span class="k">for</span>
+<span class="w">      </span>external<span class="w"> </span>publishing.<span class="w"> </span>A<span class="w"> </span>number<span class="w"> </span>of<span class="w"> </span>well-known<span class="w"> </span>directories<span class="w"> </span>are<span class="w"> </span>searched<span class="w"> </span>by
+<span class="w">      </span>default.<span class="w"> </span>This<span class="w"> </span>option<span class="w"> </span>is<span class="w"> </span>only<span class="w"> </span>necessary<span class="w"> </span><span class="k">if</span><span class="w"> </span>your<span class="w"> </span>certificates<span class="w"> </span>are<span class="w"> </span><span class="k">in</span><span class="w"> </span>an
+<span class="w">      </span>unusual<span class="w"> </span>location.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+<span class="w">    </span>--meter_ttl<span class="w"> </span><span class="o">(</span>Meter<span class="w"> </span>TTL:<span class="w"> </span>expire<span class="w"> </span>meters<span class="w"> </span>after<span class="w"> </span>this<span class="w"> </span>period<span class="w"> </span>of<span class="w"> </span>inactivity.<span class="o">)</span><span class="p">;</span>
+<span class="w">      </span>default:<span class="w"> </span>15m<span class="p">;</span>
+<span class="w">    </span>--no_common_tags<span class="w"> </span><span class="o">(</span>No<span class="w"> </span>common<span class="w"> </span>tags<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>provided<span class="w"> </span><span class="k">for</span><span class="w"> </span>metrics.<span class="w"> </span>Since<span class="w"> </span>no
+<span class="w">      </span>common<span class="w"> </span>tags<span class="w"> </span>are<span class="w"> </span>available,<span class="w"> </span>no<span class="w"> </span>internal<span class="w"> </span>status<span class="w"> </span>metrics<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>recorded.
+<span class="w">      </span>Only<span class="w"> </span>use<span class="w"> </span>this<span class="w"> </span>feature<span class="w"> </span><span class="k">for</span><span class="w"> </span>special<span class="w"> </span>cases<span class="w"> </span>where<span class="w"> </span>it<span class="w"> </span>is<span class="w"> </span>absolutely<span class="w"> </span>necessary
+<span class="w">      </span>to<span class="w"> </span>override<span class="w"> </span>common<span class="w"> </span>tags<span class="w"> </span>such<span class="w"> </span>as<span class="w"> </span>nf.app,<span class="w"> </span>and<span class="w"> </span>only<span class="w"> </span>use<span class="w"> </span>it<span class="w"> </span>with<span class="w"> </span>a<span class="w"> </span>secondary
+<span class="w">      </span>spectatord<span class="w"> </span>process.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+<span class="w">    </span>--port<span class="w"> </span><span class="o">(</span>Port<span class="w"> </span>number<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>UDP<span class="w"> </span>socket.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span><span class="m">1234</span><span class="p">;</span>
+<span class="w">    </span>--process_name<span class="w"> </span><span class="o">(</span>The<span class="w"> </span>nf.process<span class="w"> </span>tag<span class="w"> </span>value<span class="w"> </span>that<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>added<span class="w"> </span>to<span class="w"> </span>internal
+<span class="w">      </span>status<span class="w"> </span>metrics.<span class="w"> </span>We<span class="w"> </span><span class="k">do</span><span class="w"> </span>not<span class="w"> </span><span class="nb">set</span><span class="w"> </span>the<span class="w"> </span>corresponding<span class="w"> </span>environment<span class="w"> </span>value,<span class="w"> </span>because
+<span class="w">      </span>only<span class="w"> </span>the<span class="w"> </span>internal<span class="w"> </span>status<span class="w"> </span>metrics<span class="w"> </span>should<span class="w"> </span>have<span class="w"> </span>this<span class="w"> </span>tag,<span class="w"> </span>and<span class="w"> </span>all<span class="w"> </span>other
+<span class="w">      </span>metrics<span class="w"> </span>should<span class="w"> </span>be<span class="w"> </span>exempt.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span><span class="s2">&quot;spectatord&quot;</span><span class="p">;</span>
+<span class="w">    </span>--socket_path<span class="w"> </span><span class="o">(</span>Path<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>UNIX<span class="w"> </span>domain<span class="w"> </span>socket.<span class="o">)</span><span class="p">;</span>
+<span class="w">      </span>default:<span class="w"> </span><span class="s2">&quot;/run/spectatord/spectatord.unix&quot;</span><span class="p">;</span>
+<span class="w">    </span>--statsd_port<span class="w"> </span><span class="o">(</span>Port<span class="w"> </span>number<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>statsd<span class="w"> </span>socket.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span><span class="m">8125</span><span class="p">;</span>
+<span class="w">    </span>--uri<span class="w"> </span><span class="o">(</span>Optional<span class="w"> </span>override<span class="w"> </span>URI<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>aggregator.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+<span class="w">    </span>--verbose<span class="w"> </span><span class="o">(</span>Use<span class="w"> </span>verbose<span class="w"> </span>logging.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+<span class="w">    </span>--verbose_http<span class="w"> </span><span class="o">(</span>Output<span class="w"> </span>debug<span class="w"> </span>info<span class="w"> </span><span class="k">for</span><span class="w"> </span>HTTP<span class="w"> </span>requests.<span class="o">)</span><span class="p">;</span><span class="w"> </span>default:<span class="w"> </span>false<span class="p">;</span>
+
+Try<span class="w"> </span>--helpfull<span class="w"> </span>to<span class="w"> </span>get<span class="w"> </span>a<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>all<span class="w"> </span>flags<span class="w"> </span>or<span class="w"> </span>--help<span class="o">=</span>substring<span class="w"> </span>shows<span class="w"> </span><span class="nb">help</span><span class="w"> </span><span class="k">for</span>
+flags<span class="w"> </span>which<span class="w"> </span>include<span class="w"> </span>specified<span class="w"> </span>substring<span class="w"> </span><span class="k">in</span><span class="w"> </span>either<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>name,<span class="w"> </span>or<span class="w"> </span>description<span class="w"> </span>or
 path.
-```</p>
+</code></pre></div>
 <h2 id="endpoints">Endpoints<a class="headerlink" href="#endpoints" title="Permanent link">&para;</a></h2>
 <p>By default, the daemon will listen on the following endpoints:</p>
 <ul>
@@ -10866,20 +10865,23 @@ for more details.</p>
 <p>:warning: In container environments, the <code>-w0</code> option may not work and <code>-w1</code> should be
 used instead.</p>
 </blockquote>
-<p><code>echo "c:server.numRequests,id=failed:1" | nc -u -w0 localhost 1234
-echo "t:server.requestLatency:0.042" | nc -u -w0 localhost 1234
-echo "d:server.responseSizes:1024" | nc -w0 -uU /run/spectatord/spectatord.unix
-echo "g:someGauge:60" | nc -w0 -uU /run/spectatord/spectatord.unix
-echo "g,300:anotherGauge:60" | nc -w0 -uU /run/spectatord/spectatord.unix
-echo "X,1543160297100:monotonic.Source:42" | nc -w0 -uU /run/spectatord/spectatord.unix
-echo "X,1543160298100:monotonic.Source:43" | nc -w0 -uU /run/spectatord/spectatord.unix
-echo "A:age.gauge:0" | nc -u -w0 localhost 1234</code></p>
+<div class="highlight"><pre><span></span><code>echo &quot;c:server.numRequests,id=failed:1&quot; | nc -u -w0 localhost 1234
+echo &quot;t:server.requestLatency:0.042&quot; | nc -u -w0 localhost 1234
+echo &quot;d:server.responseSizes:1024&quot; | nc -w0 -uU /run/spectatord/spectatord.unix
+echo &quot;g:someGauge:60&quot; | nc -w0 -uU /run/spectatord/spectatord.unix
+echo &quot;g,300:anotherGauge:60&quot; | nc -w0 -uU /run/spectatord/spectatord.unix
+echo &quot;X,1543160297100:monotonic.Source:42&quot; | nc -w0 -uU /run/spectatord/spectatord.unix
+echo &quot;X,1543160298100:monotonic.Source:43&quot; | nc -w0 -uU /run/spectatord/spectatord.unix
+echo &quot;A:age.gauge:0&quot; | nc -u -w0 localhost 1234
+</code></pre></div>
 <h2 id="message-format">Message Format<a class="headerlink" href="#message-format" title="Permanent link">&para;</a></h2>
 <p>The message sent to the server has the following format, where the <code>,options</code> and <code>,tags</code> portions
 are optional:</p>
-<p><code>metric-type,options:name,tags:value</code></p>
+<div class="highlight"><pre><span></span><code>metric-type,options:name,tags:value
+</code></pre></div>
 <p>Multiple lines may be sent in the same packet, separated by newlines (<code>\n</code>):</p>
-<p><code>echo -e "t:server.requestLatency:0.042\nd:server.responseSizes:1024" | nc -u -w0 localhost 1234</code></p>
+<div class="highlight"><pre><span></span><code>echo -e &quot;t:server.requestLatency:0.042\nd:server.responseSizes:1024&quot; | nc -u -w0 localhost 1234
+</code></pre></div>
 <h3 id="metric-types">Metric Types<a class="headerlink" href="#metric-types" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -10954,7 +10956,8 @@ string value to rollover.</p>
 <p>The metric name and tags must follow Atlas restrictions, which are described in the sections below.</p>
 <p>Tags are optional. They may be specified as comma-separated <code>key=value</code> pairs after the metric name.
 For example:</p>
-<p><code>fooIsTheName,some.tag=val1,some.otherTag=val2</code></p>
+<div class="highlight"><pre><span></span><code>fooIsTheName,some.tag=val1,some.otherTag=val2
+</code></pre></div>
 <p>See <a href="https://netflix.github.io/atlas-docs/concepts/naming/">Atlas Naming Conventions</a> for
 recommendations on naming metrics.</p>
 <h4 id="length-restrictions">Length Restrictions<a class="headerlink" href="#length-restrictions" title="Permanent link">&para;</a></h4>
@@ -11026,10 +11029,11 @@ by setting the value to an empty string.</li>
 </ul>
 </li>
 <li>Example:
-    <code>curl -X POST \
-    -d '{"mantisJobId": "foo", "mantisJobName": "bar", "mantisUser": ""}' \
-    -w " %{http_code}\n" \
-    http://localhost:1234/config/common_tags</code></li>
+    <div class="highlight"><pre><span></span><code>curl -X POST \
+-d &#39;{&quot;mantisJobId&quot;: &quot;foo&quot;, &quot;mantisJobName&quot;: &quot;bar&quot;, &quot;mantisUser&quot;: &quot;&quot;}&#39; \
+-w &quot; %{http_code}\n&quot; \
+http://localhost:1234/config/common_tags
+</code></pre></div></li>
 </ul>
 </li>
 <li><code>GET /metrics</code><ul>
@@ -11044,9 +11048,10 @@ by type.</li>
 <li><code>DELETE /metrics/A/{id}</code><ul>
 <li>Delete one AgeGauge metric from the Registry, identified by the <code>id</code>.</li>
 <li>Example:
-    <code>curl -X DELETE \
-    -w " %{http_code}\n" \
-    http://localhost:1234/metrics/A/fooIsTheName,some.tag=val1,some.otherTag=val2</code></li>
+    <div class="highlight"><pre><span></span><code>curl -X DELETE \
+-w &quot; %{http_code}\n&quot; \
+http://localhost:1234/metrics/A/fooIsTheName,some.tag=val1,some.otherTag=val2
+</code></pre></div></li>
 </ul>
 </li>
 <li><code>DELETE /metrics/g</code><ul>
@@ -11056,9 +11061,10 @@ by type.</li>
 <li><code>DELETE /metrics/g/{id}</code><ul>
 <li>Delete one Gauge metric from the Registry, identified by the <code>id</code>.</li>
 <li>Example:
-    <code>curl -X DELETE \
-    -w " %{http_code}\n" \
-    http://localhost:1234/metrics/g/fooIsTheName,some.tag=val1,some.otherTag=val2</code></li>
+    <div class="highlight"><pre><span></span><code>curl -X DELETE \
+-w &quot; %{http_code}\n&quot; \
+http://localhost:1234/metrics/g/fooIsTheName,some.tag=val1,some.otherTag=val2
+</code></pre></div></li>
 </ul>
 </li>
 </ul>
@@ -11071,10 +11077,11 @@ second when required.</p>
 batches the updates and sends a few at a time. Sending every single metric update requires a lot of
 context switching, but is something that works well for the majority of our use cases. This
 simplicity means the user does not have to maintain any local state.</p>
-<p><code>Transport          Batch Size    First 10M          Second 10M
+<div class="highlight"><pre><span></span><code>Transport          Batch Size    First 10M          Second 10M
 Unix Dgram         1             22.98s (435k rps)  20.58s (486k rps)
 Unix Dgram         8             11.46s (873k rps)   9.89s (1011k rps)
-Unix Dgram         32            10.38s (963k rps)   8.49s (1178k rps)</code></p>
+Unix Dgram         32            10.38s (963k rps)   8.49s (1178k rps)
+</code></pre></div>
 <p>The UDP transport is particularly sensitive the max receive buffer size (16MB on our systems).</p>
 <p>Our tests indicate that sending 430K rps to the UDP port did not drop packets, but if there is a
 need for higher throughput, then tweaking <code>/proc/sys/net/unix/max_dgram_qlen</code> is recommended.</p>
@@ -11127,10 +11134,10 @@ need for higher throughput, then tweaking <code>/proc/sys/net/unix/max_dgram_qle
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

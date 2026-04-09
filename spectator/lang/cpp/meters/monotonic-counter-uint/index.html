@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -74,11 +74,6 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
-      
-        
-        <a href="#include" class="md-skip">
-          Skip to content
-        </a>
       
     </div>
     <div data-md-component="announce">
@@ -7486,8 +7481,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -10443,8 +10436,6 @@
   
   
   
-    
-  
   
 </nav>
                   </div>
@@ -10464,29 +10455,30 @@
   
 
 
+  <h1>Monotonic Counter Uint</h1>
+
 <p>A Monotonic Counter (uint64) is used to measure the rate at which an event is occurring, when the
 source data is a monotonically increasing number. A minimum of two samples must be sent, in order to
 calculate a delta value and report it to the backend as a rate-per-second. A variety of networking
 metrics may be reported monotonically, and this metric type provides a convenient means of recording
 these values, at the expense of a slower time-to-first metric.</p>
 <p>Call <code>Set()</code> when an event occurs:</p>
-<p>```cpp</p>
-<h1 id="include">include <registry.h><a class="headerlink" href="#include" title="Permanent link">&para;</a></h1>
-<p>int main()
-{
-    auto config = Config(WriterConfig(WriterTypes::UDP));
-    auto r = Registry(config);</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Option 1: Directly create a Monotonic Counter uint64_t</span>
-<span class="n">auto</span><span class="w"> </span><span class="n">interfaceBytes</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateMonotonicCounterUint</span><span class="p">(</span><span class="s">&quot;iface.bytes&quot;</span><span class="p">);</span>
-<span class="n">interfaceBytes</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;registry.h&gt;</span>
 
-<span class="c1">// Option 2: Create a Monotonic Counter uint64_t from a MeterID</span>
-<span class="n">auto</span><span class="w"> </span><span class="n">interfaceBytesMeter</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateNewId</span><span class="p">(</span><span class="s">&quot;iface.bytes&quot;</span><span class="p">);</span>
-<span class="n">r</span><span class="p">.</span><span class="n">CreateMonotonicCounterUint</span><span class="p">(</span><span class="n">interfaceBytesMeter</span><span class="p">).</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Config</span><span class="p">(</span><span class="n">WriterConfig</span><span class="p">(</span><span class="n">WriterTypes</span><span class="o">::</span><span class="n">UDP</span><span class="p">));</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Registry</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Option 1: Directly create a Monotonic Counter uint64_t</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">interfaceBytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateMonotonicCounterUint</span><span class="p">(</span><span class="s">&quot;iface.bytes&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">interfaceBytes</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Option 2: Create a Monotonic Counter uint64_t from a MeterID</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">interfaceBytesMeter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">CreateNewId</span><span class="p">(</span><span class="s">&quot;iface.bytes&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">r</span><span class="p">.</span><span class="n">CreateMonotonicCounterUint</span><span class="p">(</span><span class="n">interfaceBytesMeter</span><span class="p">).</span><span class="n">Set</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
-
-<p>}
-```</p>
 
 
 
@@ -10536,10 +10528,10 @@ these values, at the expense of a slower time-to-first metric.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

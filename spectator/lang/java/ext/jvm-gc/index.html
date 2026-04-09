@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10894,34 +10894,38 @@ keep reading this section.</p>
 to 7u40. There is also a regression impacting Java 9 and higher, see <a href="https://github.com/Netflix/spectator/issues/502">#502</a> and <a href="https://bugs.openjdk.java.net/browse/JDK-8196325">JDK-8196325</a>
 for more information. For G1, it is recommended to be on the latest version available.</p>
 <h3 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h3>
-<p><code>com.netflix.spectator:spectator-ext-gc:0.101.0</code></p>
+<div class="highlight"><pre><span></span><code>com.netflix.spectator:spectator-ext-gc:0.101.0
+</code></pre></div>
 <h3 id="start-reporting">Start Reporting<a class="headerlink" href="#start-reporting" title="Permanent link">&para;</a></h3>
 <p>Then in the initialization for the application:</p>
-<p><code>java
-import com.netflix.spectator.gc.GcLogger;
-...
-// Keep a single instance of the logger
-GcLogger gc = new GcLogger();
-gc.start(null);</code></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.spectator.gc.GcLogger</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="c1">// Keep a single instance of the logger</span>
+<span class="n">GcLogger</span><span class="w"> </span><span class="n">gc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GcLogger</span><span class="p">();</span>
+<span class="n">gc</span><span class="p">.</span><span class="na">start</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+</code></pre></div>
 <h2 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h2>
 <p>After GC events, an DEBUG level log message will get reported using slf4j. This makes it easy
 to see GC events in the context of other log messages for the application. The logger name is
 <code>com.netflix.spectator.gc.GcLogger</code> and the message will look like:</p>
-<p><code>${GC_TYPE}: ${COLLECTOR_NAME}, id=${N}, at=${START_TIME}, duration=${T}ms,
+<div class="highlight"><pre><span></span><code>${GC_TYPE}: ${COLLECTOR_NAME}, id=${N}, at=${START_TIME}, duration=${T}ms,
 cause=[${CAUSE}], ${TOTAL_USAGE_BEFORE} =&gt; ${TOTAL_USAGE_AFTER} / ${MAX_SIZE}
-(${PERCENT_USAGE_BEFORE} =&gt; ${PERCENT_USAGE_AFTER})</code></p>
+(${PERCENT_USAGE_BEFORE} =&gt; ${PERCENT_USAGE_AFTER})
+</code></pre></div>
 <p>The id can be used to verify events were not skipped or correlate with other sources like
 detailed GC logs. See <a href="../jvm-gc-causes/">GC causes</a> for more details on the possible causes.</p>
 <p>Sample:</p>
-<p><code>2014-08-31 02:02:24,724  DEBUG [com.netflix.spectator.gc.GcLogger] YOUNG: ParNew,
+<div class="highlight"><pre><span></span><code>2014-08-31 02:02:24,724  DEBUG [com.netflix.spectator.gc.GcLogger] YOUNG: ParNew,
 id=5281, at=Sun Aug 31 02:02:24 UTC 2014, duration=2ms, cause=[Allocation Failure],
-0.4G =&gt; 0.3G / 1.8G (24.3% =&gt; 16.6%)</code></p>
+0.4G =&gt; 0.3G / 1.8G (24.3% =&gt; 16.6%)
+</code></pre></div>
 <h2 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h2>
 <h3 id="jvmgcallocationrate">jvm.gc.allocationRate<a class="headerlink" href="#jvmgcallocationrate" title="Permanent link">&para;</a></h3>
 <p>The allocation rate measures how fast the application is allocating memory. It is a counter
 that is incremented after a GC event by the amount <code>youngGen.sizeBeforeGC</code>.</p>
 <p>Technically, right now it is:</p>
-<p><code>youngGen.sizeBeforeGC - youngGen.sizeAfterGC</code></p>
+<div class="highlight"><pre><span></span><code>youngGen.sizeBeforeGC - youngGen.sizeAfterGC
+</code></pre></div>
 <p>However, <code>youngGen.sizeAfterGC</code> should be 0 and thus the size of young gen before the GC is
 the amount allocated since the previous GC event.</p>
 <p><strong>Unit:</strong> bytes/second</p>
@@ -10933,7 +10937,8 @@ the amount allocated since the previous GC event.</p>
 <p>The promotion rate measures how fast data is being moved from young generation into the old
 generation.</p>
 <p>It is a counter that is incremented after a GC event by the amount:</p>
-<p><code>abs(oldGen.sizeAfterGC - oldGen.sizeBeforeGC)</code></p>
+<div class="highlight"><pre><span></span><code>abs(oldGen.sizeAfterGC - oldGen.sizeBeforeGC)
+</code></pre></div>
 <p><strong>Unit:</strong> bytes/second</p>
 <p><strong>Dimensions:</strong></p>
 <ul>
@@ -10987,19 +10992,21 @@ the option in alert ui:</p>
 </blockquote>
 <h3 id="max-pause-time">Max Pause Time<a class="headerlink" href="#max-pause-time" title="Permanent link">&para;</a></h3>
 <p>Example to trigger an alert if the <a href="#jvmgcpause">pause time</a> exceeds 500 milliseconds:</p>
-<p><code>name,jvm.gc.pause,:eq,
+<div class="highlight"><pre><span></span><code>name,jvm.gc.pause,:eq,
 statistic,max,:eq,
 :and,
 :max,(,cause,),:by,
 0.5,:gt,
-$cause,:legend</code></p>
+$cause,:legend
+</code></pre></div>
 <h3 id="heap-pressure">Heap Pressure<a class="headerlink" href="#heap-pressure" title="Permanent link">&para;</a></h3>
 <p>Example to trigger an alert if the <a href="#jvmgclivedatasize">live data size</a> is over 70% of the heap:</p>
-<p><code>name,jvm.gc.liveDataSize,:eq,:max,
+<div class="highlight"><pre><span></span><code>name,jvm.gc.liveDataSize,:eq,:max,
 name,jvm.gc.maxDataSize,:eq,:max,
 :div,100,:mul,
 70,:gt,
-percentUsed,:legend</code></p>
+percentUsed,:legend
+</code></pre></div>
 
 
 
@@ -11049,10 +11056,10 @@ percentUsed,:legend</code></p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

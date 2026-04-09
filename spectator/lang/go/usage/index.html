@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10890,81 +10890,86 @@
 <p>There is one language feature used in the project which requires at least 1.21 - the
 <a href="https://go.dev/blog/slog">log/slog structured logging library</a>.</p>
 <h2 id="instrumenting-code">Instrumenting Code<a class="headerlink" href="#instrumenting-code" title="Permanent link">&para;</a></h2>
-<p>```go
-package main</p>
-<p>import (
-    "github.com/Netflix/spectator-go/v2/spectator"
-    "github.com/Netflix/spectator-go/v2/spectator/meter"
-    "strconv"
-    "time"
-)</p>
-<p>type Server struct {
-    registry       spectator.Registry
-    requestCountId <em>meter.Id
-    requestLatency </em>meter.Timer
-    responseSizes  *meter.DistributionSummary
-}</p>
-<p>type Request struct {
-    country string
-}</p>
-<p>type Response struct {
-    status int
-    size   int64
-}</p>
-<p>func (s <em>Server) Handle(request </em>Request) (res *Response) {
-    start := time.Now()</p>
-<div class="codehilite"><pre><span></span><code><span class="o">//</span><span class="w"> </span><span class="k">initialize</span><span class="w"> </span><span class="n">response</span>
-<span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">Response</span><span class="err">{</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="err">}</span>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
-<span class="o">//</span><span class="w"> </span><span class="k">Update</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">dimensions</span><span class="w"> </span><span class="n">based</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">request</span><span class="p">.</span>
-<span class="n">tags</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="k">map</span><span class="o">[</span><span class="n">string</span><span class="o">]</span><span class="n">string</span><span class="err">{</span>
-<span class="w">    </span><span class="ss">&quot;country&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="n">country</span><span class="p">,</span>
-<span class="w">    </span><span class="ss">&quot;status&quot;</span><span class="err">:</span><span class="w">  </span><span class="n">strconv</span><span class="p">.</span><span class="n">Itoa</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">status</span><span class="p">),</span>
-<span class="err">}</span>
-<span class="n">requestCounterWithTags</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">requestCountId</span><span class="p">.</span><span class="n">WithTags</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
-<span class="n">counter</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">registry</span><span class="p">.</span><span class="n">CounterWithId</span><span class="p">(</span><span class="n">requestCounterWithTags</span><span class="p">)</span>
-<span class="n">counter</span><span class="p">.</span><span class="n">Increment</span><span class="p">()</span>
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator/meter&quot;</span>
+<span class="w">    </span><span class="s">&quot;strconv&quot;</span>
+<span class="w">    </span><span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
 
-<span class="o">//</span><span class="w"> </span><span class="p">...</span>
-<span class="n">s</span><span class="p">.</span><span class="n">requestLatency</span><span class="p">.</span><span class="n">Record</span><span class="p">(</span><span class="nc">time</span><span class="p">.</span><span class="n">Since</span><span class="p">(</span><span class="k">start</span><span class="p">))</span>
-<span class="n">s</span><span class="p">.</span><span class="n">responseSizes</span><span class="p">.</span><span class="n">Record</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="k">size</span><span class="p">)</span>
-<span class="k">return</span>
-</code></pre></div>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Server</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">registry</span><span class="w">       </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Registry</span>
+<span class="w">    </span><span class="nx">requestCountId</span><span class="w"> </span><span class="o">*</span><span class="nx">meter</span><span class="p">.</span><span class="nx">Id</span>
+<span class="w">    </span><span class="nx">requestLatency</span><span class="w"> </span><span class="o">*</span><span class="nx">meter</span><span class="p">.</span><span class="nx">Timer</span>
+<span class="w">    </span><span class="nx">responseSizes</span><span class="w">  </span><span class="o">*</span><span class="nx">meter</span><span class="p">.</span><span class="nx">DistributionSummary</span>
+<span class="p">}</span>
 
-<p>}</p>
-<p>func newServer(registry spectator.Registry) *Server {
-    return &amp;Server{
-        registry,
-        registry.NewId("server.requestCount", nil),
-        registry.Timer("server.requestLatency", nil),
-        registry.DistributionSummary("server.responseSizes", nil),
-    }
-}</p>
-<p>func getNextRequest() *Request {
-    // ...
-    return &amp;Request{"US"}
-}</p>
-<p>func main() {
-    commonTags := map[string]string{
-        "platform": "my_platform",
-        "process": "my_process"
-    }
-    // third paramater can be used to configure a custom logger
-    config, _ := spectator.NewConfig("", commonTags, nil)</p>
-<div class="codehilite"><pre><span></span><code><span class="n">registry</span><span class="o">,</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">spectator</span><span class="o">.</span><span class="n">NewRegistry</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-<span class="n">defer</span><span class="w"> </span><span class="n">registry</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Request</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">country</span><span class="w"> </span><span class="kt">string</span>
+<span class="p">}</span>
 
-<span class="n">server</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">newServer</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Response</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">status</span><span class="w"> </span><span class="kt">int</span>
+<span class="w">    </span><span class="nx">size</span><span class="w">   </span><span class="kt">int64</span>
+<span class="p">}</span>
 
-<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">get</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">request</span>
-<span class="w">    </span><span class="n">req</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">getNextRequest</span><span class="p">()</span>
-<span class="w">    </span><span class="n">server</span><span class="o">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="nx">Server</span><span class="p">)</span><span class="w"> </span><span class="nx">Handle</span><span class="p">(</span><span class="nx">request</span><span class="w"> </span><span class="o">*</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">res</span><span class="w"> </span><span class="o">*</span><span class="nx">Response</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">start</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1">// initialize response</span>
+<span class="w">    </span><span class="nx">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">Response</span><span class="p">{</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Update the counter with dimensions based on the request.</span>
+<span class="w">    </span><span class="nx">tags</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+<span class="w">        </span><span class="s">&quot;country&quot;</span><span class="p">:</span><span class="w"> </span><span class="nx">request</span><span class="p">.</span><span class="nx">country</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;status&quot;</span><span class="p">:</span><span class="w">  </span><span class="nx">strconv</span><span class="p">.</span><span class="nx">Itoa</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">),</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">requestCounterWithTags</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">requestCountId</span><span class="p">.</span><span class="nx">WithTags</span><span class="p">(</span><span class="nx">tags</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">registry</span><span class="p">.</span><span class="nx">CounterWithId</span><span class="p">(</span><span class="nx">requestCounterWithTags</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">counter</span><span class="p">.</span><span class="nx">Increment</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="w">    </span><span class="nx">s</span><span class="p">.</span><span class="nx">requestLatency</span><span class="p">.</span><span class="nx">Record</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Since</span><span class="p">(</span><span class="nx">start</span><span class="p">))</span>
+<span class="w">    </span><span class="nx">s</span><span class="p">.</span><span class="nx">responseSizes</span><span class="p">.</span><span class="nx">Record</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">size</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">newServer</span><span class="p">(</span><span class="nx">registry</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Registry</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="nx">Server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">Server</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">registry</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">registry</span><span class="p">.</span><span class="nx">NewId</span><span class="p">(</span><span class="s">&quot;server.requestCount&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">),</span>
+<span class="w">        </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Timer</span><span class="p">(</span><span class="s">&quot;server.requestLatency&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">),</span>
+<span class="w">        </span><span class="nx">registry</span><span class="p">.</span><span class="nx">DistributionSummary</span><span class="p">(</span><span class="s">&quot;server.responseSizes&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">),</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">getNextRequest</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="nx">Request</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">Request</span><span class="p">{</span><span class="s">&quot;US&quot;</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">commonTags</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+<span class="w">        </span><span class="s">&quot;platform&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_platform&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;process&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_process&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// third paramater can be used to configure a custom logger</span>
+<span class="w">    </span><span class="nx">config</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewConfig</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">commonTags</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">registry</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+<span class="w">    </span><span class="nx">server</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">newServer</span><span class="p">(</span><span class="nx">registry</span><span class="p">)</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// get a request</span>
+<span class="w">        </span><span class="nx">req</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">getNextRequest</span><span class="p">()</span>
+<span class="w">        </span><span class="nx">server</span><span class="p">.</span><span class="nx">Handle</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
-<p>}
-```</p>
 <h2 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h2>
 <p>Logging is implemented with the standard Golang <a href="https://pkg.go.dev/log/slog">slog package</a>. The
 logger defines interfaces for <a href="https://github.com/Netflix/spectator-go/blob/main/spectator/logger/logger.go">Debugf, Infof, and Errorf</a>. There are useful messages implemented at
@@ -10972,20 +10977,19 @@ the Debug level which can help diagnose the metric publishing workflow. The logg
 by providing one as the third parameter of the <code>Config</code> constructor.</p>
 <h2 id="runtime-metrics">Runtime Metrics<a class="headerlink" href="#runtime-metrics" title="Permanent link">&para;</a></h2>
 <p>Use <a href="https://github.com/Netflix/spectator-go-runtime-metrics">spectator-go-runtime-metrics</a>.</p>
-<p>```go
-import (
-    "github.com/Netflix/spectator-go-runtime-metrics/runmetrics"
-    "github.com/Netflix/spectator-go/v2/spectator"
-)</p>
-<p>func main() {
-    config, _ := spectator.NewConfig("", nil, nil)
-    registry, _ := spectator.NewRegistry(config)
-    defer registry.Close()</p>
-<div class="codehilite"><pre><span></span><code><span class="n">runmetrics</span><span class="p">.</span><span class="n">CollectRuntimeMetrics</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go-runtime-metrics/runmetrics&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator&quot;</span>
+<span class="p">)</span>
 
-<p>}
-```</p>
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">config</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewConfig</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">registry</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+<span class="w">    </span><span class="nx">runmetrics</span><span class="p">.</span><span class="nx">CollectRuntimeMetrics</span><span class="p">(</span><span class="nx">registry</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
 <h2 id="working-with-meterid-objects">Working with MeterId Objects<a class="headerlink" href="#working-with-meterid-objects" title="Permanent link">&para;</a></h2>
 <p>Each metric stored in Atlas is uniquely identified by the combination of the name and the tags
 associated with it. In <code>spectator-go</code>, this data is represented with <code>Id</code> objects, created
@@ -10997,22 +11001,21 @@ used concurrently. Manipulating the tags with the provided methods will create n
 <p>Note that <strong>all tag keys and values must be strings.</strong> For example, if you want to keep track of the
 number of successful requests, then you must cast integers to strings. The <code>Id</code> class will
 validate these values, dropping or changing any that are not valid, and reporting a warning log.</p>
-<p>```golang
-import (
-    "github.com/Netflix/spectator-go/v2/spectator"
-)</p>
-<p>func main() {
-    config, _ := spectator.NewConfig("", nil, nil)
-    registry, _ := spectator.NewRegistry(config)
-    defer registry.Close()</p>
-<div class="codehilite"><pre><span></span><code><span class="n">registry</span><span class="p">.</span><span class="n">Counter</span><span class="p">(</span><span class="ss">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">map</span><span class="o">[</span><span class="n">string</span><span class="o">]</span><span class="n">string</span><span class="err">{</span><span class="ss">&quot;statusCode&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;200&quot;</span><span class="err">}</span><span class="p">).</span><span class="n">Increment</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator&quot;</span>
+<span class="p">)</span>
 
-<span class="n">numRequests</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="nf">NewId</span><span class="p">(</span><span class="ss">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">map</span><span class="o">[</span><span class="n">string</span><span class="o">]</span><span class="n">string</span><span class="err">{</span><span class="ss">&quot;statusCode&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;200&quot;</span><span class="err">}</span><span class="p">)</span>
-<span class="n">registry</span><span class="p">.</span><span class="n">CounterWithId</span><span class="p">(</span><span class="n">numRequests</span><span class="p">).</span><span class="n">Increment</span><span class="p">()</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">config</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewConfig</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">registry</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Counter</span><span class="p">(</span><span class="s">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;statusCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;200&quot;</span><span class="p">}).</span><span class="nx">Increment</span><span class="p">()</span>
+
+<span class="w">    </span><span class="nx">numRequests</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">NewId</span><span class="p">(</span><span class="s">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;statusCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;200&quot;</span><span class="p">})</span>
+<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">CounterWithId</span><span class="p">(</span><span class="nx">numRequests</span><span class="p">).</span><span class="nx">Increment</span><span class="p">()</span>
+<span class="p">}</span>
 </code></pre></div>
-
-<p>}
-```</p>
 <p>Atlas metrics will be consumed by users many times after the data has been reported, so they should
 be chosen thoughtfully, while considering how they will be used. See the <a href="../../../../concepts/naming/">naming conventions</a> page
 for general guidelines on metrics naming and restrictions.</p>
@@ -11079,7 +11082,8 @@ is a good starting choice for this configuration. This buffer will block, and it
 interval.</li>
 </ul>
 <p>Example configuration:</p>
-<p><code>config, _ := NewConfigWithBuffer("udp", nil, nil, 61440, 5*time.Second)</code></p>
+<div class="highlight"><pre><span></span><code>config, _ := NewConfigWithBuffer(&quot;udp&quot;, nil, nil, 61440, 5*time.Second)
+</code></pre></div>
 <h3 id="low-latency-buffer">Low Latency Buffer<a class="headerlink" href="#low-latency-buffer" title="Permanent link">&para;</a></h3>
 <p>The Low Latency Buffer builds arrays of buffers that are optimized for introducing the least amount of
 latency in highly multithreaded applications that record many metrics. It offers write performance up to
@@ -11095,7 +11099,8 @@ lines, if it overflows.</p>
 <p>As a sizing example, if you have an 8 CPU system, and you want to allocate 5 MB to each buffer shard, and
 there are two buffers (front and back), then you need to configure a buffer size of 83,886,080 bytes. Each
 buffer shard will have 85 chunks, each of which is protected by a separate mutex.</p>
-<p><code>2 buffers (front/back) * 8 CPU (shard count) * 5,242,880 bytes/shard *  = 83,886,080 bytes total</code></p>
+<div class="highlight"><pre><span></span><code>2 buffers (front/back) * 8 CPU (shard count) * 5,242,880 bytes/shard *  = 83,886,080 bytes total
+</code></pre></div>
 <p>Pairing this with a 1-second flush interval will result in a configuration that can handle ~85K lines/sec
 writes to spectatord. Note that the spectatord publish interval is every 5 seconds, so you have some room to
 experiment with different buffer sizes and publish intervals.</p>
@@ -11111,7 +11116,8 @@ and on a system with 4 CPU, this will be 491,520 bytes.</p>
 <p>When using the LowLatencyBuffer, it is recommended to watch the <code>spectatord.parsedCount</code> metric, to ensure
 that you have sufficient headroom against the maximum data ingestion rate of ~1M lines/sec for <code>spectatord</code>.</p>
 <p>Example configuration:</p>
-<p><code>config, _ := NewConfigWithBuffer("udp", nil, nil, 83886080, 1*time.Second)</code></p>
+<div class="highlight"><pre><span></span><code>config, _ := NewConfigWithBuffer(&quot;udp&quot;, nil, nil, 83886080, 1*time.Second)
+</code></pre></div>
 <h2 id="batch-usage">Batch Usage<a class="headerlink" href="#batch-usage" title="Permanent link">&para;</a></h2>
 <p>When using <code>spectator-go</code> to report metrics from a batch job, ensure that the batch job runs for at
 least five (5), if not ten (10) seconds in duration. This is necessary in order to allow sufficient
@@ -11122,8 +11128,8 @@ to be sent.</p>
 <h2 id="debug-metrics-delivery-to-spectatord">Debug Metrics Delivery to <code>spectatord</code><a class="headerlink" href="#debug-metrics-delivery-to-spectatord" title="Permanent link">&para;</a></h2>
 <p>In order to see debug log messages from <code>spectatord</code>, create an <code>/etc/default/spectatord</code> file with
 the following contents:</p>
-<p><code>shell
-SPECTATORD_OPTIONS="--verbose"</code></p>
+<div class="highlight"><pre><span></span><code><span class="nv">SPECTATORD_OPTIONS</span><span class="o">=</span><span class="s2">&quot;--verbose&quot;</span>
+</code></pre></div>
 <p>This will report all metrics that are sent to the Atlas backend in the <code>spectatord</code> logs, which will
 provide an opportunity to correlate metrics publishing events from your client code.</p>
 <h2 id="design-considerations-reporting-intervals">Design Considerations - Reporting Intervals<a class="headerlink" href="#design-considerations-reporting-intervals" title="Permanent link">&para;</a></h2>
@@ -11138,59 +11144,57 @@ scenarios.</p>
 to use the <a href="https://github.com/Netflix/spectator-go/blob/main/spectator/writer/writer.go#L18-L21">MemoryWriter</a>,
 which stores all updates in an <code>Array</code>. Maintain a handle to the <code>MemoryWriter</code>, then inspect the
 <code>Lines()</code> to verify your metrics updates. See the source code for more testing examples.</p>
-<p>```golang
-import (
-    "fmt"
-    "github.com/Netflix/spectator-go/v2/spectator"
-    "github.com/Netflix/spectator-go/v2/spectator/writer"
-    "testing"
-    "time"
-)</p>
-<p>func TestRegistryWithMemoryWriter_Counter(t <em>testing.T) {
-    config, _ := spectator.NewConfig("memory", nil, nil)
-    registry, _ = spectator.NewRegistry(config)
-    mw := registry.GetWriter().(</em>writer.MemoryWriter)</p>
-<div class="codehilite"><pre><span></span><code><span class="n">counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">registry</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="s">&quot;test_counter&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span>
-<span class="n">counter</span><span class="o">.</span><span class="n">Increment</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator/writer&quot;</span>
+<span class="w">    </span><span class="s">&quot;testing&quot;</span>
+<span class="w">    </span><span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
 
-<span class="n">expected</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;c:test_counter:1&quot;</span>
-<span class="k">if</span><span class="w"> </span><span class="n">len</span><span class="p">(</span><span class="n">mw</span><span class="o">.</span><span class="n">Lines</span><span class="p">())</span><span class="w"> </span><span class="p">!</span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">||</span><span class="w"> </span><span class="n">mw</span><span class="o">.</span><span class="n">Lines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">!</span><span class="o">=</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">t</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">&quot;Expected &#39;%s&#39;, got &#39;%s&#39;&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">,</span><span class="w"> </span><span class="n">mw</span><span class="o">.</span><span class="n">Lines</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">TestRegistryWithMemoryWriter_Counter</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">config</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewConfig</span><span class="p">(</span><span class="s">&quot;memory&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">registry</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">mw</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">GetWriter</span><span class="p">().(</span><span class="o">*</span><span class="nx">writer</span><span class="p">.</span><span class="nx">MemoryWriter</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">Counter</span><span class="p">(</span><span class="s">&quot;test_counter&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">counter</span><span class="p">.</span><span class="nx">Increment</span><span class="p">()</span>
+
+<span class="w">    </span><span class="nx">expected</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;c:test_counter:1&quot;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">mw</span><span class="p">.</span><span class="nx">Lines</span><span class="p">())</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">mw</span><span class="p">.</span><span class="nx">Lines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">expected</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Expected &#39;%s&#39;, got &#39;%s&#39;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">expected</span><span class="p">,</span><span class="w"> </span><span class="nx">mw</span><span class="p">.</span><span class="nx">Lines</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
-<p>}
-```</p>
 <h3 id="protocol-parser">Protocol Parser<a class="headerlink" href="#protocol-parser" title="Permanent link">&para;</a></h3>
 <p>A <a href="../../../agent/usage/">SpectatorD</a> line protocol parser is available, which can be used for validating the results
 captured by a <code>MemoryWriter</code>.</p>
-<p>```golang
-import (
-    "github.com/Netflix/spectator-go/v2/spectator"
-    "testing"
-)</p>
-<p>func TestParseProtocolLineWithValidInput(t *testing.T) {
-    line := "c:name,tag1=value1,tag2=value2:50"
-    meterType, meterId, value, err := spectator.ParseProtocolLine(line)</p>
-<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">nil</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Unexpected error: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator&quot;</span>
+<span class="w">    </span><span class="s">&quot;testing&quot;</span>
+<span class="p">)</span>
 
-<span class="k">if</span><span class="w"> </span><span class="nx">meterType</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Unexpected meter type: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">meterType</span><span class="p">)</span>
-<span class="p">}</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">TestParseProtocolLineWithValidInput</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">line</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;c:name,tag1=value1,tag2=value2:50&quot;</span>
+<span class="w">    </span><span class="nx">meterType</span><span class="p">,</span><span class="w"> </span><span class="nx">meterId</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">ParseProtocolLine</span><span class="p">(</span><span class="nx">line</span><span class="p">)</span>
 
-<span class="k">if</span><span class="w"> </span><span class="nx">meterId</span><span class="p">.</span><span class="nx">Name</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">meterId</span><span class="p">.</span><span class="nx">Tags</span><span class="p">()[</span><span class="s">&quot;tag1&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;value1&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">meterId</span><span class="p">.</span><span class="nx">Tags</span><span class="p">()[</span><span class="s">&quot;tag2&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;value2&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Unexpected meter id: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">meterId</span><span class="p">)</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Unexpected error: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="k">if</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;50&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Unexpected value: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">meterType</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Unexpected meter type: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">meterType</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">meterId</span><span class="p">.</span><span class="nx">Name</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">meterId</span><span class="p">.</span><span class="nx">Tags</span><span class="p">()[</span><span class="s">&quot;tag1&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;value1&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">meterId</span><span class="p">.</span><span class="nx">Tags</span><span class="p">()[</span><span class="s">&quot;tag2&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;value2&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Unexpected meter id: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">meterId</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;50&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Unexpected value: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
-<p>}
-```</p>
 <h2 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h2>
 <p>On an <code>m5d.2xlarge</code> EC2 instance, with <code>Go 1.24.3</code> and <code>github.com/Netflix/spectator-go/v2 v2.0.13</code>, we
 have observed the following single-threaded performance numbers across a two-minute test window:</p>
@@ -11252,10 +11256,10 @@ system, for <code>udp</code>. It was ~113% and ~85%, respectively, for <code>uni
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10558,22 +10558,21 @@ allowing for arbitrary slicing and dicing based on dimensions.</p>
 up to 300X that of a standard Timer. Be diligent about any additional dimensions added to Percentile
 Timers and ensure that they have a small bounded cardinality.</p>
 <p>Call <code>Record()</code> with a value:</p>
-<p>```golang
-import (
-    "github.com/Netflix/spectator-go/v2/spectator"
-    "time"
-)</p>
-<p>func main() {
-    config, _ := spectator.NewConfig("udp", nil, nil)
-    registry, _ := spectator.NewRegistry(config)</p>
-<div class="codehilite"><pre><span></span><code><span class="n">registry</span><span class="o">.</span><span class="n">PercentileTimer</span><span class="p">(</span><span class="s">&quot;server.requestLatency&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span><span class="o">.</span><span class="nb">Record</span><span class="p">(</span><span class="mi">500</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;github.com/Netflix/spectator-go/v2/spectator&quot;</span>
+<span class="w">    </span><span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
 
-<span class="n">requestLatency</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">registry</span><span class="o">.</span><span class="n">NewId</span><span class="p">(</span><span class="s">&quot;server.requestLatency&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span>
-<span class="n">registry</span><span class="o">.</span><span class="n">PercentileTimerWithId</span><span class="p">(</span><span class="n">requestLatency</span><span class="p">)</span><span class="o">.</span><span class="nb">Record</span><span class="p">(</span><span class="mi">500</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">config</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewConfig</span><span class="p">(</span><span class="s">&quot;udp&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">registry</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">NewRegistry</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">PercentileTimer</span><span class="p">(</span><span class="s">&quot;server.requestLatency&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">).</span><span class="nx">Record</span><span class="p">(</span><span class="mi">500</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">requestLatency</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">NewId</span><span class="p">(</span><span class="s">&quot;server.requestLatency&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">registry</span><span class="p">.</span><span class="nx">PercentileTimerWithId</span><span class="p">(</span><span class="nx">requestLatency</span><span class="p">).</span><span class="nx">Record</span><span class="p">(</span><span class="mi">500</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
+<span class="p">}</span>
 </code></pre></div>
-
-<p>}
-```</p>
 <h2 id="units">Units<a class="headerlink" href="#units" title="Permanent link">&para;</a></h2>
 <p>See <a href="../timer/#units">Timer Units</a> for an explanation.</p>
 
@@ -10625,10 +10624,10 @@ import (
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

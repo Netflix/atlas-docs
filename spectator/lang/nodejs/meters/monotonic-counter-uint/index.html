@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10463,13 +10463,14 @@ calculate a delta value and report it to the backend as a rate-per-second. A var
 metrics may be reported monotonically, and this metric type provides a convenient means of recording
 these values, at the expense of a slower time-to-first metric.</p>
 <p>Call <code>set()</code> when an event occurs:</p>
-<p>```javascript
-import {Registry} from "nflx-spectator";</p>
-<p>const registry = new Registry();
-void registry.monotonic_counter_uint("iface.bytes").set(BigInt(1));</p>
-<p>const iface_bytes = registry.new_id("iface.bytes");
-void registry.monotonic_counter_uint_with_id(iface_bytes).set(BigInt(1));
-```</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
+<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">monotonic_counter_uint</span><span class="p">(</span><span class="s2">&quot;iface.bytes&quot;</span><span class="p">).</span><span class="nx">set</span><span class="p">(</span><span class="nb">BigInt</span><span class="p">(</span><span class="mf">1</span><span class="p">));</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">iface_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;iface.bytes&quot;</span><span class="p">);</span>
+<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">monotonic_counter_uint_with_id</span><span class="p">(</span><span class="nx">iface_bytes</span><span class="p">).</span><span class="nx">set</span><span class="p">(</span><span class="nb">BigInt</span><span class="p">(</span><span class="mf">1</span><span class="p">));</span>
+</code></pre></div>
 
 
 
@@ -10519,10 +10520,10 @@ void registry.monotonic_counter_uint_with_id(iface_bytes).set(BigInt(1));
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

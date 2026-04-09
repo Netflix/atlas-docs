@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -10536,34 +10536,35 @@
 once per ID and reuse them as needed. Avoid adding tags with high cardinality as that increases
 the cardinality of the metric. If at all possible, use a <a href="../timer/">Timer</a> instead.</p>
 <p>To get started, create an instance using the <a href="../../registry/overview/">Registry</a>:</p>
-<p>```java
-public class Server {</p>
-<p>private final Registry registry;
-  private final PercentileTimer requestLatency;</p>
-<p>@Inject
-  public Server(Registry registry) {
-    this.registry = registry;
-    requestLatency = PercentileTimer.builder(registry)
-        .withId(registry.createId("server.request.latency", "status", "200"))
-        .build();
-```</p>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Server</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">PercentileTimer</span><span class="w"> </span><span class="n">requestLatency</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nd">@Inject</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Server</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">;</span>
+<span class="w">    </span><span class="n">requestLatency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PercentileTimer</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">withId</span><span class="p">(</span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;server.request.latency&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;200&quot;</span><span class="p">))</span>
+<span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
 <p>Then wrap the call you need to measure, preferably using a lambda:</p>
-<p><code>java
-  public Response handle(Request request) {
-    return requestLatency.recordRunnable(() -&gt; handleImpl(request));
-  }</code></p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Response</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">requestLatency</span><span class="p">.</span><span class="na">recordRunnable</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">handleImpl</span><span class="p">(</span><span class="n">request</span><span class="p">));</span>
+<span class="w">  </span><span class="p">}</span>
+</code></pre></div>
 <p>The lambda variants will handle exceptions for you and ensure the record happens as part of a
 finally block using the monotonic time. It could also have been done more explicitly like:</p>
-<p><code>java
-  public Response handle(Request request) {
-    final long start = registry.clock().monotonicTime();
-    try {
-      return handleImpl(request);
-    } finally {
-      final long end = registry.clock().monotonicTime();
-      requestLatency.record(end - start, TimeUnit.NANOSECONDS);
-    }
-  }</code></p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Response</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">monotonicTime</span><span class="p">();</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">handleImpl</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">monotonicTime</span><span class="p">();</span>
+<span class="w">      </span><span class="n">requestLatency</span><span class="p">.</span><span class="na">record</span><span class="p">(</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">NANOSECONDS</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+</code></pre></div>
 <p>This example uses the Clock from the Registry, which can be useful for testing, if you need
 to control the timing. In actual usage, it will typically get mapped to the system clock. It
 is recommended to use a monotonically increasing source for measuring the times, to avoid
@@ -10620,10 +10621,10 @@ occasionally having bogus measurements due to time adjustments. For more informa
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
