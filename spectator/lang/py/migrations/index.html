@@ -11192,8 +11192,8 @@ when adopting the thin-client version of the library. Replace with direct use of
 <a href="../../../agent/usage/">SpectatorD</a> sidecar which is bundled with all standard AMIs and containers. If you must
 have the previous direct publishing behavior, because SpectatorD is not yet available on the
 platform where your code runs, then you can pin to version <code>0.1.18</code>.</li>
-<li>The internal Netflix configuration companion library is no longer required and this dependency
-may be dropped from your project.</li>
+<li><strong>Netflix-only:</strong> the internal configuration companion library is no longer required and this
+dependency may be dropped from your project.</li>
 <li>The API surface area remains unchanged to avoid breaking library consumers, and standard uses of
 <code>GlobalRegistry</code> helper methods for publishing metrics continue to work as expected. Several helper
 methods on meter classes are now no-ops, always returning values such as <code>0</code> or <code>nan</code>. If you want
