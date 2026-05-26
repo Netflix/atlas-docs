@@ -1,5 +1,7 @@
 # Gauge
 
+See [Gauge](../../../core/meters/gauge.md) for the concept.
+
 ## Polled Gauges
 
 The most common use of Gauges is by registering a hook with Spectator, so that it will poll the
