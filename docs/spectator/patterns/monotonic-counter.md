@@ -20,28 +20,12 @@ slower time-to-first-data point than a standard counter.
   (most OS-level interface counters) so that a wrap-around past `2^63` is not interpreted
   as a backward jump.
 
-The spectatord-backed clients (C++, Go, Node.js, Python) expose both variants. In Java,
-use [Polled Meter](polled-meter.md)'s `monitorMonotonicCounter` — Java is long-based and
-does not need a separate uint variant.
-
-## Implementations
-
-For the spectatord-backed clients, Monotonic Counter is a first-class meter type — call
-`set(absoluteValue)` on each sample.
-
-For Java, the equivalent is exposed via the [Polled Meter](polled-meter.md) helper, which
-periodically samples a function returning the current absolute value and reports the delta:
-
-```java
-PolledMeter.using(registry)
-    .withName("threadpool.completedTasks")
-    .monitorMonotonicCounter(executor, ThreadPoolExecutor::getCompletedTaskCount);
-```
+Java is long-based and does not need a separate uint variant.
 
 ## Languages
 
 * C++: [signed](../lang/cpp/meters/monotonic-counter.md), [uint64](../lang/cpp/meters/monotonic-counter-uint.md)
 * Go: [signed](../lang/go/meters/monotonic-counter.md), [uint64](../lang/go/meters/monotonic-counter-uint.md)
-* [Java](../lang/java/meters/monotonic-counter.md) (no dedicated meter; uses [Polled Meter](polled-meter.md))
+* [Java](../lang/java/meters/monotonic-counter.md)
 * Node.js: [signed](../lang/nodejs/meters/monotonic-counter.md), [uint64](../lang/nodejs/meters/monotonic-counter-uint.md)
 * Python: [signed](../lang/py/meters/monotonic-counter.md), [uint64](../lang/py/meters/monotonic-counter-uint.md)
