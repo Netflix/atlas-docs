@@ -1,4 +1,4 @@
-## Timer
+# Timer
 
 A Timer is used to measure how long (in seconds) some event is taking.
 

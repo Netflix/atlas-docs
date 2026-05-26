@@ -1,4 +1,4 @@
-## Percentile Timer
+# Percentile Timer
 
 The value is the number of seconds that have elapsed for an event, with percentile estimates.
 

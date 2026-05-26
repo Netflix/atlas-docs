@@ -19,8 +19,8 @@ graph.
 
 ### First-Class Support
 
-* [C++](../../lang/cpp/usage.md)
-* [Go](../../lang/go/usage.md)
+* [C++](../../lang/cpp/meters/counter.md)
+* [Go](../../lang/go/meters/counter.md)
 * [Java](../../lang/java/meters/counter.md)
 * [Node.js](../../lang/nodejs/meters/counter.md)
 * [Python](../../lang/py/meters/counter.md)

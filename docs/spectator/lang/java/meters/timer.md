@@ -1,6 +1,4 @@
-# Java Timers
-
-## Timer
+# Timer
 
 To get started, create an instance using the [Registry](../registry/overview.md):
 

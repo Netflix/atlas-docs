@@ -1,4 +1,4 @@
-# Java Percentile Timers
+# Percentile Timer
 
 **Note**: Percentile timers generate a metric per bucket in the histogram. Create instances
 once per ID and reuse them as needed. Avoid adding tags with high cardinality as that increases

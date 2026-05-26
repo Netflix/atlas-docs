@@ -1,3 +1,5 @@
+# Counter
+
 A Counter is used to measure the rate at which an event is occurring. Considering an API endpoint,
 a Counter could be used to measure the rate at which it is being accessed.
 

@@ -1,4 +1,4 @@
-# Java Counters
+# Counter
 
 Counters are created using the [Registry](../registry/overview.md), which is be setup as part of
 application initialization. For example:

@@ -1,3 +1,5 @@
+# Distribution Summary
+
 A Distribution Summary is used to track the distribution of events. It is similar to a Timer, but
 more general, in that the size does not have to be a period of time. For example, a Distribution
 Summary could be used to measure the payload sizes of requests hitting a server. Note that the C++

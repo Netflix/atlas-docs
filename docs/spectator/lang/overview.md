@@ -1,17 +1,8 @@
-The original Spectator library was written in [Java](java/usage.md), with the first stable version
-([0.35.0]) released on Jan 18, 2016. Since then, there has been a proliferation of languages at
-Netflix which seek first-class observability support.
-
-After some thought and experimentation, we have settled on a strategy of developing minimal
-Spectator implementations in many languages, which function as thin clients that send data to
-Atlas. Our goal is to have partners invested in each experimental language who will provide
-the necessary expertise to develop idiomatic solutions, deliver real-world feedback on library
-usage, and shoulder some of the support and maintenance burden.
-
-We think this is a more sustainable path over the long-term than expanding our team to support N
-different languages for this singular polyglot use case.
-
-[0.35.0]: https://github.com/Netflix/spectator/releases/tag/v0.35.0
+Spectator client libraries are available in several languages. Outside of Java, the libraries are
+intentionally minimal — they function as thin clients that send data to a local
+[SpectatorD](../agent/usage.md) agent, which handles aggregation and reporting to Atlas. This keeps
+the per-language footprint small and lets partners invested in each language drive idiomatic
+implementations.
 
 ## First-Class Support
 
@@ -27,3 +18,15 @@ in a timely manner and updates are published regularly.
 ## Best-Effort Support
 
 * Rust (internal library)
+
+## Deprecated
+
+* Ruby — the legacy `spectator-rb` client does not support SpectatorD and is no longer maintained.
+
+## History
+
+The original Spectator library was written in [Java](java/usage.md), with the first stable version
+([0.35.0]) released on Jan 18, 2016. Other languages followed as the polyglot footprint at Netflix
+grew.
+
+[0.35.0]: https://github.com/Netflix/spectator/releases/tag/v0.35.0

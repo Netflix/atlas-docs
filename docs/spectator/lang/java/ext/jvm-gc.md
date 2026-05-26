@@ -27,7 +27,7 @@ for more information. For G1, it is recommended to be on the latest version avai
 ### Dependencies
 
 ```
-com.netflix.spectator:spectator-ext-gc:{{ spectator_api.java_latest }}
+com.netflix.spectator:spectator-ext-gc:latest.release
 ```
 
 ### Start Reporting

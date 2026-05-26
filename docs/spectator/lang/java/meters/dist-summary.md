@@ -1,4 +1,4 @@
-# Java Distribution Summaries
+# Distribution Summary
 
 Distribution Summaries are created using the [Registry](../registry/overview.md), which will be
 setup as part of application initialization. For example:

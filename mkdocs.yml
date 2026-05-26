@@ -223,10 +223,10 @@ nav:
   - Core Concepts:
     - Clock: spectator/core/clock.md
     - Meters:
-      - Counters: spectator/core/meters/counter.md
-      - Distribution Summaries: spectator/core/meters/dist-summary.md
-      - Gauges: spectator/core/meters/gauge.md
-      - Timers: spectator/core/meters/timer.md
+      - Counter: spectator/core/meters/counter.md
+      - Distribution Summary: spectator/core/meters/dist-summary.md
+      - Gauge: spectator/core/meters/gauge.md
+      - Timer: spectator/core/meters/timer.md
   - Languages:
     - Overview: spectator/lang/overview.md
     - C++:
@@ -235,7 +235,7 @@ nav:
         - Age Gauge: spectator/lang/cpp/meters/age-gauge.md
         - Counter: spectator/lang/cpp/meters/counter.md
         - Distribution Summary: spectator/lang/cpp/meters/dist-summary.md
-        - Gauges: spectator/lang/cpp/meters/gauge.md
+        - Gauge: spectator/lang/cpp/meters/gauge.md
         - Max Gauge: spectator/lang/cpp/meters/max-gauge.md
         - Monotonic Counter: spectator/lang/cpp/meters/monotonic-counter.md
         - Monotonic Counter Uint: spectator/lang/cpp/meters/monotonic-counter-uint.md
@@ -250,7 +250,7 @@ nav:
         - Age Gauge: spectator/lang/go/meters/age-gauge.md
         - Counter: spectator/lang/go/meters/counter.md
         - Distribution Summary: spectator/lang/go/meters/dist-summary.md
-        - Gauges: spectator/lang/go/meters/gauge.md
+        - Gauge: spectator/lang/go/meters/gauge.md
         - Max Gauge: spectator/lang/go/meters/max-gauge.md
         - Monotonic Counter: spectator/lang/go/meters/monotonic-counter.md
         - Monotonic Counter Uint: spectator/lang/go/meters/monotonic-counter-uint.md
@@ -263,13 +263,15 @@ nav:
       - Usage: spectator/lang/java/usage.md
       - Registry:
         - Overview: spectator/lang/java/registry/overview.md
-        - Metrics3: spectator/lang/java/registry/metrics3.md
       - Meters:
-        - Counters: spectator/lang/java/meters/counter.md
-        - Distribution Summaries: spectator/lang/java/meters/dist-summary.md
-        - Gauges: spectator/lang/java/meters/gauge.md
-        - Percentile Timers: spectator/lang/java/meters/percentile-timer.md
-        - Timers: spectator/lang/java/meters/timer.md
+        - Counter: spectator/lang/java/meters/counter.md
+        - Distribution Summary: spectator/lang/java/meters/dist-summary.md
+        - Gauge: spectator/lang/java/meters/gauge.md
+        - Percentile Timer: spectator/lang/java/meters/percentile-timer.md
+        - Timer: spectator/lang/java/meters/timer.md
+      - Patterns:
+        - Gauge Poller: spectator/lang/java/patterns/gauge-poller.md
+        - Interval Counter: spectator/lang/java/patterns/interval-counter.md
       - Extensions:
         - JVM Stats:
           - Buffer Pools: spectator/lang/java/ext/jvm-buffer-pools.md
@@ -307,7 +309,7 @@ nav:
         - Age Gauge: spectator/lang/py/meters/age-gauge.md
         - Counter: spectator/lang/py/meters/counter.md
         - Distribution Summary: spectator/lang/py/meters/dist-summary.md
-        - Gauges: spectator/lang/py/meters/gauge.md
+        - Gauge: spectator/lang/py/meters/gauge.md
         - Max Gauge: spectator/lang/py/meters/max-gauge.md
         - Monotonic Counter: spectator/lang/py/meters/monotonic-counter.md
         - Monotonic Counter Uint: spectator/lang/py/meters/monotonic-counter-uint.md
@@ -316,12 +318,8 @@ nav:
         - Timer: spectator/lang/py/meters/timer.md
       - Migrations: spectator/lang/py/migrations.md
       - Performance: spectator/lang/py/perf-test.md
-    - Ruby:
-      - Deprecated: spectator/lang/rb/deprecated.md
   - Patterns:
     - Cardinality Limiter: spectator/patterns/cardinality-limiter.md
-    - Gauge Poller: spectator/patterns/gauge-poller.md
-    - Interval Counter: spectator/patterns/interval-counter.md
     - Long Task Timer: spectator/patterns/long-task-timer.md
     - Percentile Timer: spectator/patterns/percentile-timer.md
     - Polled Meter: spectator/patterns/polled-meter.md
@@ -338,10 +336,6 @@ theme:
     primary: 'red'
     accent: 'red'
 
-extra:
-  spectator_api:
-      java_latest: 0.101.0
-
 extra_css:
   - css/custom.css
 
@@ -353,6 +347,9 @@ markdown_extensions:
   - attr_list
   - toc:
       permalink: True
+
+exclude_docs: |
+  asl/README.md
 
 plugins:
   - markdownextradata: {}

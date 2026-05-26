@@ -12,7 +12,7 @@ is `slf4j`. For Gradle, the dependency is specified as follows:
 
     ```groovy
     dependencies {
-        compile "com.netflix.spectator:spectator-api:{{ spectator_api.java_latest }}"
+        compile "com.netflix.spectator:spectator-api:latest.release"
     }
     ```
 
@@ -22,7 +22,7 @@ is `slf4j`. For Gradle, the dependency is specified as follows:
 
 [Registry]: registry/overview.md
 [Netflix Integration]: #netflix-integration
-[Maven Central]: https://search.maven.org/artifact/com.netflix.spectator/spectator-api/{{ spectator_api.java_latest }}/jar
+[Maven Central]: https://central.sonatype.com/artifact/com.netflix.spectator/spectator-api
 
 ## Instrumenting Code
 
@@ -119,7 +119,7 @@ section for the type of project you are working on:
 For libraries, the only dependency that should be needed is:
 
 ```
-com.netflix.spectator:spectator-api:{{ spectator_api.java_latest }}
+com.netflix.spectator:spectator-api:latest.release
 ```
 
 The bindings to integrate internally should be included with the application. In your code,

@@ -12,8 +12,8 @@ may have been much higher or lower at some point during interval, but that is no
 
 ### First-Class Support
 
-* [C++](../../lang/cpp/usage.md)
-* [Go](../../lang/go/usage.md)
+* [C++](../../lang/cpp/meters/gauge.md)
+* [Go](../../lang/go/meters/gauge.md)
 * [Java](../../lang/java/meters/gauge.md)
 * [Node.js](../../lang/nodejs/meters/gauge.md)
 * [Python](../../lang/py/meters/gauge.md)
