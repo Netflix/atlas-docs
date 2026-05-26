@@ -180,8 +180,8 @@ registry.gauge("server.queueSize", ttl_seconds=120).set(10)
 [SpectatorD] sidecar which is bundled with all standard AMIs and containers. If you must
 have the previous direct publishing behavior, because SpectatorD is not yet available on the
 platform where your code runs, then you can pin to version `0.1.18`.
-* The internal Netflix configuration companion library is no longer required and this dependency
-may be dropped from your project.
+* **Netflix-only:** the internal configuration companion library is no longer required and this
+dependency may be dropped from your project.
 * The API surface area remains unchanged to avoid breaking library consumers, and standard uses of
 `GlobalRegistry` helper methods for publishing metrics continue to work as expected. Several helper
 methods on meter classes are now no-ops, always returning values such as `0` or `nan`. If you want
