@@ -10700,13 +10700,7 @@
 
 
 <h1 id="percentile-timer">Percentile Timer<a class="headerlink" href="#percentile-timer" title="Permanent link">&para;</a></h1>
-<p>The value is the number of seconds that have elapsed for an event, with percentile estimates.</p>
-<p>This metric type will track the data distribution by maintaining a set of Counters. The
-distribution can then be used on the server side to estimate percentiles, while still
-allowing for arbitrary slicing and dicing based on dimensions.</p>
-<p>In order to maintain the data distribution, they have a higher storage cost, with a worst-case of
-up to 300X that of a standard Timer. Be diligent about any additional dimensions added to Percentile
-Timers and ensure that they have a small bounded cardinality.</p>
+<p>See <a href="../../../../patterns/percentile-timer/">Percentile Timer</a> for the concept.</p>
 <p>Call <code>Record()</code> with a value:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;registry.h&gt;</span>
 

@@ -10633,12 +10633,7 @@
 
 
 <h1 id="gauge">Gauge<a class="headerlink" href="#gauge" title="Permanent link">&para;</a></h1>
-<p>A gauge is a value that is sampled at some point in time. Typical examples for gauges would be
-the size of a queue or number of threads in a running state. Since gauges are not updated inline
-when a state change occurs, there is no information about what might have occurred between samples.</p>
-<p>Consider monitoring the behavior of a queue of tasks. If the data is being collected once a minute,
-then a gauge for the size will show the size when it was sampled. The size may have been much
-higher or lower at some point during interval, but that is not known.</p>
+<p>See <a href="../../../../core/meters/gauge/">Gauge</a> for the concept.</p>
 <p>Call <code>set()</code> with a value:</p>
 <div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
 
