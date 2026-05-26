@@ -8309,6 +8309,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#runtime-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime Metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#netflix-integration" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10755,6 +10766,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#runtime-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime Metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#netflix-integration" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10916,6 +10938,14 @@ is <code>slf4j</code>. For Gradle, the dependency is specified as follows:</p>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+<h2 id="runtime-metrics">Runtime Metrics<a class="headerlink" href="#runtime-metrics" title="Permanent link">&para;</a></h2>
+<p>JVM runtime metrics (GC, memory pools, buffer pools, threads, class loading, compilation,
+safepoints) are available via the <code>spectator-ext-*</code> extension libraries. See the JVM Stats
+pages under <a href="../ext/jvm-gc/">Extensions</a> for the metrics each one exposes and the dependency
+to add.</p>
+<p>For applications that want everything wired up by default, the Netflix
+<a href="#sbn-applications">SBN starter</a> registers these by default — see the
+<a href="#netflix-integration">Netflix Integration</a> section below.</p>
 <h2 id="netflix-integration">Netflix Integration<a class="headerlink" href="#netflix-integration" title="Permanent link">&para;</a></h2>
 <p>When running at Netflix, use the <code>atlas-client</code> library to enable transferring the
 instrumented data to <a href="../../../../">Atlas</a>. See the appropriate
