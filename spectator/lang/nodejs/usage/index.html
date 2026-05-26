@@ -9585,6 +9585,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#async-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Async Semantics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-id-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Working with Id Objects
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#override-logger" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -9600,17 +9622,6 @@
     <span class="md-ellipsis">
       
         Runtime Metrics
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#working-with-id-objects" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Working with Id Objects
       
     </span>
   </a>
@@ -11045,6 +11056,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#async-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Async Semantics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-id-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Working with Id Objects
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#override-logger" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11060,17 +11093,6 @@
     <span class="md-ellipsis">
       
         Runtime Metrics
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#working-with-id-objects" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Working with Id Objects
       
     </span>
   </a>
@@ -11427,18 +11449,22 @@ npm<span class="w"> </span>install<span class="w"> </span>nflx-spectator-nodejsm
 <span class="nx">process</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;SIGTERM&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">shutdown</span><span class="p">);</span>
 </code></pre></div>
 <p>Save this snippet as <code>app.js</code>, then <code>node app.js</code>.</p>
-<h2 id="override-logger">Override Logger<a class="headerlink" href="#override-logger" title="Permanent link">&para;</a></h2>
-<p>You can override the logger used by the Spectator registry by setting the logger parameter in the
-<code>Config</code> object. The specified logger should provide <code>debug</code>, <code>info</code>, and <code>error</code> methods. By
-default, <code>spectator-js</code> logs to stdout.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;pino&#39;</span><span class="p">)();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">spectator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Config</span><span class="p">(</span><span class="s2">&quot;udp&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{},</span><span class="w"> </span><span class="nx">logger</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Registry</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+<h2 id="async-semantics">Async Semantics<a class="headerlink" href="#async-semantics" title="Permanent link">&para;</a></h2>
+<p>Meter update methods such as <code>Counter.increment()</code>, <code>Timer.record()</code>, and
+<code>DistributionSummary.record()</code> return a <code>Promise&lt;void&gt;</code> because the underlying writer
+sends to <code>spectatord</code> asynchronously.</p>
+<p>In most application code you do not need the result of these calls — fire-and-forget is
+the expected pattern. Prefix the call with <code>void</code> to make it explicit that the returned
+Promise is intentionally ignored:</p>
+<div class="highlight"><pre><span></span><code><span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">).</span><span class="nx">increment</span><span class="p">();</span>
 </code></pre></div>
-<h2 id="runtime-metrics">Runtime Metrics<a class="headerlink" href="#runtime-metrics" title="Permanent link">&para;</a></h2>
-<p>Use <a href="https://github.com/Netflix-Skunkworks/spectator-js-nodejsmetrics">spectator-js-nodejsmetrics</a>.</p>
-<p>The <a href="#complex-example">Instrumenting Code</a> examples show how to use this library.</p>
+<p>In <strong>high-volume tight loops</strong>, you should <code>await</code> the promise instead. Failing to do so
+will accumulate unresolved promises and can lead to heap exhaustion — see the
+<a href="#performance">Performance</a> section.</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">item</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">batch</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter</span><span class="p">(</span><span class="s2">&quot;batch.itemProcessed&quot;</span><span class="p">).</span><span class="nx">increment</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
 <h2 id="working-with-id-objects">Working with Id Objects<a class="headerlink" href="#working-with-id-objects" title="Permanent link">&para;</a></h2>
 <p>Each metric stored in Atlas is uniquely identified by the combination of the name and the tags
 associated with it. In <code>spectator-js</code>, this data is represented with <code>Id</code> objects, created
@@ -11453,14 +11479,26 @@ validate these values, dropping or changing any that are not valid, and reportin
 <div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">;</span>
 
 <span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Registry</span><span class="p">();</span>
-<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;statusCode&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">str</span><span class="p">(</span><span class="mf">200</span><span class="p">)}).</span><span class="nx">increment</span><span class="p">();</span>
+<span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;statusCode&quot;</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">(</span><span class="mf">200</span><span class="p">)}).</span><span class="nx">increment</span><span class="p">();</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">num_requests_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;statusCode&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">str</span><span class="p">(</span><span class="mf">200</span><span class="p">)});</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">num_requests_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">new_id</span><span class="p">(</span><span class="s2">&quot;server.numRequests&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;statusCode&quot;</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">(</span><span class="mf">200</span><span class="p">)});</span>
 <span class="ow">void</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">counter_with_id</span><span class="p">(</span><span class="nx">num_requests_id</span><span class="p">).</span><span class="nx">increment</span><span class="p">();</span>
 </code></pre></div>
 <p>Atlas metrics will be consumed by users many times after the data has been reported, so they should
 be chosen thoughtfully, while considering how they will be used. See the <a href="../../../../concepts/naming/">naming conventions</a> page
 for general guidelines on metrics naming and restrictions.</p>
+<h2 id="override-logger">Override Logger<a class="headerlink" href="#override-logger" title="Permanent link">&para;</a></h2>
+<p>You can override the logger used by the Spectator registry by setting the logger parameter in the
+<code>Config</code> object. The specified logger should provide <code>debug</code>, <code>info</code>, and <code>error</code> methods. By
+default, <code>spectator-js</code> logs to stdout.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;pino&#39;</span><span class="p">)();</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">spectator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;nflx-spectator&quot;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Config</span><span class="p">(</span><span class="s2">&quot;udp&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{},</span><span class="w"> </span><span class="nx">logger</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">spectator</span><span class="p">.</span><span class="nx">Registry</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+</code></pre></div>
+<h2 id="runtime-metrics">Runtime Metrics<a class="headerlink" href="#runtime-metrics" title="Permanent link">&para;</a></h2>
+<p>Use <a href="https://github.com/Netflix-Skunkworks/spectator-js-nodejsmetrics">spectator-js-nodejsmetrics</a>.</p>
+<p>The <a href="#complex-example">Instrumenting Code</a> examples show how to use this library.</p>
 <h2 id="meter-types">Meter Types<a class="headerlink" href="#meter-types" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../meters/age-gauge/">Age Gauge</a></li>
