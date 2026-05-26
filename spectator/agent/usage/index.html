@@ -6972,6 +6972,56 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Admin Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Tags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removing-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removing Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -10928,6 +10978,56 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Admin Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Tags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removing-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removing Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -10961,7 +11061,6 @@
   
 
 
-<p><a href="https://github.com/Netflix-Skunkworks/spectatord/actions/workflows/build.yml"><img alt="Build" src="https://github.com/Netflix-Skunkworks/spectatord/actions/workflows/build.yml/badge.svg" /></a></p>
 <h1 id="spectatord-introduction">SpectatorD Introduction<a class="headerlink" href="#spectatord-introduction" title="Permanent link">&para;</a></h1>
 <p><a href="https://github.com/Netflix-Skunkworks/spectatord">SpectatorD</a> is a high-performance telemetry agent that listens for metrics specified by a
 text-based protocol and publishes updates periodically to an <a href="https://github.com/Netflix/atlas">Atlas</a> aggregator service. It
@@ -11170,10 +11269,11 @@ depends on the metric type.</p>
 <h2 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h2>
 <p>See <a href="../metrics/">Metrics</a> for a list of metrics published by this service.</p>
 <h2 id="admin-server">Admin Server<a class="headerlink" href="#admin-server" title="Permanent link">&para;</a></h2>
-<p>An administrative server is provided with SpectatorD, so that debugging information and few
+<p>An administrative server is provided with SpectatorD, so that debugging information and a few
 data management tasks may be completed. By default, this server listens on port <code>1234/TCP</code>,
 but this can be modified with the <code>--admin_port</code> flag. The endpoints which change data may
 only be accessed from localhost.</p>
+<h3 id="service-information">Service Information<a class="headerlink" href="#service-information" title="Permanent link">&para;</a></h3>
 <ul>
 <li><code>GET /</code><ul>
 <li>Returns a service description and list of available endpoints.</li>
@@ -11183,6 +11283,9 @@ only be accessed from localhost.</p>
 <li>Returns the current SpectatorD configuration, including the current set of common tags.</li>
 </ul>
 </li>
+</ul>
+<h3 id="common-tags">Common Tags<a class="headerlink" href="#common-tags" title="Permanent link">&para;</a></h3>
+<ul>
 <li><code>GET /config/common_tags</code><ul>
 <li>Returns a description of how to use this endpoint to modify common tags.</li>
 </ul>
@@ -11208,11 +11311,19 @@ http://localhost:1234/config/common_tags
 </code></pre></div></li>
 </ul>
 </li>
+</ul>
+<h3 id="inspecting-metrics">Inspecting Metrics<a class="headerlink" href="#inspecting-metrics" title="Permanent link">&para;</a></h3>
+<ul>
 <li><code>GET /metrics</code><ul>
 <li>Return an object containing lists of all metrics currently known to the Registry, grouped
 by type.</li>
 </ul>
 </li>
+</ul>
+<h3 id="removing-metrics">Removing Metrics<a class="headerlink" href="#removing-metrics" title="Permanent link">&para;</a></h3>
+<p>Use these endpoints to clean up long-lived meter types (Age Gauges, Gauges) that the Registry
+will not expire on its own.</p>
+<ul>
 <li><code>DELETE /metrics/A</code><ul>
 <li>Delete all AgeGauge metrics from the Registry.</li>
 </ul>
