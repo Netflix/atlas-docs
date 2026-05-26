@@ -1,6 +1,6 @@
 # Timer
 
-A Timer is used to measure how long (in seconds) some event is taking.
+See [Timer](../../../core/meters/timer.md) for the concept.
 
 Call `record()` with a value:
 

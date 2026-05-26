@@ -1,5 +1,7 @@
 # Timer
 
+See [Timer](../../../core/meters/timer.md) for the concept.
+
 To get started, create an instance using the [Registry](../registry/overview.md):
 
 ```java

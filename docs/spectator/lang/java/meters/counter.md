@@ -1,5 +1,7 @@
 # Counter
 
+See [Counter](../../../core/meters/counter.md) for the concept.
+
 Counters are created using the [Registry](../registry/overview.md), which is be setup as part of
 application initialization. For example:
 
