@@ -1,5 +1,7 @@
 # Percentile Distribution Summary
 
+See [Percentile Distribution Summary](../../../patterns/percentile-dist-summary.md) for the concept.
+
 The value tracks the distribution of events, with percentile estimates. It is similar to a
 `PercentileTimer`, but more general, because the size does not have to be a period of time.
 
