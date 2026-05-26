@@ -126,6 +126,37 @@ registry = Registry()
 registry.counter("server.requestCount").increment()
 ```
 
+### Working with MeterId Objects
+
+Each metric stored in Atlas is uniquely identified by the combination of the name and the tags
+associated with it. In `spectator-py`, this data is represented with `MeterId` objects, created
+by the `Registry`. The `new_id()` method returns new `MeterId` objects, which have extra common
+tags applied, and which can be further customized by calling the `with_tag()` and `with_tags()`
+methods. Each `MeterId` will create and store a validated subset of the `spectatord` protocol line
+to be written for each `Meter`, when it is instantiated. `MeterId` objects are immutable, so they
+can be freely passed around and used concurrently. Manipulating the tags with the provided methods
+will create new `MeterId` objects, to assist with maintaining immutability.
+
+Note that **all tag keys and values must be strings.** For example, if you want to keep track of the
+number of successful requests, then you must cast integers to strings. The `MeterId` class will
+validate these values, dropping or changing any that are not valid, and reporting a warning log.
+
+```python
+from spectator import Registry
+
+registry = Registry()
+registry.counter("server.numRequests", {"statusCode": str(200)}).increment()
+
+num_requests_id = registry.new_id("server.numRequests", {"statusCode": str(200)})
+registry.counter_with_id(num_requests_id).increment()
+```
+
+Atlas metrics will be consumed by users many times after the data has been reported, so they should
+be chosen thoughtfully, while considering how they will be used. See the [naming conventions] page
+for general guidelines on metrics naming and restrictions.
+
+[naming conventions]: ../../../concepts/naming.md
+
 ### Legacy Usage
 
 The `GlobalRegistry` concept is a hold-over from the thick-client version of this library, but it
@@ -185,37 +216,6 @@ if __name__ == "__main__":
 ```
 
 [spectator-py-runtime-metrics]: https://github.com/Netflix/spectator-py-runtime-metrics
-
-## Working with MeterId Objects
-
-Each metric stored in Atlas is uniquely identified by the combination of the name and the tags
-associated with it. In `spectator-py`, this data is represented with `MeterId` objects, created
-by the `Registry`. The `new_id()` method returns new `MeterId` objects, which have extra common
-tags applied, and which can be further customized by calling the `with_tag()` and `with_tags()`
-methods. Each `MeterId` will create and store a validated subset of the `spectatord` protocol line
-to be written for each `Meter`, when it is instantiated. `MeterId` objects are immutable, so they
-can be freely passed around and used concurrently. Manipulating the tags with the provided methods
-will create new `MeterId` objects, to assist with maintaining immutability.
-
-Note that **all tag keys and values must be strings.** For example, if you want to keep track of the
-number of successful requests, then you must cast integers to strings. The `MeterId` class will
-validate these values, dropping or changing any that are not valid, and reporting a warning log.
-
-```python
-from spectator import Registry
-
-registry = Registry()
-registry.counter("server.numRequests", {"statusCode": str(200)}).increment()
-
-num_requests_id = registry.new_id("server.numRequests", {"statusCode": str(200)})
-registry.counter_with_id(num_requests_id).increment()
-```
-
-Atlas metrics will be consumed by users many times after the data has been reported, so they should
-be chosen thoughtfully, while considering how they will be used. See the [naming conventions] page
-for general guidelines on metrics naming and restrictions.
-
-[naming conventions]: ../../../concepts/naming.md
 
 ## Meter Types
 

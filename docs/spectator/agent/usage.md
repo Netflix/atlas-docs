@@ -30,9 +30,13 @@ spectatord: A daemon that listens for metrics and reports them to Atlas.
     --debug (Debug spectatord. All values will be sent to a dev aggregator and
       dropped.); default: false;
     --enable_external (Enable external publishing.); default: false;
+    --enable_insight_logs (Send internal logs to the Insight Logs agent on
+      localhost:1552.); default: true;
     --enable_socket (Enable UNIX domain socket support. Default is true on Linux
       and false on MacOS and Windows.); default: false;
     --enable_statsd (Enable statsd support.); default: false;
+    --frequency (Reporting frequency: how often metrics are flushed to the Atlas
+      aggregator.); default: 5s;
     --ipv4_only (Enable IPv4-only UDP listeners. This option should only be used
       in environments where it is impossible to run IPv6.); default: false;
     --metatron_dir (Path to the Metatron certificates, which are used for
