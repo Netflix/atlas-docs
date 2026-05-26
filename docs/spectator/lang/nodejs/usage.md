@@ -239,24 +239,29 @@ process.on("SIGTERM", shutdown);
 
 Save this snippet as `app.js`, then `node app.js`.
 
-## Override Logger
+## Async Semantics
 
-You can override the logger used by the Spectator registry by setting the logger parameter in the
-`Config` object. The specified logger should provide `debug`, `info`, and `error` methods. By
-default, `spectator-js` logs to stdout.
+Meter update methods such as `Counter.increment()`, `Timer.record()`, and
+`DistributionSummary.record()` return a `Promise<void>` because the underlying writer
+sends to `spectatord` asynchronously.
+
+In most application code you do not need the result of these calls — fire-and-forget is
+the expected pattern. Prefix the call with `void` to make it explicit that the returned
+Promise is intentionally ignored:
 
 ```javascript
-const logger = require('pino')();
-const spectator = require("nflx-spectator");
-const config = new spectator.Config("udp", {}, logger);
-const registry = new spectator.Registry(config);
+void registry.counter("server.numRequests").increment();
 ```
 
-## Runtime Metrics
+In **high-volume tight loops**, you should `await` the promise instead. Failing to do so
+will accumulate unresolved promises and can lead to heap exhaustion — see the
+[Performance](#performance) section.
 
-Use [spectator-js-nodejsmetrics](https://github.com/Netflix-Skunkworks/spectator-js-nodejsmetrics).
-
-The [Instrumenting Code](#complex-example) examples show how to use this library.
+```javascript
+for (const item of batch) {
+    await registry.counter("batch.itemProcessed").increment();
+}
+```
 
 ## Working with Id Objects
 
@@ -276,9 +281,9 @@ validate these values, dropping or changing any that are not valid, and reportin
 import {Registry} from "nflx-spectator";
 
 const registry = new Registry();
-void registry.counter("server.numRequests", {"statusCode": str(200)}).increment();
+void registry.counter("server.numRequests", {"statusCode": String(200)}).increment();
 
-const num_requests_id = registry.new_id("server.numRequests", {"statusCode": str(200)});
+const num_requests_id = registry.new_id("server.numRequests", {"statusCode": String(200)});
 void registry.counter_with_id(num_requests_id).increment();
 ```
 
@@ -287,6 +292,25 @@ be chosen thoughtfully, while considering how they will be used. See the [naming
 for general guidelines on metrics naming and restrictions.
 
 [naming conventions]: ../../../concepts/naming.md
+
+## Override Logger
+
+You can override the logger used by the Spectator registry by setting the logger parameter in the
+`Config` object. The specified logger should provide `debug`, `info`, and `error` methods. By
+default, `spectator-js` logs to stdout.
+
+```javascript
+const logger = require('pino')();
+const spectator = require("nflx-spectator");
+const config = new spectator.Config("udp", {}, logger);
+const registry = new spectator.Registry(config);
+```
+
+## Runtime Metrics
+
+Use [spectator-js-nodejsmetrics](https://github.com/Netflix-Skunkworks/spectator-js-nodejsmetrics).
+
+The [Instrumenting Code](#complex-example) examples show how to use this library.
 
 ## Meter Types
 
