@@ -1,7 +1,5 @@
 # spectator-py Usage
 
-[![PyPI version](https://badge.fury.io/py/netflix-spectator-py.svg)](https://badge.fury.io/py/netflix-spectator-py)
-
 Python thin-client [metrics library] for use with [Atlas] and [SpectatorD].
 
 [metrics library]: https://github.com/Netflix/spectator-py

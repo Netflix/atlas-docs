@@ -1,5 +1,3 @@
-[![Build](https://github.com/Netflix-Skunkworks/spectatord/actions/workflows/build.yml/badge.svg)](https://github.com/Netflix-Skunkworks/spectatord/actions/workflows/build.yml)
-
 # SpectatorD Introduction
 
 [SpectatorD] is a high-performance telemetry agent that listens for metrics specified by a
@@ -174,15 +172,20 @@ See [Metrics](./metrics.md) for a list of metrics published by this service.
 
 ## Admin Server
 
-An administrative server is provided with SpectatorD, so that debugging information and few
+An administrative server is provided with SpectatorD, so that debugging information and a few
 data management tasks may be completed. By default, this server listens on port `1234/TCP`,
 but this can be modified with the `--admin_port` flag. The endpoints which change data may
 only be accessed from localhost.
+
+### Service Information
 
 * `GET /`
     * Returns a service description and list of available endpoints.
 * `GET /config`
     * Returns the current SpectatorD configuration, including the current set of common tags.
+
+### Common Tags
+
 * `GET /config/common_tags`
     * Returns a description of how to use this endpoint to modify common tags.
 * `POST /config/common_tags`
@@ -203,9 +206,18 @@ only be accessed from localhost.
         -w " %{http_code}\n" \
         http://localhost:1234/config/common_tags
         ```
+
+### Inspecting Metrics
+
 * `GET /metrics`
     * Return an object containing lists of all metrics currently known to the Registry, grouped
     by type.
+
+### Removing Metrics
+
+Use these endpoints to clean up long-lived meter types (Age Gauges, Gauges) that the Registry
+will not expire on its own.
+
 * `DELETE /metrics/A`
     * Delete all AgeGauge metrics from the Registry.
 * `DELETE /metrics/A/{id}`
