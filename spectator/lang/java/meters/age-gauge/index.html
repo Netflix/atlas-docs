@@ -10634,8 +10634,10 @@
 
 <h1 id="age-gauge">Age Gauge<a class="headerlink" href="#age-gauge" title="Permanent link">&para;</a></h1>
 <p>See <a href="../../../../patterns/age-gauge/">Age Gauge</a> for the concept.</p>
-<p>Java does not have a dedicated Age Gauge meter. The equivalent is a <a href="../../../../patterns/polled-meter/">Polled Meter</a>
-that computes <code>now - lastSuccessTimestamp</code> on each poll:</p>
+<p>Java does not have a dedicated Age Gauge meter. Use a <a href="../../../../patterns/polled-meter/">Polled Meter</a>
+together with the <a href="https://www.javadoc.io/static/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/Functions.html#AGE"><code>Functions.AGE</code></a>
+helper, which computes the age in seconds from a wall-time millis timestamp stored in an
+<code>AtomicLong</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Job</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">AtomicLong</span><span class="w"> </span><span class="n">lastSuccess</span><span class="p">;</span>
@@ -10644,18 +10646,25 @@ that computes <code>now - lastSuccessTimestamp</code> on each poll:</p>
 <span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Job</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">lastSuccess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
 <span class="w">        </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;job.timeSinceLastSuccess&quot;</span><span class="p">)</span>
-<span class="w">        </span><span class="p">.</span><span class="na">monitorValue</span><span class="p">(</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicLong</span><span class="p">(</span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">wallTime</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="p">),</span>
-<span class="w">            </span><span class="n">ts</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">wallTime</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ts</span><span class="p">.</span><span class="na">get</span><span class="p">());</span>
+<span class="w">        </span><span class="p">.</span><span class="na">monitorValue</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AtomicLong</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">()),</span><span class="w"> </span><span class="n">Functions</span><span class="p">.</span><span class="na">AGE</span><span class="p">);</span>
 <span class="w">  </span><span class="p">}</span>
 
 <span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onSuccess</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">lastSuccess</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">registry</span><span class="p">.</span><span class="na">clock</span><span class="p">().</span><span class="na">wallTime</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="p">);</span>
+<span class="w">    </span><span class="n">lastSuccess</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">());</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>This reports the seconds elapsed since the last successful run, which is the basis for the
 Time Since Last Success alerting pattern.</p>
+<p>For tests that need to control time, use <a href="https://www.javadoc.io/static/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/Functions.html#age-com.netflix.spectator.api.Clock-"><code>Functions.age(Clock)</code></a>
+with a <code>ManualClock</code> (typically the same clock used by the test <code>Registry</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="n">ManualClock</span><span class="w"> </span><span class="n">clock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ManualClock</span><span class="p">();</span>
+<span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DefaultRegistry</span><span class="p">(</span><span class="n">clock</span><span class="p">);</span>
+
+<span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;job.timeSinceLastSuccess&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">monitorValue</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AtomicLong</span><span class="p">(</span><span class="n">clock</span><span class="p">.</span><span class="na">wallTime</span><span class="p">()),</span><span class="w"> </span><span class="n">Functions</span><span class="p">.</span><span class="na">age</span><span class="p">(</span><span class="n">clock</span><span class="p">));</span>
+</code></pre></div>
 
 
 

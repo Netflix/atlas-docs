@@ -10350,21 +10350,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#implementations" class="md-nav__link">
+  <a href="#lifecycle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Implementations
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#lifecycle-spectatord-backed-clients" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Lifecycle (spectatord-backed clients)
+        Lifecycle
       
     </span>
   </a>
@@ -10687,21 +10676,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#implementations" class="md-nav__link">
+  <a href="#lifecycle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Implementations
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#lifecycle-spectatord-backed-clients" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Lifecycle (spectatord-backed clients)
+        Lifecycle
       
     </span>
   </a>
@@ -10745,31 +10723,17 @@ It is a use of a <a href="../../core/meters/gauge/">Gauge</a> where the value re
 as <code>now - lastSuccessTimestamp</code> on each reporting interval.</p>
 <p>The primary use case is the <strong>Time Since Last Success</strong> alerting pattern: alert when a
 periodic job, heartbeat, or freshness signal stops advancing.</p>
-<h2 id="implementations">Implementations<a class="headerlink" href="#implementations" title="Permanent link">&para;</a></h2>
-<p>For the spectatord-backed clients (C++, Go, Node.js, Python), Age Gauge is exposed as a
-first-class meter type. The client records the last-success timestamp (or <code>now()</code>) and
-spectatord handles the elapsed-time calculation on each reporting interval, continuing to
-report for as long as the spectatord process runs.</p>
-<p>For Java, there is no dedicated Age Gauge meter. The equivalent is a polled gauge that
-computes the age on each poll — see <a href="../polled-meter/">Polled Meter</a>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">AtomicLong</span><span class="w"> </span><span class="n">lastSuccess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicLong</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="p">);</span>
-<span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">monitorValue</span><span class="p">(</span><span class="n">lastSuccess</span><span class="p">,</span><span class="w"> </span><span class="n">ts</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ts</span><span class="p">.</span><span class="na">get</span><span class="p">());</span>
-
-<span class="c1">// On successful event:</span>
-<span class="n">lastSuccess</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="p">);</span>
-</code></pre></div>
-<h2 id="lifecycle-spectatord-backed-clients">Lifecycle (spectatord-backed clients)<a class="headerlink" href="#lifecycle-spectatord-backed-clients" title="Permanent link">&para;</a></h2>
-<p>Age Gauges are long-lived in the spectatord process — once set they continue reporting
-indefinitely. To prevent leaks, spectatord enforces a per-process limit (default <code>1000</code>,
-tunable via <code>--age_gauge_limit</code>). If you need to remove or replace one, use the
+<h2 id="lifecycle">Lifecycle<a class="headerlink" href="#lifecycle" title="Permanent link">&para;</a></h2>
+<p>Age Gauges are long-lived — once set they continue reporting indefinitely until the
+process is restarted or the gauge is explicitly removed. For spectatord-backed clients,
+spectatord enforces a per-process limit (default <code>1000</code>, tunable via <code>--age_gauge_limit</code>)
+to prevent leaks. To remove or replace one, use the
 <a href="../../agent/usage/#admin-server">SpectatorD admin server</a>.</p>
 <h2 id="languages">Languages<a class="headerlink" href="#languages" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../lang/cpp/meters/age-gauge/">C++</a></li>
 <li><a href="../../lang/go/meters/age-gauge/">Go</a></li>
-<li><a href="../../lang/java/meters/age-gauge/">Java</a> (no dedicated meter; uses <a href="../polled-meter/">Polled Meter</a>)</li>
+<li><a href="../../lang/java/meters/age-gauge/">Java</a></li>
 <li><a href="../../lang/nodejs/meters/age-gauge/">Node.js</a></li>
 <li><a href="../../lang/py/meters/age-gauge/">Python</a></li>
 </ul>

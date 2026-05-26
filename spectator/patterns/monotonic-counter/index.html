@@ -10445,17 +10445,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#implementations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Implementations
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#languages" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10698,17 +10687,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#implementations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Implementations
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#languages" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10757,23 +10735,12 @@ slower time-to-first-data point than a standard counter.</p>
   (most OS-level interface counters) so that a wrap-around past <code>2^63</code> is not interpreted
   as a backward jump.</li>
 </ul>
-<p>The spectatord-backed clients (C++, Go, Node.js, Python) expose both variants. In Java,
-use <a href="../polled-meter/">Polled Meter</a>'s <code>monitorMonotonicCounter</code> — Java is long-based and
-does not need a separate uint variant.</p>
-<h2 id="implementations">Implementations<a class="headerlink" href="#implementations" title="Permanent link">&para;</a></h2>
-<p>For the spectatord-backed clients, Monotonic Counter is a first-class meter type — call
-<code>set(absoluteValue)</code> on each sample.</p>
-<p>For Java, the equivalent is exposed via the <a href="../polled-meter/">Polled Meter</a> helper, which
-periodically samples a function returning the current absolute value and reports the delta:</p>
-<div class="highlight"><pre><span></span><code><span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;threadpool.completedTasks&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">monitorMonotonicCounter</span><span class="p">(</span><span class="n">executor</span><span class="p">,</span><span class="w"> </span><span class="n">ThreadPoolExecutor</span><span class="p">::</span><span class="n">getCompletedTaskCount</span><span class="p">);</span>
-</code></pre></div>
+<p>Java is long-based and does not need a separate uint variant.</p>
 <h2 id="languages">Languages<a class="headerlink" href="#languages" title="Permanent link">&para;</a></h2>
 <ul>
 <li>C++: <a href="../../lang/cpp/meters/monotonic-counter/">signed</a>, <a href="../../lang/cpp/meters/monotonic-counter-uint/">uint64</a></li>
 <li>Go: <a href="../../lang/go/meters/monotonic-counter/">signed</a>, <a href="../../lang/go/meters/monotonic-counter-uint/">uint64</a></li>
-<li><a href="../../lang/java/meters/monotonic-counter/">Java</a> (no dedicated meter; uses <a href="../polled-meter/">Polled Meter</a>)</li>
+<li><a href="../../lang/java/meters/monotonic-counter/">Java</a></li>
 <li>Node.js: <a href="../../lang/nodejs/meters/monotonic-counter/">signed</a>, <a href="../../lang/nodejs/meters/monotonic-counter-uint/">uint64</a></li>
 <li>Python: <a href="../../lang/py/meters/monotonic-counter/">signed</a>, <a href="../../lang/py/meters/monotonic-counter-uint/">uint64</a></li>
 </ul>
