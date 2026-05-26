@@ -1,5 +1,7 @@
 # Age Gauge
 
+See [Age Gauge](../../../patterns/age-gauge.md) for the concept.
+
 The value is the time in seconds since the epoch at which an event has successfully occurred, or
 `0` to use the current time in epoch seconds. After an Age Gauge has been set, it will continue
 reporting the number of seconds since the last time recorded, for as long as the SpectatorD
