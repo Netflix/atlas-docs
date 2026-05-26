@@ -5,13 +5,13 @@ are typically short, less than 1 minute.
 
 A selection of specialized timers include:
 
-* `LongTaskTimer` - Periodically reports the time taken for a long running task (> 1 minute). See
-  the [Long Task Timer] pattern for details.
 * `PercentileTimer` - Useful if percentile approximations are needed in addition to basic stats.
   See the [Percentile Timer] pattern for details.
+* `LongTaskTimer` (Java only) - Periodically reports the time taken for a long running task
+  (> 1 minute). See the [Long Task Timer] pattern for details.
 
-[Long Task Timer]: ../../patterns/long-task-timer.md
 [Percentile Timer]: ../../patterns/percentile-timer.md
+[Long Task Timer]: ../../lang/java/patterns/long-task-timer.md
 
 ## Querying
 

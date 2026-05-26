@@ -477,7 +477,7 @@ public class Foo {
 
 See the general overview of [registration differences](#registration), the summary of
 [Timer usage](../../core/meters/timer.md), and
-[Long Task Timer usage](../../patterns/long-task-timer.md).
+[Long Task Timer usage](patterns/long-task-timer.md).
 
 Servo:
 
