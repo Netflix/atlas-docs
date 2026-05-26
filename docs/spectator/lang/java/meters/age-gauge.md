@@ -2,7 +2,7 @@
 
 See [Age Gauge](../../../patterns/age-gauge.md) for the concept.
 
-Java does not have a dedicated Age Gauge meter. Use a [Polled Meter](../../../patterns/polled-meter.md)
+Java does not have a dedicated Age Gauge meter. Use a [Polled Meter](../patterns/polled-meter.md)
 together with the [`Functions.AGE`](https://www.javadoc.io/static/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/Functions.html#AGE)
 helper, which computes the age in seconds from a wall-time millis timestamp stored in an
 `AtomicLong`:

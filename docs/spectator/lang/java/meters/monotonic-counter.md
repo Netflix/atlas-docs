@@ -3,7 +3,7 @@
 See [Monotonic Counter](../../../patterns/monotonic-counter.md) for the concept.
 
 Java does not expose a dedicated monotonic counter meter; the equivalent is the
-[Polled Meter](../../../patterns/polled-meter.md) helper's `monitorMonotonicCounter`, which
+[Polled Meter](../patterns/polled-meter.md) helper's `monitorMonotonicCounter`, which
 periodically samples a function returning the current absolute value and reports the
 per-second rate of the delta:
 
