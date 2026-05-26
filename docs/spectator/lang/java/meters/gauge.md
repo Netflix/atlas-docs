@@ -1,11 +1,11 @@
-# Java Gauges
+# Gauge
 
 ## Polled Gauges
 
 The most common use of Gauges is by registering a hook with Spectator, so that it will poll the
 values in the background. This is done by using the [PolledMeter] helper class.
 
-[PolledMeter]: https://static.javadoc.io/com.netflix.spectator/spectator-api/{{ spectator_api.java_latest }}/com/netflix/spectator/api/patterns/PolledMeter.html
+[PolledMeter]: https://static.javadoc.io/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/patterns/PolledMeter.html
 
 A Polled Gauge is registered by passing in an id, a reference to the object, and a function to get
 or compute a numeric value based on the object. Note that a Gauge should only be registered once,

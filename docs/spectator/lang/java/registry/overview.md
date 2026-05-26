@@ -3,8 +3,8 @@
 The [Registry] is the main class for managing a set of meters. A [Meter] is a class for collecting
 a set of measurements about your application.
 
-[Registry]: https://static.javadoc.io/com.netflix.spectator/spectator-api/{{ spectator_api.java_latest }}/com/netflix/spectator/api/Registry.html
-[Meter]: https://static.javadoc.io/com.netflix.spectator/spectator-api/{{ spectator_api.java_latest }}/com/netflix/spectator/api/Meter.html
+[Registry]: https://static.javadoc.io/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/Registry.html
+[Meter]: https://static.javadoc.io/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/Meter.html
 
 ## Choose Implementation
 
@@ -16,12 +16,12 @@ The core Spectator library, `spectator-api`, comes with the following [Registry]
         <th>Dependency
         <th>Description
     <tr>
-        <td><a href="https://static.javadoc.io/com.netflix.spectator/spectator-api/{{ spectator_api.java_latest }}/com/netflix/spectator/api/DefaultRegistry.html">DefaultRegistry</a>
+        <td><a href="https://static.javadoc.io/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/DefaultRegistry.html">DefaultRegistry</a>
         <td>spectator-api
         <td>
         Updates local counters, frequently used with <a href="../../testing">unit tests</a>.
     <tr>
-        <td><a href="https://static.javadoc.io/com.netflix.spectator/spectator-api/{{ spectator_api.java_latest }}/com/netflix/spectator/api/NoopRegistry.html">NoopRegistry</a>
+        <td><a href="https://static.javadoc.io/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/NoopRegistry.html">NoopRegistry</a>
         <td>spectator-api
         <td>
         Does nothing, tries to make operations as cheap as possible.
@@ -30,16 +30,6 @@ The core Spectator library, `spectator-api`, comes with the following [Registry]
         due to instrumentation. It can also be useful in testing to help ensure that no side
         effects were introduced where the instrumentation is now needed in order for the
         application for function properly.
-    <tr>
-        <td><a href="https://static.javadoc.io/com.netflix.spectator/spectator-api/{{ spectator_api.java_latest }}/com/netflix/spectator/metrics3/MetricsRegistry.html">MetricsRegistry</a>
-        <td><a href="../metrics3">spectator-reg-metrics3</a>
-        <td>
-        Map to <a href="http://metrics.dropwizard.io/3.1.0/">metrics3 library</a>.
-        <br><br>
-        This implementation is typically used for reporting to local files, JMX, or other
-        backends like Graphite. Note that it uses a hierarchical naming scheme rather
-        than the dimensional naming used by Spectator, so the names will get flattened
-        when mapped to this Registry.
 </table>
 
 It is recommended for libraries to write code against the [Registry] interface and allow the
@@ -175,4 +165,4 @@ public void init() {
 Any measurements taken while no Registries are added to the global instance will be lost. If
 multiple Registries are added, all will receive updates made to the Global Registry.
 
-[Global Registry]: https://static.javadoc.io/com.netflix.spectator/spectator-api/{{ spectator_api.java_latest }}/com/netflix/spectator/api/Spectator.html#globalRegistry--
+[Global Registry]: https://static.javadoc.io/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/Spectator.html#globalRegistry--

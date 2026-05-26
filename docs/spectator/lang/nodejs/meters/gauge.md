@@ -1,3 +1,5 @@
+# Gauge
+
 A gauge is a value that is sampled at some point in time. Typical examples for gauges would be
 the size of a queue or number of threads in a running state. Since gauges are not updated inline
 when a state change occurs, there is no information about what might have occurred between samples.
