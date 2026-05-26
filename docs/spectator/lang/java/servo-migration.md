@@ -6,8 +6,8 @@ It was done as a separate project to avoid breaking backwards compatibility for 
 
 From a user perspective, both will be supported for a long time, but most of our efforts for
 future improvement will go to Spectator. For new code, it is recommended to use the spectator
-API. If running [at Netflix](usage.md), the correct bindings will be in place for both Servo
-and Spectator.
+API. If running [at Netflix](usage.md#netflix-integration), the correct bindings will be in place for
+both Servo and Spectator.
 
 ## Differences
 

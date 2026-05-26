@@ -12,8 +12,9 @@ some basic GC logging and metrics.
 
 ## Getting Started
 
-For using it internally at Netflix, see the [Java Usage](../usage.md) guide, otherwise
-keep reading this section.
+If you are running at Netflix, the standard platform initialization already wires this up via the
+[Netflix Integration](../usage.md#netflix-integration) — no further action required. Otherwise,
+follow the instructions below.
 
 ### Requirements
 
