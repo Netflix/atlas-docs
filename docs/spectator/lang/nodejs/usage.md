@@ -1,7 +1,5 @@
 # spectator-js Usage
 
-[![npm version](https://badge.fury.io/js/nflx-spectator.svg)](https://badge.fury.io/js/nflx-spectator)
-
 TypeScript thin-client metrics library compiled to JavaScript for use with [Atlas] and [SpectatorD].
 
 Intended for use with [Node.js] applications.
