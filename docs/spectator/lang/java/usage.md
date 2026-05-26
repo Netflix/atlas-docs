@@ -105,6 +105,17 @@ public class Server {
 }
 ```
 
+## Runtime Metrics
+
+JVM runtime metrics (GC, memory pools, buffer pools, threads, class loading, compilation,
+safepoints) are available via the `spectator-ext-*` extension libraries. See the JVM Stats
+pages under [Extensions](ext/jvm-gc.md) for the metrics each one exposes and the dependency
+to add.
+
+For applications that want everything wired up by default, the Netflix
+[SBN starter](#sbn-applications) registers these by default — see the
+[Netflix Integration](#netflix-integration) section below.
+
 ## Netflix Integration
 
 When running at Netflix, use the `atlas-client` library to enable transferring the
