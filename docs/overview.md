@@ -11,7 +11,7 @@ Epic was a combination of perl CGI scripts, RRDTool logging, and MySQL. We were 
 of data. In addition there were a number of trends in the company which presaged a drastic
 increase in metric volume:
 
-* Rolling pushes to [Red/Black deployments](http://techblog.netflix.com/2012/06/asgard-web-based-cloud-management-and.html).
+* Rolling pushes to [Red/Black deployments](https://netflixtechblog.com/asgard-web-based-cloud-management-and-deployment-2c9fc4e4d3a1).
 * Leveraging auto-scaling for large clusters. Netflix has always used auto-scaling groups in AWS,
   but initially most were configured with fixed size and just used as a group and to replace
   instances.
@@ -93,10 +93,6 @@ We have isolated regional deployments in each region we operate in as well as a 
 that can combine the results from multiple regions. The query and aggregation operations can be
 performed on the fan out so most of the big summarization operations will distribute the
 computation across the tree and typically to an optimized storage layer at some point.
-
-Allowing the query and rendering layer to work on multiple backends also makes it easier for us to
-consider transitioning to other backends in the future such as OpenTSDB or InfluxDB. Switching to
-Atlas one of the biggest hurdles was compatibility and transitioning to the new system.
 
 ### Stack Language
 
@@ -301,32 +297,3 @@ Snapshot of index sizes for one region in our environment:
 |---|---|---|
 | ![Size 6h](./images/atlas_scale_6h.png) | ![Size 4d](./images/atlas_scale_4d.png) | ![Size 16d](./images/atlas_scale_16d.png) |
 
-## Ecosystem
-
-Internally there is a lot of tooling and infrastructure built up around Atlas. We are
-planning to open source many of these tools as time permits. This project is the first step for
-that with the query layer and some of the in-heap memory storage. Some additional parts that should
-come in the future:
-
-* User interfaces
-    * Main UI for browsing data and constructing queries.
-    * Dashboards
-    * Alerts
-* Platform
-    * Inline aggregation of reported data before storage layer
-    * Storage options using off-heap memory and lucene
-    * Percentile backend
-    * Publish and persistence applications
-    * EMR processing for computing rollups and analysis
-    * Poller for SNMP, healthchecks, etc
-* Client
-    * Supports integrating servo with Atlas
-    * Local rollups and alerting
-* Analytics
-    * Metrics volume report
-    * [Canary analysis](http://www.infoq.com/presentations/canary-analysis-deployment-pattern)
-    * Outlier and anomaly detection
-
-These projects were originally developed and run internally and thus only needed to be setup by our
-team and assume many internal infrastructure pieces to run. There is a goal to try and make this
-easier, but it will take some time.
