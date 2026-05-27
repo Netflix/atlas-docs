@@ -60,6 +60,26 @@ maintain a set of bucket counters. Storage cost is up to ~300x that of the basic
 Distribution Summary. Use them only for one or two key indicators per application, set an
 appropriate range, and keep tag cardinality bounded.
 
+## Thread Safety
+
+Meter instances returned by a `Registry` are safe to use concurrently from multiple threads
+in every Spectator client library. Holding a counter (or timer, etc.) in a shared field and
+calling `increment()` / `record()` from many threads is the intended pattern.
+
+A few exceptions to keep in mind:
+
+* **Java `BatchUpdater`** — the updater returned by `Counter.batchUpdater(...)` (and the
+  timer/dist-summary equivalents) is **single-thread only**. Give each thread its own
+  updater, or fall back to direct meter calls for multi-threaded code paths. See
+  [Batch Updates](../lang/java/meters/counter.md#batch-updates).
+* **Polled gauges** — the value source you hand to a polled gauge (for example, the
+  `AtomicLong` passed to `PolledMeter.monitorValue` in Java) must itself be thread-safe.
+  Spectator polls the source from a background thread; if your code mutates it from
+  another thread, use an atomic or synchronize externally.
+* **Python multiprocessing** — see the
+  [caveats](../lang/py/usage.md#caveats-multiprocessing) for fork-based workers that
+  don't share thread-level state.
+
 ## Keep tag cardinality bounded
 
 Every distinct combination of tag values produces a new time series. Avoid putting
