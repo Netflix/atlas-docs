@@ -14,7 +14,7 @@ public class Server {
   @Inject
   public Server(Registry registry) {
     requestSize = PercentileDistributionSummary.builder(registry)
-        .withId(registry.createId("server.request.size"))
+        .withId(registry.createId("server.requestSize"))
         .build();
   }
 

@@ -7,16 +7,16 @@ Create one via the [Registry](../registry/overview.md):
 ```java
 public class Queue {
 
-  private final Gauge queueDepth;
+  private final Gauge queueSize;
 
   @Inject
   public Queue(Registry registry) {
-    queueDepth = registry.maxGauge("queue.depth");
+    queueSize = registry.maxGauge("server.queueSize");
   }
 
   public void enqueue(Object obj) {
     impl.enqueue(obj);
-    queueDepth.set(impl.size());
+    queueSize.set(impl.size());
   }
 }
 ```

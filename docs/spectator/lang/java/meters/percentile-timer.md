@@ -16,7 +16,7 @@ public class Server {
   public Server(Registry registry) {
     this.registry = registry;
     requestLatency = PercentileTimer.builder(registry)
-        .withId(registry.createId("server.request.latency", "status", "200"))
+        .withId(registry.createId("server.requestLatency", "status", "200"))
         .build();
 ```
 
