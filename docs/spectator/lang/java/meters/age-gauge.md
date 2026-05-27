@@ -15,7 +15,7 @@ public class Job {
   @Inject
   public Job(Registry registry) {
     lastSuccess = PolledMeter.using(registry)
-        .withName("job.timeSinceLastSuccess")
+        .withName("time.sinceLastSuccess")
         .monitorValue(new AtomicLong(System.currentTimeMillis()), Functions.AGE);
   }
 
@@ -36,6 +36,6 @@ ManualClock clock = new ManualClock();
 Registry registry = new DefaultRegistry(clock);
 
 PolledMeter.using(registry)
-    .withName("job.timeSinceLastSuccess")
+    .withName("time.sinceLastSuccess")
     .monitorValue(new AtomicLong(clock.wallTime()), Functions.age(clock));
 ```
