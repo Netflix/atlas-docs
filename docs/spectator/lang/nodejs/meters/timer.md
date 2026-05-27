@@ -32,3 +32,25 @@ seconds (see [Use Base Units]). No conversion assistance is provided in this cas
 [process.hrtime()]: https://nodejs.org/api/process.html#processhrtimetime
 [process.hrtime.bigint()]: https://nodejs.org/api/process.html#processhrtimebigint
 [Use Base Units]: ../../../../concepts/naming.md#use-base-units
+
+## Percentile Timer
+
+Call `record()` with a value:
+
+```javascript
+import {Registry} from "nflx-spectator";
+
+const registry = new Registry();
+void registry.pct_timer("server.requestLatency").record(0.01);
+
+const request_latency = registry.new_id("server.requestLatency");
+void registry.pct_timer_with_id(request_latency).record(0.01);
+
+const start = process.hrtime();
+// do work
+void registry.pct_timer("server.requestLatency").record(process.hrtime(start));
+```
+
+The `record()` method accepts `number[]` output from `hrtime` and converts it to seconds, as a
+convenience for recording latencies.
+

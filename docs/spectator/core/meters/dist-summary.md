@@ -62,6 +62,19 @@ Note that it is possible to plot the individual statistics by filtering on the `
 If you choose to do so, note that the `count`, `totalAmount` and `totalOfSquares` are counters
 thus reported as rates per second, while the `max` is reported as a gauge.
 
+## Percentile Distribution Summary
+
+A Percentile Distribution Summary is a Distribution Summary that also buckets each
+measurement so the backend can estimate percentiles. It is the size-domain analog of a
+[Percentile Timer](timer.md#percentile-timer): use it for request payload sizes, records
+returned from a query, batch sizes, etc.
+
+!!! Warning
+    Percentile Distribution Summaries have significantly higher storage cost than a
+    standard Distribution Summary — worst case up to 300x. Use them sparingly, and keep
+    tag cardinality tightly bounded. Prefer a standard Distribution Summary unless
+    percentile estimates are required.
+
 ## Languages
 
 ### First-Class Support

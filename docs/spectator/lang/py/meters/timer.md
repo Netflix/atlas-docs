@@ -44,3 +44,34 @@ loss caused by the float type, then you need to convert back to seconds.
 [time.perf_counter()]: https://docs.python.org/3/library/time.html#time.perf_counter
 [time.monotonic()]: https://docs.python.org/3/library/time.html#time.monotonic
 [time.monotonic_ns()]: https://docs.python.org/3/library/time.html#time.monotonic_ns
+
+## Percentile Timer
+
+Call `record()` with a value:
+
+```python
+from spectator import Registry
+
+registry = Registry()
+registry.pct_timer("server.requestLatency").record(0.01)
+
+request_latency = registry.new_id("server.requestLatency")
+registry.pct_timer_with_id(request_latency).record(0.01)
+```
+
+A `StopWatch` class is available, which may be used as a [Context Manager] to automatically record
+the number of seconds that have elapsed while executing a block of code:
+
+```python
+import time
+from spectator import Registry, StopWatch
+
+registry = Registry()
+thread_sleep = registry.pct_timer("thread.sleep")
+
+with StopWatch(thread_sleep):
+    time.sleep(5)
+```
+
+[Context Manager]: https://docs.python.org/3/reference/datamodel.html#context-managers
+

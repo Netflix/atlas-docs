@@ -3,15 +3,13 @@
 A Timer is used to measure how long (in seconds) some event is taking. Timer measurements
 are typically short, less than 1 minute.
 
-A selection of specialized timers include:
+Two specialized variants exist:
 
-* `PercentileTimer` - Useful if percentile approximations are needed in addition to basic stats.
-  See the [Percentile Timer] pattern for details.
-* `LongTaskTimer` (Java only) - Periodically reports the time taken for a long running task
-  (> 1 minute). See the [Long Task Timer] pattern for details.
-
-[Percentile Timer]: ../../patterns/percentile-timer.md
-[Long Task Timer]: ../../lang/java/patterns/long-task-timer.md
+* [Percentile Timer](#percentile-timer) — adds bucket counters so the backend can estimate
+  percentiles.
+* [Long Task Timer](../../lang/java/patterns/long-task-timer.md) (Java only) — periodically
+  reports time spent in long-running tasks (> 1 minute) as a gauge while they're still
+  running.
 
 ## Querying
 
@@ -64,6 +62,33 @@ To compute the standard deviation of measurements across all instances for a tim
 Note that it is possible to plot the individual statistics by filtering on the `statistic` tag.
 If you choose to do so, note that the `count`, `totalAmount` and `totalOfSquares` are counters
 thus reported as rates per second, while the `max` is reported as a gauge.
+
+## Percentile Timer
+
+A Percentile Timer is a [Timer](#timer) that also buckets each measurement so the backend can
+estimate percentiles. The bucket counters are reported alongside the standard timer stats,
+and queries can select either the basic stats or a percentile approximation.
+
+!!! Warning
+    Percentile Timers have significant overhead on both the client and storage side. Use
+    them sparingly — usually one or two key performance indicators per application — and
+    keep tag cardinality tightly bounded. Prefer a basic Timer whenever possible.
+
+In order to maintain the data distribution, Percentile Timers have a higher storage cost,
+worst case up to 300x that of a standard Timer. It is highly recommended to set a range to
+restrict the worst case overhead. When using the builder, the range defaults to 10 ms to
+1 minute, which reduces the worst case multiple from 276x to 58x.
+
+### Range Recommendations
+
+The range should be the SLA boundary or failure point for the activity. Explicitly setting
+the range allows the implementation to optimize for the important range of values and reduce
+the overhead associated with tracking the data distribution.
+
+For example, suppose you are making a client call and timeout after 10 seconds. Setting the
+range to 10 seconds will restrict the possible set of buckets used to those approaching the
+boundary. So we can still detect if it is nearing failure, but percentiles that are further
+away from the range may be inflated compared to the actual value.
 
 ## Languages
 

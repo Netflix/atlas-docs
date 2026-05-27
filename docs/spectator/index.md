@@ -31,7 +31,6 @@ At a minimum, you need to:
     * [Distribution Summary](core/meters/dist-summary.md)
     * [Gauge](core/meters/gauge.md)
     * [Timer](core/meters/timer.md)
-    * [Percentile Timer](patterns/percentile-timer.md) (pattern built on Timer)
 
 After you are more familiar with the library and need assistance with more advanced topics,
 see the Patterns section on the left.

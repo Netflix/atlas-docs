@@ -6,7 +6,7 @@ based on the final count.
 
 ## Percentiles
 
-Heatmaps are particularly useful on top of [percentile](../../spectator/patterns/percentile-timer.md)
+Heatmaps are particularly useful on top of [percentile](../../spectator/core/meters/timer.md#percentile-timer)
 metrics to analyze the entire measurement range.
 
 **Note** Using the [log linear](axis-scale.md#log-linear) scale will help to highlight clustered regions of measurements

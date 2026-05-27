@@ -52,5 +52,5 @@ name,requestLatency,:eq,(,50,),:percentiles
 * [Percentile Distribution Summary][PercentileDistributionSummary] - Spectator class for distributions
 
 [spectator]: ../../spectator/index.md
-[PercentileTimer]: ../../spectator/patterns/percentile-timer.md
+[PercentileTimer]: ../../spectator/core/meters/timer.md#percentile-timer
 [PercentileDistributionSummary]: ../../spectator/core/meters/dist-summary.md
