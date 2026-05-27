@@ -1,21 +1,21 @@
 # spectator-cpp Usage
 
-CPP thin-client [metrics library] for use with [Atlas] and [SpectatorD].
+C++ thin-client [metrics library] for use with [Atlas] and [SpectatorD].
 
 [metrics library]: https://github.com/Netflix/spectator-cpp
 [Atlas]: ../../../overview.md
 [SpectatorD]: ../../agent/usage.md
 
-## Supported CPP Versions
+## Supported C++ Versions
 
 This library currently utilizes C++ 20.
 
 ## Installing & Building
 
 If your project uses CMake, you can easily integrate this library by calling `add_subdirectory()`
-on the root folder. To build the Spectator-CPP thin client independently, follow the Docker
+on the root folder. To build the spectator-cpp thin client independently, follow the Docker
 container instructions at [Dockerfiles](https://github.com/Netflix/spectator-cpp/tree/main/Dockerfiles).
-The container provides a minimal build environment with g++-13, python3, and conan. Spectator-CPP
+The container provides a minimal build environment with g++-13, python3, and conan. spectator-cpp
 relies on just three external dependencies (spdlog, gtest, and boost), which are managed automatically
 via conan.
 
@@ -123,7 +123,7 @@ for general guidelines on metrics naming and restrictions.
 * [Percentile Timer](./meters/percentile-timer.md)
 * [Timer](./meters/timer.md)
 
-## Output Locations
+## Output Location
 
 `spectator.Registry` supports three output writer types: Memory Writer, UDP Writer, and Unix Domain
 Socket (UDS) Writer. To specify the writer type, initialize the Registry with a `Config` object. A

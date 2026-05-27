@@ -32,6 +32,50 @@ The core Spectator library, `spectator-api`, comes with the following [Registry]
         application for function properly.
 </table>
 
+`DefaultRegistry` and `NoopRegistry` are useful for tests or local development, but they
+do not publish data anywhere. For applications that need to report to Atlas, two additional
+registry implementations are available as separate Gradle modules.
+
+## Reporting Registries
+
+### SidecarRegistry
+
+[`spectator-reg-sidecar`](https://github.com/Netflix/spectator/tree/main/spectator-reg-sidecar)
+publishes data through a local [SpectatorD](../../../agent/usage.md) agent over UDP — the
+same pattern used by the other Spectator client libraries (C++, Go, Node.js, Python). The
+Java client does not support the Unix Domain Socket transport that SpectatorD also
+provides.
+
+```groovy
+dependencies {
+    compile "com.netflix.spectator:spectator-reg-sidecar:latest.release"
+}
+```
+
+```java
+import com.netflix.spectator.api.Clock;
+import com.netflix.spectator.sidecar.SidecarConfig;
+import com.netflix.spectator.sidecar.SidecarRegistry;
+
+// Accept defaults: spectatord on udp://127.0.0.1:1234
+SidecarConfig config = key -> null;
+Registry registry = new SidecarRegistry(Clock.SYSTEM, config);
+```
+
+The output location can be overridden via the `sidecar.output-location` config key.
+Supported values match those of [SpectatorD](../../../agent/usage.md): `udp://host:port`,
+`file://path`, `stdout`, `stderr`, `none`.
+
+### AtlasRegistry
+
+[`spectator-reg-atlas`](https://github.com/Netflix/spectator/tree/main/spectator-reg-atlas)
+publishes directly to an Atlas aggregator service, without routing through SpectatorD. At
+Netflix this is what SBN applications get by default via
+[Netflix Integration](../usage.md#netflix-integration); users do not need to construct it
+themselves.
+
+## Using a Registry
+
 It is recommended for libraries to write code against the [Registry] interface and allow the
 implementation to get injected by the user of the library. The simplest way is to accept the
 Registry via the constructor, for example:

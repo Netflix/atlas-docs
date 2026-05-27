@@ -9,7 +9,7 @@ which it sends metrics to SpectatorD.
 
 `spectator.Registry` now supports 3 different writers. The WriterType is specified through a WriterConfig object.
 
-See [Usage > Output Locations](usage.md#output-locations) for more details.
+See [Usage > Output Location](usage.md#output-location) for more details.
 
 #### Common Tags
 
