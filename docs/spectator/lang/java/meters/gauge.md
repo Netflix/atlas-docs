@@ -121,31 +121,13 @@ PolledMeter.using(registry)
 
 ### Monotonic Counters
 
-A common technique used by some libraries is to expose a monotonically increasing counter that
-represents the number of events since the system was initialized. An example of that in the JDK
-is [ThreadPoolExecutor.getCompletedTaskCount], which returns the number of completed tasks on
-the thread pool.
+For sources that expose a monotonically increasing cumulative value (e.g.
+`ThreadPoolExecutor.getCompletedTaskCount`), use `PolledMeter.monitorMonotonicCounter` to
+sample the absolute value and report the delta as a rate. See the
+[Monotonic Counter](monotonic-counter.md) page for details and examples.
 
-[ThreadPoolExecutor.getCompletedTaskCount]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ThreadPoolExecutor.html#getCompletedTaskCount()
-
-For sources like this, the `monitorMonotonicCounter` method can be used:
-
-```java
-// For an implementation of Number
-LongAdder tasks = new LongAdder();
-PolledMeter.using(registry)
-  .withName("pool.completedTasks")
-  .monitorMonotonicCounter(tasks);
-
-// Or using a lambda
-ThreadPoolExecutor executor = ...
-PolledMeter.using(registry)
-  .withName("pool.completedTasks")
-  .monitorMonotonicCounter(executor, ThreadPoolExecutor::getCompletedTaskCount);
-```
-
-For thread pools specifically, there are better options for getting standard metrics. See the docs
-for the [Thread Pools extension](../ext/thread-pools.md) for more information.
+For thread pools specifically, there are better options for getting standard metrics — see
+the [Thread Pools extension](../ext/thread-pools.md).
 
 ## Active Gauges
 
