@@ -48,3 +48,21 @@ events happen together.
   }
 }
 ```
+
+## Batch Updates
+
+For very high-volume updates within a single thread, `Counter` exposes a `batchUpdater` that
+buffers updates and flushes them as a single operation. The trade-off is that updates are
+delayed by up to `batchSize` events before they appear on the underlying counter.
+
+```java
+try (Counter.BatchUpdater updater = insertCounter.batchUpdater(1000)) {
+  for (Object obj : objs) {
+    impl.insert(obj);
+    updater.increment();
+  }
+}
+```
+
+The updater is `AutoCloseable`; the try-with-resources block guarantees a final flush. See
+[Performance Tips](../../../core/performance.md) for the cross-cutting guidance.

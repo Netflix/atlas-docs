@@ -105,11 +105,18 @@ backend, the unit will be seconds.
 [System.nanoTime()]: https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#nanoTime()
 [System.currentTimeMillis()]: https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#currentTimeMillis()
 
+## Batch Updates
+
+For very high-volume updates within a single thread, `Timer` exposes a `batchUpdater` that
+buffers updates and flushes them as a single operation. See
+[Performance Tips](../../../core/performance.md) for the cross-cutting guidance and
+[`Counter.batchUpdater`](counter.md#batch-updates) for an annotated example.
+
 ## Percentile Timer
 
 **Note**: Percentile timers generate a metric per bucket in the histogram. Create instances
 once per ID and reuse them as needed. Avoid adding tags with high cardinality as that increases
-the cardinality of the metric. If at all possible, use a [Timer](timer.md) instead.
+the cardinality of the metric. If at all possible, use a [Timer](#timer) instead.
 
 To get started, create an instance using the [Registry](../registry/overview.md):
 
