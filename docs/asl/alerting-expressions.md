@@ -18,7 +18,7 @@ high CPU usage for a period:
 /api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum
 @@@
 
-Lets say we want to trigger an alert when the CPU usage goes above 80%. To do that simply use the
+Let's say we want to trigger an alert when the CPU usage goes above 80%. To do that simply use the
 [:gt](ref/gt.md) operator and append `80,:gt` to the query:
 
 @@@ atlas-graph { show-expr=false }
@@ -33,7 +33,7 @@ when everything is fine.
 Our threshold alert above will trigger if the CPU usage is ever recorded to be above the threshold.
 Alert conditions are often combined with a check for the number of occurrences. This is done by
 using the [:rolling-count](ref/rolling-count.md) operator to get a line showing how many times
-the input signal has been true withing a specified window and then applying a second threshold to
+the input signal has been true within a specified window and then applying a second threshold to
 the rolling count.
 
 @@@ atlas-example

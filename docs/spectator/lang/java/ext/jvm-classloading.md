@@ -5,7 +5,7 @@ provided by the JDK to monitor the number of classes loaded and unloaded.
 
 ## Getting Started
 
-To get information about classloading in Spectator, just setup registration of standard MXBeans.
+To get information about classloading in Spectator, just set up registration of standard MXBeans.
 Note, if you are building an app at Netflix, then this should happen automatically via the normal
 platform initialization.
 

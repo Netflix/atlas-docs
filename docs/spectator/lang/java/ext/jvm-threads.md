@@ -5,7 +5,7 @@ provided by the JDK to monitor the number of active threads and threads started.
 
 ## Getting Started
 
-To get information about threads in Spectator, just setup registration of standard MXBeans. Note,
+To get information about threads in Spectator, just set up registration of standard MXBeans. Note,
 if you are building an app at Netflix, then this should happen automatically via the normal platform
 initialization.
 

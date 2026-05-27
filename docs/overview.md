@@ -245,7 +245,7 @@ splitting the traffic up, so it goes to the correct shard. The set of mirror ins
 are assigned based on slots from the [Edda](https://github.com/Netflix/edda)
 [autoScalingGroups API](https://netflix.github.io/edda/rest-api/#apiv2group). Since
 the set of instances for the mirrors change rarely, the publish instances can cache the Edda
-response and still retain successfully publish most data if Edda fails. If an instance is replaced
+response and still successfully publish most data if Edda fails. If an instance is replaced
 and we can't update data we would have partial loss for a single shard if the same shard was
 missing in another mirror.
 
