@@ -7073,6 +7073,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#thread-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread Safety
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#keep-tag-cardinality-bounded" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10378,6 +10389,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#thread-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread Safety
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#keep-tag-cardinality-bounded" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10463,6 +10485,24 @@ instrumentation overhead can dominate. Accumulate locally and apply the delta on
 maintain a set of bucket counters. Storage cost is up to ~300x that of the basic Timer or
 Distribution Summary. Use them only for one or two key indicators per application, set an
 appropriate range, and keep tag cardinality bounded.</p>
+<h2 id="thread-safety">Thread Safety<a class="headerlink" href="#thread-safety" title="Permanent link">&para;</a></h2>
+<p>Meter instances returned by a <code>Registry</code> are safe to use concurrently from multiple threads
+in every Spectator client library. Holding a counter (or timer, etc.) in a shared field and
+calling <code>increment()</code> / <code>record()</code> from many threads is the intended pattern.</p>
+<p>A few exceptions to keep in mind:</p>
+<ul>
+<li><strong>Java <code>BatchUpdater</code></strong> — the updater returned by <code>Counter.batchUpdater(...)</code> (and the
+  timer/dist-summary equivalents) is <strong>single-thread only</strong>. Give each thread its own
+  updater, or fall back to direct meter calls for multi-threaded code paths. See
+  <a href="../../lang/java/meters/counter/#batch-updates">Batch Updates</a>.</li>
+<li><strong>Polled gauges</strong> — the value source you hand to a polled gauge (for example, the
+  <code>AtomicLong</code> passed to <code>PolledMeter.monitorValue</code> in Java) must itself be thread-safe.
+  Spectator polls the source from a background thread; if your code mutates it from
+  another thread, use an atomic or synchronize externally.</li>
+<li><strong>Python multiprocessing</strong> — see the
+  <a href="../../lang/py/usage/#caveats-multiprocessing">caveats</a> for fork-based workers that
+  don't share thread-level state.</li>
+</ul>
 <h2 id="keep-tag-cardinality-bounded">Keep tag cardinality bounded<a class="headerlink" href="#keep-tag-cardinality-bounded" title="Permanent link">&para;</a></h2>
 <p>Every distinct combination of tag values produces a new time series. Avoid putting
 high-cardinality values in tags — user IDs, request IDs, raw paths, etc. Use the
