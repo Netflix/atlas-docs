@@ -10589,7 +10589,7 @@ helper, which computes the age in seconds from a wall-time millis timestamp stor
 <span class="w">  </span><span class="nd">@Inject</span>
 <span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Job</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">lastSuccess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">        </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;job.timeSinceLastSuccess&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span>
 <span class="w">        </span><span class="p">.</span><span class="na">monitorValue</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AtomicLong</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">()),</span><span class="w"> </span><span class="n">Functions</span><span class="p">.</span><span class="na">AGE</span><span class="p">);</span>
 <span class="w">  </span><span class="p">}</span>
 
@@ -10606,7 +10606,7 @@ with a <code>ManualClock</code> (typically the same clock used by the test <code
 <span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DefaultRegistry</span><span class="p">(</span><span class="n">clock</span><span class="p">);</span>
 
 <span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;job.timeSinceLastSuccess&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;time.sinceLastSuccess&quot;</span><span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="na">monitorValue</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AtomicLong</span><span class="p">(</span><span class="n">clock</span><span class="p">.</span><span class="na">wallTime</span><span class="p">()),</span><span class="w"> </span><span class="n">Functions</span><span class="p">.</span><span class="na">age</span><span class="p">(</span><span class="n">clock</span><span class="p">));</span>
 </code></pre></div>
 

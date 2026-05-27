@@ -10581,16 +10581,16 @@
 <p>Create one via the <a href="../../registry/overview/">Registry</a>:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Queue</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Gauge</span><span class="w"> </span><span class="n">queueDepth</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Gauge</span><span class="w"> </span><span class="n">queueSize</span><span class="p">;</span>
 
 <span class="w">  </span><span class="nd">@Inject</span>
 <span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Queue</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">queueDepth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">maxGauge</span><span class="p">(</span><span class="s">&quot;queue.depth&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">queueSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">maxGauge</span><span class="p">(</span><span class="s">&quot;server.queueSize&quot;</span><span class="p">);</span>
 <span class="w">  </span><span class="p">}</span>
 
 <span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">enqueue</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">impl</span><span class="p">.</span><span class="na">enqueue</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
-<span class="w">    </span><span class="n">queueDepth</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">impl</span><span class="p">.</span><span class="na">size</span><span class="p">());</span>
+<span class="w">    </span><span class="n">queueSize</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">impl</span><span class="p">.</span><span class="na">size</span><span class="p">());</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
