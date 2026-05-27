@@ -8706,34 +8706,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../patterns/gauge-poller/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gauge Poller
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../patterns/interval-counter/" class="md-nav__link">
         
   
@@ -10609,19 +10581,24 @@
 <p>Java does not expose a dedicated monotonic counter meter; the equivalent is the
 <a href="../../patterns/polled-meter/">Polled Meter</a> helper's <code>monitorMonotonicCounter</code>, which
 periodically samples a function returning the current absolute value and reports the
-per-second rate of the delta:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Worker</span><span class="w"> </span><span class="p">{</span>
+per-second rate of the delta. A minimum of two polls is required before the first metric
+is reported.</p>
+<p>Two common forms:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Lambda over a source that exposes a long-valued cumulative count.</span>
+<span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;pool.completedTasks&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">monitorMonotonicCounter</span><span class="p">(</span><span class="n">executor</span><span class="p">,</span><span class="w"> </span><span class="n">ThreadPoolExecutor</span><span class="p">::</span><span class="n">getCompletedTaskCount</span><span class="p">);</span>
 
-<span class="w">  </span><span class="nd">@Inject</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Worker</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">ThreadPoolExecutor</span><span class="w"> </span><span class="n">executor</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">        </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;threadpool.completedTasks&quot;</span><span class="p">)</span>
-<span class="w">        </span><span class="p">.</span><span class="na">monitorMonotonicCounter</span><span class="p">(</span><span class="n">executor</span><span class="p">,</span><span class="w"> </span><span class="n">ThreadPoolExecutor</span><span class="p">::</span><span class="n">getCompletedTaskCount</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<span class="c1">// A Number instance that the caller updates directly.</span>
+<span class="n">LongAdder</span><span class="w"> </span><span class="n">tasks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LongAdder</span><span class="p">();</span>
+<span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;pool.completedTasks&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">monitorMonotonicCounter</span><span class="p">(</span><span class="n">tasks</span><span class="p">);</span>
 </code></pre></div>
-<p>For double-valued sources, use <code>monitorMonotonicCounterDouble</code>. A minimum of two polls is
-required before the first metric is reported.</p>
+<p>For double-valued sources, use <code>monitorMonotonicCounterDouble</code>.</p>
+<p>If the polled value decreases between samples (counter reset, source restart, or numeric
+wraparound), that interval's delta is dropped and the new value becomes the baseline for
+the next delta. See <a href="../../../../patterns/monotonic-counter/#counter-resets-and-wraparounds">Counter resets and wraparounds</a>.</p>
 <p>Java is long-based, so there is no separate uint64 variant — <code>monitorMonotonicCounter</code> covers
 both signed and OS-counter use cases.</p>
 

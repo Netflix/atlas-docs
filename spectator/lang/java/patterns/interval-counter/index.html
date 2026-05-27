@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://netflix.github.io/atlas-docs/spectator/lang/java/patterns/interval-counter/">
       
       
-        <link rel="prev" href="../gauge-poller/">
+        <link rel="prev" href="../cardinality-limiter/">
       
       
         <link rel="next" href="../long-task-timer/">
@@ -8693,34 +8693,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../gauge-poller/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gauge Poller
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -10605,7 +10577,37 @@
 
 
 <h1 id="interval-counter">Interval Counter<a class="headerlink" href="#interval-counter" title="Permanent link">&para;</a></h1>
-<p>A counter that also keeps track of the time since last update.</p>
+<p><code>IntervalCounter</code> is a <a href="../../meters/counter/">Counter</a> that also reports the time in seconds
+since the last update. Useful when you want an alert that fires if a counter stops being
+incremented — the "Time Since Last Success" pattern applied to event-rate signals rather than
+a separately-tracked timestamp.</p>
+<p>Two time series are published with the same name, distinguished by the <code>statistic</code> tag:</p>
+<ul>
+<li><code>statistic=count</code> — the underlying counter, reported as a rate-per-second.</li>
+<li><code>statistic=duration</code> — a gauge of the seconds elapsed since the last <code>increment()</code> call.</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Job</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">IntervalCounter</span><span class="w"> </span><span class="n">completions</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nd">@Inject</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Job</span><span class="p">(</span><span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">completions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IntervalCounter</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span><span class="w"> </span><span class="n">registry</span><span class="p">.</span><span class="na">createId</span><span class="p">(</span><span class="s">&quot;job.completions&quot;</span><span class="p">));</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">doWork</span><span class="p">();</span>
+<span class="w">    </span><span class="n">completions</span><span class="p">.</span><span class="na">increment</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Then alert on the duration series rising above a threshold, e.g.
+<code>statistic,duration,:eq,name,job.completions,:eq,:and,:max,3600,:gt</code>.</p>
+<p>Implementation note: <code>IntervalCounter</code> uses <a href="../polled-meter/">Polled Meter</a> with
+<a href="https://www.javadoc.io/static/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/Functions.html#age-com.netflix.spectator.api.Clock-"><code>Functions.age</code></a>
+under the hood. If you only need the freshness signal (without a separate counter), use a
+plain polled meter directly — see <a href="../../meters/age-gauge/">Age Gauge</a>.</p>
 
 
 

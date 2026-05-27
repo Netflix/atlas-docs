@@ -8690,34 +8690,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../lang/java/patterns/gauge-poller/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gauge Poller
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../lang/java/patterns/interval-counter/" class="md-nav__link">
         
   
@@ -10445,6 +10417,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#counter-resets-and-wraparounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Counter resets and wraparounds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#languages" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10659,6 +10642,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#counter-resets-and-wraparounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Counter resets and wraparounds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#languages" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10704,10 +10698,25 @@ slower time-to-first-data point than a standard counter.</p>
 <li><strong>Signed / double</strong> — the default. Suitable when the source fits in a signed 64-bit
   integer or double and is not expected to overflow.</li>
 <li><strong>uint64</strong> — required when reading from a source that uses unsigned 64-bit semantics
-  (most OS-level interface counters) so that a wrap-around past <code>2^63</code> is not interpreted
-  as a backward jump.</li>
+  (most OS-level interface counters), so that a wrap past <code>2^64 - 1</code> back to <code>0</code> is
+  reported correctly as a positive delta rather than appearing as a backward jump.</li>
 </ul>
 <p>Java is long-based and does not need a separate uint variant.</p>
+<h2 id="counter-resets-and-wraparounds">Counter resets and wraparounds<a class="headerlink" href="#counter-resets-and-wraparounds" title="Permanent link">&para;</a></h2>
+<p>When the polled value goes <strong>down</strong> between samples, the library cannot tell whether the
+source was reset (e.g. process restart, JMX counter cleared) or wrapped past its numeric
+limit. Behavior depends on the variant:</p>
+<ul>
+<li><strong>Signed / double</strong> — drops the sample for that interval and uses the new value as the
+  baseline for the next delta. The decrease itself is not reported; one interval's worth
+  of activity is lost, then reporting resumes normally.</li>
+<li><strong>uint64</strong> — computes the wrap delta <code>(2^64 - previous) + current</code> and reports that.
+  spectatord additionally caps this: if the computed delta exceeds <code>2^63</code>, it is treated
+  as an unexpected rollover (e.g. a real reset masquerading as a wrap) and <code>0</code> is
+  reported instead.</li>
+</ul>
+<p>If your source can legitimately reset, prefer a regular <a href="../../core/meters/counter/">Counter</a>
+with explicit <code>increment()</code> calls so each event is recorded individually.</p>
 <h2 id="languages">Languages<a class="headerlink" href="#languages" title="Permanent link">&para;</a></h2>
 <ul>
 <li>C++: <a href="../../lang/cpp/meters/monotonic-counter/">signed</a>, <a href="../../lang/cpp/meters/monotonic-counter-uint/">uint64</a></li>

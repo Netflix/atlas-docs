@@ -8815,34 +8815,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../patterns/gauge-poller/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gauge Poller
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../patterns/interval-counter/" class="md-nav__link">
         
   
@@ -10886,25 +10858,12 @@ without using the passed in object there will be a reference to <code>this</code
 <span class="w">  </span><span class="p">.</span><span class="na">monitorSize</span><span class="p">(</span><span class="n">cache</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="monotonic-counters">Monotonic Counters<a class="headerlink" href="#monotonic-counters" title="Permanent link">&para;</a></h3>
-<p>A common technique used by some libraries is to expose a monotonically increasing counter that
-represents the number of events since the system was initialized. An example of that in the JDK
-is <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ThreadPoolExecutor.html#getCompletedTaskCount()">ThreadPoolExecutor.getCompletedTaskCount</a>, which returns the number of completed tasks on
-the thread pool.</p>
-<p>For sources like this, the <code>monitorMonotonicCounter</code> method can be used:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// For an implementation of Number</span>
-<span class="n">LongAdder</span><span class="w"> </span><span class="n">tasks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LongAdder</span><span class="p">();</span>
-<span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;pool.completedTasks&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">monitorMonotonicCounter</span><span class="p">(</span><span class="n">tasks</span><span class="p">);</span>
-
-<span class="c1">// Or using a lambda</span>
-<span class="n">ThreadPoolExecutor</span><span class="w"> </span><span class="n">executor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span>
-<span class="n">PolledMeter</span><span class="p">.</span><span class="na">using</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">withName</span><span class="p">(</span><span class="s">&quot;pool.completedTasks&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">monitorMonotonicCounter</span><span class="p">(</span><span class="n">executor</span><span class="p">,</span><span class="w"> </span><span class="n">ThreadPoolExecutor</span><span class="p">::</span><span class="n">getCompletedTaskCount</span><span class="p">);</span>
-</code></pre></div>
-<p>For thread pools specifically, there are better options for getting standard metrics. See the docs
-for the <a href="../../ext/thread-pools/">Thread Pools extension</a> for more information.</p>
+<p>For sources that expose a monotonically increasing cumulative value (e.g.
+<code>ThreadPoolExecutor.getCompletedTaskCount</code>), use <code>PolledMeter.monitorMonotonicCounter</code> to
+sample the absolute value and report the delta as a rate. See the
+<a href="../monotonic-counter/">Monotonic Counter</a> page for details and examples.</p>
+<p>For thread pools specifically, there are better options for getting standard metrics — see
+the <a href="../../ext/thread-pools/">Thread Pools extension</a>.</p>
 <h2 id="active-gauges">Active Gauges<a class="headerlink" href="#active-gauges" title="Permanent link">&para;</a></h2>
 <p>Gauges can also be set directly by the user. In this mode, the user is responsible for regularly
 updating the value of the Gauge by calling <code>set</code>. Looking at the HttpServer example, with an active
