@@ -1,4 +1,4 @@
-It is recommended for all alerts to adhere to the follow guidelines:
+It is recommended for all alerts to adhere to the following guidelines:
 
 1. [Keep conditions simple](#keep-it-simple).
 2. [Alerts should be actionable](#actionable-alerts).
@@ -54,7 +54,7 @@ instance, it shouldn't send out a notification unless there is a failure to perf
 the action. If you want a summary of cluster health, then use dashboards or
 reporting tools for this function; don't attempt to do this via alert notifications.
 
-Alerts should check something important. To setup effective alerts, you need to
+Alerts should check something important. To set up effective alerts, you need to
 understand the application and have ways to detect failures for critical functionality.
 Avoid general system-type alerts that won't be investigated. For example, should
 you alert on high CPU usage? If you have done squeeze testing and you have
@@ -157,7 +157,7 @@ startup time.
 
 For the CPU example, first reconsider whether general system check alerts are
 actually useful. Is it going to help you catch a real problem and be investigated
-when it triggers? If not, don't setup an alert on CPU and rely on alerts that
+when it triggers? If not, don't set up an alert on CPU and rely on alerts that
 check for failures on the critical path.
 
 If it is useful and you have squeeze testing results or other information so

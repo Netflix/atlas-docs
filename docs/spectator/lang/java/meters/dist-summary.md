@@ -3,7 +3,7 @@
 See [Distribution Summary](../../../core/meters/dist-summary.md) for the concept.
 
 Distribution Summaries are created using the [Registry](../registry/overview.md), which will be
-setup as part of application initialization. For example:
+set up as part of application initialization. For example:
 
 ```java
 public class Server {

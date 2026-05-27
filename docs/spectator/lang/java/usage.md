@@ -80,7 +80,7 @@ public class Server {
         // Update the counter id with dimensions based on the request. The
         // counter will then be looked up in the registry which should be
         // fairly cheap, such as lookup of id object in a ConcurrentHashMap.
-        // However, it is more expensive than having a local variable seti
+        // However, it is more expensive than having a local variable set
         // to the counter.
         final Id cntId = requestCountId
           .withTag("country", req.country())

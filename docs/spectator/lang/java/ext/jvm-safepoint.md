@@ -6,7 +6,7 @@ Uses Hotspot mbean to access the spent in and getting to [safepoints].
 
 ## Getting Started
 
-To get information about compilation in Spectator, just setup registration of standard MXBeans.
+To get information about compilation in Spectator, just set up registration of standard MXBeans.
 Note, if you are building an app at Netflix, then this should happen automatically via the normal
 platform initialization.
 

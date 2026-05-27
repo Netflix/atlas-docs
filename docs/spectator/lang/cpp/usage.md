@@ -65,7 +65,7 @@ created.
 
 Each metric stored in Atlas is uniquely identified by the combination of the name and the tags
 associated with it. In `spectator-cpp`, this data is represented with `MeterId` objects, created
-by the `Registry`. The `CreateNewId()` method returns new a `MeterId` object, which has extra
+by the `Registry`. The `CreateNewId()` method returns a `MeterId` object, which has extra
 common tags applied, and which can be further customized by calling the `WithTag()` and
 `WithTags()` methods. Each `MeterId` will create and store a validated subset of the `spectatord`
 protocol line to be written for each `Meter`, when it is instantiated. Manipulating the tags with

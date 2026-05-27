@@ -14,7 +14,7 @@ implementations.
 
 * `ipc.protocol`: A short name of the network protocol in use, eg. `grpc`, `http_1`,
   `http_2`, `udp`, etc ...
-* `ipc.vip`: The Eureka VIP address used to find the the server.
+* `ipc.vip`: The Eureka VIP address used to find the server.
 * `ipc.result`: Was this considered by the implementation to be successful. Allowed Values =
   [`success`, `failure`].
 * `ipc.status`: One of a predefined list of status values indicating the general result, eg.

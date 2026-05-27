@@ -43,7 +43,7 @@ the [naming](naming.md) docs for more information.
 ## Metric
 
 A metric is a specific quantity being measured, e.g., the number of requests received by a server.
-In casual language about Atlas metric is often used interchangeably with
+In casual language about Atlas, *metric* is often used interchangeably with
 [time series](#time-series). A time series is one way to track a metric and is the method
 supported by Atlas. In most cases there will be many time series for a given metric. Going back
 to the example, request count would usually be tagged with additional dimensions such as status

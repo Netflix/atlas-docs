@@ -77,7 +77,7 @@ Note that common tags sourced by [spectatord](https://github.com/Netflix-Skunkwo
 2. Update imports for `Config` and `Registry`, and use the `meters` package instead of `spectator` for Meters.
 3. If you want to collect runtime metrics, add the [spectator-go-runtime-metrics](https://github.com/Netflix/spectator-go-runtime-metrics)
    library, and follow the instructions in the README.
-4. If you use `PercentileDistributionSummary` or `PercentileTimer`, then  you need to update your code to use the
+4. If you use `PercentileDistributionSummary` or `PercentileTimer`, then you need to update your code to use the
    respective functions provided by the `Registry` to initialize these meters.
 5. Remove the dependency on the `spectator-go` internal configuration library - it is no longer required.
 6. There is no longer an option to `start()` or `stop()` the `Registry` at runtime. If you need to configure a `Registry`
