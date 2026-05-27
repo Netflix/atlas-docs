@@ -8343,6 +8343,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#reporting-registries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reporting Registries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reporting Registries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sidecarregistry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SidecarRegistry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atlasregistry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AtlasRegistry
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using a Registry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#working-with-ids" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10713,6 +10763,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#reporting-registries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reporting Registries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reporting Registries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sidecarregistry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SidecarRegistry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atlasregistry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AtlasRegistry
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using a Registry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#working-with-ids" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10820,6 +10920,38 @@ a set of measurements about your application.</p>
         application for function properly.
 </table>
 
+<p><code>DefaultRegistry</code> and <code>NoopRegistry</code> are useful for tests or local development, but they
+do not publish data anywhere. For applications that need to report to Atlas, two additional
+registry implementations are available as separate Gradle modules.</p>
+<h2 id="reporting-registries">Reporting Registries<a class="headerlink" href="#reporting-registries" title="Permanent link">&para;</a></h2>
+<h3 id="sidecarregistry">SidecarRegistry<a class="headerlink" href="#sidecarregistry" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/Netflix/spectator/tree/main/spectator-reg-sidecar"><code>spectator-reg-sidecar</code></a>
+publishes data through a local <a href="../../../../agent/usage/">SpectatorD</a> agent over UDP — the
+same pattern used by the other Spectator client libraries (C++, Go, Node.js, Python). The
+Java client does not support the Unix Domain Socket transport that SpectatorD also
+provides.</p>
+<div class="highlight"><pre><span></span><code><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">compile</span><span class="w"> </span><span class="s2">&quot;com.netflix.spectator:spectator-reg-sidecar:latest.release&quot;</span>
+<span class="o">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.spectator.api.Clock</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.spectator.sidecar.SidecarConfig</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.spectator.sidecar.SidecarRegistry</span><span class="p">;</span>
+
+<span class="c1">// Accept defaults: spectatord on udp://127.0.0.1:1234</span>
+<span class="n">SidecarConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="n">Registry</span><span class="w"> </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SidecarRegistry</span><span class="p">(</span><span class="n">Clock</span><span class="p">.</span><span class="na">SYSTEM</span><span class="p">,</span><span class="w"> </span><span class="n">config</span><span class="p">);</span>
+</code></pre></div>
+<p>The output location can be overridden via the <code>sidecar.output-location</code> config key.
+Supported values match those of <a href="../../../../agent/usage/">SpectatorD</a>: <code>udp://host:port</code>,
+<code>file://path</code>, <code>stdout</code>, <code>stderr</code>, <code>none</code>.</p>
+<h3 id="atlasregistry">AtlasRegistry<a class="headerlink" href="#atlasregistry" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/Netflix/spectator/tree/main/spectator-reg-atlas"><code>spectator-reg-atlas</code></a>
+publishes directly to an Atlas aggregator service, without routing through SpectatorD. At
+Netflix this is what SBN applications get by default via
+<a href="../../usage/#netflix-integration">Netflix Integration</a>; users do not need to construct it
+themselves.</p>
+<h2 id="using-a-registry">Using a Registry<a class="headerlink" href="#using-a-registry" title="Permanent link">&para;</a></h2>
 <p>It is recommended for libraries to write code against the <a href="https://static.javadoc.io/com.netflix.spectator/spectator-api/latest/com/netflix/spectator/api/Registry.html">Registry</a> interface and allow the
 implementation to get injected by the user of the library. The simplest way is to accept the
 Registry via the constructor, for example:</p>
