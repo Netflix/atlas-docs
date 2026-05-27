@@ -6971,6 +6971,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../core/performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance Tips
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -8474,6 +8502,17 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#batch-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batch Updates
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#percentile-distribution-summary" class="md-nav__link">
@@ -10277,6 +10316,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#batch-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batch Updates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#percentile-distribution-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10327,9 +10377,14 @@ setup as part of application initialization. For example:</p>
 <span class="p">}</span>
 </code></pre></div>
 <strong>Note:</strong> If the amount recorded is less than 0 the value will be dropped.</p>
+<h2 id="batch-updates">Batch Updates<a class="headerlink" href="#batch-updates" title="Permanent link">&para;</a></h2>
+<p>For very high-volume updates within a single thread, <code>DistributionSummary</code> exposes a
+<code>batchUpdater</code> that buffers updates and flushes them as a single operation. See
+<a href="../../../../core/performance/">Performance Tips</a> for the cross-cutting guidance and
+<a href="../counter/#batch-updates"><code>Counter.batchUpdater</code></a> for an annotated example.</p>
 <h2 id="percentile-distribution-summary">Percentile Distribution Summary<a class="headerlink" href="#percentile-distribution-summary" title="Permanent link">&para;</a></h2>
-<p>concept and storage-cost caveats. Use a regular <a href="./">Distribution Summary</a> unless
-percentile estimates are required.</p>
+<p>Use a regular <a href="#distribution-summary">Distribution Summary</a> unless percentile estimates are
+required.</p>
 <p>Create one via the static builder:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Server</span><span class="w"> </span><span class="p">{</span>
 

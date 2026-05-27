@@ -6971,6 +6971,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../core/performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance Tips
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -8603,6 +8631,17 @@
     <span class="md-ellipsis">
       
         Units
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#batch-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batch Updates
       
     </span>
   </a>
@@ -10321,6 +10360,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#batch-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batch Updates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#percentile-timer" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10435,10 +10485,15 @@ for recording elapsed time in different units, so it can easily be used with the
 measuring elapsed time provided by the SDK, such as <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#nanoTime()">System.nanoTime()</a> (monotonic time) and
 <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#currentTimeMillis()">System.currentTimeMillis()</a> (wall clock). Regardless of how it is recorded, when queried on the
 backend, the unit will be seconds.</p>
+<h2 id="batch-updates">Batch Updates<a class="headerlink" href="#batch-updates" title="Permanent link">&para;</a></h2>
+<p>For very high-volume updates within a single thread, <code>Timer</code> exposes a <code>batchUpdater</code> that
+buffers updates and flushes them as a single operation. See
+<a href="../../../../core/performance/">Performance Tips</a> for the cross-cutting guidance and
+<a href="../counter/#batch-updates"><code>Counter.batchUpdater</code></a> for an annotated example.</p>
 <h2 id="percentile-timer">Percentile Timer<a class="headerlink" href="#percentile-timer" title="Permanent link">&para;</a></h2>
 <p><strong>Note</strong>: Percentile timers generate a metric per bucket in the histogram. Create instances
 once per ID and reuse them as needed. Avoid adding tags with high cardinality as that increases
-the cardinality of the metric. If at all possible, use a <a href="./">Timer</a> instead.</p>
+the cardinality of the metric. If at all possible, use a <a href="#timer">Timer</a> instead.</p>
 <p>To get started, create an instance using the <a href="../../registry/overview/">Registry</a>:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Server</span><span class="w"> </span><span class="p">{</span>
 
