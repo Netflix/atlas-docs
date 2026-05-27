@@ -34,7 +34,7 @@ based on the distribution buckets rather than exact sample counts.
 The metrics must be instrumented using percentile timers or distribution summaries that
 collect histogram information:
 
-* **[PercentileTimer](../../spectator/patterns/percentile-timer.md)** - For timing measurements
+* **[PercentileTimer](../../spectator/core/meters/timer.md#percentile-timer)** - For timing measurements
 * **[PercentileDistributionSummary](../../spectator/core/meters/dist-summary.md)** - For distribution measurements
 
 ## Examples
@@ -60,5 +60,5 @@ name,requestLatency,:eq,1,10,:sample-count
 
 ## See Also
 
-* [Percentile Timer Pattern](../../spectator/patterns/percentile-timer.md) - Instrumentation for timing with histograms
+* [Percentile Timer Pattern](../../spectator/core/meters/timer.md#percentile-timer) - Instrumentation for timing with histograms
 * [Percentile Distribution Summary Pattern](../../spectator/core/meters/dist-summary.md) - Distribution measurement patterns

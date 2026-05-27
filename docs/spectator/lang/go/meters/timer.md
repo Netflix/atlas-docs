@@ -28,3 +28,25 @@ Go Timers always report values to backends in seconds (see [Use Base Units]). Th
 
 [Use Base Units]: ../../../../concepts/naming.md#use-base-units
 [time.Duration]: https://pkg.go.dev/time#Duration
+
+## Percentile Timer
+
+Call `Record()` with a value:
+
+```golang
+import (
+	"github.com/Netflix/spectator-go/v2/spectator"
+	"time"
+)
+
+func main() {
+	config, _ := spectator.NewConfig("udp", nil, nil)
+	registry, _ := spectator.NewRegistry(config)
+
+	registry.PercentileTimer("server.requestLatency", nil).Record(500 * time.Millisecond)
+
+	requestLatency := registry.NewId("server.requestLatency", nil)
+	registry.PercentileTimerWithId(requestLatency).Record(500 * time.Millisecond)
+}
+```
+

@@ -319,8 +319,8 @@ The [Instrumenting Code](#complex-example) examples show how to use this library
 * [Max Gauge](./meters/max-gauge.md)
 * [Monotonic Counter](./meters/monotonic-counter.md)
 * [Monotonic Counter Uint](./meters/monotonic-counter-uint.md)
-* [Percentile Distribution Summary](./meters/percentile-dist-summary.md)
-* [Percentile Timer](./meters/percentile-timer.md)
+* [Percentile Distribution Summary](./meters/dist-summary.md#percentile-distribution-summary)
+* [Percentile Timer](./meters/timer.md#percentile-timer)
 * [Timer](./meters/timer.md)
 
 ## IPv6 Support
