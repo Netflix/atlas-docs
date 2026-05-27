@@ -17,7 +17,6 @@ were at 1.2 billion metrics and the numbers continue to rise. Atlas is designed 
 large quantity of data and can scale with the hardware we use to analyze and store it.
 
 For details and background on the project please read through the [overview](./overview.md) page.
-
-Check out the [getting started](./getting-started.md) page for an introduction to using Atlas in
-the cloud environment. Once you've explored the example, check out the stack language references to
-see the various types of information you can access.
+From there, the [Stack Language](./asl/tutorial.md) tutorial is a good next step for learning how
+to query and graph Atlas data, and the [Spectator](./spectator/index.md) section covers
+instrumenting your own code.
