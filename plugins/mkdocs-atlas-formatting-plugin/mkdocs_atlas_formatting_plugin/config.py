@@ -2,4 +2,4 @@
 PLUGIN_NAME = 'atlas_formatting'
 
 # version of the latest atlas standalone release
-ATLAS_VERSION = '1.8.0-rc.32'
+ATLAS_VERSION = '1.9.0-rc.15'
