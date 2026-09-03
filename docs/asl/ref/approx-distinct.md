@@ -18,31 +18,21 @@ distinct values seen so far, use
 
 ## Publishing the Data
 
-This operation only works on data published for it. The
-[spectator](http://netflix.github.io/spectator/en/latest/) `DistinctCountSketch` class records
-values into a [HyperLogLog] sketch and publishes it as a fixed set of 64 max gauges, one per
-register, tagged with `statistic=distinct` and a `distinct=R##` register id. Query the metric
-by name as usual and let `:approx-distinct` reassemble the registers.
-
-[HyperLogLog]: https://en.wikipedia.org/wiki/HyperLogLog
-
-Applying `:approx-distinct` to an ordinary metric matches nothing, because the query is
-rewritten to require the register tag. A sketch costs 64 time series per source, so any
-additional dimensions on it need a small, bounded cardinality, the same as for a percentile
-timer.
+This operation only works on data published for it, with a
+[Distinct Count Sketch](../../spectator/lang/java/patterns/distinct-count-sketch.md). Query the
+metric by name as usual. Applying `:approx-distinct` to an ordinary metric matches nothing.
 
 ## Behavior
 
 * **The count is approximate**: The relative standard error is roughly 13%, so expect the value
   to move around a little from one interval to the next even when the true count is steady. Use
   it to see the magnitude and the shape of a trend, not to read off an exact number
-* **Merges across sources**: The registers are merged across everything the query matches, by
-  taking the max per register, before a single estimate is computed. A user active on several
-  instances counts once, so the result is not the sum of the per instance counts
+* **Merges across sources**: A single estimate is computed over everything the query matches. A
+  user active on several instances counts once, so the result is not the sum of the per instance
+  counts
 * **Per interval**: Each interval is estimated on its own, so the line goes down as well as up
-* **Aggregation is optional**: The estimator reshapes the input to the register grouping itself,
-  so `:sum` is not required. Aggregates that cannot be regrouped, such as `:avg` and `:count`,
-  are rejected, as is `:all`
+* **Aggregation is optional**: `:sum` is not required, it makes no difference to the estimate.
+  `:avg`, `:count`, and `:all` are rejected
 * **Grouping**: Add `(,key,),:by` before the operation to estimate separately for each value of
   a key
 
