@@ -32,19 +32,6 @@ event than are ever watching at once.
   with [:approx-distinct](approx-distinct.md), the groups only add up when a distinct value can
   appear in just one group
 
-## How It Works
-
-The operation is a rewrite of:
-
-```
-:dup,:cumulative-max,:approx-distinct
-```
-
-Sketches merge by taking the max of each register, so applying
-[:cumulative-max](cumulative-max.md) to the registers unions the sketches across time before
-the estimate is computed. The running max has to be applied to the registers, not to the
-estimates, which is why this is a distinct operation rather than something to assemble by hand.
-
 ## Examples
 
 The total audience next to the audience at any one time, for the live event in the sample data.
