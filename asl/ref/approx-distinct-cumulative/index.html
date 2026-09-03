@@ -2783,17 +2783,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How It Works
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -8861,6 +8850,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../spectator/lang/java/patterns/distinct-count-sketch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distinct Count Sketch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../spectator/lang/java/patterns/interval-counter/" class="md-nav__link">
         
   
@@ -10458,17 +10475,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How It Works
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10554,14 +10560,6 @@ event than are ever watching at once.</p>
   with <a href="../approx-distinct/">:approx-distinct</a>, the groups only add up when a distinct value can
   appear in just one group</li>
 </ul>
-<h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
-<p>The operation is a rewrite of:</p>
-<div class="highlight"><pre><span></span><code>:dup,:cumulative-max,:approx-distinct
-</code></pre></div>
-<p>Sketches merge by taking the max of each register, so applying
-<a href="../cumulative-max/">:cumulative-max</a> to the registers unions the sketches across time before
-the estimate is computed. The running max has to be applied to the registers, not to the
-estimates, which is why this is a distinct operation rather than something to assemble by hand.</p>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <p>The total audience next to the audience at any one time, for the live event in the sample data.
 The gap between the lines is the turnover: 2.18M viewers over the event against a peak of 1.90M

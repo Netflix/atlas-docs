@@ -8861,6 +8861,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../spectator/lang/java/patterns/distinct-count-sketch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distinct Count Sketch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../spectator/lang/java/patterns/interval-counter/" class="md-nav__link">
         
   
@@ -10539,27 +10567,20 @@ distinct values seen so far, use
 <li><strong>expr</strong>: A query for a metric published as a distinct count sketch</li>
 </ul>
 <h2 id="publishing-the-data">Publishing the Data<a class="headerlink" href="#publishing-the-data" title="Permanent link">&para;</a></h2>
-<p>This operation only works on data published for it. The
-<a href="http://netflix.github.io/spectator/en/latest/">spectator</a> <code>DistinctCountSketch</code> class records
-values into a <a href="https://en.wikipedia.org/wiki/HyperLogLog">HyperLogLog</a> sketch and publishes it as a fixed set of 64 max gauges, one per
-register, tagged with <code>statistic=distinct</code> and a <code>distinct=R##</code> register id. Query the metric
-by name as usual and let <code>:approx-distinct</code> reassemble the registers.</p>
-<p>Applying <code>:approx-distinct</code> to an ordinary metric matches nothing, because the query is
-rewritten to require the register tag. A sketch costs 64 time series per source, so any
-additional dimensions on it need a small, bounded cardinality, the same as for a percentile
-timer.</p>
+<p>This operation only works on data published for it, with a
+<a href="../../../spectator/lang/java/patterns/distinct-count-sketch/">Distinct Count Sketch</a>. Query the
+metric by name as usual. Applying <code>:approx-distinct</code> to an ordinary metric matches nothing.</p>
 <h2 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>The count is approximate</strong>: The relative standard error is roughly 13%, so expect the value
   to move around a little from one interval to the next even when the true count is steady. Use
   it to see the magnitude and the shape of a trend, not to read off an exact number</li>
-<li><strong>Merges across sources</strong>: The registers are merged across everything the query matches, by
-  taking the max per register, before a single estimate is computed. A user active on several
-  instances counts once, so the result is not the sum of the per instance counts</li>
+<li><strong>Merges across sources</strong>: A single estimate is computed over everything the query matches. A
+  user active on several instances counts once, so the result is not the sum of the per instance
+  counts</li>
 <li><strong>Per interval</strong>: Each interval is estimated on its own, so the line goes down as well as up</li>
-<li><strong>Aggregation is optional</strong>: The estimator reshapes the input to the register grouping itself,
-  so <code>:sum</code> is not required. Aggregates that cannot be regrouped, such as <code>:avg</code> and <code>:count</code>,
-  are rejected, as is <code>:all</code></li>
+<li><strong>Aggregation is optional</strong>: <code>:sum</code> is not required, it makes no difference to the estimate.
+  <code>:avg</code>, <code>:count</code>, and <code>:all</code> are rejected</li>
 <li><strong>Grouping</strong>: Add <code>(,key,),:by</code> before the operation to estimate separately for each value of
   a key</li>
 </ul>
