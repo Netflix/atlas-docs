@@ -92,7 +92,9 @@ is computed across all sources at query time.
 ## Querying
 
 * [:approx-distinct] - distinct values in each interval
+* [:approx-distinct-rolling] - distinct values over a trailing window
 * [:approx-distinct-cumulative] - running count of the distinct values seen so far
 
 [:approx-distinct]: ../../../../asl/ref/approx-distinct.md
+[:approx-distinct-rolling]: ../../../../asl/ref/approx-distinct-rolling.md
 [:approx-distinct-cumulative]: ../../../../asl/ref/approx-distinct-cumulative.md

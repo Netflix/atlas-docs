@@ -166,6 +166,7 @@ for general guidelines on metrics naming and restrictions.
 
 * [Age Gauge](./meters/age-gauge.md)
 * [Counter](./meters/counter.md)
+* [Distinct Count Sketch](./meters/distinct-count-sketch.md)
 * [Distribution Summary](./meters/dist-summary.md)
 * [Gauge](./meters/gauge.md)
 * [Max Gauge](./meters/max-gauge.md)

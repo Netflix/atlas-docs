@@ -1,19 +1,29 @@
 @@@ atlas-signature
-n: Int
+w: Window
 expr: TimeSeriesExpr
 -->
 TimeSeriesExpr
 @@@
 
-Delays the values in a time series by shifting them forward by N time steps. This creates
-a lag effect where each value appears N intervals later than it originally occurred.
+Delays the values in a time series by shifting them forward by a number of time steps or an
+amount of time. This creates a lag effect where each value appears later than it originally
+occurred.
 Unlike [:offset](offset.md), this operates on the computed time series data rather than
 changing the time window used for data fetching.
 
 ## Parameters
 
 * **expr**: The time series expression to delay
-* **n**: The number of time steps to delay the values (integer)
+* **w**: How far to delay the values, either a number of time steps, such as `5`, or a
+  duration, such as `5m`
+
+## Delay Size
+
+A number of time steps, `5`, shifts the values by 5 intervals, so the amount of time changes
+with the step size, for example when zooming out to a time frame that causes consolidation. A
+duration, `5m`, shifts by a fixed amount of time independent of the step size. The duration is
+rounded down to the nearest step boundary, and if the step size is larger than the duration the
+values are shifted by a single step. The delay must be positive, `0,:delay` is rejected.
 
 ## Examples
 
@@ -27,6 +37,13 @@ Combined: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requ
 
 The "Combined" example shows both the original and delayed series overlaid, demonstrating
 how the delayed series follows the same pattern but shifted later in time.
+
+Delaying by 15 minutes, independent of the step size:
+
+@@@ atlas-example { hilite=:delay }
+Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum
+After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,15m,:delay
+@@@
 
 ## Key Differences from :offset
 

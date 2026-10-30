@@ -1,5 +1,5 @@
 @@@ atlas-signature
-n: Int
+w: Window
 expr: TimeSeriesExpr
 -->
 TimeSeriesExpr
@@ -12,14 +12,27 @@ multiple datapoints before triggering alerts.
 ## Parameters
 
 * **expr**: The time series expression to count occurrences for
-* **n**: Window size (number of datapoints including current value)
+* **w**: Window size, either a number of datapoints including the current value, such as
+  `5`, or a duration, such as `5m`. See [Window Size](#window-size)
+
+## Window Size
+
+The window can be specified as a number of datapoints or as an amount of time. A number of
+datapoints, `5`, will consider the last 5 values, including the current value. The amount of
+time covered then changes with the step size, for example when zooming out to a time frame that
+causes consolidation. A duration, `5m`, will consider the values for the last 5 minutes
+independent of the step size. The duration is rounded down to the nearest step boundary, so a
+`5m` window with a 2m step will use a 4m window with two datapoints. If the step size is larger
+than the window, then the window will be a single datapoint. The window must be positive.
+
+Note that the result is still based on datapoints, so the value will change with the step size
+even when using a duration to keep the amount of time covered fixed.
 
 ## Counting Rules
 
 * **Non-zero values**: Only values != 0 are counted as occurrences
 * **Missing data**: NaN values are treated as zero (not counted)
 * **Negative values**: Negative non-zero values are counted as occurrences
-* **Window-based**: Uses fixed number of datapoints, not time duration
 
 ## Alerting Pattern
 
