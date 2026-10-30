@@ -83,3 +83,25 @@ The size of the internal string pool.
 The number of entries in the internal string pool.
 
 **Unit:** entries
+
+### spectatord.sketchCacheSize
+
+The number of Distinct Count Sketches that have been updated recently in the dedicated cache.
+
+**Unit:** meters
+
+**Dimensions:**
+
+* `id`: `distinct`
+* Common Infrastructure
+
+### spectatord.sketchExpired
+
+The number of Distinct Count Sketches that have been expired from the dedicated cache.
+
+**Unit:** meters/second
+
+**Dimensions:**
+
+* `id`: `distinct`
+* Common Infrastructure

@@ -219,6 +219,7 @@ if __name__ == "__main__":
 
 * [Age Gauge](./meters/age-gauge.md)
 * [Counter](./meters/counter.md)
+* [Distinct Count Sketch](./meters/distinct-count-sketch.md)
 * [Distribution Summary](./meters/dist-summary.md)
 * [Gauge](./meters/gauge.md)
 * [Max Gauge](./meters/max-gauge.md)

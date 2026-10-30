@@ -1,6 +1,6 @@
 @@@ atlas-signature
 minNumValues: Int
-n: Int
+w: Window
 expr: TimeSeriesExpr
 -->
 TimeSeriesExpr
@@ -13,15 +13,28 @@ This is useful for smoothing noisy data while maintaining data quality requireme
 ## Parameters
 
 * **expr**: The time series expression to compute the rolling mean for
-* **n**: Window size (number of datapoints including current value)
+* **w**: Window size, either a number of datapoints including the current value, such as
+  `5`, or a duration, such as `5m`. See [Window Size](#window-size)
 * **minNumValues**: Minimum required non-NaN values to compute the mean
+
+## Window Size
+
+The window can be specified as a number of datapoints or as an amount of time. A number of
+datapoints, `5`, will consider the last 5 values, including the current value. The amount of
+time covered then changes with the step size, for example when zooming out to a time frame that
+causes consolidation. A duration, `5m`, will consider the values for the last 5 minutes
+independent of the step size. The duration is rounded down to the nearest step boundary, so a
+`5m` window with a 2m step will use a 4m window with two datapoints. If the step size is larger
+than the window, then the window will be a single datapoint. The window must be positive.
 
 ## Window Behavior
 
-* **Window-based**: Uses a fixed number of datapoints, not time duration
 * **Quality threshold**: Requires minimum non-NaN values before emitting a result
 * **Missing data handling**: NaN values are ignored in calculation but count toward window size
-* **Consolidation impact**: Each datapoint represents a longer time window when step size increases
+* **Consolidation impact**: With a number of datapoints, each datapoint represents a longer time
+  window when the step size increases. Use a duration to keep the time covered fixed
+* **Small windows**: If `minNumValues` is larger than the number of datapoints in the window,
+  for example a duration window at a large step size, the result is NaN
 
 ## Data Processing Example
 

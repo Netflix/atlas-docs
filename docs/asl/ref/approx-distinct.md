@@ -8,8 +8,9 @@ Estimate the number of distinct values seen in each interval, for example the nu
 distinct users active on a service. Counting distinct values exactly means remembering every
 value seen, which does not fit in a time series, so the count is approximate.
 
-Each output datapoint is the estimate for that interval on its own. For a running count of the
-distinct values seen so far, use
+Each output datapoint is the estimate for that interval on its own. For the distinct values seen
+over a trailing window, use [:approx-distinct-rolling](approx-distinct-rolling.md). For a running
+count of the distinct values seen so far, use
 [:approx-distinct-cumulative](approx-distinct-cumulative.md).
 
 ## Parameters
@@ -18,9 +19,11 @@ distinct values seen so far, use
 
 ## Publishing the Data
 
-This operation only works on data published for it, with a
-[Distinct Count Sketch](../../spectator/lang/java/patterns/distinct-count-sketch.md). Query the
-metric by name as usual. Applying `:approx-distinct` to an ordinary metric matches nothing.
+This operation only works on data published for it with a distinct count sketch. See the
+[Java](../../spectator/lang/java/patterns/distinct-count-sketch.md),
+[Python](../../spectator/lang/py/meters/distinct-count-sketch.md), or
+[Go](../../spectator/lang/go/meters/distinct-count-sketch.md) docs for how to record one. Query
+the metric by name as usual. Applying `:approx-distinct` to an ordinary metric matches nothing.
 
 ## Behavior
 
@@ -66,6 +69,8 @@ operation and let it do the merging.
 
 ## Related Operations
 
+* [:approx-distinct-rolling](approx-distinct-rolling.md) - Distinct values over a trailing
+  window, rather than per interval
 * [:approx-distinct-cumulative](approx-distinct-cumulative.md) - Distinct values seen so far,
   rather than per interval
 * [:by](by.md) - Break the estimate out by a key

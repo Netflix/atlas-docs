@@ -67,21 +67,24 @@ Example showing how `:trend` processes data:
 
 ## Migration Guide
 
-Replace `:trend` with `:rolling-mean` for similar functionality:
+Replace `:trend` with `:rolling-mean` for similar functionality. The window can be the same
+duration, and `minNumValues` sets how many non-NaN values are needed before a mean is emitted:
 
 ```
 # Old (deprecated):
 name,cpu,:eq,:sum,5m,:trend
 
 # New (recommended):
-name,cpu,:eq,:sum,5,:rolling-mean
+name,cpu,:eq,:sum,5m,1,:rolling-mean
 ```
+
+Unlike `:trend`, missing values are ignored rather than treated as zeros.
 
 ## Related Operations
 
-* [:rolling-mean](rolling-mean.md) - Recommended replacement (uses datapoint count instead of time)
-* [:rolling-max](rolling-max.md) - Rolling maximum over datapoint windows
-* [:rolling-min](rolling-min.md) - Rolling minimum over datapoint windows
+* [:rolling-mean](rolling-mean.md) - Recommended replacement
+* [:rolling-max](rolling-max.md) - Rolling maximum over a window
+* [:rolling-min](rolling-min.md) - Rolling minimum over a window
 * [:sdes](sdes.md) - More sophisticated smoothing with trend detection
 
 ## See Also

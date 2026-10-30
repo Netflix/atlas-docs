@@ -65,6 +65,7 @@ the total.
 ## Related Operations
 
 * [:approx-distinct](approx-distinct.md) - Distinct values per interval
+* [:approx-distinct-rolling](approx-distinct-rolling.md) - Distinct values over a trailing window
 * [:cumulative-max](cumulative-max.md) - Running maximum of a line
 * [:integral](integral.md) - Running sum, the equivalent for values that add up
 * [:by](by.md) - Break the running count out by a key
