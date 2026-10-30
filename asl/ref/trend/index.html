@@ -2731,6 +2731,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../approx-distinct-rolling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    approx-distinct-rolling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../as/" class="md-nav__link">
         
   
@@ -8147,6 +8175,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../spectator/lang/go/meters/distinct-count-sketch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distinct Count Sketch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../spectator/lang/go/meters/dist-summary/" class="md-nav__link">
         
   
@@ -10127,6 +10183,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../spectator/lang/py/meters/distinct-count-sketch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distinct Count Sketch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../spectator/lang/py/meters/dist-summary/" class="md-nav__link">
         
   
@@ -10732,18 +10816,20 @@ PT5M,<a href="https://netflix.github.io/atlas-docs/asl/ref/trend/"><span class="
 </tbody>
 </table>
 <h2 id="migration-guide">Migration Guide<a class="headerlink" href="#migration-guide" title="Permanent link">&para;</a></h2>
-<p>Replace <code>:trend</code> with <code>:rolling-mean</code> for similar functionality:</p>
+<p>Replace <code>:trend</code> with <code>:rolling-mean</code> for similar functionality. The window can be the same
+duration, and <code>minNumValues</code> sets how many non-NaN values are needed before a mean is emitted:</p>
 <div class="highlight"><pre><span></span><code># Old (deprecated):
 name,cpu,:eq,:sum,5m,:trend
 
 # New (recommended):
-name,cpu,:eq,:sum,5,:rolling-mean
+name,cpu,:eq,:sum,5m,1,:rolling-mean
 </code></pre></div>
+<p>Unlike <code>:trend</code>, missing values are ignored rather than treated as zeros.</p>
 <h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../rolling-mean/">:rolling-mean</a> - Recommended replacement (uses datapoint count instead of time)</li>
-<li><a href="../rolling-max/">:rolling-max</a> - Rolling maximum over datapoint windows</li>
-<li><a href="../rolling-min/">:rolling-min</a> - Rolling minimum over datapoint windows</li>
+<li><a href="../rolling-mean/">:rolling-mean</a> - Recommended replacement</li>
+<li><a href="../rolling-max/">:rolling-max</a> - Rolling maximum over a window</li>
+<li><a href="../rolling-min/">:rolling-min</a> - Rolling minimum over a window</li>
 <li><a href="../sdes/">:sdes</a> - More sophisticated smoothing with trend detection</li>
 </ul>
 <h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>

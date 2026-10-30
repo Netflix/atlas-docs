@@ -2733,6 +2733,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../approx-distinct-rolling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    approx-distinct-rolling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../as/" class="md-nav__link">
         
   
@@ -4221,6 +4249,17 @@
     <span class="md-ellipsis">
       
         Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#window-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Window Size
       
     </span>
   </a>
@@ -8136,6 +8175,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../spectator/lang/go/meters/distinct-count-sketch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distinct Count Sketch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../spectator/lang/go/meters/dist-summary/" class="md-nav__link">
         
   
@@ -10116,6 +10183,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../spectator/lang/py/meters/distinct-count-sketch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distinct Count Sketch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../spectator/lang/py/meters/dist-summary/" class="md-nav__link">
         
   
@@ -10486,6 +10581,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#window-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Window Size
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#counting-rules" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10574,7 +10680,7 @@
   <h1>rolling-count</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>n: Int</td></tr><tr><td>expr: TimeSeriesExpr</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>w: Window</td></tr><tr><td>expr: TimeSeriesExpr</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td>TimeSeriesExpr</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
 </tr></tbody></table>
@@ -10584,14 +10690,24 @@ multiple datapoints before triggering alerts.</p>
 <h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>expr</strong>: The time series expression to count occurrences for</li>
-<li><strong>n</strong>: Window size (number of datapoints including current value)</li>
+<li><strong>w</strong>: Window size, either a number of datapoints including the current value, such as
+  <code>5</code>, or a duration, such as <code>5m</code>. See <a href="#window-size">Window Size</a></li>
 </ul>
+<h2 id="window-size">Window Size<a class="headerlink" href="#window-size" title="Permanent link">&para;</a></h2>
+<p>The window can be specified as a number of datapoints or as an amount of time. A number of
+datapoints, <code>5</code>, will consider the last 5 values, including the current value. The amount of
+time covered then changes with the step size, for example when zooming out to a time frame that
+causes consolidation. A duration, <code>5m</code>, will consider the values for the last 5 minutes
+independent of the step size. The duration is rounded down to the nearest step boundary, so a
+<code>5m</code> window with a 2m step will use a 4m window with two datapoints. If the step size is larger
+than the window, then the window will be a single datapoint. The window must be positive.</p>
+<p>Note that the result is still based on datapoints, so the value will change with the step size
+even when using a duration to keep the amount of time covered fixed.</p>
 <h2 id="counting-rules">Counting Rules<a class="headerlink" href="#counting-rules" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Non-zero values</strong>: Only values != 0 are counted as occurrences</li>
 <li><strong>Missing data</strong>: NaN values are treated as zero (not counted)</li>
 <li><strong>Negative values</strong>: Negative non-zero values are counted as occurrences</li>
-<li><strong>Window-based</strong>: Uses fixed number of datapoints, not time duration</li>
 </ul>
 <h2 id="alerting-pattern">Alerting Pattern<a class="headerlink" href="#alerting-pattern" title="Permanent link">&para;</a></h2>
 <p>A common alerting pattern using rolling count:</p>

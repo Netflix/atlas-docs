@@ -2724,6 +2724,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../asl/ref/approx-distinct-rolling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    approx-distinct-rolling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../asl/ref/as/" class="md-nav__link">
         
   
@@ -8255,6 +8283,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../lang/go/meters/distinct-count-sketch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distinct Count Sketch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../lang/go/meters/dist-summary/" class="md-nav__link">
         
   
@@ -10235,6 +10291,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../lang/py/meters/distinct-count-sketch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distinct Count Sketch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../lang/py/meters/dist-summary/" class="md-nav__link">
         
   
@@ -10922,6 +11006,16 @@ are optional:</p>
 <td>The value is the number of increments that have occurred since the last time it was recorded. The value will be reported to the backend as a rate-per-second.</td>
 </tr>
 <tr>
+<td>Distinct Count Sketch</td>
+<td><code>S</code></td>
+<td>The value is the base64 encoded bytes of a value to count, such as a user id. It is used to estimate the number of distinct values seen during each interval, which can be queried with <a href="../../../asl/ref/approx-distinct/">:approx-distinct</a>. Equal values must be encoded to the same bytes to be counted once, the Spectator clients use the UTF-8 bytes for strings and the 8-byte little-endian representation for integers. <br><br> For example, to record the string <code>user1</code>: <code>S:server.uniqueUsers:dXNlcjE=</code>. <br><br> Each sketch is published as 64 gauges, so it is much more expensive than a Counter. Be diligent about any additional dimensions added to sketches and ensure that they have a small bounded cardinality.</td>
+</tr>
+<tr>
+<td>Distinct Count Sketch (precomputed hash)</td>
+<td><code>s</code></td>
+<td>The same as <code>S</code>, except that the value is a <code>uint64</code> xxHash64 (seed 0) of the bytes to count, written as a decimal integer rather than hex. This avoids sending the raw value.</td>
+</tr>
+<tr>
 <td>Distribution Summary</td>
 <td><code>d</code></td>
 <td>The value tracks the distribution of events. It is similar to a Timer, but more general, because the size does not have to be a period of time. <br><br> For example, it can be used to measure the payload sizes of requests hitting a server or the number of records returned from a query.</td>
@@ -10968,8 +11062,8 @@ are optional:</p>
 </tr>
 </tbody>
 </table>
-<p>The data type for all numbers except <code>U</code> is <code>double</code>. The <code>U</code> values are recorded as <code>uint64_t</code>, and the calculated
-deltas are passed to the backend as <code>double</code>. Passing negative values for <code>uint64_t</code> data types will cause the parsed
+<p>The data type for all numbers except <code>U</code> and <code>s</code> is <code>double</code>. The <code>U</code> values are recorded as <code>uint64_t</code>, and the calculated
+deltas are passed to the backend as <code>double</code>. The <code>s</code> values are <code>uint64_t</code> hashes. The <code>S</code> values are base64 strings. Passing negative values for <code>uint64_t</code> data types will cause the parsed
 string value to rollover.</p>
 <h3 id="metric-name-and-tags">Metric Name and Tags<a class="headerlink" href="#metric-name-and-tags" title="Permanent link">&para;</a></h3>
 <p>The metric name and tags must follow Atlas restrictions, which are described in the sections below.</p>

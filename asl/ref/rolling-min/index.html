@@ -2733,6 +2733,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../approx-distinct-rolling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    approx-distinct-rolling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../as/" class="md-nav__link">
         
   
@@ -4305,6 +4333,17 @@
     <span class="md-ellipsis">
       
         Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#window-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Window Size
       
     </span>
   </a>
@@ -8125,6 +8164,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../spectator/lang/go/meters/distinct-count-sketch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distinct Count Sketch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../spectator/lang/go/meters/dist-summary/" class="md-nav__link">
         
   
@@ -10105,6 +10172,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../spectator/lang/py/meters/distinct-count-sketch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distinct Count Sketch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../spectator/lang/py/meters/dist-summary/" class="md-nav__link">
         
   
@@ -10475,6 +10570,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#window-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Window Size
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#behavior" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10552,7 +10658,7 @@
   <h1>rolling-min</h1>
 
 <table><tbody><tr>
-<td><strong>Input Stack:</strong><table><tbody><tr><td>n: Int</td></tr><tr><td>expr: TimeSeriesExpr</td></tr></tbody></table></td>
+<td><strong>Input Stack:</strong><table><tbody><tr><td>w: Window</td></tr><tr><td>expr: TimeSeriesExpr</td></tr></tbody></table></td>
 <td style="vertical-align: middle;">&#8680;</td>
 <td><strong>Output Stack:</strong><table><tbody><tr><td>TimeSeriesExpr</td></tr><tr><td>&nbsp;</td></tr></tbody></table></td>
 </tr></tbody></table>
@@ -10562,14 +10668,23 @@ functions that follow the lowest points in fluctuating signals.</p>
 <h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>expr</strong>: The time series expression to find rolling minimum for</li>
-<li><strong>n</strong>: Window size (number of datapoints including current value)</li>
+<li><strong>w</strong>: Window size, either a number of datapoints including the current value, such as
+  <code>5</code>, or a duration, such as <code>5m</code>. See <a href="#window-size">Window Size</a></li>
 </ul>
+<h2 id="window-size">Window Size<a class="headerlink" href="#window-size" title="Permanent link">&para;</a></h2>
+<p>The window can be specified as a number of datapoints or as an amount of time. A number of
+datapoints, <code>5</code>, will consider the last 5 values, including the current value. The amount of
+time covered then changes with the step size, for example when zooming out to a time frame that
+causes consolidation. A duration, <code>5m</code>, will consider the values for the last 5 minutes
+independent of the step size. The duration is rounded down to the nearest step boundary, so a
+<code>5m</code> window with a 2m step will use a 4m window with two datapoints. If the step size is larger
+than the window, then the window will be a single datapoint and the input is passed through
+unchanged. The window must be positive.</p>
 <h2 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Minimum selection</strong>: Returns the lowest value in the current window</li>
 <li><strong>Missing data</strong>: NaN values are ignored in the calculation</li>
 <li><strong>All NaN window</strong>: If all values in window are NaN, emits NaN</li>
-<li><strong>Window-based</strong>: Uses fixed number of datapoints, not time duration</li>
 </ul>
 <h2 id="alerting-example">Alerting Example<a class="headerlink" href="#alerting-example" title="Permanent link">&para;</a></h2>
 <p>Using rolling min to establish recent low baseline:</p>

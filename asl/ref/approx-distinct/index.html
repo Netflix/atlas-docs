@@ -2842,6 +2842,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../approx-distinct-rolling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    approx-distinct-rolling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../as/" class="md-nav__link">
         
   
@@ -8125,6 +8153,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../spectator/lang/go/meters/distinct-count-sketch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distinct Count Sketch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../spectator/lang/go/meters/dist-summary/" class="md-nav__link">
         
   
@@ -10105,6 +10161,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../spectator/lang/py/meters/distinct-count-sketch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distinct Count Sketch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../spectator/lang/py/meters/dist-summary/" class="md-nav__link">
         
   
@@ -10559,17 +10643,20 @@
 <p>Estimate the number of distinct values seen in each interval, for example the number of
 distinct users active on a service. Counting distinct values exactly means remembering every
 value seen, which does not fit in a time series, so the count is approximate.</p>
-<p>Each output datapoint is the estimate for that interval on its own. For a running count of the
-distinct values seen so far, use
+<p>Each output datapoint is the estimate for that interval on its own. For the distinct values seen
+over a trailing window, use <a href="../approx-distinct-rolling/">:approx-distinct-rolling</a>. For a running
+count of the distinct values seen so far, use
 <a href="../approx-distinct-cumulative/">:approx-distinct-cumulative</a>.</p>
 <h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>expr</strong>: A query for a metric published as a distinct count sketch</li>
 </ul>
 <h2 id="publishing-the-data">Publishing the Data<a class="headerlink" href="#publishing-the-data" title="Permanent link">&para;</a></h2>
-<p>This operation only works on data published for it, with a
-<a href="../../../spectator/lang/java/patterns/distinct-count-sketch/">Distinct Count Sketch</a>. Query the
-metric by name as usual. Applying <code>:approx-distinct</code> to an ordinary metric matches nothing.</p>
+<p>This operation only works on data published for it with a distinct count sketch. See the
+<a href="../../../spectator/lang/java/patterns/distinct-count-sketch/">Java</a>,
+<a href="../../../spectator/lang/py/meters/distinct-count-sketch/">Python</a>, or
+<a href="../../../spectator/lang/go/meters/distinct-count-sketch/">Go</a> docs for how to record one. Query
+the metric by name as usual. Applying <code>:approx-distinct</code> to an ordinary metric matches nothing.</p>
 <h2 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>The count is approximate</strong>: The relative standard error is roughly 13%, so expect the value
@@ -10612,6 +10699,8 @@ of <code>:approx-distinct</code> with <code>:sum</code> is nearly always a mista
 operation and let it do the merging.</p>
 <h2 id="related-operations">Related Operations<a class="headerlink" href="#related-operations" title="Permanent link">&para;</a></h2>
 <ul>
+<li><a href="../approx-distinct-rolling/">:approx-distinct-rolling</a> - Distinct values over a trailing
+  window, rather than per interval</li>
 <li><a href="../approx-distinct-cumulative/">:approx-distinct-cumulative</a> - Distinct values seen so far,
   rather than per interval</li>
 <li><a href="../by/">:by</a> - Break the estimate out by a key</li>
